@@ -1,0 +1,14 @@
+$tb: 900px;
+$sp: 400px;
+
+@mixin tb {
+    @media (max-width: $tb) {
+        @content;
+    }    
+}
+
+@mixin sp {
+    @media (max-width: $sp) {
+        @content;
+    }    
+}

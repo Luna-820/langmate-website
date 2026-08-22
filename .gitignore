@@ -1,0 +1,18 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/*
+!.vscode/settings.json
+
+# Sass (Live Sass Compiler output/maps)
+*.css.map
+
+# Node (将来 build tool を導入した場合用)
+node_modules/
+npm-debug.log*
+
+# Env
+.env
+.env.local
