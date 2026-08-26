@@ -1,0 +1,89 @@
+@use '../base/mixin' as mx;
+@use '../base/base' as v;
+
+// ==========================================================================
+// Floating DL Button — 画面右端に追従するダウンロード導線（PC専用）
+// トリガーとパネルを1つの枠(.floating-dl__box)にまとめ、
+// 「別々の箱」ではなく「1つの箱の幅が広がって中身が見える」動きにする。
+// ==========================================================================
+
+.floating-dl {
+    display: none;
+
+    @include mx.pc {
+        display: block;
+        position: fixed;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+        z-index: 100;
+    }
+
+    &__box {
+        display: flex;
+        align-items: stretch;
+        background-color: v.$color-white;
+        border: 8px solid v.$color-blue;
+        border-right: none;
+        border-radius: 60px 0 0 60px;
+        overflow: hidden; // パネルの幅が0の間、中身を隠しておくため
+    }
+
+    // writing-mode:vertical-rlで英字(D/L)を縦にすると、フォントの縦書き用メトリクスが
+    // 文字ごとに不揃いになり、D-L間の間隔だけ不自然に広がる問題があった。
+    // → writing-modeを使わず、文字ごとに<br>で改行した通常の横書きテキストにすることで、
+    //   全文字が同じline-height基準で均等に並ぶようにする。
+    &__trigger {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        flex-shrink: 0;
+        width: 99px;
+        min-height: 310px; // 実測388pxから縮小、余白(padding/gap)を詰めて調整
+        padding-block: 20px;
+        padding-inline: 20px;
+        background: none;
+        border: none;
+        color: v.$color-blue;
+        font-family: v.$font-en;
+        font-weight: v.$fw-bold;
+        font-size: 3.2rem;
+        line-height: 1.19;
+        letter-spacing: -0.05em;
+        text-align: center;
+        cursor: pointer;
+
+        svg {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+    }
+
+    &__panel {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 8px;
+        width: 0;
+        padding-inline: 0;
+        overflow: hidden;
+        transition: width 0.35s ease, padding-inline 0.35s ease;
+
+        .btn--store {
+            width: 160px;
+            flex-shrink: 0;
+        }
+    }
+
+    // クリックでも:hoverでも展開できるようにする(キーボード操作対応)
+    &[data-open="true"] &__panel,
+    &:hover &__panel,
+    &:focus-within &__panel {
+        width: 184px;
+        padding-inline: 12px;
+    }
+}

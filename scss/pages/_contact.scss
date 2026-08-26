@@ -1,2 +1,287 @@
-@use '../component/_mixin.scss' as mx;
-@use '../base/base' as *;
+@use '../base/mixin' as mx;
+@use '../base/base' as v;
+
+// ==========================================================================
+// Contact page（お問い合わせ）
+// ラフに全体を組んだ一次実装。吹き出しの位置・破線コネクタなどは簡易な近似で
+// 作っており、後で数値をもらいながら調整していく前提。
+// ==========================================================================
+
+// ---- Hero ----
+.contact-hero {
+    position: relative;
+    overflow: hidden;
+    margin-block-start: -86px; // headerのsticky分だけ引き上げ（他ページと同じ手法）
+    padding-block-end: 60px;
+
+    @include mx.pc {
+        padding-block-end: 80px;
+    }
+
+    &__map {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1280 / 500;
+        z-index: 0;
+    }
+
+    // お問い合わせ完了ページ用：見出し等のテキストが無いので、地図をposition:staticの
+    // 通常フローに戻して地図自身の高さでセクションの高さが決まるようにする。
+    // さらにaspect-ratioを少し詰めて（object-fit:coverで上側基準にクロップ）、
+    // アーチの下の余分なクリーム部分を削り、アイコンとの間隔を狭くする。
+    &--thanks {
+        padding-block-end: 40px;
+
+        .contact-hero__map {
+            position: static;
+            display: block;
+            aspect-ratio: 1280 / 380;
+            object-fit: cover;
+            object-position: top;
+        }
+    }
+
+    &__inner {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        padding-block-start: calc(100vw * 500 / 1280 - 100px);
+    }
+
+    // ABOUT US（.about-hero__eyebrow）と同じアーチ構造に統一
+    &__eyebrow {
+        display: block;
+        width: 196px;
+        aspect-ratio: 220 / 70;
+        margin-inline: auto;
+        margin-block-end: -16px;
+        overflow: visible;
+
+        text {
+            font-family: v.$font-en;
+            font-weight: v.$fw-medium;
+            font-size: 2.4rem;
+            fill: v.$color-blue;
+            letter-spacing: 0.04em;
+        }
+    }
+
+    &__heading {
+        font-size: 4.8rem;
+        font-weight: v.$fw-bold;
+        letter-spacing: 0.1em;
+        margin-block-end: 24px;
+    }
+
+    &__lead {
+        font-size: 2.4rem;
+        line-height: 1.4;
+        margin-block-end: 24px;
+    }
+
+    &__note {
+        font-size: 2rem;
+        color: v.$color-text;
+        margin-block-end: 24px;
+        font-weight: v.$fw-normal;
+    }
+
+    &__cta {
+        display: inline-flex;
+    }
+}
+
+// ---- Form ----
+.contact-form-section {
+    padding-block: 60px;
+
+    @include mx.pc {
+        padding-bottom: 100px;
+    }
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    max-width: 1000px;
+    margin-inline: auto;
+    background-color: v.$color-white;
+    border-radius: 40px;
+    padding: 64px 24px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.08);
+    border: 1px solid #A9A9A9;
+
+    @include mx.pc {
+        padding-block: 64px;
+    }
+
+    &__field {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start; // label/inputを左揃えに（親のalign-items:centerで中央寄せされないよう明示）
+        gap: 8px;
+        width: 100%;
+        max-width: 345px;
+        margin-inline: auto; // fieldそのものはbox内で中央寄せ
+        text-align: left;
+
+        @include mx.pc {
+            width: 600px;
+            max-width: 600px;
+        }
+    }
+
+    &__label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 2rem;
+        font-weight: v.$fw-bold;
+    }
+
+    &__required {
+        display: inline-block;
+        font-size: 1.6rem;
+        font-weight: v.$fw-bold;
+        color: v.$color-white;
+        background-color: v.$color-pink;
+        border-radius: 999px;
+        padding: 2px 12px;
+        line-height: 1.4;
+    }
+
+    &__input,
+    &__textarea {
+        width: 100%;
+        font-family: v.$font-jp;
+        font-size: 2rem;
+        color: v.$color-text;
+        background-color: v.$color-white;
+        border: 1px solid v.$color-gray;
+        border-radius: v.$radius-input;
+        padding-inline: 17px;
+        height: 48px;
+
+        &::placeholder {
+            color: v.$color-gray;
+        }
+
+        &:focus {
+            outline: 2px solid v.$color-blue;
+            outline-offset: 1px;
+        }
+    }
+
+    &__textarea {
+        resize: vertical;
+        min-height: 160px;
+    }
+
+    &__user-id {
+        text-align: center;
+        font-size: 2rem;
+        margin-top: 20px;
+
+        p {
+            margin-block-end: 8px;
+            font-size: 1.6rem;
+        }
+    }
+
+    &__user-id-trigger {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        background: none;
+        border: none;
+        border-block-end: 1px solid v.$color-text;
+        font-family: v.$font-jp;
+        font-size: 1.6rem;
+        color: v.$color-text;
+        cursor: pointer;
+        padding-block-end: 4px;
+    }
+
+    &__user-id-help {
+        margin-block-start: 16px;
+        text-align: left;
+
+        p {
+            font-size: 1.3rem;
+            color: v.$color-text;
+            margin-block-end: 8px;
+        }
+    }
+
+    &__dropzone {
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 345px;
+        margin-inline: auto; // __fieldと同じく中央寄せ
+        text-align: center;
+        border: 1px dashed v.$color-text;
+        border-radius: v.$radius-card;
+        background-color: #F4FAFF;
+        padding: 32px 72px;
+        margin-bottom: 20px;
+
+        @include mx.pc {
+            width: 600px; // 上のformフィールドと同じ幅
+            max-width: 600px;
+        }
+    }
+
+    &__dropzone-label {
+        font-size: 2rem;
+        font-weight: v.$fw-bold;
+        margin-block-end: 16px;
+    }
+
+    &__dropzone-or {
+        font-size: 1.6rem;
+        color: v.$color-text;
+        font-weight: v.$fw-normal;
+        margin-block-end: 16px;
+    }
+
+    &__file-button {
+        display: inline-block;
+        font-size: 2rem;
+        line-height: 1.4;
+        background-color: #E2E2E2;
+        color: v.$color-text;
+        border-radius: 4px;
+        padding: 8px 32px;
+        cursor: pointer;
+        border: 1px solid v.$color-text;
+        height:44px;
+    }
+
+    &__submit {
+        display: inline-block;
+        width: auto;
+        font-family: v.$font-jp;
+        font-weight: v.$fw-bold;
+        font-size: 2.4rem;
+        color: v.$color-white;
+        background-color: v.$color-blue;
+        border: none;
+        border-radius: v.$radius-button;
+        padding: 16px 96px;
+        cursor: pointer;
+        transition: opacity 0.3s, transform 0.2s;
+
+        &:hover {
+            opacity: 0.85;
+        }
+
+        &:active {
+            transform: scale(0.98);
+        }
+    }
+}

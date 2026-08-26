@@ -1,2 +1,249 @@
-@use '../component/_mixin.scss' as mx;
-@use '../base/base' as *;
+@use '../base/mixin' as mx;
+@use '../base/base' as v;
+
+// ==========================================================================
+// Header — ロゴ・グロナビ・Language Switcher・ハンバーガー・モバイルナビ
+// 全ページ共通のヘッダー周りをまとめたファイル
+// ==========================================================================
+
+// ヘッダーは画面上部に浮くピル型カード。
+// 背景の装飾（Hero等）が左右にのぞく余白を残すため、site-header自体は透明にし、
+// 実際の白い背景・角丸はsite-header__inner側に持たせる。
+.site-header {
+    position: sticky;
+    top: 12px;
+    z-index: 200;
+    padding-inline: 12px;
+
+    @include mx.pc {
+        top: 20px;
+        padding-inline: 24px;
+    }
+
+    &__inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        max-width: 1100px;
+        margin-inline: auto;
+        padding-block: 16px;
+        padding-inline: 20px;
+        background-color: v.$color-white;
+        border-radius: 60px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+
+        // Figma実測値: padding 40px(左右) / 16px(上下)、max-width 1100px、角丸60px
+        @include mx.pc {
+            padding-inline: 40px;
+        }
+    }
+
+    &__logo img {
+        height: 40px;
+        width: auto;
+
+        @include mx.pc {
+            height: 54px;
+            width: 250px;
+        }
+    }
+}
+
+.global-nav {
+    display: none;
+
+    @include mx.pc {
+        display: block;
+    }
+
+    &__list {
+        display: flex;
+        gap: 24px;
+        font-weight: v.$fw-bold;
+        font-size: 2rem;
+
+        a[aria-current="page"] {
+            color: v.$color-pink;
+        }
+    }
+}
+
+.hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 32px;
+    height: 32px;
+    background: none;
+    border: none;
+    cursor: pointer;
+
+    @include mx.pc {
+        display: none;
+    }
+
+    &__line {
+        display: block;
+        height: 2px;
+        background-color: v.$color-text;
+        border-radius: 1px;
+    }
+}
+
+// ---- Language Switcher — 丸型国旗アイコン＋ドロップダウン ----
+.language-switcher {
+    position: relative;
+
+    &__trigger {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 4px;
+
+        img {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 1px solid v.$color-gray-light;
+            object-fit: cover;
+
+            @include mx.pc {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    }
+
+    // フォントの「▼」文字は字形の余白の関係で見た目の中心がズレやすいため、
+    // CSSのborderで三角形を描いて確実に中央揃えにする。
+    &__caret {
+        width: 0;
+        height: 0;
+        flex-shrink: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 6px solid v.$color-text;
+    }
+
+    &__list {
+        position: absolute;
+        top: calc(100% + 8px);
+        right: 0;
+        min-width: 140px;
+        background-color: v.$color-white;
+        border: 1px solid v.$color-gray;
+        border-radius: v.$radius-card;
+        padding: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+        &[hidden] {
+            display: none;
+        }
+
+        li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px;
+            border-radius: v.$radius-input;
+            cursor: pointer;
+            font-size: 1.4rem;
+
+            &:hover {
+                background-color: v.$color-pink-light;
+            }
+
+            &[aria-selected="true"] {
+                font-weight: v.$fw-bold;
+                color: v.$color-pink;
+            }
+
+            img {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+        }
+    }
+}
+
+// ---- Mobile Navigation — フルスクリーンオーバーレイ ----
+.mobile-nav {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    background-color: v.$color-cream;
+    padding: 24px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+
+    &[hidden] {
+        display: none;
+    }
+
+    @include mx.pc {
+        display: none !important;
+    }
+
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-block-end: 32px;
+    }
+
+    &__logo img {
+        height: 32px;
+    }
+
+    &__close {
+        background: none;
+        border: none;
+        font-size: 2.4rem;
+        cursor: pointer;
+    }
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        font-size: 2rem;
+        font-weight: v.$fw-bold;
+        text-align: center;
+        margin-block: auto;
+    }
+
+    &__sns {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        margin-block: 24px;
+
+        img {
+            width: 24px;
+            height: 24px;
+        }
+    }
+
+    &__download {
+        display: block;
+        text-align: center;
+        padding: 16px;
+        background-color: v.$color-blue;
+        color: v.$color-white;
+        font-weight: v.$fw-bold;
+        border-radius: v.$radius-button v.$radius-button 0 0;
+        position: sticky;
+        bottom: -24px;
+        margin-inline: -24px;
+        margin-block-start: 24px;
+    }
+}
