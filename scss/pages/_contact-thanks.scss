@@ -1,0 +1,62 @@
+@use '../base/mixin' as mx;
+@use '../base/base' as v;
+
+// ==========================================================================
+// Contact Thanks page（お問い合わせありがとうございます）
+// ==========================================================================
+
+.contact-thanks {
+    padding-block: 0 100px;
+
+    @include mx.pc {
+        padding-block: 0 80px;
+    }
+
+    &__inner {
+        margin-inline: auto;
+        text-align: center;
+    }
+
+    &__icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100px;
+        height: 100px;
+        margin-inline: auto;
+        margin-block-end: 32px;
+        border: 2px solid v.$color-blue;
+        border-radius: 50%;
+        color: v.$color-blue;
+
+        @include mx.pc {
+            width: 180px;
+            height: 180px;
+        }
+
+        img {
+            width: 120px;
+            height: auto;
+        }
+    }
+
+    &__heading {
+        font-size: 2.4rem;
+        font-weight: v.$fw-bold;
+        margin-block-end: 24px;
+
+        @include mx.pc {
+            font-size: 3.2rem;
+        }
+    }
+
+    &__text {
+        font-size: 1.5rem;
+        line-height: 1.8;
+        color: v.$color-text;
+
+        @include mx.pc {
+            font-size: 2rem;
+        }
+    }
+}

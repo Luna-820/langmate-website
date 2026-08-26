@@ -1,2 +1,103 @@
-@use '../component/_mixin.scss' as mx;
-@use '../base/base' as *;
+@use '../base/mixin' as mx;
+@use '../base/base' as v;
+
+// ==========================================================================
+// Footer
+// ==========================================================================
+
+.site-footer {
+    margin-top: 64px;
+    padding: 80px 80px 40px;
+    border-top: 1px solid v.$color-gray;
+
+    &__inner {
+        display: flex;
+        flex-direction: column;
+        gap: 92px;
+
+        @include mx.pc {
+            flex-direction: row;
+            justify-content: space-between;
+        }
+    }
+
+    &__brand {
+        p {
+            font-size: 1.8rem;
+            margin-block-end: 8px;
+        }
+
+        img {
+            height: 86px;
+            margin-block-end: 20px;
+        }
+    }
+
+    &__badges {
+        display: flex;
+        gap: 40px;
+
+        img {
+            height: 56px;
+            width: auto;
+        }
+    }
+
+    &__nav ul {
+        display: grid;
+        grid-template-columns: repeat(2, auto);
+        gap: 16px 64px;
+        font-size: 2.4rem;
+    }
+
+    &__sns {
+        p {
+            font-size: 2.0rem;
+            margin-block-end: 16px;
+        }
+
+        div {
+            display: flex;
+            gap: 40px;
+
+            // 実際にflexの子要素になっているのはimgではなく、それを包む<a>タグ。
+            // ここにflex-shrink:0が無いと縮んでしまい、imgのwidth:56pxを指定しても
+            // 親<a>の縮んだ幅にmax-width:100%で追従して実際は48.7pxほどになっていた
+            a {
+                flex-shrink: 0;
+            }
+        }
+
+        img {
+            width: 56px;
+            height: 56px;
+            // logo-tiktok.svgだけ縦横比が正方形じゃない(732×780)ため、object-fit無しだと
+            // 56×56の箱の中でレターボックスされて他の2つより一回り小さく見えてしまう
+            object-fit: cover;
+        }
+    }
+
+    &__legal {
+        display: flex;
+        justify-content: center;
+        gap: 24px;
+        margin-block-start: 32px;
+
+        a {
+            font-size: 1.6rem;
+            text-decoration: underline;
+            opacity: 0.7;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+
+    &__copyright {
+        text-align: center;
+        font-size: 2.0rem;
+        margin-block-start: 16px;
+        opacity: 0.7;
+    }
+}
