@@ -995,7 +995,7 @@
 
         p {
             //sp=1.6rem / pc=2.4rem（431〜1023pxを線形補間）
-            font-size: clamp(1.6rem, calc(10.21px + 1.347vw), 2.4rem);
+            font-size: clamp(1.5rem, calc(10.21px + 1.347vw), 2.4rem);
             font-weight: v.$fw-medium;
             line-height: 1.219;
             letter-spacing: 0.08em;
