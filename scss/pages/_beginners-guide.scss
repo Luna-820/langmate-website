@@ -1,0 +1,952 @@
+@use '../base/mixin' as mx;
+@use '../base/base' as v;
+
+// ==========================================================================
+// Beginners Guide page（初めての方へ / beginners-guide.html）
+// ==========================================================================
+
+// ---- Hero ----
+.gs-hero {
+    position: relative;
+    overflow: hidden;
+    margin-block-start: -86px;
+    // fluid化: sp=40px / pc=200px（431〜1023pxを線形補間）
+    padding-block-end: clamp(40px, calc(-75.82px + 26.94vw), 200px);
+
+    &__map {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1280 / 500;
+        z-index: 0;
+
+        @include mx.sp {
+            aspect-ratio: 393 / 235;
+        }
+    }
+
+    &__inner {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        padding-block-start: calc(100vw * 500 / 1280 - 100px);
+
+        @include mx.sp {
+            padding-block-start: 240px;
+        }
+    }
+
+    &__eyebrow {
+        display: block;
+        width: 196px;
+        aspect-ratio: 220 / 70;
+        margin-inline: auto;
+        margin-block-end: -16px;
+        overflow: visible;
+
+        text {
+            font-family: v.$font-en;
+            font-weight: v.$fw-medium;
+            // fluid化: sp=1.6rem / pc=2.4rem（431〜1023pxを線形補間）
+            font-size: clamp(1.6rem, calc(10.21px + 1.347vw), 2.4rem);
+            fill: v.$color-blue;
+            letter-spacing: 0.04em;
+        }
+    }
+
+    &__heading {
+        // fluid化: sp=2.4rem / pc=4.8rem（431〜1023pxを線形補間）
+        font-size: clamp(2.4rem, calc(6.626px + 4.04vw), 4.8rem);
+        font-weight: v.$fw-bold;
+        letter-spacing: 0.1em;
+        margin-bottom: 24px;
+    }
+
+    &__lead {
+        // fluid化: sp=1.6rem / pc=2.4rem（431〜1023pxを線形補間）
+        font-size: clamp(1.6rem, calc(10.21px + 1.347vw), 2.4rem);
+        line-height: 1.6;
+        // fluid化: sp=50px / pc=120px（431〜1023pxを線形補間）
+        margin-bottom: clamp(50px, calc(-0.6734px + 11.78vw), 120px);
+    }
+
+    &__nav {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        // fluid化: sp=40px / pc=56px（431〜1023pxを線形補間）
+        gap: clamp(40px, calc(28.42px + 2.694vw), 56px);
+        justify-content: center;
+
+        @include mx.sp {
+            flex-direction: column;
+            align-items: center;
+            justify-content: unset;
+        }
+    }
+
+    &__nav-card {
+        position: relative;
+        display: block;
+        width: 300px;
+        max-width: 100%;
+        // fluid化: sp=24px / pc=48px（431〜1023pxを線形補間）。inlineは元々sp/pcとも
+        // 24pxで同じなので据え置き
+        padding-block: clamp(24px, calc(6.626px + 4.04vw), 48px);
+        padding-inline: 24px;
+        border-radius: 12px;
+        border: 4px solid;
+        text-align: center;
+        color: v.$color-text;
+        transition: box-shadow 0.2s, transform 0.2s;
+
+        @include mx.sp {
+            width: 100%;
+            max-width: 324px;
+        }
+
+
+        &:hover,
+        &:active {
+            box-shadow: none;
+            transform: translate(5px, 5px);
+        }
+
+        &--reason {
+            border-color: v.$color-pink;
+            background-color: v.$color-pink-light;
+            box-shadow: 5px 5px 0 v.$color-pink;
+        }
+
+        &--started {
+            border-color: v.$color-yellow;
+            background-color: #FFFCE6;
+            box-shadow: 5px 5px 0 v.$color-yellow;
+        }
+
+        &--safety {
+            border-color: v.$color-blue;
+            background-color: #F3F9FF;
+            box-shadow: 5px 5px 0 v.$color-blue;
+        }
+    }
+
+    &__nav-eyebrow {
+        display: block;
+        // fluid化: sp=1.6rem / pc=2rem（431〜1023pxを線形補間）
+        font-size: clamp(1.6rem, calc(13.1px + 0.6734vw), 2rem);
+    }
+
+    &__nav-title {
+        display: block;
+        // fluid化: sp=2.4rem / pc=3.2rem（431〜1023pxを線形補間）
+        font-size: clamp(2.4rem, calc(18.21px + 1.347vw), 3.2rem);
+        font-weight: v.$fw-bold;
+    }
+
+    &__nav-arrow {
+        position: absolute;
+        // fluid化: sp=-20px / pc=-32px（431〜1023pxを線形補間）
+        bottom: clamp(-32px, calc(-11.31px + -2.02vw), -20px); // 円の半分が枠線からはみ出す
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        // fluid化: sp=36px / pc=64px（431〜1023pxを線形補間）
+        width: clamp(36px, calc(15.73px + 4.714vw), 64px);
+        height: clamp(36px, calc(15.73px + 4.714vw), 64px);
+        border-radius: 50%;
+        color: v.$color-white;
+
+        svg {
+            // fluid化: sp=13px / pc=24px（431〜1023pxを線形補間）
+            width: clamp(13px, calc(5.037px + 1.852vw), 24px);
+            height: clamp(13px, calc(5.037px + 1.852vw), 24px);
+        }
+
+        .gs-hero__nav-card--reason & {
+            background-color: v.$color-pink;
+        }
+
+        .gs-hero__nav-card--started & {
+            background-color: v.$color-yellow;
+        }
+
+        .gs-hero__nav-card--safety & {
+            background-color: v.$color-blue;
+        }
+    }
+
+    &__nav-illust {
+        position: absolute;
+        width: 90px;
+        height: auto;
+        pointer-events: none;
+
+        .gs-hero__nav-card--reason & {
+            // fluid化: sp=10px / pc=-8px（431〜1023pxを線形補間）
+            bottom: clamp(-8px, calc(23.03px + -3.03vw), 10px);
+            // fluid化: sp=20px / pc=-54px（431〜1023pxを線形補間）
+            left: clamp(-54px, calc(73.57px + -12.46vw), 20px);
+            // fluid化: sp=65px / pc=100px（431〜1023pxを線形補間）
+            width: clamp(65px, calc(39.66px + 5.892vw), 100px);
+            transform: scaleX(-1);
+        }
+
+        .gs-hero__nav-card--started & {
+            // fluid化: sp=10px / pc=-64px（431〜1023pxを線形補間）
+            top: clamp(-64px, calc(63.57px + -12.46vw), 10px);
+            // fluid化: sp=10px / pc=-30px（431〜1023pxを線形補間）
+            right: clamp(-30px, calc(38.96px + -6.734vw), 10px);
+            // fluid化: sp=65px / pc=79px（431〜1023pxを線形補間）
+            width: clamp(65px, calc(54.87px + 2.357vw), 79px);
+            transform: scaleX(-1);
+        }
+
+        // このモディファイアだけSPで基準がright→leftに切り替わる（位置決めの軸自体が
+        // 変わる離散的な切り替えのため、bottom/left自体は補間せずSP値のまま）。
+        // widthのみ他と揃えてfluid化する。
+        .gs-hero__nav-card--safety & {
+            bottom: -8px;
+            right: -54px;
+            // fluid化: sp=73px / pc=100px（431〜1023pxを線形補間）
+            width: clamp(73px, calc(53.45px + 4.545vw), 100px);
+
+            @include mx.sp {
+                bottom: 10px;
+                left: 4px;
+            }
+        }
+    }
+}
+
+// ---- 共通: 縦回転の巨大ウォーターマーク文字 ----
+@mixin watermark {
+    position: absolute;
+    top: 50%;
+    display: block;
+    font-family: v.$font-en;
+    font-weight: v.$fw-bold;
+    // fluid化: sp=8rem / pc(1280px時)=15.36rem（431〜1279pxを線形補間。他のsp/pc
+    // ペアと違い、元々12vwのvw基準フォーミュラだったため基準の1280pxまで伸ばして
+    // 1280px時点の見た目(12vw=153.6px)を保っている）
+    font-size: clamp(8rem, calc(4.277px + 8.659vw), 15.36rem);
+    line-height: 1.4;
+    letter-spacing: 0em;
+    white-space: nowrap;
+    pointer-events: none;
+    writing-mode: horizontal-tb;
+    transform: translateY(-50%) rotate(90deg);
+    z-index: 0;
+}
+
+// ---- REASON ----
+.gs-reason {
+    position: relative;
+    overflow: hidden;
+    background-color: v.$color-pink-deep;
+    color: v.$color-white;
+    padding-block: clamp(60px, calc(31.04px + 6.734vw), 100px);
+
+    &__watermark {
+        @include watermark;
+        top: 40px;
+        left: clamp(-60px, calc(8.956px - 6.734vw), -20px);
+        writing-mode: vertical-rl;
+        transform: none;
+        -webkit-text-stroke: 2px v.$color-pink-light;
+        color: transparent;
+
+        @include mx.sp {
+            left: -8%;
+        }
+    }
+
+    &__wrapper {
+        position: relative;
+        z-index: 1;
+        padding-block-start: 180px;
+
+        @include mx.sp {
+            padding-block-start: unset;
+        }
+    }
+
+    &__head {
+        position: absolute;
+        top: 60px;
+        right: 0;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        margin-block-end: clamp(0px, calc(68.96px - 6.734vw), 40px);
+        padding-inline: clamp(0px, calc(27.58px - 2.694vw), 16px);
+        text-align: right;
+
+        @include mx.sp {
+            position: unset;
+            top: unset;
+            right: unset;
+            z-index: unset;
+            display: block;
+            flex-direction: unset;
+            align-items: unset;
+            text-align: center;
+            margin-block-start: 0;
+        }
+    }
+
+    &__eyebrow {
+        display: inline-block;
+        background-color: v.$color-white;
+        color: v.$color-text;
+        // fluid化: sp=2rem / pc=4rem（431〜1023pxを線形補間）
+        font-size: clamp(2rem, calc(5.522px + 3.367vw), 4rem);
+        font-weight: v.$fw-bold;
+        line-height: 1.32;
+        letter-spacing: 0;
+        // fluid化: sp=24px / pc=48px（431〜1023pxを線形補間）。inline-endは
+        // 元々sp/pcとも24pxで同じなので据え置き
+        padding-inline-start: clamp(24px, calc(6.626px + 4.04vw), 48px);
+        padding-inline-end: 24px;
+    }
+
+    &__title {
+        display: inline-block;
+        background-color: v.$color-white;
+        color: v.$color-text;
+        // fluid化: sp=3.2rem / pc=6.4rem（431〜1023pxを線形補間）
+        font-size: clamp(3.2rem, calc(8.835px + 5.387vw), 6.4rem);
+        font-weight: v.$fw-bold;
+        line-height: 1.32;
+        letter-spacing: 0;
+        padding-inline-start: clamp(24px, calc(6.626px + 4.04vw), 48px);
+        padding-inline-end: 24px;
+        margin-block-start: 9px; // 2つの帯のgap
+    }
+
+    &__list {
+        display: grid;
+        flex-direction: column;
+        gap: 56px;
+        max-width: none;
+        margin-inline: auto;
+        grid-template-columns: 1fr 1fr;
+        column-gap: clamp(24px, calc(79.16px - 5.387vw), 56px);
+        row-gap: clamp(56px, calc(38.63px + 4.04vw), 80px);
+        width: 1126px;
+        margin-inline-start: -20px;
+        margin-inline-end: 0;
+
+        @include mx.sp {
+            display: flex;
+            grid-template-columns: unset;
+            max-width: 760px;
+            width: unset;
+            margin-inline-start: auto;
+            margin-inline-end: auto;
+        }
+    }
+
+    &__item {
+        &:nth-child(1) {
+            grid-column: 1;
+            grid-row: 1;
+
+            @include mx.sp {
+                grid-column: unset;
+                grid-row: unset;
+            }
+        }
+
+        &:nth-child(2) {
+            grid-column: 2;
+            grid-row: 1;
+            margin-block-start: 180px;
+
+            @include mx.sp {
+                grid-column: unset;
+                grid-row: unset;
+                margin-block-start: unset;
+            }
+        }
+
+        &:nth-child(3) {
+            grid-column: 1;
+            grid-row: 2;
+            margin-block-start: 60px;
+
+            @include mx.sp {
+                grid-column: unset;
+                grid-row: unset;
+                margin-block-start: unset;
+            }
+        }
+
+        &:nth-child(4) {
+            grid-column: 2;
+            grid-row: 2;
+            margin-block-start: 400px;
+
+            @include mx.sp {
+                grid-column: unset;
+                grid-row: unset;
+                margin-block-start: unset;
+            }
+        }
+    }
+
+    // ---- ブロブ（オリジナル図形）----
+    &__blob-wrap {
+        position: relative;
+        width: 100%;
+        margin-inline: auto;
+
+        // fluid化: sp=255px / pc=433px（431〜1023pxを線形補間）
+        &--01 {
+            max-width: clamp(255px, calc(126.1px + 29.97vw), 433px); // 387 × 1.12
+            aspect-ratio: 387 / 303;
+        }
+
+        // fluid化: sp=308px / pc=507px（431〜1023pxを線形補間）
+        &--02 {
+            max-width: clamp(308px, calc(163.9px + 33.5vw), 507px); // 453 × 1.12
+            aspect-ratio: 453 / 354;
+        }
+
+        // fluid化: sp=305px / pc=551px（431〜1023pxを線形補間）
+        &--03 {
+            max-width: clamp(305px, calc(126.9px + 41.41vw), 551px); // 492 × 1.12
+            aspect-ratio: 492 / 328;
+        }
+
+        // fluid化: sp=315px / pc=551px（431〜1023pxを線形補間）
+        &--04 {
+            max-width: clamp(315px, calc(144.2px + 39.73vw), 551px); // 492 × 1.12
+            aspect-ratio: 492 / 333;
+        }
+    }
+
+    &__blob-shape,
+    &__blob-label {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    &__blob-label {
+        overflow: visible;
+    }
+
+    &__blob-label text {
+        // fluid化: sp=2rem / pc=3.2rem（431〜1023pxを線形補間）
+        font-size: clamp(2rem, calc(11.31px + 2.02vw), 3.2rem);
+        font-weight: v.$fw-bold;
+        line-height: 1.3;
+        letter-spacing: -0.05em;
+        fill: v.$color-white;
+    }
+
+    &__blob-label path {
+        transform-box: fill-box;
+        transform-origin: center;
+        transform: scale(1.15);
+    }
+
+    &__blob-text {
+        position: absolute;
+        inset: 22% 18%;
+        display: flex;
+        align-items: center;
+        color: v.$color-text;
+        // fluid化: sp=1.4rem / pc=2rem（431〜1023pxを線形補間）
+        font-size: clamp(1.4rem, calc(9.657px + 1.01vw), 2rem);
+        line-height: 1.3;
+        text-align: left;
+    }
+
+    &__illust {
+        display: block;
+        position: absolute;
+        bottom: 400px;
+        right: 0;
+        // fluid化: sp=120px / pc=400px（431〜1023pxを線形補間）
+        width: clamp(120px, calc(-82.69px + 47.14vw), 400px);
+        height: auto;
+        z-index: 2;
+
+        @include mx.sp {
+            bottom: unset;
+            top: 3%;
+            right: -4%;
+        }
+    }
+}
+
+// ---- GET STARTED ----
+.gs-started {
+    position: relative;
+    overflow: hidden;
+    background-color: v.$color-yellow;
+    padding-block: clamp(60px, calc(31.04px + 6.734vw), 100px);
+
+    &__watermark {
+        @include watermark;
+        top: 40px;
+        right: -3%;
+        writing-mode: vertical-rl;
+        transform: none;
+        color: #FFFCE6;
+
+        @include mx.sp {
+            right: -8%;
+        }
+    }
+
+    &__wrapper {
+        position: relative;
+        z-index: 1;
+    }
+
+    &__head {
+        text-align: left;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-block-end: clamp(0px, calc(68.96px - 6.734vw), 40px);
+        padding-inline: clamp(0px, calc(27.58px - 2.694vw), 16px);
+
+        p,
+        h2 {
+            background-color: v.$color-cream;
+            color: v.$color-text;
+            line-height: 1.32;
+            padding-inline: 24px 48px;
+        }
+
+        @include mx.sp {
+            position: unset;
+            top: unset;
+            left: unset;
+            right: unset;
+            z-index: unset;
+            display: block;
+            text-align: center;
+            margin-block-start: 0;
+        }
+
+        @media (min-width: 431px) and (max-width: 1023px) {
+            top: 24px;
+            left: 152px; // イラスト幅120px + 余白32px
+            text-align: center;
+            align-items: center;
+        }
+    }
+
+    &__eyebrow {
+        display: inline-block;
+        // fluid化: sp=2rem / pc=4rem（431〜1023pxを線形補間）
+        font-size: clamp(2rem, calc(5.522px + 3.367vw), 4rem);
+        font-weight: v.$fw-bold;
+    }
+
+    &__title {
+        display: block;
+        // display:blockでも中身の文字幅ぶんだけの「ピル」の見た目を保つため、
+        // 横幅いっぱいに広がらないようfit-contentにする
+        width: fit-content;
+        // fluid化: sp=3.2rem / pc=6.4rem（431〜1023pxを線形補間）
+        font-size: clamp(3.2rem, calc(8.835px + 5.387vw), 6.4rem);
+        font-weight: v.$fw-bold;
+        margin-block-start: 9px;
+
+        @include mx.sp {
+            margin-inline: auto;
+        }
+    }
+
+    &__illust {
+        display: block;
+        // fluid化: sp=100px / pc=400px（431〜1023pxを線形補間）
+        width: clamp(100px, calc(-117.2px + 50.51vw), 400px);
+        height: auto;
+        max-width: none;
+        margin-inline: auto;
+        margin-block-end: 32px;
+        position: absolute;
+        bottom: 100px;
+        left: -2%;
+        margin: 0;
+
+        @include mx.sp {
+            top: 0%;
+            left: 1%;
+        }
+
+        @media (min-width: 431px) and (max-width: 1023px) {
+            top: 24px;
+            bottom: unset;
+            left: 16px;
+            width: 120px;
+        }
+    }
+
+    &__list {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        // fluid化: sp=8px / pc=40px（431〜1023pxを線形補間）
+        gap: clamp(8px, calc(-15.16px + 5.387vw), 40px);
+        // fluid化: sp=345px / pc=700px（431〜1023pxを線形補間）
+        max-width: clamp(345px, calc(88.01px + 59.76vw), 700px);
+        margin-inline: auto;
+        margin-inline-start: 176px;
+
+        @include mx.sp {
+            margin-inline-start: auto;
+        }
+    }
+
+    &__list-curve {
+        display: block;
+        position: absolute;
+        top: 24px;
+        left: 0;
+        width: 121px;
+        height: calc(100% - 48px);
+        overflow: visible;
+        z-index: 0;
+
+        path {
+            fill: none;
+            stroke: #FFFCE6;
+            stroke-width: 4px;
+            stroke-dasharray: 10 10;
+            stroke-linecap: round;
+
+            @include mx.sp {
+                fill: unset;
+                stroke: unset;
+                stroke-width: unset;
+                stroke-dasharray: unset;
+                stroke-linecap: unset;
+            }
+        }
+
+        @include mx.sp {
+            display: none;
+            position: unset;
+            top: unset;
+            left: unset;
+            width: unset;
+            height: unset;
+            overflow: hidden;
+            z-index: unset;
+        }
+    }
+
+    &__item {
+        position: relative;
+        display: flex;
+        align-items: flex-start;
+        // fluid化: sp=8px / pc=80px（431〜1023pxを線形補間）
+        gap: clamp(20px, calc(-44.12px + 12.12vw), 80px);
+
+        // アイコン同士をつなぐ点線コネクタ（
+        &:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            top: 48px;
+            left: 24px;
+            width: 2px;
+            height: calc(100% + 16px);
+            border-left: 2px dashed v.$color-white;
+            display: none;
+
+            @include mx.sp {
+                display: unset;
+            }
+        }
+
+        h3 {
+            // fluid化: sp=2rem / pc=3.2rem（431〜1023pxを線形補間）
+            font-size: clamp(2rem, calc(11.31px + 2.02vw), 3.2rem);
+            font-weight: v.$fw-bold;
+            line-height: 1.3;
+            letter-spacing: 0;
+            margin-block-end: 4px;
+        }
+
+        p {
+            // fluid化: sp=1.6rem / pc=2.4rem（431〜1023pxを線形補間）
+            font-size: clamp(1.6rem, calc(10.21px + 1.347vw), 2.4rem);
+            font-weight: v.$fw-medium;
+            line-height: 1.3;
+            letter-spacing: 0;
+        }
+    }
+
+    &__icon {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        // fluid化: sp=70px / pc=90px（431〜1023pxを線形補間）
+        width: clamp(70px, calc(55.52px + 3.367vw), 90px);
+        height: clamp(70px, calc(55.52px + 3.367vw), 90px);
+        border-radius: 50%;
+        background-color: v.$color-white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+
+        img {
+            width: 38.4px;
+            height: auto;
+
+            @include mx.sp {
+                width: 30px;
+            }
+        }
+
+
+        &--download {
+            margin-inline-start: -30px;
+
+            @include mx.sp {
+                margin-inline-start: unset;
+            }
+        }
+
+        &--register {
+            margin-inline-start: 40px;
+
+            @include mx.sp {
+                margin-inline-start: unset;
+            }
+        }
+
+        &--profile {
+            margin-inline-start: 70px;
+
+            @include mx.sp {
+                margin-inline-start: unset;
+            }
+        }
+
+        &--search {
+            margin-inline-start: 60px;
+
+            @include mx.sp {
+                margin-inline-start: unset;
+            }
+        }
+
+        &--chat {
+            margin-inline-start: -10px;
+
+            @include mx.sp {
+                margin-inline-start: unset;
+            }
+        }
+    }
+}
+
+// ---- SAFETY ----
+.gs-safety {
+    position: relative;
+    overflow: hidden;
+    background-color: v.$color-blue;
+    color: v.$color-white;
+    padding-block: clamp(60px, calc(31.04px + 6.734vw), 100px) clamp(60px, calc(16.57px + 10.1vw), 120px);
+
+    &__watermark {
+        @include watermark;
+        top: 280px;
+        left: clamp(-60px, calc(8.956px - 6.734vw), -20px);
+        writing-mode: vertical-rl;
+        transform: none;
+        -webkit-text-stroke: 2px #F3F9FF;
+        color: transparent;
+
+        @include mx.sp {
+            top: 5%;
+            left: unset;
+            right: -8%;
+        }
+    }
+
+    &__wrapper {
+        position: relative;
+        z-index: 1;
+        padding-block-start: 180px;
+
+        @include mx.sp {
+            padding-block-start: unset;
+        }
+
+        @media (min-width: 431px) and (max-width: 1023px) {
+            padding-block-start: 140px;
+        }
+    }
+
+    &__head {
+        text-align: left;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-block-end: clamp(0px, calc(68.96px - 6.734vw), 40px);
+        padding-inline: clamp(0px, calc(27.58px - 2.694vw), 16px);
+
+        p,
+        h2 {
+            background-color: v.$color-white;
+            color: v.$color-text;
+            line-height: 1.32;
+            padding-inline: 24px 48px;
+        }
+
+        @include mx.sp {
+            position: unset;
+            top: unset;
+            left: unset;
+            z-index: unset;
+            display: block; // divのUAデフォルト（unsetだとinlineに戻ってしまうため明示）
+            flex-direction: unset;
+            align-items: center;
+            text-align: center;
+            margin-inline: auto;
+            width: fit-content;
+        }
+
+        @media (min-width: 431px) and (max-width: 1023px) {
+            top: 24px;
+            left: 152px; // イラスト幅120px + 余白32px
+            text-align: center;
+            align-items: center;
+        }
+    }
+
+    &__eyebrow {
+        display: inline-block;
+        // fluid化: sp=2rem / pc=4rem（431〜1023pxを線形補間）
+        font-size: clamp(2rem, calc(5.522px + 3.367vw), 4rem);
+        font-weight: v.$fw-bold;
+    }
+
+    &__title {
+        display: block;
+        // fluid化: sp=3.2rem / pc=6.4rem（431〜1023pxを線形補間）
+        font-size: clamp(3.2rem, calc(8.835px + 5.387vw), 6.4rem);
+        font-weight: v.$fw-bold;
+        margin-block-start: 9px; // 2つの帯のgap
+    }
+
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: clamp(16px, calc(-1.374px + 4.04vw), 40px);
+        max-width: clamp(780px, calc(694.9px + 19.78vw), 897.5px);
+
+        @include mx.sp {
+            grid-template-columns: repeat(2, 1fr);
+            max-width: 100%;
+            gap: 16px;
+        }
+    }
+
+    &__card {
+        background-color: v.$color-white;
+        color: v.$color-text;
+        border-radius: 13.85px;
+        // fluid化: sp=20px 16px / pc=32px 20px（431〜1023pxを線形補間）
+        padding-block: clamp(20px, calc(11.31px + 2.02vw), 32px);
+        padding-inline: clamp(16px, calc(13.1px + 0.6734vw), 20px);
+        text-align: center;
+
+        img,
+        svg {
+            // fluid化: sp=64px / pc=80px（431〜1023pxを線形補間）
+            width: clamp(64px, calc(52.42px + 2.694vw), 80px);
+            height: clamp(64px, calc(52.42px + 2.694vw), 80px);
+            margin-inline: auto;
+            margin-block-end: 24px; // アイコンとh3の間
+
+            @include mx.sp {
+                margin-block-end: 8px;
+            }
+        }
+
+        h3 {
+            @include v.heading-md;
+            // fluid化: sp=1.6rem / pc=3.2rem（431〜1023pxを線形補間）
+            font-size: clamp(1.6rem, calc(4.418px + 2.694vw), 3.2rem);
+            margin-block-end: 8px;
+        }
+
+        p {
+            // fluid化: sp=1.4rem / pc=2rem（431〜1023pxを線形補間）
+            font-size: clamp(1.4rem, calc(9.657px + 1.01vw), 2rem);
+            font-weight: v.$fw-medium;
+            line-height: 1.3;
+            letter-spacing: 0;
+        }
+    }
+
+    &__illust {
+        display: block;
+        position: absolute;
+        bottom: 120px;
+        right: -110px;
+        z-index: 1;
+
+        @include mx.sp {
+            position: absolute;
+            bottom: unset;
+            top: 2%;
+            left: -8%;
+            width: 120px;
+            height: auto;
+            z-index: 1;
+        }
+
+        @media (min-width: 431px) and (max-width: 1023px) {
+            bottom: unset;
+            right: unset;
+            top: 24px;
+            left: 16px;
+            width: 120px;
+            height: auto;
+        }
+    }
+}
+
+// ---- 各セクション間の波形divider ----
+.gs-divider {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+// REASON→GET STARTEDのdividerはSVGの塗り以外(透明部分)を次セクションの黄色にして、
+// 波でなめらかに繋がって見えるようにする
+.gs-divider--reason {
+    background-color: v.$color-yellow;
+}
+
+.gs-divider--started {
+    background-color: v.$color-blue;
+}

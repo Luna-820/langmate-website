@@ -3,20 +3,27 @@
 
 // ==========================================================================
 // Floating DL Button — 画面右端に追従するダウンロード導線（PC専用）
-// トリガーとパネルを1つの枠(.floating-dl__box)にまとめ、
-// 「別々の箱」ではなく「1つの箱の幅が広がって中身が見える」動きにする。
 // ==========================================================================
 
 .floating-dl {
-    display: none;
+    display: block;
+    position: fixed;
+    top: 50%;
+    right: 0;
+    // 現状(実測)のサイズは1280px以上での見た目を上限にし、1280px未満は
+    // 431pxに向けて少しずつ縮小する（scaleなので中の要素の比率はそのまま）。
+    // transform-origin側で右端を基準にして、縮んでも画面右端にはくっついたまま。
+    transform: translateY(-50%) scale(clamp(0.85, calc(0.85 + 0.15 * ((100vw - 430px) / 850px)), 1));
+    transform-origin: right center;
+    z-index: 100;
 
-    @include mx.pc {
-        display: block;
-        position: fixed;
-        top: 50%;
-        right: 0;
-        transform: translateY(-50%);
-        z-index: 100;
+    @include mx.sp {
+        display: none;
+        position: unset;
+        top: unset;
+        right: unset;
+        transform: unset;
+        z-index: unset;
     }
 
     &__box {
@@ -29,10 +36,6 @@
         overflow: hidden; // パネルの幅が0の間、中身を隠しておくため
     }
 
-    // writing-mode:vertical-rlで英字(D/L)を縦にすると、フォントの縦書き用メトリクスが
-    // 文字ごとに不揃いになり、D-L間の間隔だけ不自然に広がる問題があった。
-    // → writing-modeを使わず、文字ごとに<br>で改行した通常の横書きテキストにすることで、
-    //   全文字が同じline-height基準で均等に並ぶようにする。
     &__trigger {
         display: flex;
         flex-direction: column;
@@ -54,12 +57,6 @@
         letter-spacing: -0.05em;
         text-align: center;
         cursor: pointer;
-
-        svg {
-            width: 24px;
-            height: 24px;
-            flex-shrink: 0;
-        }
     }
 
     &__panel {
@@ -79,11 +76,15 @@
         }
     }
 
-    // クリックでも:hoverでも展開できるようにする(キーボード操作対応)
     &[data-open="true"] &__panel,
     &:hover &__panel,
     &:focus-within &__panel {
         width: 184px;
         padding-inline: 12px;
+    }
+
+    .floating-dl__text--vertical {
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
     }
 }

@@ -41,8 +41,14 @@
     background-color: v.$color-white;
     color: v.$color-text;
     border: 1px solid v.$color-text;
-    box-shadow: 5px 5px 0 v.$color-text; // Figma実測のドロップシャドウ(X5 Y5 blur0)
+    box-shadow: 5px 5px 0 v.$color-text;
     transition: opacity 0.3s, transform 0.2s, box-shadow 0.2s;
+
+    @include mx.sp {
+        width: 100%;
+        // .btnがdisplay:inline-flexなので、text-alignではなくjustify-contentで中央寄せする
+        justify-content: center;
+    }
 
     &::after {
         content: "▶";

@@ -10,7 +10,7 @@ function getCurrentLang() {
 }
 
 // 指定した言語版の、今のページに対応するURLを組み立てる
-// 例: /about.html + 'en' → /en/about.html　/en/about.html + 'ja' → /about.html
+// 例: /company.html + 'en' → /en/company.html　/en/company.html + 'ja' → /company.html
 // ※ 対応する言語版のページがまだ存在しない場合は404になる（多言語対応を
 //   ページ単位で順次進めている間の暫定挙動。翻訳が揃い次第解消する）。
 function buildUrlForLang(lang) {

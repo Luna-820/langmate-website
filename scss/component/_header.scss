@@ -3,22 +3,13 @@
 
 // ==========================================================================
 // Header — ロゴ・グロナビ・Language Switcher・ハンバーガー・モバイルナビ
-// 全ページ共通のヘッダー周りをまとめたファイル
 // ==========================================================================
 
-// ヘッダーは画面上部に浮くピル型カード。
-// 背景の装飾（Hero等）が左右にのぞく余白を残すため、site-header自体は透明にし、
-// 実際の白い背景・角丸はsite-header__inner側に持たせる。
 .site-header {
     position: sticky;
-    top: 12px;
+    top: clamp(12px, calc(6.209px + 1.347vw), 20px);
     z-index: 200;
-    padding-inline: 12px;
-
-    @include mx.pc {
-        top: 20px;
-        padding-inline: 24px;
-    }
+    padding-inline: clamp(12px, calc(3.313px + 2.02vw), 24px);
 
     &__inner {
         display: flex;
@@ -28,40 +19,37 @@
         max-width: 1100px;
         margin-inline: auto;
         padding-block: 16px;
-        padding-inline: 20px;
+        padding-inline: clamp(20px, calc(5.522px + 3.367vw), 40px);
         background-color: v.$color-white;
         border-radius: 60px;
         box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-
-        // Figma実測値: padding 40px(左右) / 16px(上下)、max-width 1100px、角丸60px
-        @include mx.pc {
-            padding-inline: 40px;
-        }
     }
 
     &__logo img {
-        height: 40px;
-        width: auto;
+        height: clamp(40px, calc(29.87px + 2.357vw), 54px);
+        width: 250px;
 
-        @include mx.pc {
-            height: 54px;
-            width: 250px;
+        @include mx.sp {
+            width: auto;
         }
     }
 }
 
 .global-nav {
-    display: none;
+    display: block;
 
-    @include mx.pc {
-        display: block;
+    @include mx.nav-collapse {
+        display: none;
     }
 
     &__list {
         display: flex;
-        gap: 24px;
+        gap: 20px;
         font-weight: v.$fw-bold;
-        font-size: 2rem;
+        // ナビが出るのはnav-collapse(1000px)より上のみなので、1000px→1280pxを
+        // 基準に線形補間（1000pxで折り返しかけないギリギリの1.6rem、1280px以上は
+        // 通常の2rem）
+        font-size: clamp(1.6rem, calc(1.714px + 1.429vw), 2rem);
 
         a[aria-current="page"] {
             color: v.$color-pink;
@@ -69,8 +57,15 @@
     }
 }
 
-.hamburger {
+// ---- Header Actions — 言語切替とハンバーガーをまとめて右寄せするグループ ----
+.site-header__actions {
     display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.hamburger {
+    display: none;
     flex-direction: column;
     justify-content: center;
     gap: 5px;
@@ -80,8 +75,8 @@
     border: none;
     cursor: pointer;
 
-    @include mx.pc {
-        display: none;
+    @include mx.nav-collapse {
+        display: flex;
     }
 
     &__line {
@@ -106,21 +101,14 @@
         padding: 4px;
 
         img {
-            width: 24px;
-            height: 24px;
+            width: clamp(24px, calc(12.42px + 2.694vw), 40px);
+            height: clamp(24px, calc(12.42px + 2.694vw), 40px);
             border-radius: 50%;
             border: 1px solid v.$color-gray-light;
             object-fit: cover;
-
-            @include mx.pc {
-                width: 40px;
-                height: 40px;
-            }
         }
     }
 
-    // フォントの「▼」文字は字形の余白の関係で見た目の中心がズレやすいため、
-    // CSSのborderで三角形を描いて確実に中央揃えにする。
     &__caret {
         width: 0;
         height: 0;
@@ -174,22 +162,49 @@
 }
 
 // ---- Mobile Navigation — フルスクリーンオーバーレイ ----
+// 開閉はJS側で.is-openクラスを付け外しして行う（[hidden]属性のみだと
+// display:none⇔flexの切り替えになりtransitionが効かないため、
+// 「[hidden]解除→次フレームで.is-open付与→height:0→100vh」の2段階にしている）
 .mobile-nav {
     position: fixed;
     inset: 0;
     z-index: 300;
-    background-color: v.$color-cream;
-    padding: 24px;
-    overflow-y: auto;
-    display: flex;
+    padding-inline: 24px;
+    padding-block: 24px 80px; // 下は固定表示の&__downloadぶんの余白を確保
+    overflow: hidden;
+    display: none !important;
     flex-direction: column;
+    height: 0;
+    transition: height 0.35s ease;
 
-    &[hidden] {
-        display: none;
+    // 背景の半透明＋ぼかしは.mobile-nav自体ではなく::beforeに持たせる。
+    // 注意: backdrop-filter(やtransform/filter)を持つ要素は、子孫のposition:fixed
+    // の基準（containing block）をビューポートではなくその要素自身に変えてしまう
+    // 仕様がある。.mobile-nav自体に付けると&__downloadがopen中(height:0→100vh)の
+    // 「まだ小さい自分自身」を基準に画面上部へ描画され、閉じるボタンと重なって
+    // しまう。::beforeに逃がせば&__downloadは::beforeの子孫ではない（兄弟）ので
+    // 影響を受けず、素直にビューポート基準のposition:fixedとして機能する。
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background-color: rgba(255, 252, 243, 0.9); // v.$color-cream(#FFFCF3)の半透明版
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
     }
 
-    @include mx.pc {
+    @include mx.nav-collapse {
+        display: flex !important;
+    }
+
+    &[hidden] {
         display: none !important;
+    }
+
+    &.is-open {
+        height: 100vh;
+        overflow-y: auto;
     }
 
     &__header {
@@ -233,6 +248,9 @@
         }
     }
 
+    // 画面下端に完全に固定。backdrop-filterを.mobile-nav本体から::beforeへ
+    // 逃がしたことで、position:fixedが素直にビューポート基準で効くようになった
+    // （中身の量に関わらず常に画面最下端に張り付く）
     &__download {
         display: block;
         text-align: center;
@@ -241,9 +259,9 @@
         color: v.$color-white;
         font-weight: v.$fw-bold;
         border-radius: v.$radius-button v.$radius-button 0 0;
-        position: sticky;
-        bottom: -24px;
-        margin-inline: -24px;
-        margin-block-start: 24px;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
     }
 }

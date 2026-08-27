@@ -59,10 +59,50 @@ $container-max: 1000px;
 $section-padding-pc: 80px 140px 100px; // top / inline(左右) / bottom ※PC値、SPは実装時に調整
 
 // ==========================================================================
+// Typography Mixins — 複数ページ・複数コンポーネントで繰り返し使われている
+// h1/h2/h3/p のデザインを共通化する。上のトークンと同じファイルで管理することで
+// 二重管理を防ぐ。ページ固有の見出し（section-titleの装飾文字など）は含めない。
+// ==========================================================================
+
+// 「カード/CTAの大見出し」パターン
+// 例: .cta h2, .card--reason .card__title 相当（4.0rem/2.4rem, Bold, lh1.4）
+@mixin heading-lg {
+    // fluid化: sp=2.4rem / pc=4.0rem（431〜1023pxを線形補間。前は430px境界で
+    // 2.4rem⇔4.0remが急に切り替わっていたため、間を滑らかに繋ぐ）
+    font-size: clamp(2.4rem, calc(12.42px + 2.694vw), 4.0rem);
+    font-weight: $fw-bold;
+    line-height: 1.4;
+    letter-spacing: 0;
+}
+
+// 「セクション内の中見出し」パターン
+// 例: beginners-guide.html の各ステップ見出し（3.2rem, Bold, lh1.3〜1.4）
+@mixin heading-md {
+    font-size: $fs-subheading; // 3.2rem
+    font-weight: $fw-bold;
+    line-height: 1.4;
+    letter-spacing: 0;
+}
+
+// 「標準本文」パターン
+// 例: 各ページの説明文（2.0rem/1.6rem, Medium, lh1.5）
+@mixin body-text {
+    // fluid化: sp=1.6rem / pc=2.0rem（431〜1023pxを線形補間）
+    font-size: clamp(1.6rem, calc(13.1px + 0.6734vw), 2.0rem);
+    font-weight: $fw-medium;
+    line-height: $lh-body; // 1.5
+    letter-spacing: 0;
+}
+
+// ==========================================================================
 // Global Base (要素の初期設定)
 // ==========================================================================
 html {
     font-size: 62.5%; // 1rem = 10px
+    // bodyのoverflow-x:hiddenだけだと、431〜1023pxの未調整域で装飾要素が
+    // ページ幅より広がった時にposition:fixed要素(floating-dlなど)の
+    // 基準幅がずれて画面外にはみ出すブラウザ挙動があるため、html側にも設定。
+    overflow-x: hidden;
 }
 
 body {
@@ -98,15 +138,15 @@ img {
 // 共通レイアウトユーティリティ
 // ==========================================================================
 
-// ページ全体を囲うコンテナ（PCではcontainer-maxで中央寄せ）
+// ページ全体を囲うコンテナ（container-maxで中央寄せ）
 .wrapper {
     width: 100%;
     max-width: $container-max;
-    padding-inline: 16px;
+    padding-inline: 24px;
     margin-inline: auto;
 
-    @include mx.pc {
-        padding-inline: 24px;
+    @include mx.sp {
+        padding-inline: 20px;
     }
 }
 

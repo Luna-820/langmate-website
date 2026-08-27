@@ -1,0 +1,83 @@
+@use '../base/mixin' as mx;
+@use '../base/base' as v;
+
+// ==========================================================================
+// Sub Hero — 下層ページ（会社概要・お問い合わせ・よくある質問・初めての方へ等）
+// 共通のFV（地図背景＋アーチ型eyebrow＋h1＋lead）。
+// .wrapperと同じ考え方で、各ページのHTML側で独自クラスと併記して使う。
+// 例: <section class="sub-hero about-hero">
+//     <h1 class="sub-hero__heading about-hero__heading">…</h1>
+// ページ固有の余白・モディファイア（padding-block-endの微調整、
+// contact-hero--thanksなど）は各ページのscssに残し、ここでは
+// 「見た目が完全に同じ」部分だけを持つ。
+// ==========================================================================
+
+.sub-hero {
+    position: relative;
+    overflow: hidden;
+    margin-block-start: -86px; // headerのsticky分だけ引き上げる（全ページ共通）
+
+    &__map {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1280 / 500;
+        z-index: 0;
+
+        // <picture><source media="(max-width: 430px)" srcset="…bg-page-sp.svg">で
+        // 画像自体もこの幅で切り替える前提（アスペクト比もそれに合わせて切り替える）
+        @include mx.sp {
+            aspect-ratio: 393 / 235;
+        }
+    }
+
+    &__inner {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        // 地図画像(1280:500比)の下端にちょうど揃う高さから逆算した余白。
+        // 431px〜PCまでは画像と一緒に連続的に伸縮する
+        padding-block-start: calc(100vw * 500 / 1280 - 100px);
+
+        // 430px以下は&__mapの画像自体がbg-page-sp.svg(393:235比)に切り替わるため、
+        // 上の計算式ではなく実測の固定値にする
+        @include mx.sp {
+            padding-block-start: 240px;
+        }
+    }
+
+    &__eyebrow {
+        display: block;
+        width: 196px;
+        aspect-ratio: 220 / 70;
+        margin-inline: auto;
+        margin-block-end: -16px;
+        overflow: visible;
+
+        text {
+            font-family: v.$font-en;
+            font-weight: v.$fw-medium;
+            // fluid化: sp=1.6rem / pc=2.4rem（431〜1023pxを線形補間）
+            font-size: clamp(1.6rem, calc(10.21px + 1.347vw), 2.4rem);
+            fill: v.$color-blue;
+            letter-spacing: 0.04em;
+        }
+    }
+
+    &__heading {
+        // fluid化: sp=2.4rem / pc=4.8rem（431〜1023pxを線形補間）
+        font-size: clamp(2.4rem, calc(6.626px + 4.04vw), 4.8rem);
+        font-weight: v.$fw-bold;
+        letter-spacing: 0.1em;
+        margin-block-end: 24px;
+    }
+
+    &__lead {
+        // fluid化: sp=1.6rem / pc=2.4rem（431〜1023pxを線形補間）
+        font-size: clamp(1.6rem, calc(10.21px + 1.347vw), 2.4rem);
+        line-height: 1.4;
+        margin-block-end: 24px;
+    }
+}

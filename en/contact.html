@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- TODO: クライアント提供の英訳をここに貼り付け（title/description/OGP/Twitterカード含む） -->
+  <title>お問い合わせ｜Langmate（ラングメイト）</title>
+  <meta name="description" content="Langmate（ラングメイト）に関するご質問やご相談はこちらのお問い合わせフォームからお気軽にご連絡ください。" />
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://www.langmate.jp/en/contact.html" />
+
+  <!-- 日英の相互参照。検索エンジンに言語違いの同一ページであることを伝える -->
+  <link rel="alternate" hreflang="ja" href="https://www.langmate.jp/contact.html" />
+  <link rel="alternate" hreflang="en" href="https://www.langmate.jp/en/contact.html" />
+  <link rel="alternate" hreflang="x-default" href="https://www.langmate.jp/contact.html" />
+
+  <!-- OGP -->
+  <meta property="og:site_name" content="Langmate" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="お問い合わせ｜Langmate（ラングメイト）" />
+  <meta property="og:description" content="Langmate（ラングメイト）に関するご質問やご相談はこちらのお問い合わせフォームからお気軽にご連絡ください。" />
+  <meta property="og:url" content="https://www.langmate.jp/en/contact.html" />
+  <meta property="og:locale" content="en_US" />
+  <!-- TODO: og:image 用のOGP画像(1200x630)を用意して追加する -->
+
+  <!-- X(Twitter)カード -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="お問い合わせ｜Langmate（ラングメイト）" />
+  <meta name="twitter:description" content="Langmate（ラングメイト）に関するご質問やご相談はこちらから。" />
+
+  <!-- Favicon（暫定。後日ちゃんとしたfavicon一式に差し替え予定） -->
+  <link rel="icon" type="image/svg+xml" href="/design-assets/logo-langmate.svg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@1,700&family=Poppins:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap"
+    rel="stylesheet" />
+
+  <link rel="stylesheet" href="/main.css" />
+</head>
+
+<body>
+  <a class="skip-link" href="#main">メインコンテンツへスキップ</a>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="site-header__logo" href="/en/index.html">
+        <img src="/design-assets/logo-langmate.svg" alt="Langmate" width="140" height="40" />
+      </a>
+
+      <nav class="global-nav" aria-label="グローバルナビゲーション">
+        <ul class="global-nav__list">
+          <li><a href="/en/index.html">ホーム</a></li>
+          <li><a href="/en/beginners-guide.html">初めてでも安心</a></li>
+          <li><a href="/en/how-can-we-help.html">よくある質問</a></li>
+          <li><a href="/en/company.html">会社概要</a></li>
+          <li><a href="/en/contact.html" aria-current="page">お問い合わせ</a></li>
+        </ul>
+      </nav>
+
+      <div class="site-header__actions">
+        <div class="language-switcher" data-language-switcher>
+          <button class="language-switcher__trigger" type="button" aria-haspopup="listbox" aria-expanded="false"
+            aria-controls="language-switcher-list">
+            <img src="/design-assets/flag-us.svg" alt="" width="24" height="24" />
+            <span class="visually-hidden">言語を選択</span>
+            <span class="language-switcher__caret" aria-hidden="true"></span>
+          </button>
+          <ul class="language-switcher__list" id="language-switcher-list" role="listbox" hidden>
+            <li role="option" data-lang="ja" aria-selected="false">
+            <img src="/design-assets/flag-jp.svg" alt="" width="20" height="20" />日本語
+            </li>
+            <li role="option" data-lang="en" aria-selected="true">
+            <img src="/design-assets/flag-us.svg" alt="" width="20" height="20" />English
+            </li>
+          </ul>
+        </div>
+
+        <button class="hamburger" type="button" aria-expanded="false" aria-controls="mobile-nav"
+                data-mobile-nav-trigger>
+          <span class="visually-hidden">メニューを開く</span>
+          <span class="hamburger__line" aria-hidden="true"></span>
+          <span class="hamburger__line" aria-hidden="true"></span>
+          <span class="hamburger__line" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-nav" id="mobile-nav" data-mobile-nav hidden>
+    <div class="mobile-nav__header">
+      <a class="mobile-nav__logo" href="/en/index.html">
+        <img src="/design-assets/logo-langmate.svg" alt="Langmate" width="120" height="34" />
+      </a>
+      <button class="mobile-nav__close" type="button" data-mobile-nav-close>
+        <span class="visually-hidden">メニューを閉じる</span>
+        <span aria-hidden="true">✕</span>
+      </button>
+    </div>
+    <nav aria-label="モバイルナビゲーション">
+      <ul class="mobile-nav__list">
+        <li><a href="/en/index.html">ホーム</a></li>
+        <li><a href="/en/beginners-guide.html">初めてでも安心</a></li>
+        <li><a href="/en/how-can-we-help.html">よくある質問</a></li>
+        <li><a href="/en/company.html">会社概要</a></li>
+        <li><a href="/en/contact.html">お問い合わせ</a></li>
+      </ul>
+    </nav>
+    <div class="mobile-nav__sns">
+      <span class="visually-hidden">公式SNS</span>
+      <a href="#"><img src="/design-assets/logo-instagram.svg" alt="Instagram" width="24" height="24" /></a>
+      <a href="#"><img src="/design-assets/logo-x.svg" alt="X" width="24" height="24" /></a>
+      <a href="#"><img src="/design-assets/logo-tiktok.svg" alt="TikTok" width="24" height="24" /></a>
+    </div>
+    <a class="mobile-nav__download" href="#download">ダウンロードはこちら <span aria-hidden="true">⬇</span></a>
+  </div>
+
+  <div class="floating-dl" data-floating-dl>
+    <div class="floating-dl__box">
+      <button class="floating-dl__trigger" type="button" aria-expanded="false" aria-controls="floating-dl-panel"
+        data-floating-dl-trigger>
+        <span>D<br />L<br />は<br />こ<br />ち<br />ら</span>
+      </button>
+      <div class="floating-dl__panel" id="floating-dl-panel">
+        <a href="#" class="btn btn--store"><img src="/design-assets/badge-appstore-ja.svg" alt="App Storeからダウンロード"
+            width="160" height="48" /></a>
+        <a href="#" class="btn btn--store"><img src="/design-assets/badge-googleplay-ja.svg" alt="Google Playで手に入れよう"
+            width="160" height="48" /></a>
+      </div>
+    </div>
+  </div>
+
+  <main id="main">
+    <!-- ===== Hero ===== -->
+    <section class="sub-hero contact-hero">
+      <picture>
+        <source srcset="/design-assets/bg-page-sp.svg" media="(max-width: 430px)">
+        <img class="sub-hero__map contact-hero__map" src="/design-assets/bg-page.svg" alt="" aria-hidden="true" width="1280"
+          height="500" />
+      </picture>
+      <div class="wrapper sub-hero__inner contact-hero__inner">
+        <svg class="sub-hero__eyebrow contact-hero__eyebrow" viewBox="0 0 220 70" role="img" aria-label="CONTACT">
+          <!-- about-hero/get-startedと同じアーチ構造を流用 -->
+          <path id="contact-hero-eyebrow-arc" d="M12,55 A220.3,220.3 0 0,1 208,55" fill="none" />
+          <text text-anchor="middle">
+            <textPath href="#contact-hero-eyebrow-arc" startOffset="50%">CONTACT</textPath>
+          </text>
+        </svg>
+        <h1 class="sub-hero__heading contact-hero__heading">お問い合わせ</h1>
+        <p class="sub-hero__lead contact-hero__lead">Langmateに関するご質問やご相談など、 お気軽にお問い合わせください。<br>
+          営業時間外のお問合せの場合には、返信までにお時間がかかる場合がございます。<br>
+          予めご了承くださいませ。</p>
+        <p class="contact-hero__note">お問合せ前に、以下のボタンより一般的なヘルプをチェックしてみてください。</p>
+        <a class="btn btn--outline contact-hero__cta" href="/en/how-can-we-help.html">よくある質問はこちら</a>
+      </div>
+    </section>
+
+    <!-- ===== Form ===== -->
+    <section class="contact-form-section">
+      <div class="wrapper">
+        <form class="contact-form" action="#" method="post" novalidate>
+          <div class="contact-form__field">
+            <label class="contact-form__label" for="contact-name">お名前 <span
+                class="contact-form__required">必須</span></label>
+            <input class="contact-form__input" type="text" id="contact-name" name="name" placeholder="山田太郎"
+              required />
+          </div>
+
+          <div class="contact-form__field">
+            <label class="contact-form__label" for="contact-email">メールアドレス <span
+                class="contact-form__required">必須</span></label>
+            <input class="contact-form__input" type="email" id="contact-email" name="email"
+              placeholder="hello@example.com" required />
+          </div>
+
+          <div class="contact-form__field">
+            <label class="contact-form__label" for="contact-email-confirm">メールアドレス（確認） <span
+                class="contact-form__required">必須</span></label>
+            <input class="contact-form__input" type="email" id="contact-email-confirm" name="email_confirm"
+              placeholder="hello@example.com" required />
+          </div>
+
+          <div class="contact-form__field">
+            <label class="contact-form__label" for="contact-message">お問い合わせ内容 <span
+                class="contact-form__required">必須</span></label>
+            <textarea class="contact-form__textarea" id="contact-message" name="message" rows="6" required></textarea>
+          </div>
+
+          <div class="contact-form__user-id">
+            <p>Langmateユーザーの場合は、ユーザーIDを追加してください</p>
+            <button type="button" class="contact-form__user-id-trigger" aria-expanded="false"
+              aria-controls="contact-user-id-help" data-contact-user-id-trigger>
+              ユーザーIDを追加する方法
+              <span class="contact-form__user-id-icon" aria-hidden="true"></span>
+            </button>
+            <div class="contact-form__user-id-help" id="contact-user-id-help" hidden>
+              <ol class="user-id-steps">
+                <li class="user-id-steps__item">
+                  <span class="user-id-steps__num">1</span>
+                  <p>Langmateアプリを開き、<strong>My Page</strong>をタップ</p>
+                </li>
+                <li class="user-id-steps__item">
+                  <span class="user-id-steps__num">2</span>
+                  <p><strong>設定</strong>をタップ</p>
+                </li>
+                <li class="user-id-steps__item">
+                  <span class="user-id-steps__num">3</span>
+                  <p><strong>My ID</strong>をタップ</p>
+                </li>
+                <li class="user-id-steps__item">
+                  <span class="user-id-steps__num">4</span>
+                  <div class="user-id-steps__body">
+                    <p><strong>ポップアップが開きます</strong></p>
+
+                    <ol class="user-id-steps__sub">
+                      <li>［MY INFOをコピーする］ボタンをタップしてIDをコピーし、下記にユーザーID入力欄に貼り付けることができます。</li>
+                      <li>この画面のスクリーンショットを撮り、お問い合わせフォームに画像アップローダーを利用して添付してください。</li>
+                    </ol>
+
+                    <p class="user-id-steps__note">
+                      ご利用する携帯電話によってスクリーンショット方法は異なります。ご利用中の携帯電話に応じて以下のリンクにアクセスしてください：<br>
+                      <a href="https://support.apple.com/ja-jp/102616" target="_blank" rel="noopener">iPhone</a>
+                      /
+                      <a href="https://support.google.com/android/answer/9075928?hl=ja" target="_blank" rel="noopener">Android</a>
+                    </p>
+
+                    <div class="user-id-steps__screens">
+                      <img src="/design-assets/screenshot-userid.png"
+                        alt="My Page画面→設定画面→My ID画面の操作手順スクリーンショット" width="688" height="402" />
+                    </div>
+                  </div>
+                </li>
+              </ol>
+
+              <div class="contact-form__field contact-form__field--user-id">
+                <label class="contact-form__label" for="contact-user-id">ユーザーID</label>
+                <input class="contact-form__input" type="text" id="contact-user-id" name="user_id"
+                  placeholder="例）123456" />
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-form__dropzone">
+            <p class="contact-form__dropzone-label">ここにファイルをドラッグ&ドロップ</p>
+            <p class="contact-form__dropzone-or">または</p>
+            <label class="contact-form__file-button" for="contact-file">ファイルの参照</label>
+            <input class="visually-hidden" type="file" id="contact-file" name="file" />
+          </div>
+
+          <button class="contact-form__submit" type="submit">送信する</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <div class="site-footer__brand">
+        <p>外国人の友達になれる国際交流アプリ</p>
+        <img src="/design-assets/logo-langmate.svg" alt="Langmate" />
+        <div class="site-footer__badges">
+          <a href="#download"><img src="/design-assets/badge-appstore-ja.svg" alt="App Storeからダウンロード" width="120"
+              height="36" /></a>
+          <a href="#download"><img src="/design-assets/badge-googleplay-ja.svg" alt="Google Playで手に入れよう" width="120"
+              height="36" /></a>
+        </div>
+      </div>
+
+      <nav class="site-footer__nav" aria-label="フッターナビゲーション">
+        <ul>
+          <li class="site-footer__nav-home"><a href="/en/index.html">ホーム</a></li>
+          <li><a href="/en/beginners-guide.html">初めての方へ</a></li>
+          <li><a href="/en/company.html">会社概要</a></li>
+          <li><a href="/en/how-can-we-help.html">よくある質問</a></li>
+          <li><a href="/en/contact.html">お問い合わせ</a></li>
+        </ul>
+      </nav>
+
+      <div class="site-footer__sns">
+        <p>公式SNSはこちら</p>
+        <div>
+          <a href="#"><img src="/design-assets/logo-instagram.svg" alt="Instagram" width="24" height="24" /></a>
+          <a href="#"><img src="/design-assets/logo-x.svg" alt="X" width="24" height="24" /></a>
+          <a href="#"><img src="/design-assets/logo-tiktok.svg" alt="TikTok" width="24" height="24" /></a>
+        </div>
+      </div>
+    </div>
+    <nav class="site-footer__legal" aria-label="法的情報">
+      <a href="/terms-of-service.html">利用規約</a>
+      <a href="/privacy-policy.html">プライバシーポリシー</a>
+    </nav>
+    <p class="site-footer__copyright">Copyright &copy; 2026 Langmate Inc.</p>
+  </footer>
+
+  <script type="module" src="/js/main.js"></script>
+</body>
+
+</html>

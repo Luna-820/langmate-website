@@ -1,0 +1,439 @@
+@use '../base/mixin' as mx;
+@use '../base/base' as v;
+
+// ==========================================================================
+// Company page（会社概要 / company.html）
+// ==========================================================================
+
+// ---- Hero ----
+// 地図＋eyebrow＋h1の見た目は他の下層ページと完全に共通なので
+// scss/component/_sub-hero.scssに集約済み。HTML側で.sub-heroを
+// 併記しているため、ここではabout-hero固有の上書きは無し。
+
+// ---- Intro ----
+.about-intro {
+    padding-block: 50px 100px;
+
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+
+        @include mx.sp {
+            gap: 20px;
+        }
+    }
+
+    &__image {
+        display: block;
+        width: 100%;
+        aspect-ratio: 1080 / 300;
+        height: auto;
+        border-radius: 24px;
+        max-width: 1080px;
+        margin-inline: auto;
+        object-fit: cover;
+    }
+
+    &__divider {
+        width: 100%;
+        max-width: 800px;
+        height: 3px;
+        margin-block: 0;
+        margin-inline: auto;
+        border: none;
+        background-color: #C0C0C0;
+    }
+
+    &__text {
+        display: flex;
+        flex-direction: row;
+        // fluid化: sp=24px / pc=40px（431〜1023pxを線形補間）
+        gap: clamp(24px, calc(12.42px + 2.694vw), 40px);
+        font-size: 2rem;
+        line-height: 1.5;
+        letter-spacing: 0.2em;
+
+        @include mx.sp {
+            font-size: 1.6rem;
+        }
+
+        p {
+            flex: 1;
+        }
+
+        @include mx.sp {
+            flex-direction: column;
+
+            p {
+                flex: unset;
+            }
+        }
+    }
+}
+
+.about-company__top {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1280 / 200;
+    margin-block-end: -1px; // 
+}
+
+// 青セクションの下端アーチ。同じSVGを上下反転（scaleY）して使い回す
+.about-company__bottom {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1280 / 200;
+    margin-block-start: -1px;
+    transform: scaleY(-1);
+}
+
+// ---- Company ----
+.about-company {
+    position: relative;
+    overflow: hidden;
+    background-color: v.$color-blue;
+    color: v.$color-white;
+    // fluid化: sp=60px / pc=100px（431〜1023pxを線形補間）
+    padding-block: clamp(60px, calc(31.04px + 6.734vw), 100px);
+
+    &__deco {
+        position: absolute;
+        z-index: 0;
+        pointer-events: none;
+        opacity: 73%;
+
+        // Figma実測: W355.03×H347.11、回転-170.11deg
+        &--tl {
+            top: 100px;
+            left: 150px;
+            width: 355.03px;
+            height: 347.11px;
+            transform: rotate(-170.11deg);
+        }
+
+        // Figma実測: W282.63×H276.32
+        &--br {
+            bottom: 30px;
+            right: 140px;
+            width: 282.63px;
+            height: 276.32px;
+        }
+    }
+
+    &__inner {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+    }
+
+    &__eyebrow {
+        display: block;
+        width: 196px;
+        aspect-ratio: 220 / 70;
+        margin-inline: auto;
+        margin-block-end: -16px;
+        overflow: visible;
+
+        text {
+            font-family: v.$font-en;
+            font-weight: v.$fw-medium;
+            font-size: 2.4rem;
+            fill: v.$color-white;
+            letter-spacing: 0.04em;
+
+            @include mx.sp {
+                font-size: 1.6rem;
+            }
+        }
+    }
+
+    &__heading {
+        font-size: 4.8rem;
+        font-weight: v.$fw-bold;
+        letter-spacing: 0.1em;
+        margin-block-end: 40px;
+
+        @include mx.sp {
+            font-size: 2.4rem;
+        }
+    }
+
+    &__table {
+        position: relative;
+        background-color: v.$color-white;
+        color: v.$color-text;
+        border-radius: v.$radius-card;
+        // fluid化: sp=16px / pc=56px（431〜1023pxを線形補間）
+        padding-block: clamp(16px, calc(-12.96px + 6.734vw), 56px);
+        // fluid化: sp=24px / pc=64px（431〜1023pxを線形補間）
+        padding-inline: clamp(24px, calc(-4.956px + 6.734vw), 64px);
+        text-align: left;
+        max-width: 1000px;
+        margin-inline: auto;
+
+        @include mx.sp {
+            padding: 16px 24px;
+        }
+    }
+
+    &__row {
+        display: flex;
+        flex-direction: row;
+        // fluid化: sp=4px / pc=24px（431〜1023pxを線形補間）
+        gap: clamp(4px, calc(-10.48px + 3.367vw), 24px);
+        // fluid化: sp=16px / pc=20px（431〜1023pxを線形補間）
+        padding-block: clamp(16px, calc(13.1px + 0.6734vw), 20px);
+        border-block-end: 1px solid v.$color-gray-light;
+
+        &:last-child {
+            border-block-end: none;
+        }
+
+        @include mx.sp {
+            flex-direction: column;
+        }
+
+        dt {
+            font-weight: v.$fw-medium;
+            flex: 0 0 160px;
+
+            @include mx.sp {
+                flex: unset;
+                font-size: 1.6rem;
+                padding: 16px 24px
+            }
+        }
+
+        dd {
+            line-height: 1.6;
+            font-weight: v.$fw-regular;
+            flex: 1;
+
+            @include mx.sp {
+                flex: unset;
+                font-size: 1.6rem;
+                padding: 0 24px
+            }
+        }
+    }
+}
+
+// ---- Recruit ----
+.about-recruit {
+    position: relative;
+    overflow: hidden;
+    padding-block: 60px;
+    // fluid化: sp=60px / pc=80px（431〜1023pxを線形補間、旧v.$section-padding-pcのtop分）
+    padding-block-start: clamp(60px, calc(45.52px + 3.367vw), 80px);
+    // fluid化: sp=0px / pc=140px（431〜1023pxを線形補間、旧v.$section-padding-pcのinline分）
+    padding-inline: clamp(0px, calc(-101.3px + 23.57vw), 140px);
+    // fluid化: sp=60px / pc=100px（431〜1023pxを線形補間、旧v.$section-padding-pcのbottom分）
+    padding-block-end: clamp(60px, calc(31.04px + 6.734vw), 100px);
+
+    &__bg {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top;
+        pointer-events: none;
+    }
+
+    // 背景画像より前面に出す
+    >.wrapper {
+        position: relative;
+        z-index: 1;
+    }
+
+    // ABOUT US（.about-hero__eyebrow）と同じアーチ構造に統一
+    &__eyebrow {
+        display: block;
+        width: 196px;
+        aspect-ratio: 220 / 70;
+        margin-inline: auto;
+        margin-block-end: -16px;
+        overflow: visible;
+
+        text {
+            font-family: v.$font-en;
+            font-weight: v.$fw-medium;
+            font-size: 2.4rem;
+            fill: v.$color-blue;
+            letter-spacing: 0.04em;
+
+            @include mx.sp {
+                font-size: 1.6rem;
+            }
+        }
+    }
+
+    &__heading {
+        font-size: 4.8rem;
+        font-weight: v.$fw-bold;
+        letter-spacing: 0.1em;
+        text-align: center;
+        margin-block-end: 60px;
+
+        @include mx.sp {
+            font-size: 2.4rem;
+        }
+    }
+
+    // 4項目（iOSデベロッパー募集概要／私たちのチーム／募集している人材／応募方法）同士のgap
+    &__items {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 48px;
+        max-width: 1000px;
+        margin-inline: auto;
+
+
+        @include mx.sp {
+            align-items: center;
+        }
+    }
+
+    &__item {
+        position: relative;
+        max-width: 560px;
+
+
+        @include mx.sp {
+            max-width: 345px;
+        }
+
+        &:nth-child(even) {
+            align-self: flex-end;
+
+            @include mx.sp {
+                align-self: unset;
+            }
+        }
+
+        p {
+            font-size: 2rem;
+            font-weight: v.$fw-regular;
+            line-height: normal;
+            letter-spacing: 0;
+
+            @include mx.sp {
+                font-size: 1.6rem;
+            }
+
+        }
+    }
+
+    &__title {
+        position: relative;
+        display: inline-block;
+        font-size: 2.4rem;
+        font-weight: v.$fw-bold;
+        line-height: normal;
+        letter-spacing: 0.1em;
+        margin-block-end: 16px;
+
+        @include mx.sp {
+            font-size: 2rem;
+        }
+    }
+
+    // タイトル文頭に重なる装飾円（テキストの後ろ側に配置）
+    &__badge {
+        position: absolute;
+        top: 50%;
+        left: -10%;
+        transform: translateY(-50%);
+        z-index: -1;
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background-color: v.$color-blue;
+        opacity: 58%;
+
+        @include mx.sp {
+            width: 56px;
+            height: 56px;
+        }
+    }
+
+    &__lead {
+        font-weight: v.$fw-bold;
+        margin-block-end: 16px;
+    }
+
+    &__list {
+        list-style: disc;
+        padding-inline-start: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        font-size: 1.5rem;
+        line-height: 1.8;
+
+    }
+
+    &__illust {
+        display: block;
+        height: auto;
+        // fluid化: sp=16px / pc=0px（431〜1023pxを線形補間）
+        margin-block-start: clamp(0px, calc(27.58px + -2.694vw), 16px);
+    }
+
+    // 01: 募集している人材（左寄せテキスト）の右に配置
+    &__item--team &__illust {
+        width: 200px;
+        position: absolute;
+        top: -30px;
+        right: 150%;
+        margin-inline-end: 20px;
+
+        @include mx.sp {
+            width: 77px;
+            top: -30%;
+            right: 0%;
+            margin-inline-end: unset;
+        }
+    }
+
+    // 02: 募集している人材（左寄せテキスト）の右に配置
+    &__item--member &__illust {
+        width: 300px;
+        position: absolute;
+        top: 24px;
+        left: 170%;
+        margin-inline-start: 20px;
+
+        @include mx.sp {
+            width: 77px;
+            top: 10%;
+            right: 0%;
+            margin-inline-end: unset;
+        }
+    }
+
+    // 03: 応募方法（右寄せテキスト）の左に配置
+    &__item--apply &__illust {
+        width: 300px;
+        position: absolute;
+        top: 24px;
+        right: 120%;
+        margin-inline-end: 20px;
+
+        @include mx.sp {
+            width: 83px;
+            top: -30%;
+            right: 0%;
+            margin-inline-end: unset;
+        }
+    }
+}
+
+.site-footer {
+    margin-top: 0;
+}
