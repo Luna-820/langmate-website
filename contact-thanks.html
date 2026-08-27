@@ -44,37 +44,39 @@
       <nav class="global-nav" aria-label="グローバルナビゲーション">
         <ul class="global-nav__list">
           <li><a href="index.html">ホーム</a></li>
-          <li><a href="getting-started.html">初めてでも安心</a></li>
-          <li><a href="faq-archive.html">よくある質問</a></li>
-          <li><a href="about.html">会社概要</a></li>
+          <li><a href="beginners-guide.html">初めてでも安心</a></li>
+          <li><a href="how-can-we-help.html">よくある質問</a></li>
+          <li><a href="company.html">会社概要</a></li>
           <li><a href="contact.html" aria-current="page">お問い合わせ</a></li>
         </ul>
       </nav>
 
-      <div class="language-switcher" data-language-switcher>
-        <button class="language-switcher__trigger" type="button" aria-haspopup="listbox" aria-expanded="false"
-          aria-controls="language-switcher-list">
-          <img src="design-assets/flag-jp.svg" alt="" width="24" height="24" />
-          <span class="visually-hidden">言語を選択</span>
-          <span class="language-switcher__caret" aria-hidden="true"></span>
-        </button>
-        <ul class="language-switcher__list" id="language-switcher-list" role="listbox" hidden>
-          <li role="option" data-lang="ja" aria-selected="true">
+      <div class="site-header__actions">
+        <div class="language-switcher" data-language-switcher>
+          <button class="language-switcher__trigger" type="button" aria-haspopup="listbox" aria-expanded="false"
+            aria-controls="language-switcher-list">
+            <img src="design-assets/flag-jp.svg" alt="" width="24" height="24" />
+            <span class="visually-hidden">言語を選択</span>
+            <span class="language-switcher__caret" aria-hidden="true"></span>
+          </button>
+          <ul class="language-switcher__list" id="language-switcher-list" role="listbox" hidden>
+            <li role="option" data-lang="ja" aria-selected="true">
             <img src="design-assets/flag-jp.svg" alt="" width="20" height="20" />日本語
-          </li>
-          <li role="option" data-lang="en" aria-selected="false">
+            </li>
+            <li role="option" data-lang="en" aria-selected="false">
             <img src="design-assets/flag-us.svg" alt="" width="20" height="20" />English
-          </li>
-        </ul>
-      </div>
+            </li>
+          </ul>
+        </div>
 
-      <button class="hamburger" type="button" aria-expanded="false" aria-controls="mobile-nav"
-        data-mobile-nav-trigger>
-        <span class="visually-hidden">メニューを開く</span>
-        <span class="hamburger__line" aria-hidden="true"></span>
-        <span class="hamburger__line" aria-hidden="true"></span>
-        <span class="hamburger__line" aria-hidden="true"></span>
-      </button>
+        <button class="hamburger" type="button" aria-expanded="false" aria-controls="mobile-nav"
+                data-mobile-nav-trigger>
+          <span class="visually-hidden">メニューを開く</span>
+          <span class="hamburger__line" aria-hidden="true"></span>
+          <span class="hamburger__line" aria-hidden="true"></span>
+          <span class="hamburger__line" aria-hidden="true"></span>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -91,9 +93,9 @@
     <nav aria-label="モバイルナビゲーション">
       <ul class="mobile-nav__list">
         <li><a href="index.html">ホーム</a></li>
-        <li><a href="getting-started.html">初めてでも安心</a></li>
-        <li><a href="faq-archive.html">よくある質問</a></li>
-        <li><a href="about.html">会社概要</a></li>
+        <li><a href="beginners-guide.html">初めてでも安心</a></li>
+        <li><a href="how-can-we-help.html">よくある質問</a></li>
+        <li><a href="company.html">会社概要</a></li>
         <li><a href="contact.html">お問い合わせ</a></li>
       </ul>
     </nav>
@@ -111,12 +113,6 @@
       <button class="floating-dl__trigger" type="button" aria-expanded="false" aria-controls="floating-dl-panel"
         data-floating-dl-trigger>
         <span>D<br />L<br />は<br />こ<br />ち<br />ら</span>
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 3v10m0 0l-4-4m4 4l4-4" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-            stroke-linejoin="round" />
-          <path d="M4 15v3a2 2 0 002 2h12a2 2 0 002-2v-3" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-            stroke-linejoin="round" />
-        </svg>
       </button>
       <div class="floating-dl__panel" id="floating-dl-panel">
         <a href="#" class="btn btn--store"><img src="design-assets/badge-appstore-ja.svg" alt="App Storeからダウンロード"
@@ -162,11 +158,11 @@
 
       <nav class="site-footer__nav" aria-label="フッターナビゲーション">
         <ul>
-          <li><a href="index.html">ホーム</a></li>
-          <li><a href="about.html">会社概要</a></li>
-          <li><a href="getting-started.html">初めての方へ</a></li>
+          <li class="site-footer__nav-home"><a href="index.html">ホーム</a></li>
+          <li><a href="beginners-guide.html">初めての方へ</a></li>
+          <li><a href="company.html">会社概要</a></li>
+          <li><a href="how-can-we-help.html">よくある質問</a></li>
           <li><a href="contact.html">お問い合わせ</a></li>
-          <li><a href="faq-archive.html">よくある質問</a></li>
         </ul>
       </nav>
 
@@ -180,8 +176,8 @@
       </div>
     </div>
     <nav class="site-footer__legal" aria-label="法的情報">
-      <a href="terms.html">利用規約</a>
-      <a href="privacy.html">プライバシーポリシー</a>
+      <a href="terms-of-service.html">利用規約</a>
+      <a href="privacy-policy.html">プライバシーポリシー</a>
     </nav>
     <p class="site-footer__copyright">Copyright &copy; 2026 Langmate Inc.</p>
   </footer>

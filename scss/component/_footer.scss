@@ -7,47 +7,81 @@
 
 .site-footer {
     margin-top: 64px;
-    padding: 80px 80px 40px;
+    padding-block: 80px 40px;
+    // fluid化: sp=24px / pc=80px（431〜1023pxを線形補間）
+    padding-inline: clamp(24px, calc(-16.54px + 9.428vw), 80px);
     border-top: 1px solid v.$color-gray;
 
     &__inner {
         display: flex;
-        flex-direction: column;
-        gap: 92px;
+        flex-direction: row;
+        justify-content: space-between;
+        // fluid化: sp=20px / pc=92px（431〜1023pxを線形補間）
+        gap: clamp(20px, calc(-32.12px + 12.12vw), 92px);
 
-        @include mx.pc {
-            flex-direction: row;
-            justify-content: space-between;
+        @include mx.sp {
+            flex-direction: column;
+            align-items: center;
+            justify-content: unset;
+            text-align: center;
         }
     }
 
     &__brand {
         p {
-            font-size: 1.8rem;
+            // fluid化: sp=1.4rem / pc=1.8rem（431〜1023pxを線形補間）
+            font-size: clamp(1.4rem, calc(11.1px + 0.6734vw), 1.8rem);
             margin-block-end: 8px;
         }
 
         img {
-            height: 86px;
+            // fluid化: sp=51px / pc=86px（431〜1023pxを線形補間）
+            height: clamp(51px, calc(25.66px + 5.892vw), 86px);
             margin-block-end: 20px;
+        }
+
+        @include mx.sp {
+            img {
+                margin-inline: auto;
+            }
         }
     }
 
     &__badges {
         display: flex;
-        gap: 40px;
+        // fluid化: sp=16px / pc=40px（431〜1023pxを線形補間）
+        gap: clamp(16px, calc(-1.374px + 4.04vw), 40px);
 
         img {
-            height: 56px;
+            // fluid化: sp=48px / pc=56px（431〜1023pxを線形補間）
+            height: clamp(48px, calc(42.21px + 1.347vw), 56px);
             width: auto;
+        }
+
+        @include mx.sp {
+            justify-content: center;
         }
     }
 
     &__nav ul {
         display: grid;
         grid-template-columns: repeat(2, auto);
-        gap: 16px 64px;
-        font-size: 2.4rem;
+        // fluid化: sp=12px 32px / pc=16px 64px（行間・列間ともに431〜1023pxを線形補間）
+        gap: clamp(12px, calc(9.104px + 0.6734vw), 16px) clamp(32px, calc(8.835px + 5.387vw), 64px);
+        // fluid化: sp=1.6rem / pc=2.4rem（431〜1023pxを線形補間）
+        font-size: clamp(1.6rem, calc(10.21px + 1.347vw), 2.4rem);
+
+        @include mx.sp {
+            justify-content: flex-start;
+        }
+    }
+
+    // 1件目(ホーム)だけ2カラムの上に単独で中央寄せする
+    &__nav-home {
+        @include mx.sp {
+            grid-column: 1 / -1;
+            text-align: left;
+        }
     }
 
     &__sns {
@@ -58,33 +92,39 @@
 
         div {
             display: flex;
-            gap: 40px;
+            // fluid化: sp=16px / pc=40px（431〜1023pxを線形補間）
+            gap: clamp(16px, calc(-1.374px + 4.04vw), 40px);
 
-            // 実際にflexの子要素になっているのはimgではなく、それを包む<a>タグ。
-            // ここにflex-shrink:0が無いと縮んでしまい、imgのwidth:56pxを指定しても
-            // 親<a>の縮んだ幅にmax-width:100%で追従して実際は48.7pxほどになっていた
             a {
                 flex-shrink: 0;
             }
         }
 
         img {
-            width: 56px;
-            height: 56px;
-            // logo-tiktok.svgだけ縦横比が正方形じゃない(732×780)ため、object-fit無しだと
-            // 56×56の箱の中でレターボックスされて他の2つより一回り小さく見えてしまう
+            // fluid化: sp=40px / pc=56px（431〜1023pxを線形補間）
+            width: clamp(40px, calc(28.42px + 2.694vw), 56px);
+            // fluid化: sp=40px / pc=56px（431〜1023pxを線形補間）
+            height: clamp(40px, calc(28.42px + 2.694vw), 56px);
             object-fit: cover;
+        }
+
+        @include mx.sp {
+            div {
+                justify-content: center;
+            }
         }
     }
 
     &__legal {
         display: flex;
         justify-content: center;
-        gap: 24px;
+        // fluid化: sp=16px / pc=24px（431〜1023pxを線形補間）
+        gap: clamp(16px, calc(10.21px + 1.347vw), 24px);
         margin-block-start: 32px;
 
         a {
-            font-size: 1.6rem;
+            // fluid化: sp=1.4rem / pc=1.6rem（431〜1023pxを線形補間）
+            font-size: clamp(1.4rem, calc(12.55px + 0.3367vw), 1.6rem);
             text-decoration: underline;
             opacity: 0.7;
 
@@ -96,7 +136,8 @@
 
     &__copyright {
         text-align: center;
-        font-size: 2.0rem;
+        // fluid化: sp=1.4rem / pc=2.0rem（431〜1023pxを線形補間）
+        font-size: clamp(1.4rem, calc(9.657px + 1.01vw), 2.0rem);
         margin-block-start: 16px;
         opacity: 0.7;
     }

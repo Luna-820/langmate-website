@@ -12,11 +12,8 @@
     position: relative;
     overflow: hidden;
     margin-block-start: -86px; // headerのsticky分だけ引き上げ（他ページと同じ手法）
-    padding-block-end: 60px;
-
-    @include mx.pc {
-        padding-block-end: 80px;
-    }
+    // fluid化: sp=60px / pc=80px（431〜1023pxを線形補間）
+    padding-block-end: clamp(60px, calc(45.52px + 3.367vw), 80px);
 
     &__map {
         position: absolute;
@@ -96,11 +93,11 @@
 
 // ---- Form ----
 .contact-form-section {
+    // デフォルト(=PC)はpadding-blockの上60px/下100pxの非対称。
+    // SPでは@include mx.spで下を60pxに上書きし、上下均等の60pxに戻す。
     padding-block: 60px;
-
-    @include mx.pc {
-        padding-bottom: 100px;
-    }
+    // fluid化: sp=60px / pc=100px（431〜1023pxを線形補間）
+    padding-bottom: clamp(60px, calc(31.04px + 6.734vw), 100px);
 }
 
 .contact-form {
@@ -116,24 +113,17 @@
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.08);
     border: 1px solid #A9A9A9;
 
-    @include mx.pc {
-        padding-block: 64px;
-    }
-
     &__field {
         display: flex;
         flex-direction: column;
         align-items: flex-start; // label/inputを左揃えに（親のalign-items:centerで中央寄せされないよう明示）
         gap: 8px;
+        // fluid化: width(sp=100%)はそのままフルードなので据え置き、
+        // max-widthのみsp=345px / pc=600pxで補間
         width: 100%;
-        max-width: 345px;
+        max-width: clamp(345px, calc(160.4px + 42.93vw), 600px);
         margin-inline: auto; // fieldそのものはbox内で中央寄せ
         text-align: left;
-
-        @include mx.pc {
-            width: 600px;
-            max-width: 600px;
-        }
     }
 
     &__label {
@@ -196,7 +186,7 @@
     &__user-id-trigger {
         display: inline-flex;
         align-items: center;
-        gap: 4px;
+        gap: 8px;
         background: none;
         border: none;
         border-block-end: 1px solid v.$color-text;
@@ -207,9 +197,45 @@
         padding-block-end: 4px;
     }
 
+    // +/− アイコン：横棒(::before)は常に表示、縦棒(::after)は開いた時だけ消して「−」にする
+    &__user-id-icon {
+        position: relative;
+        display: inline-block;
+        flex-shrink: 0;
+        width: 14px;
+        height: 14px;
+
+        &::before,
+        &::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            background-color: currentColor;
+            transform: translate(-50%, -50%);
+        }
+
+        &::before {
+            width: 14px;
+            height: 2px;
+        }
+
+        &::after {
+            width: 2px;
+            height: 14px;
+            transition: opacity 0.2s;
+        }
+
+        [aria-expanded='true'] &::after {
+            opacity: 0;
+        }
+    }
+
     &__user-id-help {
-        margin-block-start: 16px;
+        margin-block-start: 24px;
         text-align: left;
+        max-width: 600px;
+        margin-inline: auto;
 
         p {
             font-size: 1.3rem;
@@ -218,10 +244,15 @@
         }
     }
 
+    &__field--user-id {
+        margin-block-start: 24px;
+    }
+
     &__dropzone {
         box-sizing: border-box;
+        // fluid化: width(sp=100%)は据え置き、max-widthのみsp=345px / pc=600pxで補間（__fieldと同じ幅）
         width: 100%;
-        max-width: 345px;
+        max-width: clamp(345px, calc(160.4px + 42.93vw), 600px);
         margin-inline: auto; // __fieldと同じく中央寄せ
         text-align: center;
         border: 1px dashed v.$color-text;
@@ -229,11 +260,6 @@
         background-color: #F4FAFF;
         padding: 32px 72px;
         margin-bottom: 20px;
-
-        @include mx.pc {
-            width: 600px; // 上のformフィールドと同じ幅
-            max-width: 600px;
-        }
     }
 
     &__dropzone-label {
@@ -282,6 +308,99 @@
 
         &:active {
             transform: scale(0.98);
+        }
+    }
+}
+
+// ---- ユーザーIDを追加する方法（アコーディオン中身の手順リスト） ----
+// WordPress化は想定していないが、番号付き手順1件 = 繰り返し可能な1ブロックとして
+// 他の手順追加にも対応しやすいマークアップにしている。
+.user-id-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-block-end: 24px;
+
+    &__item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+
+        p {
+            // fluid化: sp=1.4rem / pc=1.5rem（431〜1023pxを線形補間）
+            font-size: clamp(1.4rem, calc(13.28px + 0.1684vw), 1.5rem);
+            line-height: 1.6;
+            margin-block-end: 0;
+        }
+    }
+
+    &__num {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        margin-block-start: 1px;
+        font-family: v.$font-en;
+        font-weight: v.$fw-bold;
+        font-size: 1.3rem;
+        color: v.$color-white;
+        background-color: v.$color-blue;
+        border-radius: 50%;
+    }
+
+    &__body {
+        flex: 1;
+        min-width: 0;
+    }
+
+    &__sub {
+        list-style: none;
+        counter-reset: user-id-sub;
+        margin-block: 12px;
+        padding-inline-start: 0;
+
+        li {
+            position: relative;
+            padding-inline-start: 24px;
+            // fluid化: sp=1.4rem / pc=1.5rem（431〜1023pxを線形補間）
+            font-size: clamp(1.4rem, calc(13.28px + 0.1684vw), 1.5rem);
+            line-height: 1.7;
+            color: v.$color-text;
+
+            &:not(:last-child) {
+                margin-block-end: 8px;
+            }
+
+            &::before {
+                counter-increment: user-id-sub;
+                content: counter(user-id-sub) '.';
+                position: absolute;
+                left: 0;
+                font-weight: v.$fw-bold;
+            }
+        }
+    }
+
+    &__note {
+        font-size: 1.3rem;
+        line-height: 1.6;
+        color: v.$color-text;
+        margin-block-end: 16px;
+
+        a {
+            color: v.$color-text;
+            text-decoration: underline;
+        }
+    }
+
+    &__screens {
+        img {
+            width: 100%;
+            // fluid化: sp=400px / pc=480px（431〜1023pxを線形補間）
+            max-width: clamp(400px, calc(342.1px + 13.47vw), 480px);
+            height: auto;
         }
     }
 }

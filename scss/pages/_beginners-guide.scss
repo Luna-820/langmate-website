@@ -1,0 +1,881 @@
+@use '../base/mixin' as mx;
+@use '../base/base' as v;
+
+// ==========================================================================
+// Beginners Guide page（初めての方へ / beginners-guide.html）
+// ラフに全体を組んだ一次実装。細部（曲線に沿ったラベル文字・ステップの曲線コネクタ等）
+// は簡易な近似で作っており、後で数値をもらいながら調整していく前提。
+// ==========================================================================
+
+// ---- Hero ----
+// ヘッダーがposition:stickyで確保している分の高さだけ引き上げて、
+// 背景の地図画像がヘッダーの透明な余白部分の裏まで届くようにする（TOPページのheroと同じ手法）。
+.gs-hero {
+    position: relative;
+    overflow: hidden;
+    margin-block-start: -86px;
+    padding-block-end: clamp(140px, calc(96.57px + 10.1vw), 200px);
+
+    // bg-page.svg自体にアーチ型のカーブ(#FFFCF3)が焼き込み済みなので、
+    // CSSでの円トリックは不要。実寸比率(1280:500)のまま絶対配置で
+    // ヘッダー裏（セクション最上部）から表示する。
+    &__map {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1280 / 500;
+        z-index: 0;
+    }
+
+    &__inner {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        padding-block-start: calc(100vw * 500 / 1280 - 100px);
+    }
+
+    // "GET STARTED"はアーチ状に湾曲させたいので、CSSの回転文字ではなく
+    // SVGのtextPathで円弧に沿わせる（正確に文字ごとの角度を追従できる）。
+    // Figma実測：バウンディングボックス W196×H23、Poppins Medium 24px/140%/4%、色 #0083F8
+    &__eyebrow {
+        display: block;
+        width: 196px;
+        aspect-ratio: 220 / 70;
+        margin-inline: auto;
+        margin-block-end: -16px;
+        overflow: visible;
+
+        text {
+            font-family: v.$font-en;
+            font-weight: v.$fw-medium;
+            font-size: 2.4rem;
+            fill: v.$color-blue;
+            letter-spacing: 0.04em;
+        }
+    }
+
+    &__heading {
+        font-size: 4.8rem;
+        font-weight: v.$fw-bold;
+        letter-spacing: 0.1em;
+        margin-bottom: 24px;
+    }
+
+    &__lead {
+        font-size: 2.4rem;
+        line-height: 1.6;
+        margin-bottom: 120px;
+    }
+
+    &__nav {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        // 元コードの `gap: auto;`（PC用の値のつもりだったもの）はgapプロパティとして
+        // 不正な値のため実際にはブラウザに無視されており、結果的にPCでも常にgap:56pxの
+        // ままレンダリングされていた（挙動を変えないためそのまま56pxで固定する）。
+        gap: 56px;
+        justify-content: center;
+
+        @include mx.sp {
+            flex-direction: column;
+            align-items: center;
+            justify-content: unset;
+        }
+    }
+
+    &__nav-card {
+        position: relative;
+        display: block;
+        width: 300px;
+        max-width: 100%;
+        padding: 48px 24px;
+        border-radius: 12px;
+        border: 4px solid;
+        text-align: center;
+        color: v.$color-text;
+        transition: box-shadow 0.2s, transform 0.2s;
+
+        // クリック（押し込み）時はシャドウを消して、影の分だけ本体を動かすことで
+        // 「カチッと押した」ように見せる（他のボタン類と同じパターン）
+        &:hover,
+        &:active {
+            box-shadow: none;
+            transform: translate(5px, 5px);
+        }
+
+        // ドロップシャドウ(X5 Y5 ぼかし0 広がり0 100%)は各ボックスの枠線色に合わせる
+        &--reason {
+            border-color: v.$color-pink;
+            background-color: v.$color-pink-light;
+            box-shadow: 5px 5px 0 v.$color-pink;
+        }
+
+        &--started {
+            border-color: v.$color-yellow;
+            background-color: #FFFCE6;
+            box-shadow: 5px 5px 0 v.$color-yellow;
+        }
+
+        &--safety {
+            border-color: v.$color-blue;
+            background-color: #F3F9FF;
+            box-shadow: 5px 5px 0 v.$color-blue;
+        }
+    }
+
+    &__nav-eyebrow {
+        display: block;
+        font-size: 2rem;
+    }
+
+    &__nav-title {
+        display: block;
+        font-size: 3.2rem;
+        font-weight: v.$fw-bold;
+    }
+
+    // 円は64×64px、矢印は長さ24px・太さ3px
+    &__nav-arrow {
+        position: absolute;
+        bottom: -32px; // 円の半分(32px)が枠線からはみ出す
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        color: v.$color-white;
+
+        svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .gs-hero__nav-card--reason & {
+            background-color: v.$color-pink;
+        }
+
+        .gs-hero__nav-card--started & {
+            background-color: v.$color-yellow;
+        }
+
+        .gs-hero__nav-card--safety & {
+            background-color: v.$color-blue;
+        }
+    }
+
+    &__nav-illust {
+        position: absolute;
+        width: 90px;
+        height: auto;
+        pointer-events: none;
+
+        .gs-hero__nav-card--reason & {
+            bottom: -8px;
+            left: -54px;
+            width: 100px;
+            transform: scaleX(-1); // 左右反転
+        }
+
+        .gs-hero__nav-card--started & {
+            top: -64px;
+            right: -30px;
+            width: 79px;
+            transform: scaleX(-1); // 左右反転
+        }
+
+        .gs-hero__nav-card--safety & {
+            bottom: -8px;
+            right: -54px;
+            width: 100px;
+        }
+    }
+}
+
+// ---- 共通: 縦回転の巨大ウォーターマーク文字 ----
+@mixin watermark {
+    position: absolute;
+    top: 50%;
+    display: block;
+    font-family: v.$font-en;
+    font-weight: v.$fw-bold;
+    font-size: clamp(4.8rem, 12vw, 16rem);
+    line-height: 1.4;
+    letter-spacing: 0em;
+    white-space: nowrap;
+    pointer-events: none;
+    writing-mode: horizontal-tb;
+    transform: translateY(-50%) rotate(90deg);
+    z-index: 0;
+}
+
+// ---- REASON ----
+.gs-reason {
+    position: relative;
+    overflow: hidden;
+    background-color: v.$color-pink-deep;
+    color: v.$color-white;
+    padding-block: clamp(60px, calc(31.04px + 6.734vw), 100px);
+
+    // rotate(90deg)は要素自身の中心が軸になるので、回転前のテキスト全長（＝見た目の高さ）の
+    // 半分ぶんだけ実際の左端がleftの指定値からズレる（GET STARTED/SAFETYと同じ値を入れても
+    // 全然左に寄らなかったのはこれが原因）。writing-mode:vertical-rlならrotate不要で、
+    // left/topの指定がそのまま見た目の位置になるので、ここだけ個別に上書きする。
+    &__watermark {
+        @include watermark;
+        top: 40px;
+        left: clamp(-60px, calc(8.956px - 6.734vw), -20px);
+        writing-mode: vertical-rl;
+        transform: none;
+        -webkit-text-stroke: 2px v.$color-pink-light;
+        color: transparent;
+    }
+
+    &__wrapper {
+        position: relative;
+        z-index: 1;
+        // __headがposition:absoluteで浮いている分、その高さを考慮しないと
+        // グリッドの1行目（item2側）とタイトル帯が被ってしまうので、デフォルト(=PC)は下に逃がす。
+        // SPでは@include mx.spでリセットする。
+        padding-block-start: 180px;
+
+        @include mx.sp {
+            padding-block-start: unset;
+        }
+    }
+
+    // .wrapperの外に出したので、デフォルト(=PC)では画面右端に貼り付ける。
+    // SPでは@include mx.spで通常フローの一番上に普通に積む。
+    &__head {
+        position: absolute;
+        top: 60px;
+        right: 0;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        margin-block-end: clamp(0px, calc(68.96px - 6.734vw), 40px);
+        padding-inline: clamp(0px, calc(27.58px - 2.694vw), 16px);
+        text-align: right;
+
+        @include mx.sp {
+            position: unset;
+            top: unset;
+            right: unset;
+            z-index: unset;
+            display: block; // divのUAデフォルト（unsetだとinlineに戻ってしまうため明示）
+            flex-direction: unset;
+            align-items: unset;
+            text-align: center;
+        }
+    }
+
+    &__eyebrow {
+        display: inline-block;
+        background-color: v.$color-white;
+        color: v.$color-text;
+        font-size: 4rem; // 40px
+        font-weight: v.$fw-bold;
+        line-height: 1.32;
+        letter-spacing: 0;
+        padding-inline: 48px 24px;
+    }
+
+    &__title {
+        display: inline-block;
+        background-color: v.$color-white;
+        color: v.$color-text;
+        font-size: clamp(4rem, calc(22.63px + 4.04vw), 6.4rem); // 40px→64px
+        font-weight: v.$fw-bold;
+        line-height: 1.32;
+        letter-spacing: 0;
+        padding-inline: 48px 24px;
+        margin-block-start: 9px; // 2つの帯のgap
+    }
+
+    // SPは読みやすさ優先で縦一列のまま、PCだけ添付デザインの通り2列の
+    // 千鳥配置（互い違いにずらして重ねる）にする。正確な数値は無いため、
+    // スクショを見た目で確認しながらの近似値。
+    &__list {
+        display: grid;
+        flex-direction: column;
+        gap: 56px;
+        max-width: none;
+        margin-inline: auto;
+        grid-template-columns: 1fr 1fr;
+        column-gap: clamp(24px, calc(79.16px - 5.387vw), 56px);
+        row-gap: clamp(56px, calc(38.63px + 4.04vw), 80px); // 詰まりすぎ対策で行間を広く確保
+        // .gs-reason__wrapperは共通.wrapper（max-width:1000px）の内側なので、
+        // max-widthだけでは利用可能幅（932px）で頭打ちになってしまう。
+        // widthを明示指定して親のサイズ制約から意図的にはみ出す
+        // （overflow:hiddenは.gs-reasonセクション側=画面幅基準なのでここでは効かない）。
+        width: 1126px; // ブロブ最大551px×2列 + column-gap24px
+        margin-inline-start: -20px;
+        margin-inline-end: 0;
+
+        @include mx.sp {
+            display: flex;
+            grid-template-columns: unset;
+            max-width: 760px;
+            width: unset;
+            margin-inline-start: auto;
+            margin-inline-end: auto;
+        }
+    }
+
+    &__item {
+        &:nth-child(1) {
+            grid-column: 1;
+            grid-row: 1;
+
+            @include mx.sp {
+                grid-column: unset;
+                grid-row: unset;
+            }
+        }
+
+        &:nth-child(2) {
+            grid-column: 2;
+            grid-row: 1;
+            margin-block-start: 180px;
+
+            @include mx.sp {
+                grid-column: unset;
+                grid-row: unset;
+                margin-block-start: unset;
+            }
+        }
+
+        &:nth-child(3) {
+            grid-column: 1;
+            grid-row: 2;
+            margin-block-start: 60px;
+
+            @include mx.sp {
+                grid-column: unset;
+                grid-row: unset;
+                margin-block-start: unset;
+            }
+        }
+
+        &:nth-child(4) {
+            grid-column: 2;
+            grid-row: 2;
+            margin-block-start: 400px;
+
+            @include mx.sp {
+                grid-column: unset;
+                grid-row: unset;
+                margin-block-start: unset;
+            }
+        }
+    }
+
+    // ---- ブロブ（4つともFigmaから正確なパスを書き出し済み）----
+    // 各ブロブごとに実寸のviewBoxが違うため、aspect-ratioだけmodifierで個別指定。
+    // 同じviewBoxの中に「塗りつぶし用の図形」と「文字を沿わせるガイド」を別々のSVGとして
+    // 重ね、CSS側はwidth:100%+aspect-ratioで拡縮するだけにすることで、画面幅が変わっても
+    // 図形とラベルの湾曲が常に同期する。
+    &__blob-wrap {
+        position: relative;
+        width: 100%;
+        margin-inline: auto;
+
+        // aspect-ratio（縦横比）はFigmaの元データのまま変えず、max-widthだけ底上げして
+        // 「形は同じまま拡大」を実現（テキストサイズをデザイン通りにしたら収まらなくなったため）
+        &--01 {
+            max-width: 433px; // 387 × 1.12
+            aspect-ratio: 387 / 303;
+        }
+
+        &--02 {
+            max-width: 507px; // 453 × 1.12
+            aspect-ratio: 453 / 354;
+        }
+
+        &--03 {
+            max-width: 551px; // 492 × 1.12
+            aspect-ratio: 492 / 328;
+        }
+
+        &--04 {
+            max-width: 551px; // 492 × 1.12
+            aspect-ratio: 492 / 333;
+        }
+    }
+
+    &__blob-shape,
+    &__blob-label {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    // SVGのルート要素はデフォルトでoverflow:hiddenのため、gap用にscaleで外側へ
+    // ずらしたガイドパスの文字がviewBoxの外（マイナス座標）にはみ出すと
+    // クリップされて消えてしまう。overflow:visibleで解除する。
+    &__blob-label {
+        overflow: visible;
+    }
+
+    &__blob-label text {
+        font-size: 3.2rem;
+        font-weight: v.$fw-bold;
+        line-height: 1.3;
+        letter-spacing: -0.05em;
+        fill: v.$color-white;
+    }
+
+    // オリジナル図形とのgap8px分、ガイドパスを外側にオフセット。
+    // ベジェ曲線の厳密なオフセットパス計算はしていないため、図形の中心を基準に
+    // 一律スケールアップして近似している（円に近い形なので大きくは崩れない想定）。
+    &__blob-label path {
+        transform-box: fill-box;
+        transform-origin: center;
+        transform: scale(1.15);
+    }
+
+    &__blob-text {
+        position: absolute;
+        inset: 22% 18%;
+        display: flex;
+        align-items: center;
+        color: v.$color-text;
+        font-size: 2rem;
+        line-height: 1.3;
+        text-align: left;
+    }
+
+    // .wrapperの外に出したので、画面幅に関係なく画面の右端にきっちり貼り付く
+    &__illust {
+        display: block;
+        position: absolute;
+        bottom: 400px;
+        // .wrapperの外（.gs-reasonの直接の子）に出したので、right:0で画面の真の右端に貼り付く
+        right: 0;
+        width: 400px;
+        height: auto;
+        z-index: 2;
+
+        // display:noneで非表示になる要素なので、他プロパティ(position/bottom/right/
+        // width/height/z-index)は描画に一切影響しない。unsetにすると数値上は
+        // 元の値と食い違うが、非表示である以上どちらでも見た目は変わらないため、
+        // displayだけ指定すれば十分（値を減らして見通しを良くする）。
+        @include mx.sp {
+            display: none;
+        }
+    }
+}
+
+// ---- GET STARTED ----
+.gs-started {
+    position: relative;
+    overflow: hidden;
+    background-color: v.$color-yellow;
+    padding-block: clamp(60px, calc(31.04px + 6.734vw), 100px);
+
+    // rotate(90deg)は要素自身の中心が軸になるため、right指定値どおりの位置に来ない
+    // （REASONと同じ理由）。writing-mode:vertical-rlに変えてright:0を画面の真の右端に
+    // 素直に効かせる。span自体は既に.wrapperの外（.gs-startedの直接の子）にある。
+    &__watermark {
+        @include watermark;
+        top: 40px;
+        right: -3%;
+        writing-mode: vertical-rl;
+        transform: none;
+        color: #FFFCE6;
+
+        @include mx.sp {
+            right: -20px;
+        }
+    }
+
+    &__wrapper {
+        position: relative;
+        z-index: 1;
+    }
+
+    // REASONのheadと同じ帯デザイン（太字・大きめサイズ）だが、画面左寄せなのでREASON(右寄せ)とは
+    // 逆に、帯のpadding-inlineも左右反転（edge側=左を24px、中央側=右を48px）。
+    // .wrapperの外（.gs-startedの直接の子）に出したので、left:0が画面の真の左端に効く。
+    &__head {
+        text-align: left;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-block-end: clamp(0px, calc(68.96px - 6.734vw), 40px);
+        padding-inline: clamp(0px, calc(27.58px - 2.694vw), 16px);
+
+        p,
+        h2 {
+            display: inline-block;
+            background-color: v.$color-cream;
+            color: v.$color-text;
+            line-height: 1.32;
+            padding-inline: 24px 48px;
+        }
+
+        @include mx.sp {
+            position: unset;
+            top: unset;
+            left: unset;
+            z-index: unset;
+            display: block; // divのUAデフォルト（unsetだとinlineに戻ってしまうため明示）
+            flex-direction: unset;
+            align-items: unset;
+        }
+    }
+
+    &__eyebrow {
+        font-size: 4rem; // 40px
+        font-weight: v.$fw-bold;
+    }
+
+    &__title {
+        display: block;
+        font-size: clamp(4rem, calc(22.63px + 4.04vw), 6.4rem); // 40px→64px
+        font-weight: v.$fw-bold;
+        margin-block-start: 9px; // 2つの帯のgap（REASONと同じ）
+    }
+
+    &__illust {
+        display: block;
+        width: 400px;
+        max-width: none;
+        margin-inline: auto;
+        margin-block-end: 32px;
+        position: absolute;
+        bottom: 100px;
+        left: -2%;
+        margin: 0;
+
+        @include mx.sp {
+            width: 100%;
+            max-width: 320px;
+            position: unset;
+            bottom: unset;
+            left: unset;
+        }
+    }
+
+    &__list {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        max-width: clamp(600px, calc(527.6px + 16.84vw), 700px);
+        margin-inline: auto;
+        // illustが.wrapperの外（真の画面左端=left:0）に出た分、被らない範囲でもう少し左へ寄せる
+        margin-inline-start: 176px;
+
+        @include mx.sp {
+            margin-inline-start: auto;
+        }
+    }
+
+    // アイコン同士を繋ぐアーチ状（S字）のガイド線。デフォルト(=PC)で表示し、
+    // SPは@include mx.spで非表示（横幅が狭くうねらせると窮屈なので従来の直線点線のまま）。
+    &__list-curve {
+        display: block;
+        position: absolute;
+        // preserveAspectRatio="none"でこのtop/heightの範囲にパスを伸縮しているので、
+        // 上下に余白を作ると曲線全体が少し短くなる（アイコンの位置には影響しない）
+        top: 24px;
+        left: 0;
+        width: 121px; // Figma提供ガイド(Line 3.svg)のviewBox幅と合わせる
+        height: calc(100% - 48px);
+        overflow: visible;
+        z-index: 0;
+
+        path {
+            fill: none;
+            stroke: #FFFCE6;
+            stroke-width: 4px;
+            stroke-dasharray: 10 10;
+            stroke-linecap: round;
+
+            @include mx.sp {
+                fill: unset;
+                stroke: unset;
+                stroke-width: unset;
+                stroke-dasharray: unset;
+                stroke-linecap: unset;
+            }
+        }
+
+        @include mx.sp {
+            display: none;
+            position: unset;
+            top: unset;
+            left: unset;
+            width: unset;
+            height: unset;
+            overflow: hidden; // svgのUAデフォルト（unsetだとvisibleに戻ってしまうため明示）
+            z-index: unset;
+        }
+    }
+
+    &__item {
+        position: relative;
+        display: flex;
+        align-items: flex-start;
+        gap: 80px;
+
+        // アイコン同士をつなぐ点線コネクタ（SP用の簡易的な直線近似。PCは__list-curveのSVGに置き換えるため、
+        // デフォルト(=PC)では非表示。SPでは@include mx.spで表示に戻す）
+        &:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            top: 48px;
+            left: 24px;
+            width: 2px;
+            height: calc(100% + 16px);
+            border-left: 2px dashed v.$color-white;
+            display: none;
+
+            @include mx.sp {
+                display: unset;
+            }
+        }
+
+        h3 {
+            font-size: 3.2rem; 
+            font-weight: v.$fw-bold;
+            line-height: 1.3;
+            letter-spacing: 0;
+            margin-block-end: 4px;
+        }
+
+        p {
+            font-size: 2.4rem; 
+            font-weight: v.$fw-medium;
+            line-height: 1.3;
+            letter-spacing: 0;
+        }
+    }
+
+    &__icon {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        background-color: v.$color-white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+
+        img {
+            width: 38.4px;
+            height: auto;
+        }
+
+        // アイコンごとにサイズ・アーチ上の左右位置を個別調整するためのモディファイア。
+        // margin-inline-startはアイコン(flexの先頭子)に付けることで、後ろのテキストも
+        // 一緒に押し出されてFigma提供のアーチガイド(__list-curve)に沿う（値は初期の目安）。
+        // サイズを変えたい場合はwidth/heightとimgのwidthを個別に上書きする。
+        &--download {
+            margin-inline-start: -30px;
+
+            @include mx.sp {
+                margin-inline-start: unset;
+            }
+        }
+
+        &--register {
+            margin-inline-start: 40px;
+
+            @include mx.sp {
+                margin-inline-start: unset;
+            }
+        }
+
+        &--profile {
+            margin-inline-start: 70px;
+
+            @include mx.sp {
+                margin-inline-start: unset;
+            }
+        }
+
+        &--search {
+            margin-inline-start: 60px;
+
+            @include mx.sp {
+                margin-inline-start: unset;
+            }
+        }
+
+        &--chat {
+            margin-inline-start: -10px;
+
+            @include mx.sp {
+                margin-inline-start: unset;
+            }
+        }
+    }
+}
+
+// ---- SAFETY ----
+.gs-safety {
+    position: relative;
+    overflow: hidden;
+    background-color: v.$color-blue;
+    color: v.$color-white;
+    padding-block: clamp(60px, calc(31.04px + 6.734vw), 100px) clamp(60px, calc(16.57px + 10.1vw), 120px);
+
+    // REASONと同じ書式・配置に統一（vertical-rlでrotateの軸ズレを回避し、
+    // 縁取りだけ見える透明塗りにする）
+    &__watermark {
+        @include watermark;
+        top: 280px;
+        left: clamp(-60px, calc(8.956px - 6.734vw), -20px);
+        writing-mode: vertical-rl;
+        transform: none;
+        -webkit-text-stroke: 2px #F3F9FF;
+        color: transparent;
+    }
+
+    &__wrapper {
+        position: relative;
+        z-index: 1;
+        padding-block-start: 180px;
+
+        @include mx.sp {
+            padding-block-start: unset;
+        }
+    }
+
+    // REASON/GET STARTEDのheadと同じ帯デザインに統一。画面左寄せなのでGET STARTEDと同じく
+    // padding-inlineは左右反転（edge側=左を24px、中央側=右を48px）。
+    // .wrapperの外（.gs-safetyの直接の子）に出したので、left:0が画面の真の左端に効く。
+    &__head {
+        text-align: left;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-block-end: clamp(0px, calc(68.96px - 6.734vw), 40px);
+        padding-inline: clamp(0px, calc(27.58px - 2.694vw), 16px);
+
+        p,
+        h2 {
+            display: inline-block;
+            background-color: v.$color-white;
+            color: v.$color-text;
+            line-height: 1.32;
+            padding-inline: 24px 48px;
+        }
+
+        @include mx.sp {
+            position: unset;
+            top: unset;
+            left: unset;
+            z-index: unset;
+            display: block; // divのUAデフォルト（unsetだとinlineに戻ってしまうため明示）
+            flex-direction: unset;
+            align-items: unset;
+        }
+    }
+
+    &__eyebrow {
+        font-size: 4rem; // 40px
+        font-weight: v.$fw-bold;
+    }
+
+    &__title {
+        display: block;
+        font-size: clamp(4rem, calc(22.63px + 4.04vw), 6.4rem); // 40px→64px
+        font-weight: v.$fw-bold;
+        margin-block-start: 9px; // 2つの帯のgap（REASON/GET STARTEDと同じ）
+    }
+
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: clamp(16px, calc(-1.374px + 4.04vw), 40px);
+        max-width: clamp(780px, calc(694.9px + 19.78vw), 897.5px); // Figma実測(3×2グリッド, パディング0)
+
+        @include mx.sp {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    &__card {
+        background-color: v.$color-white;
+        color: v.$color-text;
+        border-radius: 13.85px;
+        padding: 32px 20px;
+        text-align: center;
+
+        img,
+        svg {
+            width: 80px;
+            height: 80px;
+            margin-inline: auto;
+            margin-block-end: 24px; // アイコンとh3の間
+        }
+
+        // scss/base/_typography.scssの共通中見出しスタイル（3.2rem, Bold, lh1.4）と一致
+        h3 {
+            @include v.heading-md;
+            margin-block-end: 8px;
+        }
+
+        p {
+            font-size: 2rem; // 20px
+            font-weight: v.$fw-medium;
+            line-height: 1.3;
+            letter-spacing: 0;
+        }
+    }
+
+    &__illust {
+        display: block;
+        position: absolute;
+        bottom: 0;
+        right: -25%;
+        z-index: 1;
+
+        @include mx.sp {
+            display: none;
+            position: unset;
+            bottom: unset;
+            right: unset;
+            z-index: unset;
+        }
+    }
+}
+
+// ---- 各セクション間の波形divider ----
+.gs-divider {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+// REASON→GET STARTEDのdividerはSVGの塗り以外(透明部分)を次セクションの黄色にして、
+// 波でなめらかに繋がって見えるようにする
+.gs-divider--reason {
+    background-color: v.$color-yellow;
+}
+
+.gs-divider--started {
+    background-color: v.$color-blue;
+}
+

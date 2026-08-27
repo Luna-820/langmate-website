@@ -14,14 +14,13 @@
 
 // 3. Pages (各ページ固有。section-title/card/cta/faq-accordion/marquee/step-list/
 //    mobile-nav/language-switcherは、使用箇所に応じてheader.scssまたは
-//    各ページのscssに統合済み。breadcrumbは中身が空だったため削除。
-//    faq.html実装時にfaq.scss側で必要になったら追加する)
+//    各ページのscssに統合済み。breadcrumbは中身が空だったため削除)
 @use "scss/pages/top";
-@use "scss/pages/about";
-@use "scss/pages/getting-started";
-@use "scss/pages/faq-archive";
-@use "scss/pages/faq";
+@use "scss/pages/company";
+@use "scss/pages/beginners-guide";
+@use "scss/pages/how-can-we-help";
+@use "scss/pages/support";
 @use "scss/pages/contact";
 @use "scss/pages/contact-thanks";
-@use "scss/pages/terms";
-@use "scss/pages/privacy";
+@use "scss/pages/terms-of-service";
+@use "scss/pages/privacy-policy";

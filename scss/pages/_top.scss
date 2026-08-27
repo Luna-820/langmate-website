@@ -3,63 +3,57 @@
 
 // ==========================================================================
 // TOP page
-// section-title / card / cta / faq-accordionは、TOPページでしか使わない
-// パーツのため、ここに統合している（他ページでも使うなら component/ に戻す）。
 // ==========================================================================
 
 // ---- Hero ----
 .hero {
     position: relative;
-    overflow: hidden; // 左上の装飾円がはみ出して横スクロールが出ないように
-    // ヘッダーがposition:stickyで確保している分の高さだけ引き上げて、
-    // 背景装飾(青丸・スマホ画像)がヘッダーの透明な余白部分の裏まで届くようにする。
-    // ※このpx値はヘッダーの実際の高さに依存するため、ヘッダーの余白を変えたら要調整。
-    margin-block-start: -86px; // 実測: 72pxだとheroの上端が画面上端より14px下にずれてしまい、
-    // 背景装飾(青丸)の丸みが不自然な直線でカットされて見えていたため補正
-    padding-block-start: 126px; // 86px(ヘッダー分) + 40px(元の余白)
+    overflow: hidden;
+    margin-block-start: -86px;
+    padding-block-start: clamp(126px, calc(253.6px + -12.46vw), 200px);
     padding-block-end: 40px;
 
-    // max-widthで全体を絞ると、広い画面でhero__visualが右端まで届かんくなる
-    // （右側に余白ができてしまう）ので、ここでは幅を制限しない。
-    // テキスト側の最大幅は.hero__content側のmax-widthで別途制御する。
+    @include mx.nav-collapse {
+        padding-block-start: 200px;
+    }
+￥
     &__inner {
         display: flex;
-        flex-direction: column;
-        gap: 24px;
+        flex-direction: row;
+        align-items: center;
+        gap: clamp(0px, calc(-17.37px + 4.04vw), 24px);
 
-        @include mx.pc {
-            flex-direction: row;
-            align-items: center;
-            gap: 24px;
+        @include mx.nav-collapse {
+            align-items: stretch;
+            gap: 0px;
         }
     }
 
-    // .wrapperの中に入れず独自レイアウトにしたので、左右の余白はここで直接持たせる。
-    // 右側のhero__visualは画面右端まで届かせたいので、右側にはpaddingを付けない。
-    // position+z-indexを明示して、.hero__deco(青丸)より確実に手前に来るようにする
-    // （position:relativeなだけの要素の中では、z-index:0の絶対配置要素が
-    //   通常のテキストより手前に描画されてしまうCSSの仕様のため）。
     &__content {
         position: relative;
         z-index: 1;
-        padding-inline-start: 16px;
+        padding-inline-start: clamp(20px, calc(-52.39px + 16.84vw), 120px);
         min-width: 0;
+        flex: 0 1 740px;
+        max-width: 740px;
 
-        @include mx.pc {
-            padding-inline-start: 120px;
-            // 1280px幅で実測して調整：リード文の各行(<br>区切り)が折り返さず
-            // 1行で収まるのに必要な幅(約620px)+左padding(120px)分を確保する。
-            flex: 0 1 740px;
-            max-width: 740px;
+        @include mx.nav-collapse {
+            flex: 1 1 50%;
+            max-width: unset;
+            padding-inline-start: 20px;
         }
     }
 
     &__heading {
-        font-size: 2rem;
+        font-size: clamp(14px, calc(9.657px + 1.01vw), 20px);
         font-weight: v.$fw-bold;
         line-height: 1.4;
         letter-spacing: 0;
         margin-block-end: 16px;
+
+        @include mx.nav-collapse {
+            font-size: 14px;
+        }
     }
 
     // ロゴはh1内の子要素（imgのalt="Langmate"がh1のテキストを補強するため）。
@@ -67,68 +61,94 @@
     // Figma実測: 378.27×81px。aspect-ratioで比率固定しつつ、狭い画面では縮小する。
     &__logo {
         display: block;
-        width: min(378px, 100%);
+        width: min(clamp(240px, calc(140.1px + 23.23vw), 378px), 100%);
         aspect-ratio: 378.27 / 81;
         height: auto;
         margin-block-start: 12px;
+
+        @include mx.nav-collapse {
+            width: min(240px, 100%);
+        }
     }
 
     &__lead {
-        font-size: 2.4rem;
+        font-size: clamp(14px, calc(6.761px + 1.684vw), 24px);
         font-weight: v.$fw-medium;
         line-height: 1.3;
         letter-spacing: 0;
         margin-block-end: 24px;
+        // 幅の50%制限は.hero__content側に移した（この要素自体は列幅いっぱいに使う）
+
+        @include mx.nav-collapse {
+            font-size: 14px;
+        }
     }
 
     &__badges {
         display: flex;
         gap: 12px;
 
+        @include mx.nav-collapse {
+            flex-direction: column;
+        }
+
         // .btn--store側のheight(64px)と揃えないと、a要素だけ64pxでimgが48pxのまま浮いて
         // 余白ができてしまうため、こちらも合わせて48pxに固定する
         .btn--store {
-            height: 48px;
+            height: clamp(40px, calc(34.21px + 1.347vw), 48px);
+
+            @include mx.nav-collapse {
+                height: 40px;
+            }
         }
 
         img {
-            height: 48px;
+            height: clamp(40px, calc(34.21px + 1.347vw), 48px);
             width: auto;
+
+            @include mx.nav-collapse {
+                height: 40px;
+            }
         }
     }
 
-    // 右端は画面幅に関係なく常に画像を画面端まで届かせたいので、
-    // .wrapperの制約から外し、残り幅いっぱいに広がる要素にする。
-    // 高さを固定してoverflow: hiddenにすることで、上下だけがトリミングされる。
-    // .heroのpadding-block-start(126px)は本来ヘッダー分のクリアランス(=テキスト用)。
-    // 画像側だけは青丸と同じくヘッダーの裏まで届かせたいので、その分だけ引き上げて
-    // 高さも足しておく（下端の位置は変えず、上だけ伸ばす形）。
     &__visual {
         position: relative;
-        margin-block-start: -126px;
-        height: 646px; // 520 + 126
+        height: 826px; // 700 + 126
         overflow: hidden;
+        flex: 1;
+        margin-block-start: clamp(-126px, calc(91.21px + -21.21vw), 0px);
+        align-self: stretch;
 
-        @include mx.pc {
-            flex: 1;
-            height: 826px; // 700 + 126
+        // SPはヘッダー裏まで届かせる必要が無い（.heroのpadding-block-startで
+        // テキスト側のクリアランスは別途確保済み）ので、PC専用のネガティブマージンは
+        // 外す。高さは指定せず、.hero__inner側のalign-items:stretchで
+        // .hero__content(テキスト+ボタン)と同じ高さに自動で揃える。
+        @include mx.nav-collapse {
+            height: auto;
+            flex: 1 1 50%;
             align-self: stretch;
+            margin-block-start: 0px;
         }
     }
 
-    // 左上の青い扇形＋ストライプ装飾（画像を使わずCSSのみで再現）
-    // .hero__visual(右カラム)ではなく.hero自体の子要素にして、
-    // カラム位置に関係なく常に画面左端に固定されるようにする。
     &__deco {
         position: absolute;
         top: -100px;
         left: -100px;
-        width: 340px;
-        height: 340px;
+        width: clamp(215px, calc(124.5px + 21.04vw), 340px);
+        height: clamp(215px, calc(124.5px + 21.04vw), 340px);
         background-color: v.$color-blue;
         border-radius: 50%;
         z-index: 0;
         pointer-events: none;
+
+        @include mx.nav-collapse {
+            top: -3%;
+            left: -10%;
+            width: 215px;
+            height: 215px;
+        }
 
         &::after {
             content: "";
@@ -144,9 +164,6 @@
         }
     }
 
-    // スマホモックアップの後ろに敷くピンクの円。
-    // 下に大きくずらして、コンテナのoverflow: hiddenで大部分がトリミングされる
-    // ＝「切れてる半月（クレセント）」のような見え方にする。
     &__pink-deco {
         position: absolute;
         bottom: -35%;
@@ -156,23 +173,43 @@
         background-color: v.$color-pink;
         border-radius: 50%;
         z-index: 0;
+
+        @include mx.nav-collapse {
+            bottom: -10%;
+            right: -5%;
+        }
     }
 
-    // 左端は絶対にトリミングしない：回転の基準点(transform-origin)を左端にすることで、
-    // 左側はほぼ位置が変わらないまま、右側だけが上下に振れてコンテナ端でトリミングされる。
-    // 幅はコンテナ(=画面残り幅)基準の%指定にしているので、画面サイズが変わっても
-    // 「右端まで届く」見え方が常に保たれる。
     &__kv {
         position: absolute;
         top: 50%;
-        // left:0だと、回転で下辺の左角がコンテナ外(左)にはみ出て逆に切れてしまうため、
-        // その分だけ%で右にずらして相殺する（コンテナ幅基準の%なので画面サイズが変わっても比率は一定）。
         left: 13%;
         z-index: 1;
         width: 115%;
-        height: auto; // 実寸(1190×1954)の比率を保ち、間延びを防ぐ
+        height: auto;
         transform-origin: left center;
         transform: translateY(-50%) rotate(8deg);
+
+        // 431〜1000pxの未調整域は.hero__visualの高さが.hero__content側のテキスト量に
+        // 連動して変わる（align-items:stretch）ため、幅基準(115%、実際はimgの
+        // 共通リセットmax-width:100%で頭打ち)のままだと高さが親を超えてしまい
+        // overflow:hiddenで上下が切れる。max-heightで高さだけ抑えると今度は
+        // アスペクト比が壊れて幅と高さが独立に頭打ちになり歪んでしまうため、
+        // この範囲だけobject-fit:containに切り替えて「歪まず全体が箱に収まる」
+        // 方式にする。回転(8deg)で見た目の外接ボックスが少し膨らむ分の余裕を
+        // 見て、箱自体は85%×85%にしておく。
+        // ※430px以下（既に調整済みのSPデザイン）は対象外にして、元の見た目
+        // （115%幅で箱いっぱいに寄せる構図）をそのまま保つ。
+        @media (min-width: 431px) and (max-width: 1000px) {
+            top: 50%;
+            left: 50%;
+            width: 85%;
+            height: 85%;
+            object-fit: contain;
+            object-position: center;
+            transform-origin: center;
+            transform: translate(-50%, -50%) rotate(8deg);
+        }
     }
 }
 
@@ -183,82 +220,105 @@
     &__inner {
         display: flex;
         flex-direction: column;
-        gap: 32px;
+        gap: clamp(32px, calc(73.37px + -4.04vw), 56px);
     }
 
     &__head {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 24px;
-        margin-bottom: 56px;
-
-        @include mx.pc {
-            flex-direction: row;
-            align-items: flex-start;
-            gap: 48px;
-            margin-bottom: 100px;
-        }
+        margin-bottom: clamp(0px, calc(-72.39px + 16.84vw), 100px);
     }
 
-    &__illustration img {
-        width: 100%;
-        max-width: 320px;
-        margin-inline: auto;
-
+    &__illustration {
         @include mx.pc {
-            max-width: 400px;
-            flex-shrink: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 400px;
+        }
+
+        @include mx.sp {
+            float: right;
+            width: 45%;
+            margin-inline-start: 16px;
+            margin-block-end: 16px;
+        }
+
+        // 431〜1023pxの未調整域はmx.pcのabsolute配置もmx.spのfloatも当たらず、
+        // 幅指定も無いままコンテナ幅いっぱいに広がってしまっていたので、
+        // 中央寄せ・現状(PC:400px)の半分程度のサイズに固定し、
+        // テキストとの余白も確保する
+        @media (min-width: 431px) and (max-width: 1023px) {
+            position: static;
+            float: none;
+            width: 200px;
+            margin-inline: auto;
+            margin-block: 24px;
+        }
+
+        img {
+            display: block;
+            width: 100%;
+            height: auto;
         }
     }
 
     &__content {
         @include mx.pc {
-            flex: 1;
+            position: relative;
+            padding-inline-start: 448px;
         }
 
         h2 {
             width: fit-content;
-            font-size: 3.6rem;
+            font-size: clamp(24px, calc(15.31px + 2.02vw), 36px);
             font-weight: v.$fw-bold;
             line-height: 1.55;
             letter-spacing: 0;
-            // 文字の下に、ピンクの丸ドットの下線
             border-bottom: 4px dotted v.$color-pink;
             padding-block-end: 12px;
-            margin-block-end: 16px;
+            margin-block-end: clamp(16px, calc(29.79px + -1.347vw), 24px);
         }
 
         p {
-            font-size: 2rem;
+            font-size: clamp(16px, calc(13.1px + 0.6734vw), 20px);
             font-weight: v.$fw-medium;
             line-height: 1.5;
             letter-spacing: 0;
+
+            @include mx.sp {
+                margin-block-end: 0;
+            }
         }
     }
 }
 
-// 上段3個・下段2個で必要な幅が違う(280/280/380 と 均等2分割)ため、
-// 1つの共有グリッドでは表現しにくく、行ごとに独立したflexの列にしている。
 .stat-grid {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: clamp(40px, calc(27.69px + 2.862vw), 57px); // 1列目と2列目の間隔
     margin-block-start: 32px;
-
-    @include mx.pc {
-        gap: 57px; // 1列目と2列目の間隔
-    }
 
     &__row {
         display: flex;
-        flex-direction: column;
-        gap: 16px;
+        flex-direction: row;
+        justify-content: center;
+        row-gap: clamp(16px, calc(57.37px + -4.04vw), 40px);
+        column-gap: clamp(16px, calc(29.79px + -1.347vw), 24px);
 
-        @include mx.pc {
-            flex-direction: row;
-            justify-content: center;
-            gap: 16px;
+        @include mx.sp {
+            justify-content: unset;
+        }
+
+        &--top {
+            @include mx.sp {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        &--bottom {
+            @include mx.sp {
+                flex-direction: column;
+            }
         }
     }
 }
@@ -277,40 +337,43 @@
     padding-block: 24px;
     text-align: center;
 
-    // 上段: マッチング実績・DL数(280px)／メディア掲載(380px)
-    @include mx.pc {
-        &--sm {
-            width: 280px;
-        }
+    &--sm {
+        width: 280px;
 
-        &--lg {
-            width: 380px;
+        @include mx.sp {
+            width: unset;
         }
     }
 
-    // 下段: 国別利用者比率・多言語に対応（残り幅を均等2分割）
-    .stat-grid__row--bottom > & {
-        @include mx.pc {
-            flex: 1 1 0;
+    &--lg {
+        width: 380px;
+
+        @include mx.sp {
+            width: unset;
+            grid-column: 1 / -1;
+        }
+    }
+    .stat-grid__row--bottom>& {
+        flex: 1 1 0;
+
+        @include mx.sp {
+            flex: unset;
         }
     }
 
-    // 吹き出し（スピーチバブル）: 角丸の帯＋下向き三角
-    // 右上の丸い突起装飾は一旦保留（後日再検討）。
+    // 吹き出し（スピーチバブル）: 角丸の帯＋下向き三角＋右端にくっつく四分円デコ
     &__tag {
         position: absolute;
-        top: -22px;
+        top: -30px;
         left: 50%;
         z-index: 1;
         background-color: v.$color-pink;
         color: v.$color-white;
-        font-size: 1.3rem;
+        font-size: clamp(16px, calc(13.1px + 0.6734vw), 20px);
         font-weight: v.$fw-bold;
         padding: 6px 18px;
         border-radius: 8px;
         white-space: nowrap;
-
-        // スクロールで画面に入った時のポップイン演出（js/stat-pop.js が .is-visible を付与）
         opacity: 0;
         transform: translateX(-50%) scale(0.6);
         transition: opacity 0.4s ease-out, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -327,6 +390,19 @@
             border-top: 10px solid v.$color-pink;
         }
 
+        // &::before {
+        //     content: "";
+        //     position: absolute;
+        //     top: 4px;
+        //     bottom: 0; // top:0とセットで、タグ自身の高さ(auto)にピッタリ合わせる
+        //     left: 95%;
+        //     width: 10px;
+        //     height: 50%;
+        //     z-index: -1;
+        //     background-color: v.$color-pink;
+        //     border-radius: 0 8px 0 0;
+        // }
+
         &.is-visible {
             opacity: 1;
             transform: translateX(-50%) scale(1);
@@ -335,7 +411,7 @@
 
     // グループ1: 通常テキスト（年間/以上/ユーザーが登録。/多言語対応文など）
     &__value {
-        font-size: 2rem;
+        font-size: clamp(16px, calc(13.1px + 0.6734vw), 20px);
         font-weight: v.$fw-medium;
         line-height: 1.219;
         letter-spacing: 0.08em;
@@ -343,7 +419,7 @@
         // グループ2: 強調する大きい数字（435万件・400万・120か国以上）
         strong {
             display: block;
-            font-size: 3.2rem;
+            font-size: clamp(24px, calc(18.21px + 1.347vw), 32px);
             font-weight: v.$fw-medium;
             line-height: 1.08;
             letter-spacing: 0.08em;
@@ -353,7 +429,7 @@
     // グループ1: メディア掲載リスト（ABEMA/TBS）も通常テキストと同じ設定
     &__list {
         text-align: left;
-        font-size: 2rem;
+        font-size: clamp(16px, calc(13.1px + 0.6734vw), 20px);
         font-weight: v.$fw-medium;
         line-height: 1.219;
         letter-spacing: 0.08em;
@@ -375,7 +451,7 @@
     // グループ3: 国別比率の凡例（USA 39%など）
     &__legend {
         text-align: left;
-        font-size: 2rem;
+        font-size: clamp(16px, calc(13.1px + 0.6734vw), 20px);
         font-weight: v.$fw-medium;
         line-height: 1.3;
         letter-spacing: 0.08em;
@@ -387,7 +463,7 @@
 
     // グループ5: 注釈（※日本を除く）
     &__note {
-        font-size: 1.6rem;
+        font-size: clamp(13px, calc(10.83px + 0.5051vw), 16px);
         font-weight: v.$fw-medium;
         line-height: 1.3;
         letter-spacing: 0.08em;
@@ -404,21 +480,19 @@
 .banner {
     &__inner {
         display: flex;
-        flex-direction: column;
-        gap: 24px;
+        flex-direction: row;
+        justify-content: center;
+        gap: clamp(0px, calc(-17.37px + 4.04vw), 24px);
         align-items: center;
-        padding-block: 40px;
+        padding-block: clamp(30px, calc(22.76px + 1.684vw), 40px);
+        padding-inline: clamp(16px, calc(-18.75px + 8.081vw), 64px); // Figma実測(W1000/padding 64・40)。.wrapperの既定paddingを上書き
 
-        @include mx.pc {
-            flex-direction: row;
-            justify-content: center;
-            padding-block: 40px;
-            padding-inline: 64px; // Figma実測(W1000/padding 64・40)。.wrapperの既定paddingを上書き
+        @include mx.sp {
+            flex-direction: column;
+            justify-content: unset;
         }
     }
 
-    // 実寸906×613と指定枠295×256で比率が違い、coverだと吹き出しが見切れてしまうため、
-    // containに変更してトリミングせず全体が見えるようにする。
     &__visual {
         flex-shrink: 0; // flexの縮小で幅だけ縮んで高さと比率が崩れるのを防ぐ
 
@@ -432,20 +506,19 @@
     }
 
     &__heading {
-        font-size: 3.6rem;
+        font-size: clamp(24px, calc(15.31px + 2.02vw), 36px);
         font-weight: v.$fw-bold;
         line-height: 1.4;
         letter-spacing: 0;
         margin-block-end: 12px;
 
-        // <strong>のデフォルトfont-weight:bolderが親の700と合わさって900になるため上書き
         strong {
             font-weight: inherit;
         }
     }
 
     &__content p:not(.banner__heading) {
-        font-size: 2rem;
+        font-size: clamp(16px, calc(13.1px + 0.6734vw), 20px);
         font-weight: v.$fw-medium;
         line-height: 1.5;
         letter-spacing: 0;
@@ -454,26 +527,20 @@
 }
 
 // Marquee — "Langmate"文字が横スクロールし続ける装飾帯
-// Intro-Banner間・Banner-REASON間・VOICE-SNS間の複数箇所で使用。
-// aria-hidden="true"で読み上げ対象外にする（装飾用途のため）
-// prefers-reduced-motionでアニメーション停止（_base.scssのグローバル設定で対応済み）
 .marquee {
     overflow: hidden;
     white-space: nowrap;
     padding-block: 12px;
-    // 背景は透過（ページ・セクションの背景色をそのまま見せる）
 
     &__track {
         display: inline-flex;
         align-items: center;
-        gap: 114px; // "Langmate"同士の間隔
+        gap: clamp(40px, calc(-13.57px + 12.46vw), 114px); // "Langmate"同士の間隔
         animation: marquee-scroll 20s linear infinite;
     }
 
-    // 色・枠線・ドロップシャドウはSVG(Langmate-yellow.svg / Langmate-blue.svg)に
-    // Figmaのベクターパスとしてそのまま焼き込まれているため、CSS側での色指定は不要。
     img {
-        width: min(696px, 90vw); // Figma実測値。狭い画面では90vwを上限に縮小
+        width: min(696px, 90vw);
         height: auto;
         aspect-ratio: 696 / 162.58;
         flex-shrink: 0;
@@ -484,25 +551,21 @@
     from {
         transform: translateX(0);
     }
+
     to {
         transform: translateX(-50%);
     }
 }
 
 // ---- Section Title — 巨大装飾英字 + 日本語見出し ----
-// 例: REASON / SERVICE / STEP / VOICE / FAQ
-// REASON・SERVICE・STEP・VOICE・FAQ Previewの5セクションで共通利用。
-// 装飾文字(.section-title__deco)はaria-hiddenで読み上げ対象から除外し、
-// 実際の見出しテキスト(日本語)だけがアクセシビリティツリーに残る。
-//
-// 頭文字の色・丸ドットの色はセクションごとに違うため、CSS変数(--title-accent /
-// --title-dot)として切り出し、.section-title--◯◯ のmodifierで個別に上書きする。
 .section-title {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(0px, calc(-8.687px + 2.02vw), 12px);
     text-align: center;
-    margin-block-end: 40px;
-
-    // デフォルト値（modifierクラスが無い場合のフォールバック）
+    margin-block-end: clamp(40px, calc(67.58px + -2.694vw), 56px);
     --title-accent: #{v.$color-pink};
     --title-dot: #{v.$color-pink};
 
@@ -514,6 +577,10 @@
         font-size: clamp(4.8rem, 16vw, #{v.$fs-display}); // 128px
         line-height: v.$lh-display; // 140%
         letter-spacing: 0;
+
+        @include mx.sp {
+            font-size: 4rem;
+        }
     }
 
     &__deco-shadow,
@@ -521,9 +588,6 @@
         grid-area: 1 / 1;
     }
 
-    // 影レイヤー：半透明の黒にしておくことで、背景色が黄/青/白のどのセクションでも
-    // 自然になじむ（Figma実測の色ではなく、汎用的に使える近似値）。不透明度30%。
-    // 頭文字だけは--title-accent色（例: Rはピンク30%）にする。
     &__deco-shadow {
         color: v.$color-text;
         opacity: 0.3;
@@ -534,10 +598,6 @@
         color: var(--title-accent);
     }
 
-    // 前面レイヤー：白抜き＋1pxの外枠線
-    // transformを使うシャドウ層が独自のスタッキングコンテキストを作ってしまい、
-    // 前面より手前に描画されるCSSの仕様上の落とし穴があったため、
-    // position+z-indexで確実に前面レイヤーが上にくるようにする。
     &__deco-front {
         position: relative;
         z-index: 1;
@@ -557,7 +617,8 @@
         gap: 8px;
         font-family: v.$font-jp;
         font-weight: v.$fw-bold;
-        font-size: v.$fs-subheading; // 32px
+        // fluid化: sp=1.6rem / pc=3.2rem（431〜1023pxを線形補間）
+        font-size: clamp(1.6rem, calc(4.418px + 2.694vw), #{v.$fs-subheading});
         line-height: v.$lh-sub; // 140%
         letter-spacing: 0;
     }
@@ -565,16 +626,16 @@
     // 丸ドット（セクションごとの色 --title-dot）
     &__dot {
         display: inline-block;
-        width: 36px;
-        height: 36px;
+        // fluid化: sp=10px / pc=36px（431〜1023pxを線形補間）
+        width: clamp(10px, calc(-8.822px + 4.377vw), 36px);
+        // fluid化: sp=10px / pc=36px（431〜1023pxを線形補間）
+        height: clamp(10px, calc(-8.822px + 4.377vw), 36px);
         border-radius: 50%;
         background-color: var(--title-dot);
         flex-shrink: 0;
     }
 
     // ---- セクションごとの色設定 ----
-    // ※reason以外は正式な指定がまだ無いため、これまでのデザイン確認時の記憶をもとにした
-    //   仮の値。違ってたら教えてほしい。
     &--reason {
         --title-accent: #{v.$color-pink};
         --title-dot: #{v.$color-pink};
@@ -602,31 +663,28 @@
 }
 
 // ---- REASON ----
-// 上下端のドーム型区切り。Figma書き出しのSVG(1280×240)をそのまま使用。
-// .reasonの中に入れず、前後に並ぶ独立した要素にする。
-// （.reasonの中に絶対配置で入れて引き上げる方式だと、marginとtransformの
-// 　计算が絡み合って画面幅ごとに間隔がズレるバグが出ていたため、
-// 　「ドームの下端 = 隣接する黄色セクションの上端」という単純な普通のブロック要素にした）
 .reason__divider {
     display: block;
     width: 100%;
-    height: auto; // これが無いとHTMLのheight属性が優先されaspect-ratioが効かない
+    height: auto;
     aspect-ratio: 1280 / 240;
 
     &--top {
-        margin-block-start: 100px; // マーキー帯との間隔
+        // fluid化: sp=32px / pc=100px（431〜1023pxを線形補間）
+        margin-block-start: clamp(32px, calc(-17.23px + 11.45vw), 100px);
     }
 }
 
 .reason {
     background-color: v.$color-yellow;
     padding-bottom: 60px;
+    padding-block: v.$section-padding-pc;
 
-    @include mx.pc {
-        padding-block: v.$section-padding-pc;
+    @include mx.sp {
+        padding-block: unset;
+        padding-bottom: 60px;
     }
 
-    // reason__itemの最大幅1120pxに合わせて、このセクションだけ.wrapperの上限を広げる
     .wrapper {
         max-width: 1120px;
     }
@@ -634,50 +692,53 @@
     &__list {
         display: flex;
         flex-direction: column;
-        gap: 40px;
+        // fluid化: sp=64px / pc=40px（431〜1023pxを線形補間）
+        gap: clamp(40px, calc(81.37px + -4.04vw), 64px);
     }
 
-    // イラストとカードを横並びにする（flex）
-    // 723(カード) : 364.19(イラスト) + gap ≒ 1120 になる比率。カードはflex:1で残り幅を埋める。
     &__item {
-        position: relative; // __bg装飾の絶対配置の基準にする
+        position: relative;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
-        gap: 24px;
+        gap: 33px;
         max-width: 1120px;
         margin-inline: auto;
 
-        @include mx.pc {
-            flex-direction: row;
+        @include mx.sp {
+            flex-direction: column;
             align-items: center;
-            gap: 33px;
         }
 
         // Reason 02: イラストとカードを左右反転し、イラストがカードに少し重なるデザイン
         &--reverse {
-            @include mx.pc {
-                flex-direction: row-reverse;
+            flex-direction: row-reverse;
 
-                .reason__illustration {
-                    margin-inline-start: -90px;
+            @include mx.sp {
+                flex-direction: column;
+            }
+
+            .reason__illustration {
+                margin-inline-start: -90px;
+
+                @include mx.sp {
+                    margin-inline-start: unset;
                 }
             }
         }
     }
 
     // Reason 01の背景装飾（水玉模様の輪っか＋オレンジのうねり）。
-    // イラスト・カードより背面に置きたいので、DOM順を先頭にしてz-indexも指定しない
-    // （__illustrationがz-index:1を持つため、無指定なら自動的に背面になる）。
-    // 位置はスクショからの近似値、常にうにょうにょ揺れ続けるアニメーション付き。
     &__bg {
-        display: none;
+        display: block;
         pointer-events: none;
+        position: absolute;
+        animation: reason-bg-wobble 8s ease-in-out infinite;
 
-        @include mx.pc {
-            display: block;
-            position: absolute;
-            animation: reason-bg-wobble 8s ease-in-out infinite;
+        @include mx.sp {
+            display: none;
+            position: unset;
+            animation: unset;
         }
 
         &--01 {
@@ -690,11 +751,10 @@
             top: 80px;
             right: -130px;
             animation-duration: 7s;
-            animation-delay: -3s; // 2つの動きがズレるように開始位置をずらす
+            animation-delay: -3s;
         }
 
-        // Reason 02（reverse）用。カードが視覚的に左、イラストが右に来るレイアウトなので、
-        // 03はカードの左側、04はイラストの下側に配置。
+        // Reason 02（reverse）用。
         &--03 {
             bottom: -10px;
             left: -170px;
@@ -712,35 +772,46 @@
 
     &__illustration {
         position: relative;
-        z-index: 1; // DOM順でcardより前にあるため、position:relativeだけだとcardの下に潜り込んでしまう
-        width: 100%;
-        max-width: 220px;
+        z-index: 1;
+        max-width: 364px;
+        height: auto;
         flex-shrink: 0;
 
-        @include mx.pc {
-            width: 364px;
-            max-width: 364px;
+        @include mx.sp {
+            width: 100%;
+            max-width: 120px;
+            position: absolute;
+            bottom: calc(100% - 50px);
+            right: 0;
         }
 
-        // Figmaの数値(-174.13deg等)が実際のデザインと合っていなかったため、
-        // 添付デザインを見た目で確認しながらの近似値に変更。少し左に傾ける程度。
         &--01 {
             transform: rotate(-8deg);
+
+            @include mx.sp {
+                width: 88px;
+            }
         }
 
         &--02 {
             transform: rotate(-1.36deg);
+
+            @include mx.sp {
+                width: 122px;
+            }
         }
 
         &--03 {
             transform: rotate(-3.36deg);
+
+            @include mx.sp {
+                width: 74px;
+            }
         }
     }
 }
 
 // __bg装飾の「うにょうにょ」ループアニメーション。
-// SVG自体の輪郭を変形させるのは大掛かりになるため、拡大縮小・回転・位置ずれを
-// ゆっくり組み合わせて、柔らかく揺れ続けているように見せる疑似モーフィング。
 @keyframes reason-bg-wobble {
     0% {
         transform: translate(0, 0) rotate(0deg) scale(1);
@@ -764,14 +835,13 @@
 }
 
 // ---- Card — 用途別にmodifierで分ける（過度な共通化を避ける） ----
-// .cardの基本形はREASON・VOICEの2セクションで共用。
 .card {
     background-color: v.$color-white;
     border-radius: v.$radius-card;
     padding: 24px;
 }
 
-// Reasonセクション用カード（イラストと横並びにするため、残り幅いっぱいに広がる）
+// Reasonセクション用カード
 .card--reason {
     position: relative;
     display: flex;
@@ -779,27 +849,28 @@
     gap: 24px;
     width: 100%;
     text-align: left;
-    border-radius: 15px; // Figma実測（.cardの基本12pxを上書き）
-    padding-inline: 24px;
-    padding-block: 24px;
+    border-radius: 15px;
+    // fluid化: sp=24px / pc=88px（431〜1023pxを線形補間）
+    padding-inline: clamp(24px, calc(-22.33px + 10.77vw), 88px);
+    // fluid化: sp=24px / pc=64px（431〜1023pxを線形補間）
+    padding-block: clamp(24px, calc(-4.956px + 6.734vw), 64px);
+    flex: 1;
 
-    @include mx.pc {
-        flex: 1;
-        padding-inline: 88px; // Figma実測(W703.05塗り×H558内包 の枠から)
-        padding-block: 64px;
+    @include mx.sp {
+        flex: unset;
     }
 
     .card__eyebrow {
         font-family: v.$font-en;
         font-weight: v.$fw-bold;
-        // opacityだと子要素(span)のピンクまで一緒に薄まってしまうため、
-        // "Reason"部分はcolor指定(#B9B9B9)にして、spanのピンクは100%のまま独立させる
         color: #B9B9B9;
-        font-size: 3.2rem;
+        // fluid化: sp=2rem / pc=3.2rem（431〜1023pxを線形補間）
+        font-size: clamp(2rem, calc(11.31px + 2.02vw), 3.2rem);
 
         span {
             color: v.$color-pink;
-            font-size: 6.4rem;
+            // fluid化: sp=3.6rem / pc=6.4rem（431〜1023pxを線形補間）
+            font-size: clamp(3.6rem, calc(15.73px + 4.714vw), 6.4rem);
             opacity: 1;
             font-style: italic;
         }
@@ -810,47 +881,69 @@
         font-weight: v.$fw-bold;
         letter-spacing: v.$ls-card;
         line-height: v.$lh-card;
+
+        @include mx.sp {
+            font-size: 2rem;
+        }
     }
 
     .card__body {
-        font-size: 1.5rem;
+        // fluid化: sp=1.6rem / pc=2.4rem（431〜1023pxを線形補間）
+        font-size: clamp(1.6rem, calc(10.21px + 1.347vw), 2.4rem);
         line-height: v.$lh-body;
     }
 }
 
 // ---- SERVICE ----
 .service {
-    padding-block: 60px;
+    // fluid化: sp=40px / pc=60px（431〜1023pxを線形補間）
+    padding-block: clamp(40px, calc(25.52px + 3.367vw), 60px);
 
-    // Figma実測：幅1000pxの白箱、padding 48px(上下)/80px(左右)
-    &__inner {
-        display: flex;
-        flex-direction: column;
-        gap: 32px;
+    &__box {
         max-width: 1000px;
         margin-inline: auto;
         background-color: v.$color-white;
-        padding-block: 48px;
-        padding-inline: 24px;
+        // fluid化: sp=40px / pc=48px（431〜1023pxを線形補間）
+        padding-block: clamp(40px, calc(34.21px + 1.347vw), 48px);
+        // fluid化: sp=32px / pc=80px（431〜1023pxを線形補間）
+        padding-inline: clamp(32px, calc(-2.747px + 8.081vw), 80px);
+    }
 
-        @include mx.pc {
-            flex-direction: row;
-            align-items: center;
-            padding-inline: 80px;
+    .section-title {
+        @include mx.sp {
+            margin-block-end: 32px;
+        }
+    }
+
+    &__inner {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 32px;
+
+        @include mx.sp {
+            flex-direction: column;
+            align-items: unset;
         }
     }
 
     &__mockup {
-        max-width: 280px;
+        // fluid化: sp=100px / pc=280px（431〜1023pxを線形補間）
+        max-width: clamp(100px, calc(-30.3px + 30.3vw), 280px);
         margin-inline: auto;
         flex-shrink: 0;
+
+        @include mx.sp {
+            height: auto;
+        }
     }
 
     &__content {
         text-align: left;
+        flex: 1;
 
-        @include mx.pc {
-            flex: 1;
+        @include mx.sp {
+            flex: unset;
         }
     }
 }
@@ -858,25 +951,28 @@
 .service-tabs {
     &__list {
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         gap: 16px;
         margin-block-end: 24px;
 
-        @include mx.pc {
-            justify-content: flex-start;
+        @include mx.sp {
+            justify-content: center;
         }
 
         button {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 56px;
-            height: 56px;
+            // fluid化: sp=48px / pc=56px（431〜1023pxを線形補間）
+            width: clamp(48px, calc(42.21px + 1.347vw), 56px);
+            // fluid化: sp=48px / pc=56px（431〜1023pxを線形補間）
+            height: clamp(48px, calc(42.21px + 1.347vw), 56px);
             border-radius: 50%;
             border: 2px solid v.$color-gray; // 非選択時: #E0E0E0
             background-color: v.$color-white;
             color: v.$color-gray; // アイコンのcurrentColorもグレーに揃える
-            padding: 12px;
+            // fluid化: sp=6px / pc=12px（431〜1023pxを線形補間）
+            padding: clamp(6px, calc(1.657px + 1.01vw), 12px);
             cursor: pointer;
             transition: color 0.2s, border-color 0.2s;
 
@@ -898,17 +994,26 @@
 
         h3 {
             display: inline-block;
-            font-size: 4rem;
+            // fluid化: sp=2rem / pc=4rem（431〜1023pxを線形補間）
+            font-size: clamp(2rem, calc(5.522px + 3.367vw), 3.5rem);
             font-weight: v.$fw-bold;
             line-height: 1.55;
             letter-spacing: 0;
             border-bottom: 3px dotted v.$color-pink;
             padding-block-end: 8px;
             margin-block-end: 16px;
+
+            @include mx.sp {
+                display: block;
+                width: fit-content;
+                margin-inline: auto;
+                text-align: center;
+            }
         }
 
         p {
-            font-size: 2.4rem;
+            // fluid化: sp=1.6rem / pc=2.4rem（431〜1023pxを線形補間）
+            font-size: clamp(1.6rem, calc(10.21px + 1.347vw), 2.4rem);
             font-weight: v.$fw-medium;
             line-height: 1.219;
             letter-spacing: 0.08em;
@@ -917,12 +1022,10 @@
 }
 
 // ---- STEP ----
-// 上下端の波型区切り。Figma書き出しのSVG(1280×317 / 1280×319)をそのまま使用。
-// reason__dividerと同様、.stepの中に入れず前後に並ぶ独立した要素にする。
 .step-divider {
     display: block;
     width: 100%;
-    height: auto; // これが無いとHTMLのheight属性が優先されaspect-ratioが効かない
+    height: auto;
 
     &--top {
         aspect-ratio: 1280 / 317;
@@ -938,31 +1041,36 @@
     background-color: #21A3FF;
     color: v.$color-white;
     padding-block: 60px;
-    overflow: hidden; // 角の装飾ドット・イラストが画面外にはみ出すのを防ぐ
+    overflow: hidden;
 
-    @include mx.pc {
-        padding-block: v.$section-padding-pc;
+    .section-title {
+        @include mx.sp {
+            margin-block-end: 32px;
+        }
     }
 
-    // 角のイラスト（吹き出しの女性 / プロフィール入力の男性）。
-    // 中央の白いボックスより外側にはみ出す配置。位置はFigmaのスクショからの近似値。
     &__illust {
-        display: none;
-
-        @include mx.pc {
-            display: block;
-            position: absolute;
-            z-index: 2; // .step__box(z-index:1)より手前にして、下に潜り込まないようにする
-        }
+        display: block;
+        position: absolute;
+        z-index: 2;
+        height: auto; // widthだけ変える箇所があるため、HTMLのheight属性に潰されないよう明示
 
         &--01 {
-            top: 24px;
-            right: 40px;
+            // fluid化: sp=12px / pc=24px（431〜1023pxを線形補間）
+            top: clamp(12px, calc(3.313px + 2.02vw), 24px);
+            // fluid化: sp=12px / pc=40px（431〜1023pxを線形補間）
+            right: clamp(12px, calc(-8.269px + 4.714vw), 40px);
+            // fluid化: sp=110px / pc=227px（431〜1023pxを線形補間）
+            width: clamp(110px, calc(25.3px + 19.7vw), 227px);
         }
 
         &--02 {
-            bottom: 24px;
-            left: 40px;
+            // fluid化: sp=12px / pc=24px（431〜1023pxを線形補間）
+            bottom: clamp(12px, calc(3.313px + 2.02vw), 24px);
+            // fluid化: sp=12px / pc=40px（431〜1023pxを線形補間）
+            left: clamp(12px, calc(-8.269px + 4.714vw), 40px);
+            // fluid化: sp=100px / pc=226px（431〜1023pxを線形補間）
+            width: clamp(100px, calc(8.788px + 21.21vw), 226px);
         }
     }
 
@@ -977,45 +1085,45 @@
         border-radius: 30px;
         padding: 24px;
         border: 2px solid v.$color-text;
-
-        @include mx.pc {
-            padding-block: 64px;
-        }
+        padding-block: 64px;
     }
 
-    // 水玉の装飾円。.step__boxの角を基準に、カードの上に少し被さるように配置する
-    // （ユーザー指定：「水たまの円は白のカードの上、少し被ってる感じで」）。
-    // .step__boxの子要素にし、z-indexをboxより上にしてカードの上に重ねる。
     &__deco {
-        display: none;
-
-        @include mx.pc {
-            display: block;
-            position: absolute;
-            z-index: 2;
-            pointer-events: none;
-        }
+        display: block;
+        position: absolute;
+        z-index: 2;
+        pointer-events: none;
+        height: auto;
 
         &--01 {
-            top: 40px;
-            left: -280px;
+            // fluid化: sp=60px / pc=40px（431〜1023pxを線形補間）
+            top: clamp(40px, calc(74.48px + -3.367vw), 60px);
+            // fluid化: sp=-100px / pc=-280px（431〜1023pxを線形補間）
+            left: clamp(-280px, calc(30.3px + -30.3vw), -100px);
+            // fluid化: sp=160px / pc=330px（431〜1023pxを線形補間）
+            width: clamp(160px, calc(36.94px + 28.62vw), 330px);
         }
 
         &--02 {
-            right: -174px;
-            bottom: 40px;
+            // fluid化: sp=-70px / pc=-174px（431〜1023pxを線形補間）
+            right: clamp(-174px, calc(5.286px + -17.51vw), -70px);
+            // fluid化: sp=20px / pc=40px（431〜1023pxを線形補間）
+            bottom: clamp(20px, calc(5.522px + 3.367vw), 40px);
+            // fluid化: sp=100px / pc=205px（431〜1023pxを線形補間）
+            width: clamp(100px, calc(23.99px + 17.68vw), 205px);
         }
     }
 
     &__inner {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        justify-content: center;
         gap: 72px;
         align-items: center;
 
-        @include mx.pc {
-            flex-direction: row;
-            justify-content: center;
+        @include mx.sp {
+            flex-direction: column;
+            justify-content: unset;
         }
     }
 
@@ -1026,18 +1134,19 @@
             display: block;
             width: 100%;
             height: auto;
+
+            @include mx.sp {
+                width: 100px;
+            }
         }
     }
 }
 
-// Step List — 「ダウンロード→登録→…」の手順リスト
-// ※getting-started.html実装時にも使う想定でReusable Component化していたが、
-//   今の時点ではTOPページでしか使ってないため、いったんここに統合する。
-//   getting-started.html側で必要になったら、共通コンポーネントとして切り出し直す。
 .step-list {
     display: flex;
     flex-direction: column;
-    gap: 34px;
+    // fluid化: sp=24px / pc=34px（431〜1023pxを線形補間）
+    gap: clamp(24px, calc(16.76px + 1.684vw), 34px);
     margin-bottom: 40px;
 
     &__item {
@@ -1052,29 +1161,16 @@
             border-bottom: none;
         }
 
-        // アイコンの続きのように、点線の下に下向き三角を配置（最後の項目は矢印なし）
+        // アイコンの続きのように、点線の下に下向き三角を配置
         &:not(:last-child)::after {
             content: "";
             position: absolute;
-            top: calc(100% + 6px); // 点線とのgap 6px
-            left: 40%; // アイコン(50px)の水平中央に合わせる（25px - 三角幅の半分12px）
+            top: calc(100% + 6px);
+            left: 40%;
             width: 24px;
             height: 16px;
             background-color: #D9D9D9;
             clip-path: polygon(0 0, 100% 0, 50% 100%);
-        }
-
-        // アイコンに角丸8px・青枠線付きの外枠(50×50px)を追加
-        img {
-            position: relative;
-            top: 3px; // アイコンの塊だけ3px下にずらす（テキスト・点線の位置には影響しない）
-            left: -6px;
-            width: 50px;
-            height: 50px;
-            padding: 9px;
-            border: 3px solid v.$color-blue;
-            border-radius: 8px;
-            flex-shrink: 0;
         }
 
         span {
@@ -1082,33 +1178,166 @@
             font-size: 2rem;
         }
     }
+
+    &__icon {
+        position: relative;
+        top: 3px;
+        left: -6px;
+        display: block;
+        box-sizing: border-box;
+        width: 50px;
+        height: 50px;
+        padding: 9px;
+        border: 3px solid v.$color-blue;
+        border-radius: 8px;
+        flex-shrink: 0;
+
+        &::before {
+            content: "";
+            position: absolute;
+            inset: 9px;
+            background-color: v.$color-blue;
+            -webkit-mask-image: var(--icon-src);
+            mask-image: var(--icon-src);
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+            -webkit-mask-size: contain;
+            mask-size: contain;
+        }
+    }
 }
 
 // ---- VOICE ----
 .voice {
-    padding-block: 100px;
+    // fluid化: sp=40px / pc=100px（431〜1023pxを線形補間）
+    padding-block: clamp(40px, calc(-3.434px + 10.1vw), 100px);
+
+    .section-title {
+        @include mx.voice-collapse {
+            margin-block-end: 32px;
+        }
+    }
+
+    &__slider {
+        @include mx.voice-collapse {
+            position: relative;
+        }
+    }
 
     &__list {
         display: grid;
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(3, 1fr);
         gap: 40px;
 
-        @include mx.pc {
-            grid-template-columns: repeat(3, 1fr);
+        @include mx.voice-collapse {
+            display: flex;
+            grid-template-columns: unset;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-padding-inline-start: 20px;
+            gap: 20px;
+            padding-inline: 16px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+
+            >.card--voice {
+                flex: 0 0 300px;
+                scroll-snap-align: start;
+            }
+        }
+    }
+
+    &__nav {
+        display: none;
+
+        @include mx.voice-collapse {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 50%;
+            z-index: 2;
+            width: 48px;
+            height: 48px;
+            // 縦方向のtranslateY(-50%)は、下の&--prev/&--nextのtransformで
+            // translate()としてまとめて上書きする
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+
+            svg {
+                width: 48px;
+                height: 48px;
+            }
+        }
+
+        &--prev svg {
+            @include mx.voice-collapse {
+                transform: scaleX(-1);
+            }
+        }
+
+        // %指定はコンテナ幅に依存して脆いため、「ボタンの中心が.voice__sliderの
+        // 端にちょうど来る」ように、0px + transformで自身の半分だけずらす
+        // 固定の方式にする（コンテナ幅が変わっても常に端に半分だけかかる）。
+        &--prev {
+            @include mx.voice-collapse {
+                left: 0;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        &--next {
+            @include mx.voice-collapse {
+                right: 0;
+                transform: translate(50%, -50%);
+            }
+        }
+
+        // 1枚目では前へボタン、最後のカードでは次へボタンを隠す
+        // （js/voice-slider.jsがスクロール位置に応じてis-hiddenを付け外しする）
+        &.is-hidden {
+            @include mx.voice-collapse {
+                display: none;
+            }
         }
     }
 }
 
 // VOICEセクション用カード（口コミ）
 .card--voice {
+    position: relative;
     border: 2px solid v.$color-pink;
     box-shadow: 4px 4px 0 v.$color-pink;
     padding: 24px 32px;
 
+    &__illust {
+        display: none;
+
+        @include mx.voice-collapse {
+            display: block;
+            position: absolute;
+            bottom: -24px;
+            right: -16px;
+            width: 130px;
+            height: auto;
+            z-index: 1;
+            pointer-events: none;
+        }
+    }
+
     .card__rating {
-        color: v.$color-yellow;
+        color: #FBBC04;
         letter-spacing: 0.1em;
         margin-block-end: 8px;
+        font-size: 3.2rem;
     }
 
     .card__author {
@@ -1120,24 +1349,25 @@
     }
 
     .card__body {
-        font-size: 2rem;
+        // fluid化: sp=1.6rem / pc=2rem（431〜1023pxを線形補間）
+        font-size: clamp(1.6rem, calc(13.1px + 0.6734vw), 2rem);
         line-height: v.$lh-body;
     }
 }
 
 // ---- SNS (Instagram) ----
-// 上下端のドーム型区切り。Figma書き出しのSVG(1280×180)をそのまま使用。
-// reason__divider / step-dividerと同様、.snsの中に入れず前後に並ぶ独立した要素にする。
 .sns-divider {
     display: block;
     width: 100%;
-    height: auto; // これが無いとHTMLのheight属性が優先されaspect-ratioが効かない
+    height: auto;
     aspect-ratio: 1280 / 180;
+
 }
 
 .sns {
     background-color: v.$color-yellow;
-    padding-block: 60px;
+    // fluid化: sp=16px / pc=60px（431〜1023pxを線形補間）
+    padding-block: clamp(16px, calc(-15.85px + 7.407vw), 60px);
 
     &__inner {
         width: 100%;
@@ -1145,31 +1375,47 @@
         margin-inline: auto;
         background-color: v.$color-white;
         border-radius: 24px;
-        padding: 24px;
+        // fluid化: sp=24px / pc=80px（431〜1023pxを線形補間）
+        padding-block: clamp(24px, calc(-16.54px + 9.428vw), 80px);
+        // fluid化: sp=32px / pc=80px（431〜1023pxを線形補間）
+        padding-inline: clamp(32px, calc(-2.747px + 8.081vw), 80px);
         display: flex;
-        flex-direction: column;
-        gap: 24px;
+        flex-direction: row;
+        // fluid化: sp=20px / pc=24px（431〜1023pxを線形補間）
+        gap: clamp(20px, calc(17.1px + 0.6734vw), 24px);
         align-items: center;
         text-align: center;
 
-        @include mx.pc {
-            flex-direction: row;
-            padding: 80px;
+        @include mx.sp {
+            flex-direction: column;
         }
     }
 
     &__grid {
-        width: 260px;
-        height: 356px;
+        // fluid化: sp=120px / pc=260px（431〜1023pxを線形補間）
+        width: clamp(120px, calc(18.65px + 23.57vw), 260px);
+        // fluid化: sp=165px / pc=356px（431〜1023pxを線形補間）
+        height: clamp(165px, calc(26.73px + 32.15vw), 356px);
         object-fit: cover;
         flex-shrink: 0;
     }
 
     &__label {
-        font-size: 3.6rem;
+        // fluid化: sp=2rem / pc=3.6rem（431〜1023pxを線形補間）
+        font-size: clamp(2rem, calc(8.418px + 2.694vw), 3.6rem);
         font-weight: v.$fw-bold;
         line-height: 1.4;
         letter-spacing: 0;
+
+        @include mx.sp {
+            margin-bottom: 4px;
+        }
+    }
+
+    &__heading {
+        @include mx.sp {
+            margin-bottom: 16px;
+        }
     }
 
     &__content h2 {
@@ -1180,27 +1426,19 @@
         font-family: v.$font-inter;
         font-style: italic;
         font-weight: v.$fw-bold;
-        font-size: 5.6rem;
+        // fluid化: sp=2.4rem / pc=5.6rem（431〜1023pxを線形補間）
+        font-size: clamp(2.4rem, calc(0.835px + 5.387vw), 5.6rem);
         line-height: 1.4;
         letter-spacing: 0;
 
         img {
-            width: 56px;
-            height: 56px;
+            // fluid化: sp=32px / pc=56px（431〜1023pxを線形補間）
+            width: clamp(32px, calc(14.63px + 4.04vw), 56px);
+            // fluid化: sp=32px / pc=56px（431〜1023pxを線形補間）
+            height: clamp(32px, calc(14.63px + 4.04vw), 56px);
         }
     }
 
-    // 添付デザイン参照：白塗り＋黒の外側リング＋その外側に黄色のリング、の3層構造。
-    // -webkit-text-strokeは文字の輪郭の中央基準（内側/外側半分ずつ）にしか引けず、
-    // 「外側のみ」を直接指定できないため、太さの違うstrokeを3枚重ねて、
-    // 内側半分を上のレイヤーで覆い隠すことで「外側だけのリング」を擬似的に作る。
-    // 実テキスト本体＝黒リング(中間)、::before＝黄リング(最背面)、::after＝白塗り(最前面)。
-    // paint-order: stroke fill によって「stroke→fillの順」で描画させ、
-    // 不透明な塗り(白)をstrokeの上から重ねることで内側半分を隠す
-    // → 結果的に外側だけにstrokeが見える（多重レイヤーの疑似要素は不要）。
-    // text-shadowだと文字の塗りつぶし込みでコピーされてしまい、黄色が「塗り」に
-    // なってしまう（アウトラインだけにできない）。そのため::beforeで、黄色の
-    // アウトラインのみ(塗りは透明)の複製を5px,5pxオフセットして背面に敷く方式にする。
     &__ig-text {
         position: relative;
         z-index: 1;
@@ -1223,13 +1461,12 @@
 
     // :not(.sns__label)が無いと「follow me!」ラベル側のpにも掛かって上書きしてしまう
     &__content p:not(.sns__label) {
-        font-size: 2.4rem;
+        // fluid化: sp=1.6rem / pc=2.4rem（431〜1023pxを線形補間）
+        font-size: clamp(1.6rem, calc(10.21px + 1.347vw), 2.4rem);
         line-height: 1.4;
         letter-spacing: 0;
     }
 
-    // ピル型のリンクボタン。右端に検索アイコンの四角いゾーンを分離し、
-    // 黄色いハードシャドウ(.btn--outlineと同じ「押し込み」パターン)を付ける。
     &__link {
         display: inline-flex;
         align-items: stretch;
@@ -1253,7 +1490,8 @@
         padding-inline: 24px;
         padding-block: 4px 8px;
         font-weight: v.$fw-bold;
-        font-size: 2rem;
+        // fluid化: sp=1.6rem / pc=2rem（431〜1023pxを線形補間）
+        font-size: clamp(1.6rem, calc(13.1px + 0.6734vw), 2rem);
     }
 
     &__link-icon {
@@ -1278,6 +1516,16 @@
     padding-block: 60px 100px;
     text-align: center;
 
+    @include mx.sp {
+        padding-block: 80px 24px 40px;
+    }
+
+    .section-title {
+        @include mx.sp {
+            margin-block-end: 32px;
+        }
+    }
+
     &__box {
         position: relative;
         width: 100%;
@@ -1285,34 +1533,40 @@
         margin-inline: auto;
         background-color: v.$color-white;
         border-radius: v.$radius-card;
-        padding: 24px;
-        margin-block-end: 40px;
-
-        @include mx.pc {
-            padding: 40px 32px;
-        }
+        // fluid化: sp=24px / pc=40px（431〜1023pxを線形補間）
+        padding-block: clamp(24px, calc(12.42px + 2.694vw), 40px);
+        // fluid化: sp=24px / pc=32px（431〜1023pxを線形補間）
+        padding-inline: clamp(24px, calc(18.21px + 1.347vw), 32px);
+        // 白箱と下のボタン(よくある質問を見る)の間隔をきっちり24pxにする
+        // fluid化: sp=24px / pc=40px（431〜1023pxを線形補間）
+        margin-block-end: clamp(24px, calc(12.42px + 2.694vw), 40px);
     }
 
-    // PCではboxの左上あたりに少し左に傾けて重ねる装飾配置（Figma実測が無いため近似値）。
-    // SPでは絶対配置だと窮屈になるため、従来通り上部中央の通常フローに置く。
+    // イラストは.faq-preview__boxのHTML上の子要素だが、白箱の外（左上）に
+    // はみ出す形で重ねる。boxにoverflow:hiddenは付いていないため、
+    // position:absoluteのままなら箱の外にきちんとはみ出して表示される。
     &__illustration {
-        max-width: 223px;
         margin-inline: auto;
-        margin-block-end: 16px;
-
-        @include mx.pc {
-            position: absolute;
-            top: -130px;
-            left: -50px;
-            margin-block-end: 0;
-            transform: rotate(-6deg);
-        }
+        margin-block-end: 0;
+        position: absolute;
+        // 幅・高さも431〜1023pxで固定サイズのままだと、431px直後で急にPC寄りの
+        // 大きいサイズ(223px)になってしまい、上のセクション見出し（FAQ watermark）
+        // と被る事故が起きていた。top/leftと同じくwidth/heightもsp↔pcで連続的に
+        // 補間する（アスペクト比92.38:76.81を維持）
+        // fluid化: sp=92.38px / pc=223px（431〜1023pxを線形補間）
+        width: clamp(92.38px, calc(-2.177px + 21.99vw), 223px);
+        // fluid化: sp=76.81px / pc=185.4px（431〜1023pxを線形補間）
+        height: clamp(76.81px, calc(-1.81px + 18.28vw), 185.4px);
+        // fluid化: sp=-100px / pc=-130px（431〜1023pxを線形補間）
+        top: clamp(-130px, calc(-78.28px + -5.051vw), -100px);
+        // fluid化: sp=0px / pc=-50px（431〜1023pxを線形補間）
+        left: clamp(-50px, calc(36.2px + -8.418vw), 0px);
+        transform: rotate(-6deg);
     }
 }
 
 // FAQ Accordion / Preview List
-// TOPページでは「抜粋リスト（アコーディオン開閉、白箱の中）」として使用。
-// faq-archive.html / faq.html 実装時にカテゴリタブを追加する。
+
 .faq-preview__list {
     width: 100%;
     max-width: 700px;
@@ -1357,7 +1611,8 @@
     flex-shrink: 0;
     font-family: v.$font-en; // Poppins
     font-weight: v.$fw-bold;
-    font-size: 4.8rem;
+    // fluid化: sp=2.4rem / pc=4.8rem（431〜1023pxを線形補間）
+    font-size: clamp(2.4rem, calc(6.626px + 4.04vw), 4.8rem);
     line-height: 1.4;
     letter-spacing: 0;
 }
@@ -1371,7 +1626,8 @@
 }
 
 .faq-preview__q-text {
-    font-size: 2.4rem;
+    // fluid化: sp=1.6rem / pc=2.4rem（431〜1023pxを線形補間）
+    font-size: clamp(1.6rem, calc(10.21px + 1.347vw), 2.4rem);
     font-weight: v.$fw-bold;
     line-height: 1.4;
     letter-spacing: 0;
@@ -1399,14 +1655,13 @@
     gap: 16px;
     padding-block-start: 12px;
 
-    // [hidden]は本来UAスタイルのdisplay:noneで隠れるが、上のdisplay:flexが
-    // クラスセレクタとして上書きしてしまい閉じなくなるため、明示的に効かせ直す
     &[hidden] {
         display: none;
     }
 
     p {
-        font-size: 2rem;
+        // fluid化: sp=1.6rem / pc=2rem（431〜1023pxを線形補間）
+        font-size: clamp(1.6rem, calc(13.1px + 0.6734vw), 2rem);
         line-height: v.$lh-body;
         color: v.$color-text;
         opacity: 0.8;
@@ -1416,42 +1671,65 @@
 // ---- CTA — ピンクの全体CTA帯 ----
 .cta {
     position: relative;
-    overflow: hidden; // 四隅の装飾が画面外にはみ出して横スクロールが出ないように
+    overflow: hidden;
     background-color: v.$color-pink;
     color: v.$color-white;
     text-align: center;
-    padding: 60px 24px;
-    margin-bottom: 80px;
+    // fluid化: sp=80px / pc=100px（431〜1023pxを線形補間）
+    padding-block: clamp(80px, calc(65.52px + 3.367vw), 100px);
+    // fluid化: sp=24px / pc=80px（431〜1023pxを線形補間）
+    padding-inline: clamp(24px, calc(-16.54px + 9.428vw), 80px);
+    // fluid化: sp=40px / pc=80px（431〜1023pxを線形補間）
+    margin-bottom: clamp(40px, calc(11.04px + 6.734vw), 80px);
 
-    @include mx.pc {
-        padding: 100px 80px;
-    }
-
-    // 四隅の装飾（波形×2、水玉の円×2）。画面幅に関わらず必ず角に張り付くよう、
-    // %ではなくtop/left/right/bottomの絶対値で固定する。
-    // 位置はFigma実測が無いため、添付デザインを見た目で確認しながらの近似値。
     &__deco {
         position: absolute;
         pointer-events: none;
+        height: auto;
 
         &--lt-wave {
             top: 0;
             left: 0;
+
+            @include mx.sp {
+                top: -6%;
+                left: 0;
+            }
+
         }
 
         &--lt-circle {
             top: 24px;
-            left: -40px;
+            // fluid化: sp=0px / pc=-40px（431〜1023pxを線形補間）
+            left: clamp(-40px, calc(28.96px + -6.734vw), 0px);
+
+            @include mx.sp {
+                width: 138px;
+                height: 170px;
+                top: -20%;
+            }
         }
 
         &--rb-circle {
             bottom: 60px;
             right: -30px;
+
+            @include mx.sp {
+                width: 138px;
+                height: 170px;
+                bottom: -24%;
+                right: -4%;
+            }
         }
 
         &--rb-wave {
             bottom: 0;
             right: 0;
+
+            @include mx.sp {
+                bottom: -8%;
+                right: 0;
+            }
         }
     }
 
@@ -1464,21 +1742,32 @@
         gap: 32px;
     }
 
+    // scss/base/_typography.scssの共通見出しスタイル（4.0rem/2.4rem, Bold, lh1.4）と一致
     h2 {
-        font-size: 4rem;
-        font-weight: v.$fw-bold;
-        line-height: 1.4;
-        letter-spacing: 0;
+        @include v.heading-lg;
     }
 
     p {
-        font-size: 2.4rem;
+        // fluid化: sp=1.6rem / pc=2.4rem（431〜1023pxを線形補間）
+        font-size: clamp(1.6rem, calc(10.21px + 1.347vw), 2.4rem);
         line-height: 1.4;
         letter-spacing: 0;
     }
 
     &__badges {
         display: flex;
-        gap: 40px;
+        // fluid化: sp=32px / pc=40px（431〜1023pxを線形補間）
+        gap: clamp(32px, calc(26.21px + 1.347vw), 40px);
+
+        // App Store/Google Playバッジ：高さ48px・幅autoに統一
+        // （共有の.btn--storeはデフォルト64px/SP40pxだが、CTAではこの値を使う）
+        .btn--store {
+            height: 48px;
+        }
+
+        img {
+            height: 48px;
+            width: auto;
+        }
     }
 }

@@ -1,0 +1,123 @@
+@use '../base/mixin' as mx;
+@use '../base/base' as v;
+
+// ==========================================================================
+// FAQ detail page（よくある質問 詳細 / support.html）
+// hero / search / categoriesは_how-can-we-help.scssと共通のため、ここでは
+// 白カードパネル以下（.faq-detail）のみを定義する。
+// ※ 本番(WordPress化後)は /support/{category}/{slug}/ の動的ページになる想定。
+//   このファイルは静的プロトタイプでの1本のサンプル実装。
+// ==========================================================================
+
+.faq-detail-section {
+    // fluid化: sp=80px / pc=120px（431〜1023pxを線形補間）
+    padding-block-end: clamp(80px, calc(51.04px + 6.734vw), 120px);
+}
+
+.faq-detail {
+    max-width: 900px;
+    margin-inline: auto;
+    background-color: v.$color-white;
+    border-radius: 24px;
+    // fluid化: sp=32px / pc=56px（431〜1023pxを線形補間）
+    padding-block: clamp(32px, calc(14.63px + 4.04vw), 56px);
+    // fluid化: sp=20px / pc=64px（431〜1023pxを線形補間）
+    padding-inline: clamp(20px, calc(-11.85px + 7.407vw), 64px);
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.08);
+    border: 1px solid v.$color-gray-light;
+
+    // WordPress化後、投稿タイトルが入る想定のプレースホルダー見出し
+    &__title {
+        // fluid化: sp=4rem / pc=2.4rem（431〜1023pxを線形補間）
+        font-size: clamp(2.4rem, calc(51.58px + -2.694vw), 4rem);
+        font-weight: v.$fw-bold;
+        color: v.$color-text;
+        margin-block-end: 12px;
+    }
+
+    &__breadcrumb {
+        margin-block-end: 24px;
+
+        // sp/pcで同じ1.4rem指定だったため、重複していたmx.spのfont-sizeは削除済み
+        ol {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            font-size: 1.4rem;
+            color: v.$color-text;
+        }
+
+        li {
+            display: flex;
+            align-items: center;
+
+            &:not(:last-child)::after {
+                content: '>';
+                margin-inline: 8px;
+                color: v.$color-gray;
+            }
+
+            &[aria-current='page'] {
+                font-weight: v.$fw-bold;
+            }
+        }
+
+        a:hover {
+            opacity: 0.7;
+        }
+    }
+
+    &__divider {
+        border: none;
+        border-block-start: 2px dashed #C2C2C2;
+        margin-block-end: 24px;
+    }
+
+    // 1件のFAQ本文ブロック。WordPress化後はACFのフレキシブルコンテンツ／
+    // リピーターの1要素としてループ出力される想定。
+    &__block {
+        & + & {
+            margin-block-start: 64px;
+        }
+
+        h2 {
+            // fluid化: sp=2rem / pc=2.4rem（431〜1023pxを線形補間）
+            font-size: clamp(2rem, calc(17.1px + 0.6734vw), 2.4rem);
+            font-weight: v.$fw-bold;
+            line-height: 1.4;
+            // fluid化: sp=10px / pc=16px（431〜1023pxを線形補間）
+            margin-block-end: clamp(10px, calc(5.657px + 1.01vw), 16px);
+        }
+
+        > p {
+            // fluid化: sp=1.5rem / pc=1.6rem（431〜1023pxを線形補間）
+            font-size: clamp(1.5rem, calc(14.28px + 0.1684vw), 1.6rem);
+            line-height: 1.9;
+            color: v.$color-text;
+            font-weight: v.$fw-normal;
+        }
+    }
+
+    // h2本文中にネストした小見出し+本文のセット
+    &__sub {
+        margin-block-start: 24px;
+
+        h3 {
+            // fluid化: sp=1.6rem / pc=2rem（431〜1023pxを線形補間）
+            font-size: clamp(1.6rem, calc(13.1px + 0.6734vw), 2rem);
+            font-weight: v.$fw-medium;
+            margin-block-end: 16px;
+        }
+
+        p {
+            // fluid化: sp=1.4rem / pc=1.6rem（431〜1023pxを線形補間）
+            font-size: clamp(1.4rem, calc(12.55px + 0.3367vw), 1.6rem);
+            line-height: 1.4;
+            color: v.$color-text;
+            font-weight: v.$fw-normal;
+        }
+    }
+}

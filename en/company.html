@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- TODO: クライアント提供の英訳をここに貼り付け（title/description/OGP/Twitterカード含む） -->
+  <title>会社概要｜Langmate（ラングメイト）</title>
+  <meta name="description" content="Langmate（ラングメイト）を運営する株式会社ラングメイトの会社概要と、採用募集情報をご紹介します。" />
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://www.langmate.jp/en/company.html" />
+
+  <!-- 日英の相互参照。検索エンジンに言語違いの同一ページであることを伝える -->
+  <link rel="alternate" hreflang="ja" href="https://www.langmate.jp/company.html" />
+  <link rel="alternate" hreflang="en" href="https://www.langmate.jp/en/company.html" />
+  <link rel="alternate" hreflang="x-default" href="https://www.langmate.jp/company.html" />
+
+  <!-- OGP -->
+  <meta property="og:site_name" content="Langmate" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="会社概要｜Langmate（ラングメイト）" />
+  <meta property="og:description" content="Langmate（ラングメイト）を運営する株式会社ラングメイトの会社概要と、採用募集情報をご紹介します。" />
+  <meta property="og:url" content="https://www.langmate.jp/en/company.html" />
+  <meta property="og:locale" content="en_US" />
+  <!-- TODO: og:image 用のOGP画像(1200x630)を用意して追加する -->
+
+  <!-- X(Twitter)カード -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="会社概要｜Langmate（ラングメイト）" />
+  <meta name="twitter:description" content="Langmate（ラングメイト）を運営する株式会社ラングメイトの会社概要。" />
+
+  <!-- Favicon（暫定。後日ちゃんとしたfavicon一式に差し替え予定） -->
+  <link rel="icon" type="image/svg+xml" href="/design-assets/logo-langmate.svg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@1,700&family=Poppins:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap"
+    rel="stylesheet" />
+
+  <link rel="stylesheet" href="/main.css" />
+</head>
+
+<body>
+  <a class="skip-link" href="#main">メインコンテンツへスキップ</a>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="site-header__logo" href="/en/index.html">
+        <img src="/design-assets/logo-langmate.svg" alt="Langmate" width="140" height="40" />
+      </a>
+
+      <nav class="global-nav" aria-label="グローバルナビゲーション">
+        <ul class="global-nav__list">
+          <li><a href="/en/index.html">ホーム</a></li>
+          <li><a href="/en/beginners-guide.html">初めてでも安心</a></li>
+          <li><a href="/en/how-can-we-help.html">よくある質問</a></li>
+          <li><a href="/en/company.html" aria-current="page">会社概要</a></li>
+          <li><a href="/en/contact.html">お問い合わせ</a></li>
+        </ul>
+      </nav>
+
+      <div class="site-header__actions">
+        <div class="language-switcher" data-language-switcher>
+          <button class="language-switcher__trigger" type="button" aria-haspopup="listbox" aria-expanded="false"
+            aria-controls="language-switcher-list">
+            <img src="/design-assets/flag-us.svg" alt="" width="24" height="24" />
+            <span class="visually-hidden">言語を選択</span>
+            <span class="language-switcher__caret" aria-hidden="true"></span>
+          </button>
+          <ul class="language-switcher__list" id="language-switcher-list" role="listbox" hidden>
+            <li role="option" data-lang="ja" aria-selected="false">
+            <img src="/design-assets/flag-jp.svg" alt="" width="20" height="20" />日本語
+            </li>
+            <li role="option" data-lang="en" aria-selected="true">
+            <img src="/design-assets/flag-us.svg" alt="" width="20" height="20" />English
+            </li>
+          </ul>
+        </div>
+
+        <button class="hamburger" type="button" aria-expanded="false" aria-controls="mobile-nav"
+                data-mobile-nav-trigger>
+          <span class="visually-hidden">メニューを開く</span>
+          <span class="hamburger__line" aria-hidden="true"></span>
+          <span class="hamburger__line" aria-hidden="true"></span>
+          <span class="hamburger__line" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-nav" id="mobile-nav" data-mobile-nav hidden>
+    <div class="mobile-nav__header">
+      <a class="mobile-nav__logo" href="/en/index.html">
+        <img src="/design-assets/logo-langmate.svg" alt="Langmate" width="120" height="34" />
+      </a>
+      <button class="mobile-nav__close" type="button" data-mobile-nav-close>
+        <span class="visually-hidden">メニューを閉じる</span>
+        <span aria-hidden="true">✕</span>
+      </button>
+    </div>
+    <nav aria-label="モバイルナビゲーション">
+      <ul class="mobile-nav__list">
+        <li><a href="/en/index.html">ホーム</a></li>
+        <li><a href="/en/beginners-guide.html">初めてでも安心</a></li>
+        <li><a href="/en/how-can-we-help.html">よくある質問</a></li>
+        <li><a href="/en/company.html">会社概要</a></li>
+        <li><a href="/en/contact.html">お問い合わせ</a></li>
+      </ul>
+    </nav>
+    <div class="mobile-nav__sns">
+      <span class="visually-hidden">公式SNS</span>
+      <a href="#"><img src="/design-assets/logo-instagram.svg" alt="Instagram" width="24" height="24" /></a>
+      <a href="#"><img src="/design-assets/logo-x.svg" alt="X" width="24" height="24" /></a>
+      <a href="#"><img src="/design-assets/logo-tiktok.svg" alt="TikTok" width="24" height="24" /></a>
+    </div>
+    <a class="mobile-nav__download" href="#download">ダウンロードはこちら <span aria-hidden="true">⬇</span></a>
+  </div>
+
+  <div class="floating-dl" data-floating-dl>
+    <div class="floating-dl__box">
+      <button class="floating-dl__trigger" type="button" aria-expanded="false" aria-controls="floating-dl-panel"
+        data-floating-dl-trigger>
+        <span>D<br />L<br />は<br />こ<br />ち<br />ら</span>
+      </button>
+      <div class="floating-dl__panel" id="floating-dl-panel">
+        <a href="#" class="btn btn--store"><img src="/design-assets/badge-appstore-ja.svg" alt="App Storeからダウンロード"
+            width="160" height="48" /></a>
+        <a href="#" class="btn btn--store"><img src="/design-assets/badge-googleplay-ja.svg" alt="Google Playで手に入れよう"
+            width="160" height="48" /></a>
+      </div>
+    </div>
+  </div>
+
+  <main id="main">
+    <!-- ===== Hero ===== -->
+    <section class="about-hero">
+      <img class="about-hero__map" src="/design-assets/bg-page.svg" alt="" aria-hidden="true" width="1280"
+        height="500" />
+      <div class="wrapper about-hero__inner">
+        <svg class="about-hero__eyebrow" viewBox="0 0 220 70" role="img" aria-label="ABOUT US">
+          <!-- get-started(.gs-hero__eyebrow)と同じアーチ構造・半径を流用 -->
+          <path id="about-hero-eyebrow-arc" d="M12,55 A220.3,220.3 0 0,1 208,55" fill="none" />
+          <text text-anchor="middle">
+            <textPath href="#about-hero-eyebrow-arc" startOffset="50%">ABOUT US</textPath>
+          </text>
+        </svg>
+        <h1 class="about-hero__heading">Langmateについて</h1>
+      </div>
+    </section>
+
+    <!-- ===== Intro ===== -->
+    <section class="about-intro">
+      <div class="wrapper">
+        <img class="about-intro__image"
+          src="/design-assets/img-page-about.webp" alt="世界中のいろいろな言語の「こんにちは」が集まったワードクラウド" width="1080"
+          height="300" />
+        <hr class="about-intro__divider" />
+        <div class="about-intro__text">
+          <p>株式会社ラングメイトは、日本と世界中の人々を繋ぐ国際交流・語学学習プラットフォーム「Langmate」を運営しています。私たちのミッションは、言語や国境の壁を越えて、誰もが気軽に世界とつながれる日常を創り出すことです。
+            <br><br>
+            2015年のサービス開始以来、日本文化を愛する世界中の親日外国人ユーザーと、実践的な国際交流を楽しみたい日本人ユーザーに支持され、現在では累計400万ダウンロードに迫るグローバルプラットフォームへと成長しました。</p>
+          <p>「語学力」と「国際力」をアップデートする場所。「生きた英語や外国語を日常的に学びたい」「海外のリアルな文化に触れたい」「日本にいながら外国人の友達を作りたい」。Langmateは、そんなユーザーの想いに応えるマッチングアプリです。
+            <br><br>
+            私たちはアプリを通じて、単なる出会いではなく、ネイティブスピーカーとの言語交換（ランゲージエクスチェンジ）の場を提供しています。誰もが簡単に世界とつながる体験を通じて、外国語への苦手意識をなくし、グローバルな視野を広げる機会をこれからも提供し続けます。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Company ===== -->
+    <!-- 前セクション(cream)から青セクションへの上端アーチ。border-radiusの近似をやめてFigma提供のSVGに差し替え -->
+    <img class="about-company__top" src="/design-assets/about-company-top.svg" alt="" aria-hidden="true" width="1280"
+      height="200" />
+    <section class="about-company">
+      <img class="about-company__deco about-company__deco--tl" src="/design-assets/about-company-stripes.svg" alt=""
+        aria-hidden="true" width="355"/>
+      <img class="about-company__deco about-company__deco--br" src="/design-assets/about-company-stripes.svg" alt=""
+        aria-hidden="true" width="282" />
+      <div class="wrapper about-company__inner">
+        <svg class="about-company__eyebrow" viewBox="0 0 220 70" role="img" aria-label="COMPANY">
+          <!-- about-hero/get-startedと同じアーチ構造を流用 -->
+          <path id="about-company-eyebrow-arc" d="M12,55 A220.3,220.3 0 0,1 208,55" fill="none" />
+          <text text-anchor="middle">
+            <textPath href="#about-company-eyebrow-arc" startOffset="50%">COMPANY</textPath>
+          </text>
+        </svg>
+        <h2 class="about-company__heading">会社概要</h2>
+
+        <dl class="about-company__table">
+          <div class="about-company__row">
+            <dt>会社名</dt>
+            <dd>株式会社ラングメイト<br>（英語表記：Langmate Inc.）</dd>
+          </div>
+          <div class="about-company__row">
+            <dt>創立</dt>
+            <dd>2017年7月28日</dd>
+          </div>
+          <div class="about-company__row">
+            <dt>資本金</dt>
+            <dd>900万円</dd>
+          </div>
+          <div class="about-company__row">
+            <dt>事業内容</dt>
+            <dd>国際交流アプリの開発、制作及び運営等</dd>
+          </div>
+          <div class="about-company__row">
+            <dt>所在地</dt>
+            <dd>〒105-0003<br>東京都港区浜松町2-2-15浜松町ダイヤビル2F</dd>
+          </div>
+          <div class="about-company__row">
+            <dt>代表取締役</dt>
+            <dd>桑原　大</dd>
+          </div>
+          <div class="about-company__row">
+            <dt>取引銀行</dt>
+            <dd>三菱UFJ銀行　田町支店</dd>
+          </div>
+          <div class="about-company__row">
+            <dt>会計監査</dt>
+            <dd>児島会計事務所</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+    <!-- 青セクションの下端アーチ。上端と同じSVGを上下反転して流用 -->
+    <img class="about-company__bottom" src="/design-assets/about-company-top.svg" alt="" aria-hidden="true"
+      width="1280" height="200" />
+
+    <!-- ===== Recruit ===== -->
+    <section class="about-recruit">
+      <img class="about-recruit__bg" src="/design-assets/bg-about.svg" alt="" aria-hidden="true" width="1280"
+        height="1328" />
+      <div class="wrapper">
+        <svg class="about-recruit__eyebrow" viewBox="0 0 220 70" role="img" aria-label="RECRUIT">
+          <!-- about-hero/get-startedと同じアーチ構造を流用 -->
+          <path id="about-recruit-eyebrow-arc" d="M12,55 A220.3,220.3 0 0,1 208,55" fill="none" />
+          <text text-anchor="middle">
+            <textPath href="#about-recruit-eyebrow-arc" startOffset="50%">RECRUIT</textPath>
+          </text>
+        </svg>
+        <h2 class="about-recruit__heading">求人募集</h2>
+
+        <div class="about-recruit__items">
+        <div class="about-recruit__item">
+          <h3 class="about-recruit__title">
+            <span class="about-recruit__badge" aria-hidden="true"></span>
+            iOSデベロッパー募集概要
+          </h3>
+          <p>Langmateのサービスの特徴：<br>
+            Langmateは、異なる文化や背景を持つ人々をつなぎ、言語交換や文化交流を促進するためのユニークなサービスです。</p>
+        </div>
+
+        <div class="about-recruit__item about-recruit__item--team">
+          <h3 class="about-recruit__title">
+            <span class="about-recruit__badge" aria-hidden="true"></span>
+            私たちのチーム
+          </h3>
+          <p>開発メンバーはチームマネジャーを除いて全員が非日本人で構成されており、国際色豊かな交流が日常的に行われています。また、私たちはフルリモートで働くことができます。</p>
+          <img class="about-recruit__illust" src="/design-assets/illust-recruit-01.svg" alt="" aria-hidden="true"
+            width="200" height="168" />
+        </div>
+
+        <div class="about-recruit__item about-recruit__item--member">
+          <h3 class="about-recruit__title">
+            <span class="about-recruit__badge" aria-hidden="true"></span>
+            募集している人材
+          </h3>
+          <p class="about-recruit__lead">高度な技能を持つモバイルアプリエンジニア</p>
+          <ul class="about-recruit__list">
+            <li>エンジニアとして高度な技能を習得していること。</li>
+            <li>高度情報処理技術者試験の合格に相当する能力を有していること。</li>
+            <li>高い作業遂行力と実務経験を持ち、自他ともに認められる方。</li>
+            <li>マッチングアプリの開発経験がある方を歓迎します。</li>
+            <li>英語を話せる方も歓迎しますが、日本語のみでも問題ありません。</li>
+          </ul>
+          <img class="about-recruit__illust" src="/design-assets/illust-recruit-02.svg" alt="" aria-hidden="true"
+            width="300" height="274" />
+        </div>
+
+        <div class="about-recruit__item about-recruit__item--apply">
+          <h3 class="about-recruit__title">
+            <span class="about-recruit__badge" aria-hidden="true"></span>
+            応募方法
+          </h3>
+          <p>面談を希望される方は、職務経歴書をこちらよりお送りください。<br>
+            Langmateでのキャリアにご興味のある方からのご応募をお待ちしております！</p>
+          <img class="about-recruit__illust" src="/design-assets/illust-recruit-03.svg" alt="" aria-hidden="true"
+            width="300" height="193" />
+        </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <div class="site-footer__brand">
+        <p>外国人の友達になれる国際交流アプリ</p>
+        <img src="/design-assets/logo-langmate.svg" alt="Langmate" />
+        <div class="site-footer__badges">
+          <a href="#download"><img src="/design-assets/badge-appstore-ja.svg" alt="App Storeからダウンロード" width="120"
+              height="36" /></a>
+          <a href="#download"><img src="/design-assets/badge-googleplay-ja.svg" alt="Google Playで手に入れよう" width="120"
+              height="36" /></a>
+        </div>
+      </div>
+
+      <nav class="site-footer__nav" aria-label="フッターナビゲーション">
+        <ul>
+          <li class="site-footer__nav-home"><a href="/en/index.html">ホーム</a></li>
+          <li><a href="/en/beginners-guide.html">初めての方へ</a></li>
+          <li><a href="/en/company.html">会社概要</a></li>
+          <li><a href="/en/how-can-we-help.html">よくある質問</a></li>
+          <li><a href="/en/contact.html">お問い合わせ</a></li>
+        </ul>
+      </nav>
+
+      <div class="site-footer__sns">
+        <p>公式SNSはこちら</p>
+        <div>
+          <a href="#"><img src="/design-assets/logo-instagram.svg" alt="Instagram"></a>
+          <a href="#"><img src="/design-assets/logo-x.svg" alt="X"></a>
+          <a href="#"><img src="/design-assets/logo-tiktok.svg" alt="TikTok"></a>
+        </div>
+      </div>
+    </div>
+    <nav class="site-footer__legal" aria-label="法的情報">
+      <a href="/terms-of-service.html">利用規約</a>
+      <a href="/privacy-policy.html">プライバシーポリシー</a>
+    </nav>
+    <p class="site-footer__copyright">Copyright &copy; 2026 Langmate Inc.</p>
+  </footer>
+
+  <script type="module" src="/js/main.js"></script>
+</body>
+
+</html>

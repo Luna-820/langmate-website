@@ -1,0 +1,271 @@
+@use '../base/mixin' as mx;
+@use '../base/base' as v;
+
+// ==========================================================================
+// FAQ archive page（よくある質問 一覧 / how-can-we-help.html）
+// ここで定義する .faq-hero / .faq-search / .faq-categories は support.html（詳細）
+// とも共通なので、_support.scssからも参照される（値の重複定義はしない）。
+// ==========================================================================
+
+// ---- Hero（他の下層ページ共通の地図ヒーロー。今回はFigma指定で吹き出し付き） ----
+.faq-hero {
+    position: relative;
+    overflow: hidden;
+    margin-block-start: -86px; // headerのsticky分だけ引き上げ（他ページと同じ手法）
+    // fluid化: sp=60px / pc=80px（431〜1023pxを線形補間）
+    padding-block-end: clamp(60px, calc(45.52px + 3.367vw), 80px);
+
+    &__map {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1280 / 500;
+        z-index: 0;
+    }
+
+    &__inner {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        padding-block-start: calc(100vw * 500 / 1280 - 100px);
+    }
+
+    // 他ページのアーチ型eyebrowと同じ構造に統一
+    &__eyebrow {
+        display: block;
+        width: 196px;
+        aspect-ratio: 220 / 70;
+        margin-inline: auto;
+        margin-block-end: -16px;
+        overflow: visible;
+
+        text {
+            font-family: v.$font-en;
+            font-weight: v.$fw-medium;
+            font-size: 2.4rem;
+            fill: v.$color-blue;
+            letter-spacing: 0.04em;
+        }
+    }
+
+    &__heading {
+        font-size: 4.8rem;
+        font-weight: v.$fw-bold;
+        letter-spacing: 0.1em;
+    }
+}
+
+// ---- Search / Categories ----
+.faq-search-section {
+    // fluid化: sp=40px / pc=60px（431〜1023pxを線形補間）
+    padding-block-end: clamp(40px, calc(25.52px + 3.367vw), 60px);
+}
+
+// 入力欄とボタンを1つの外枠でくくり、境目なくくっつける
+.faq-search {
+    display: flex;
+    align-items: stretch;
+    // fluid化: PCのwidth:1000pxは.wrapperの内側パディングを越えて外枠(container-max)いっぱいまで
+    // 意図的にはみ出す仕様。sp(≤430px)は@include mx.spのwidth:100%のままなので、
+    // ここでは431px時点の実効幅(=390px、sp版.wrapperの内容幅)からpc=1000pxへ線形補間する。
+    // fluid化: sp=390px（wrapperの実効内容幅） / pc=1000px（431〜1023pxを線形補間）
+    width: clamp(390px, calc(-51.58px + 102.7vw), 1000px);
+    // fluid化: sp=56px / pc=64px（431〜1023pxを線形補間）
+    height: clamp(56px, calc(50.21px + 1.347vw), 64px);
+    margin-inline: auto;
+    margin-block-end: 32px;
+    background-color: v.$color-white;
+    border: 1px solid v.$color-text;
+    border-radius: v.$radius-button;
+    overflow: hidden; // ボタンの角を外枠の丸みに合わせてクリップ
+
+    @include mx.sp {
+        width: 100%;
+        max-width: 700px;
+    }
+
+    &__input {
+        flex: 1;
+        min-width: 0;
+        height: 100%;
+        font-family: v.$font-jp;
+        font-size: 1.6rem;
+        color: v.$color-text;
+        background-color: transparent;
+        border: none;
+        padding-inline: 24px;
+
+        &::placeholder {
+            color: v.$color-gray;
+        }
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    &__submit {
+        flex-shrink: 0;
+        font-family: v.$font-jp;
+        font-weight: v.$fw-bold;
+        font-size: 1.6rem;
+        color: v.$color-white;
+        background-color: v.$color-pink;
+        border: none;
+        border-radius: 8px;;
+        // fluid化: sp=32px / pc=48px（431〜1023pxを線形補間）
+        padding-inline: clamp(32px, calc(20.42px + 2.694vw), 48px);
+        cursor: pointer;
+        transition: opacity 0.3s;
+
+        &:hover {
+            opacity: 0.85;
+        }
+    }
+}
+
+// 将来的にWordPressの親カテゴリー（タクソノミー）タームの一覧に対応する想定
+.faq-categories {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    // fluid化: .faq-searchと同じ理由・同じ値でwidth:1000pxをはみ出し防止しつつ431px時点は
+    // sp版のwidth:unset（実効幅390px）に一致させる
+    // fluid化: sp=390px（wrapperの実効内容幅） / pc=1000px（431〜1023pxを線形補間）
+    width: clamp(390px, calc(-51.58px + 102.7vw), 1000px);
+    // fluid化: sp=12px / pc=16px（431〜1023pxを線形補間）
+    gap: clamp(12px, calc(9.104px + 0.6734vw), 16px);
+    margin-inline: auto;
+
+    @include mx.sp {
+        grid-template-columns: repeat(2, 1fr);
+        width: unset;
+        max-width: 700px;
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        // fluid化: sp=1.4rem / pc=1.6rem（431〜1023pxを線形補間）
+        font-size: clamp(1.4rem, calc(12.55px + 0.3367vw), 1.6rem);
+        font-weight: v.$fw-bold;
+        color: v.$color-text;
+        background-color: v.$color-white;
+        border: 1px solid v.$color-text;
+        border-radius: v.$radius-button;
+        padding: 12px 16px;
+        transition: background-color 0.3s;
+
+        &:hover,
+        &--active {
+            background-color: v.$color-pink-light;
+            opacity: 1; // 全体aルールのhover:opacity0.7を打ち消し、背景色変化のみにする
+        }
+    }
+
+    &__arrow {
+        color: v.$color-text;
+        font-size: 1rem;
+    }
+}
+
+// ---- Groups（カテゴリー配下のFAQ一覧。1グループ = 将来の子タクソノミー1件） ----
+// 「機能について」は内部リストが2列あるため単独で全幅、残り3グループはPCで
+// 2カラムグリッドに自動配置（3番目のグループは自然に左カラム下へ回り込む）。
+.faq-groups {
+    // fluid化: sp=80px / pc=120px（431〜1023pxを線形補間）
+    padding-block-end: clamp(80px, calc(51.04px + 6.734vw), 120px);
+
+    // .faq-groups自体ではなく、実際に.faq-groupを並べている.wrapperの方に
+    // グリッドを適用する（section > .wrapper > .faq-group という構造のため）
+    > .wrapper {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 56px;
+        // fluid化: sp=56px / pc=40px（431〜1023pxを線形補間）
+        column-gap: clamp(40px, calc(67.58px + -2.694vw), 56px);
+        // fluid化: sp=56px / pc=80px（431〜1023pxを線形補間）
+        row-gap: clamp(56px, calc(38.63px + 4.04vw), 80px);
+
+        @include mx.sp {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .faq-group:first-child {
+        grid-column: 1 / -1;
+
+        @include mx.sp {
+            grid-column: unset;
+        }
+    }
+}
+
+// 1カテゴリー分のFAQブロック。WordPress化後は「子カテゴリー名 + そのタームに
+// 紐づくFAQ投稿一覧（ACFのQ&Aリピーター）」をループ出力する形にそのまま対応できる想定。
+.faq-group {
+    &__title {
+        text-align: center;
+        // fluid化: sp=2.4rem / pc=3.2rem（431〜1023pxを線形補間）
+        font-size: clamp(2.4rem, calc(18.21px + 1.347vw), 3.2rem);
+        font-weight: v.$fw-bold;
+        // fluid化: sp=24px / pc=16px（431〜1023pxを線形補間）
+        margin-block-end: clamp(16px, calc(29.79px + -1.347vw), 24px);
+    }
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        max-width: 900px;
+        margin-inline: auto;
+
+        &--2col {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px 40px;
+
+            // `&--2col`はSPでは元々@include mx.pc外に単独のbase宣言が無く、同じ要素に付く
+            // `.faq-group__list`本体の値（display:flex, gap:16px）にフォールバックしていた。
+            // `unset`だとCSS初期値に戻ってそのフォールバックを再現できないため、
+            // 元の実効値を明示的に書き戻す。
+            @include mx.sp {
+                display: flex;
+                grid-template-columns: unset;
+                gap: 16px;
+            }
+        }
+    }
+}
+
+// 1件のFAQ（Q + 質問文）。WordPress化後はACFリピーターの1行に対応する想定。
+.faq-item {
+    a {
+        display: flex;
+        align-items: flex-start;
+        gap: 20px;
+        width: 100%;
+        // fluid化: sp=1.5rem / pc=2rem（431〜1023pxを線形補間）
+        font-size: clamp(1.5rem, calc(11.38px + 0.8418vw), 2rem);
+        line-height: 1.5;
+        padding: 16px;
+        border-block-end: 1px dashed #707070;
+    }
+
+    &__icon {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 35px;
+        height: 35px;
+        font-family: v.$font-en;
+        font-weight: v.$fw-bold;
+        font-size: 2rem;
+        color: v.$color-white;
+        background-color: v.$color-pink;
+        border-radius: 50%;
+    }
+}
