@@ -507,7 +507,7 @@ img {
   }
 }
 .btn--outline::after {
-  content: "▶";
+  content: "▶︎";
   font-size: 0.8em;
 }
 .btn--outline:hover {
@@ -1605,7 +1605,7 @@ img {
   }
 }
 .service-tabs__panels p {
-  font-size: clamp(1.6rem, 10.21px + 1.347vw, 2.4rem);
+  font-size: clamp(1.5rem, 10.21px + 1.347vw, 2.4rem);
   font-weight: 500;
   line-height: 1.219;
   letter-spacing: 0.08em;
@@ -4083,4 +4083,4 @@ img {
   font-size: clamp(1.5rem, 11.38px + 0.8418vw, 2rem);
   line-height: 1.8;
   color: #202020;
-}/*# sourceMappingURL=main.css.map */
+}
