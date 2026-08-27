@@ -3,58 +3,12 @@
 
 // ==========================================================================
 // Company page（会社概要 / company.html）
-// ラフに全体を組んだ一次実装。細部（吹き出しの位置・装飾の柄など）は
-// 簡易な近似で作っており、後で数値をもらいながら調整していく前提。
 // ==========================================================================
 
 // ---- Hero ----
-.about-hero {
-    position: relative;
-    overflow: hidden;
-    margin-block-start: -86px; // headerのsticky分だけ引き上げ、地図をheaderの裏まで届かせる（他ページと同じ手法）
-
-    &__map {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: auto;
-        aspect-ratio: 1280 / 500;
-        z-index: 0;
-    }
-
-    &__inner {
-        position: relative;
-        z-index: 2;
-        text-align: center;
-        padding-block-start: calc(100vw * 500 / 1280 - 100px);
-    }
-
-    // get-started(.gs-hero__eyebrow)と同じアーチ・色に統一
-    &__eyebrow {
-        display: block;
-        width: 196px;
-        aspect-ratio: 220 / 70;
-        margin-inline: auto;
-        margin-block-end: -16px;
-        overflow: visible;
-
-        text {
-            font-family: v.$font-en;
-            font-weight: v.$fw-medium;
-            font-size: 2.4rem;
-            fill: v.$color-blue;
-            letter-spacing: 0.04em;
-        }
-    }
-
-    // get-started(.gs-hero__heading)と同じサイズに統一
-    &__heading {
-        font-size: 4.8rem;
-        font-weight: v.$fw-bold;
-        letter-spacing: 0.1em;
-    }
-}
+// 地図＋eyebrow＋h1の見た目は他の下層ページと完全に共通なので
+// scss/component/_sub-hero.scssに集約済み。HTML側で.sub-heroを
+// 併記しているため、ここではabout-hero固有の上書きは無し。
 
 // ---- Intro ----
 .about-intro {
@@ -64,6 +18,10 @@
         display: flex;
         flex-direction: column;
         gap: 40px;
+
+        @include mx.sp {
+            gap: 20px;
+        }
     }
 
     &__image {
@@ -81,7 +39,6 @@
         width: 100%;
         max-width: 800px;
         height: 3px;
-        // <hr>はブラウザ標準でmargin-block:10pxが付くので、親のgap(40px)と重複しないよう0にする
         margin-block: 0;
         margin-inline: auto;
         border: none;
@@ -97,6 +54,10 @@
         line-height: 1.5;
         letter-spacing: 0.2em;
 
+        @include mx.sp {
+            font-size: 1.6rem;
+        }
+
         p {
             flex: 1;
         }
@@ -111,13 +72,12 @@
     }
 }
 
-// 前セクションから青セクションへの上端アーチ（Figma提供のSVGをそのまま使用、レスポンシブにaspect-ratioで拡縮）
 .about-company__top {
     display: block;
     width: 100%;
     height: auto;
     aspect-ratio: 1280 / 200;
-    margin-block-end: -1px; // 拡大率の丸め誤差で1px隙間が出るのを防ぐ
+    margin-block-end: -1px; // 
 }
 
 // 青セクションの下端アーチ。同じSVGを上下反転（scaleY）して使い回す
@@ -139,8 +99,6 @@
     // fluid化: sp=60px / pc=100px（431〜1023pxを線形補間）
     padding-block: clamp(60px, calc(31.04px + 6.734vw), 100px);
 
-    // 左上・右下の斜線ストライプ装飾（Figma提供のSVG）。角の半径0（円に見えるのはCSSの
-    // クリップではなくパス自体の形状によるもの）。左右でサイズ・回転角がそれぞれ違う。
     &__deco {
         position: absolute;
         z-index: 0;
@@ -171,7 +129,6 @@
         text-align: center;
     }
 
-    // ABOUT US（.about-hero__eyebrow）と同じアーチ構造に統一（色は青背景に合わせて白）
     &__eyebrow {
         display: block;
         width: 196px;
@@ -186,6 +143,10 @@
             font-size: 2.4rem;
             fill: v.$color-white;
             letter-spacing: 0.04em;
+
+            @include mx.sp {
+                font-size: 1.6rem;
+            }
         }
     }
 
@@ -194,6 +155,10 @@
         font-weight: v.$fw-bold;
         letter-spacing: 0.1em;
         margin-block-end: 40px;
+
+        @include mx.sp {
+            font-size: 2.4rem;
+        }
     }
 
     &__table {
@@ -208,6 +173,10 @@
         text-align: left;
         max-width: 1000px;
         margin-inline: auto;
+
+        @include mx.sp {
+            padding: 16px 24px;
+        }
     }
 
     &__row {
@@ -233,6 +202,8 @@
 
             @include mx.sp {
                 flex: unset;
+                font-size: 1.6rem;
+                padding: 16px 24px
             }
         }
 
@@ -243,6 +214,8 @@
 
             @include mx.sp {
                 flex: unset;
+                font-size: 1.6rem;
+                padding: 0 24px
             }
         }
     }
@@ -272,7 +245,7 @@
     }
 
     // 背景画像より前面に出す
-    > .wrapper {
+    >.wrapper {
         position: relative;
         z-index: 1;
     }
@@ -292,6 +265,10 @@
             font-size: 2.4rem;
             fill: v.$color-blue;
             letter-spacing: 0.04em;
+
+            @include mx.sp {
+                font-size: 1.6rem;
+            }
         }
     }
 
@@ -301,24 +278,36 @@
         letter-spacing: 0.1em;
         text-align: center;
         margin-block-end: 60px;
+
+        @include mx.sp {
+            font-size: 2.4rem;
+        }
     }
 
     // 4項目（iOSデベロッパー募集概要／私たちのチーム／募集している人材／応募方法）同士のgap
     &__items {
         display: flex;
         flex-direction: column;
-        align-items: flex-start; // stretchのままだとalign-selfの左右寄せが効かないので明示的に左寄せをデフォルトに
+        align-items: flex-start;
         gap: 48px;
         max-width: 1000px;
         margin-inline: auto;
+
+
+        @include mx.sp {
+            align-items: center;
+        }
     }
 
     &__item {
         position: relative;
-        max-width: 560px; // 幅を絞って左右交互に配置できるようにする
+        max-width: 560px;
 
-        // デフォルト(=PC)では2番目・4番目（私たちのチーム／応募方法）だけ右寄せにしてジグザグにする。
-        // SPでは@include mx.spで解除。
+
+        @include mx.sp {
+            max-width: 345px;
+        }
+
         &:nth-child(even) {
             align-self: flex-end;
 
@@ -328,21 +317,30 @@
         }
 
         p {
-            font-size: 2rem; // 20px
+            font-size: 2rem;
             font-weight: v.$fw-regular;
             line-height: normal;
             letter-spacing: 0;
+
+            @include mx.sp {
+                font-size: 1.6rem;
+            }
+
         }
     }
 
     &__title {
         position: relative;
         display: inline-block;
-        font-size: 2.4rem; // 24px
+        font-size: 2.4rem;
         font-weight: v.$fw-bold;
         line-height: normal;
         letter-spacing: 0.1em;
         margin-block-end: 16px;
+
+        @include mx.sp {
+            font-size: 2rem;
+        }
     }
 
     // タイトル文頭に重なる装飾円（テキストの後ろ側に配置）
@@ -357,6 +355,11 @@
         border-radius: 50%;
         background-color: v.$color-blue;
         opacity: 58%;
+
+        @include mx.sp {
+            width: 56px;
+            height: 56px;
+        }
     }
 
     &__lead {
@@ -372,6 +375,7 @@
         gap: 4px;
         font-size: 1.5rem;
         line-height: 1.8;
+
     }
 
     &__illust {
@@ -381,12 +385,7 @@
         margin-block-start: clamp(0px, calc(27.58px + -2.694vw), 16px);
     }
 
-    // PCでは各アイテム（テキスト群）の空いている側にイラストを配置。
-    // right:100%/left:100%はアイテム自身の幅を基準に「隣（外側）」を指すので、
-    // イラストの実寸に関わらずぴったりテキストの脇に置ける（wrapperより外にはみ出るのは意図通り）。
-
-    // 01: 私たちのチーム（右寄せテキスト）の左に配置
-    // デフォルト(=PC)で絶対配置。SPでは@include mx.spで解除し通常フローに戻す。
+    // 01: 募集している人材（左寄せテキスト）の右に配置
     &__item--team &__illust {
         width: 200px;
         position: absolute;
@@ -395,9 +394,9 @@
         margin-inline-end: 20px;
 
         @include mx.sp {
-            position: unset;
-            top: unset;
-            right: unset;
+            width: 77px;
+            top: -30%;
+            right: 0%;
             margin-inline-end: unset;
         }
     }
@@ -411,10 +410,10 @@
         margin-inline-start: 20px;
 
         @include mx.sp {
-            position: unset;
-            top: unset;
-            left: unset;
-            margin-inline-start: unset;
+            width: 77px;
+            top: 10%;
+            right: 0%;
+            margin-inline-end: unset;
         }
     }
 
@@ -427,14 +426,14 @@
         margin-inline-end: 20px;
 
         @include mx.sp {
-            position: unset;
-            top: unset;
-            right: unset;
+            width: 83px;
+            top: -30%;
+            right: 0%;
             margin-inline-end: unset;
         }
     }
 }
 
 .site-footer {
-    margin-top:0;
+    margin-top: 0;
 }

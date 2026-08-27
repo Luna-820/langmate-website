@@ -136,19 +136,22 @@
 
   <main id="main">
     <!-- ===== Hero ===== -->
-    <section class="gs-hero">
-      <img class="gs-hero__map" src="design-assets/bg-page.svg" alt="" aria-hidden="true" width="1280" height="500" />
+    <section class="sub-hero gs-hero">
+      <picture>
+        <source srcset="design-assets/bg-page-sp.svg" media="(max-width: 430px)">
+        <img class="sub-hero__map gs-hero__map" src="design-assets/bg-page.svg" alt="" aria-hidden="true" width="1280" height="500" />
+      </picture>
 
-      <div class="wrapper gs-hero__inner">
-        <svg class="gs-hero__eyebrow" viewBox="0 0 220 70" role="img" aria-label="GET STARTED">
+      <div class="wrapper sub-hero__inner gs-hero__inner">
+        <svg class="sub-hero__eyebrow gs-hero__eyebrow" viewBox="0 0 220 70" role="img" aria-label="GET STARTED">
           <!-- Figma実測: バウンディングボックス W196×H23 → 半径R=H/2+W²/(8H)≒220.3 で逆算 -->
           <path id="gs-hero-eyebrow-arc" d="M12,55 A220.3,220.3 0 0,1 208,55" fill="none" />
           <text text-anchor="middle">
             <textPath href="#gs-hero-eyebrow-arc" startOffset="50%">GET STARTED</textPath>
           </text>
         </svg>
-        <h1 class="gs-hero__heading">初めての方へ</h1>
-        <p class="gs-hero__lead">英語に自信がなくても、<br />世界中のユーザーと安心して交流を始められます。</p>
+        <h1 class="sub-hero__heading gs-hero__heading">初めての方へ</h1>
+        <p class="sub-hero__lead gs-hero__lead">英語に自信がなくても、<br />世界中のユーザーと安心して交流を始められます。</p>
 
         <div class="gs-hero__nav">
           <a class="gs-hero__nav-card gs-hero__nav-card--reason" href="#reason">
@@ -191,8 +194,6 @@
     <!-- ===== REASON ===== -->
     <section class="gs-reason" id="reason" aria-labelledby="gs-reason-heading">
       <span class="gs-reason__watermark" aria-hidden="true">REASON</span>
-      <!-- .wrapper（max-width:1000px）の中に入れるとright:0がwrapperの右端止まりになって
-           画面端にピッタリつかないので、.wrapperの外＝.gs-reasonの直接の子にする -->
       <div class="gs-reason__head">
         <p class="gs-reason__eyebrow">初めてでも安心な</p>
         <h2 id="gs-reason-heading" class="gs-reason__title">４つの理由</h2>
@@ -201,8 +202,6 @@
         <ul class="gs-reason__list">
           <li class="gs-reason__item">
             <div class="gs-reason__blob-wrap gs-reason__blob-wrap--01">
-              <!-- Figmaから書き出したブロブの正確なパス。viewBox基準でスケールするため
-                   画面幅が変わっても形が崩れず、文字の湾曲ガイドとも常に同期する -->
               <svg class="gs-reason__blob-shape" viewBox="0 0 387 303" aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -211,9 +210,6 @@
               </svg>
               <svg class="gs-reason__blob-label" viewBox="0 0 387 303" aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg">
-                <!-- ラベル用ガイドは閉じたブロブ全周ではなく、外周の左上〜上あたりの
-                     区間だけを切り出す（全周を使うと文字が内側の白い塗りにまで
-                     はみ出して本文と被ってしまうため） -->
                 <path id="gs-reason-path-01"
                   d="M0.0515811 169.048C-0.473394 140.836 2.91216 116.372 14.6652 93.5788C27.5378 68.6222 47.5029 51.3722 72.6749 39.5902C113.735 20.3586 156.783 8.24453 201.781 2.80336C236.992 -1.45425 272.031 -1.38998 306.733 6.69679"
                   fill="none" />
@@ -234,7 +230,6 @@
               </svg>
               <svg class="gs-reason__blob-label" viewBox="0 0 453 354" aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg">
-                <!-- 外周のうち上側の区間のみを切り出したガイド -->
                 <path id="gs-reason-path-02"
                   d="M0.716187 255.895C9.51602 188.211 39.7333 133.187 95.7493 92.7494C151.446 52.537 211.524 22.093 278.981 7.37479C307.408 1.17334 336.117 -1.86166 365.264 1.21091"
                   fill="none" />
@@ -298,18 +293,12 @@
     <!-- ===== GET STARTED ===== -->
     <section class="gs-started" id="get-started" aria-labelledby="gs-started-heading">
       <span class="gs-started__watermark" aria-hidden="true">GET STARTED</span>
-      <!-- REASONと同じ理由で.wrapper（max-width:1000px）の外＝.gs-startedの直接の子にする
-           （right/leftを画面の真の端に効かせるため） -->
       <div class="gs-started__head">
         <p class="gs-started__eyebrow">Langmateの</p>
         <h2 id="gs-started-heading" class="gs-started__title">はじめ方</h2>
       </div>
       <div class="wrapper gs-started__wrapper">
         <ol class="gs-started__list">
-          <!-- ステップ同士をアーチ状（S字にうねる曲線）で繋ぐガイド。preserveAspectRatio="none"で
-               リストの実際の高さ（本文の折り返しで変わる）にフィットさせる近似実装 -->
-          <!-- Figma提供のアーチガイド（Line 3.svg）をそのまま使用。preserveAspectRatio="none"で
-               リストの実際の高さ（本文の折り返しで変わる）にフィットさせる -->
           <svg class="gs-started__list-curve" viewBox="0 0 121 708" preserveAspectRatio="none" aria-hidden="true">
             <path d="M2.00003 2.00023C155.067 207.078 157.864 487.622 8.91684 695.711L2 705.375" />
           </svg>
@@ -402,9 +391,9 @@
             <p>安心して利用できるサポート体制を整えています。</p>
           </li>
         </ul>
-        <img class="gs-safety__illust" src="design-assets/illust-page-safety.svg" alt="" aria-hidden="true"
-          width="400" height="434.63" />
       </div>
+      <img class="gs-safety__illust" src="design-assets/illust-page-safety.svg" alt="" aria-hidden="true"
+        width="400" height="434.63" />
     </section>
 
     <!-- ===== FAQ Preview ===== -->

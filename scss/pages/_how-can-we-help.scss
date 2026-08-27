@@ -7,54 +7,13 @@
 // とも共通なので、_support.scssからも参照される（値の重複定義はしない）。
 // ==========================================================================
 
-// ---- Hero（他の下層ページ共通の地図ヒーロー。今回はFigma指定で吹き出し付き） ----
+// ---- Hero ----
+// 地図＋eyebrow＋h1の見た目は他の下層ページと共通なので
+// scss/component/_sub-hero.scssに集約済み（HTML側で.sub-heroを併記）。
+// ここにはfaq-hero固有の下余白だけを残す（support.htmlもこのクラスを共有）。
 .faq-hero {
-    position: relative;
-    overflow: hidden;
-    margin-block-start: -86px; // headerのsticky分だけ引き上げ（他ページと同じ手法）
     // fluid化: sp=60px / pc=80px（431〜1023pxを線形補間）
     padding-block-end: clamp(60px, calc(45.52px + 3.367vw), 80px);
-
-    &__map {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: auto;
-        aspect-ratio: 1280 / 500;
-        z-index: 0;
-    }
-
-    &__inner {
-        position: relative;
-        z-index: 2;
-        text-align: center;
-        padding-block-start: calc(100vw * 500 / 1280 - 100px);
-    }
-
-    // 他ページのアーチ型eyebrowと同じ構造に統一
-    &__eyebrow {
-        display: block;
-        width: 196px;
-        aspect-ratio: 220 / 70;
-        margin-inline: auto;
-        margin-block-end: -16px;
-        overflow: visible;
-
-        text {
-            font-family: v.$font-en;
-            font-weight: v.$fw-medium;
-            font-size: 2.4rem;
-            fill: v.$color-blue;
-            letter-spacing: 0.04em;
-        }
-    }
-
-    &__heading {
-        font-size: 4.8rem;
-        font-weight: v.$fw-bold;
-        letter-spacing: 0.1em;
-    }
 }
 
 // ---- Search / Categories ----

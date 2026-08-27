@@ -137,19 +137,22 @@
 
   <main id="main">
     <!-- ===== Hero ===== -->
-    <section class="gs-hero">
-      <img class="gs-hero__map" src="/design-assets/bg-page.svg" alt="" aria-hidden="true" width="1280" height="500" />
+    <section class="sub-hero gs-hero">
+      <picture>
+        <source srcset="/design-assets/bg-page-sp.svg" media="(max-width: 430px)">
+        <img class="sub-hero__map gs-hero__map" src="/design-assets/bg-page.svg" alt="" aria-hidden="true" width="1280" height="500" />
+      </picture>
 
-      <div class="wrapper gs-hero__inner">
-        <svg class="gs-hero__eyebrow" viewBox="0 0 220 70" role="img" aria-label="GET STARTED">
+      <div class="wrapper sub-hero__inner gs-hero__inner">
+        <svg class="sub-hero__eyebrow gs-hero__eyebrow" viewBox="0 0 220 70" role="img" aria-label="GET STARTED">
           <!-- Figma実測: バウンディングボックス W196×H23 → 半径R=H/2+W²/(8H)≒220.3 で逆算 -->
           <path id="gs-hero-eyebrow-arc" d="M12,55 A220.3,220.3 0 0,1 208,55" fill="none" />
           <text text-anchor="middle">
             <textPath href="#gs-hero-eyebrow-arc" startOffset="50%">GET STARTED</textPath>
           </text>
         </svg>
-        <h1 class="gs-hero__heading">初めての方へ</h1>
-        <p class="gs-hero__lead">英語に自信がなくても、<br />世界中のユーザーと安心して交流を始められます。</p>
+        <h1 class="sub-hero__heading gs-hero__heading">初めての方へ</h1>
+        <p class="sub-hero__lead gs-hero__lead">英語に自信がなくても、<br />世界中のユーザーと安心して交流を始められます。</p>
 
         <div class="gs-hero__nav">
           <a class="gs-hero__nav-card gs-hero__nav-card--reason" href="#reason">
@@ -403,9 +406,9 @@
             <p>安心して利用できるサポート体制を整えています。</p>
           </li>
         </ul>
-        <img class="gs-safety__illust" src="/design-assets/illust-page-safety.svg" alt="" aria-hidden="true"
-          width="400" height="434.63" />
       </div>
+      <img class="gs-safety__illust" src="/design-assets/illust-page-safety.svg" alt="" aria-hidden="true"
+        width="400" height="434.63" />
     </section>
 
     <!-- ===== FAQ Preview ===== -->

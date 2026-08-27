@@ -135,18 +135,20 @@
 
   <main id="main">
     <!-- ===== Hero ===== -->
-    <section class="about-hero">
-      <img class="about-hero__map" src="design-assets/bg-page.svg" alt="" aria-hidden="true" width="1280"
-        height="500" />
-      <div class="wrapper about-hero__inner">
-        <svg class="about-hero__eyebrow" viewBox="0 0 220 70" role="img" aria-label="ABOUT US">
+    <section class="sub-hero about-hero">
+      <picture>
+        <source srcset="design-assets/bg-page-sp.svg" media="(max-width: 430px)">
+        <img class="sub-hero__map about-hero__map" src="design-assets/bg-page.svg" alt="" aria-hidden="true" width="1280" height="500" />
+      </picture>
+      <div class="wrapper sub-hero__inner about-hero__inner">
+        <svg class="sub-hero__eyebrow about-hero__eyebrow" viewBox="0 0 220 70" role="img" aria-label="ABOUT US">
           <!-- get-started(.gs-hero__eyebrow)と同じアーチ構造・半径を流用 -->
           <path id="about-hero-eyebrow-arc" d="M12,55 A220.3,220.3 0 0,1 208,55" fill="none" />
           <text text-anchor="middle">
             <textPath href="#about-hero-eyebrow-arc" startOffset="50%">ABOUT US</textPath>
           </text>
         </svg>
-        <h1 class="about-hero__heading">Langmateについて</h1>
+        <h1 class="sub-hero__heading about-hero__heading">Langmateについて</h1>
       </div>
     </section>
 

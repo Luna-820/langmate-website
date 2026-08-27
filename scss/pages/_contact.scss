@@ -3,36 +3,17 @@
 
 // ==========================================================================
 // Contact page（お問い合わせ）
-// ラフに全体を組んだ一次実装。吹き出しの位置・破線コネクタなどは簡易な近似で
-// 作っており、後で数値をもらいながら調整していく前提。
 // ==========================================================================
 
 // ---- Hero ----
 .contact-hero {
-    position: relative;
-    overflow: hidden;
-    margin-block-start: -86px; // headerのsticky分だけ引き上げ（他ページと同じ手法）
     // fluid化: sp=60px / pc=80px（431〜1023pxを線形補間）
     padding-block-end: clamp(60px, calc(45.52px + 3.367vw), 80px);
 
-    &__map {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: auto;
-        aspect-ratio: 1280 / 500;
-        z-index: 0;
-    }
-
-    // お問い合わせ完了ページ用：見出し等のテキストが無いので、地図をposition:staticの
-    // 通常フローに戻して地図自身の高さでセクションの高さが決まるようにする。
-    // さらにaspect-ratioを少し詰めて（object-fit:coverで上側基準にクロップ）、
-    // アーチの下の余分なクリーム部分を削り、アイコンとの間隔を狭くする。
     &--thanks {
         padding-block-end: 40px;
 
-        .contact-hero__map {
+        .sub-hero__map {
             position: static;
             display: block;
             aspect-ratio: 1280 / 380;
@@ -41,49 +22,15 @@
         }
     }
 
-    &__inner {
-        position: relative;
-        z-index: 2;
-        text-align: center;
-        padding-block-start: calc(100vw * 500 / 1280 - 100px);
-    }
-
-    // ABOUT US（.about-hero__eyebrow）と同じアーチ構造に統一
-    &__eyebrow {
-        display: block;
-        width: 196px;
-        aspect-ratio: 220 / 70;
-        margin-inline: auto;
-        margin-block-end: -16px;
-        overflow: visible;
-
-        text {
-            font-family: v.$font-en;
-            font-weight: v.$fw-medium;
-            font-size: 2.4rem;
-            fill: v.$color-blue;
-            letter-spacing: 0.04em;
-        }
-    }
-
-    &__heading {
-        font-size: 4.8rem;
-        font-weight: v.$fw-bold;
-        letter-spacing: 0.1em;
-        margin-block-end: 24px;
-    }
-
-    &__lead {
-        font-size: 2.4rem;
-        line-height: 1.4;
-        margin-block-end: 24px;
-    }
-
     &__note {
         font-size: 2rem;
         color: v.$color-text;
         margin-block-end: 24px;
         font-weight: v.$fw-normal;
+
+        @include mx.sp {
+            font-size: 1.4rem;
+        }
     }
 
     &__cta {
@@ -93,11 +40,14 @@
 
 // ---- Form ----
 .contact-form-section {
-    // デフォルト(=PC)はpadding-blockの上60px/下100pxの非対称。
-    // SPでは@include mx.spで下を60pxに上書きし、上下均等の60pxに戻す。
     padding-block: 60px;
     // fluid化: sp=60px / pc=100px（431〜1023pxを線形補間）
     padding-bottom: clamp(60px, calc(31.04px + 6.734vw), 100px);
+
+
+    @include mx.sp {
+        padding-top: 0;
+    }
 }
 
 .contact-form {
@@ -118,11 +68,9 @@
         flex-direction: column;
         align-items: flex-start; // label/inputを左揃えに（親のalign-items:centerで中央寄せされないよう明示）
         gap: 8px;
-        // fluid化: width(sp=100%)はそのままフルードなので据え置き、
-        // max-widthのみsp=345px / pc=600pxで補間
         width: 100%;
         max-width: clamp(345px, calc(160.4px + 42.93vw), 600px);
-        margin-inline: auto; // fieldそのものはbox内で中央寄せ
+        margin-inline: auto;
         text-align: left;
     }
 
@@ -197,7 +145,6 @@
         padding-block-end: 4px;
     }
 
-    // +/− アイコン：横棒(::before)は常に表示、縦棒(::after)は開いた時だけ消して「−」にする
     &__user-id-icon {
         position: relative;
         display: inline-block;
@@ -253,19 +200,27 @@
         // fluid化: width(sp=100%)は据え置き、max-widthのみsp=345px / pc=600pxで補間（__fieldと同じ幅）
         width: 100%;
         max-width: clamp(345px, calc(160.4px + 42.93vw), 600px);
-        margin-inline: auto; // __fieldと同じく中央寄せ
+        margin-inline: auto;
         text-align: center;
         border: 1px dashed v.$color-text;
         border-radius: v.$radius-card;
         background-color: #F4FAFF;
         padding: 32px 72px;
         margin-bottom: 20px;
+
+        @include mx.sp {
+            padding: 32px;
+        }
     }
 
     &__dropzone-label {
         font-size: 2rem;
         font-weight: v.$fw-bold;
         margin-block-end: 16px;
+
+        @include mx.sp {
+            font-size: 1.6rem;
+        }
     }
 
     &__dropzone-or {
@@ -285,7 +240,11 @@
         padding: 8px 32px;
         cursor: pointer;
         border: 1px solid v.$color-text;
-        height:44px;
+        height: 44px;
+
+        @include mx.sp {
+            font-size: 1.6rem;
+        }
     }
 
     &__submit {
@@ -301,6 +260,10 @@
         padding: 16px 96px;
         cursor: pointer;
         transition: opacity 0.3s, transform 0.2s;
+
+        @include mx.sp {
+            font-size: 2rem;
+        }
 
         &:hover {
             opacity: 0.85;

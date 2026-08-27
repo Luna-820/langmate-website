@@ -134,18 +134,21 @@
 
   <main id="main">
     <!-- ===== Hero ===== -->
-    <section class="faq-hero">
-      <img class="faq-hero__map" src="design-assets/bg-page.svg" alt="" aria-hidden="true" width="1280"
-        height="500" />
-      <div class="wrapper faq-hero__inner">
-        <svg class="faq-hero__eyebrow" viewBox="0 0 220 70" role="img" aria-label="FAQ">
+    <section class="sub-hero faq-hero">
+      <picture>
+        <source srcset="design-assets/bg-page-sp.svg" media="(max-width: 430px)">
+        <img class="sub-hero__map faq-hero__map" src="design-assets/bg-page.svg" alt="" aria-hidden="true" width="1280"
+          height="500" />
+      </picture>
+      <div class="wrapper sub-hero__inner faq-hero__inner">
+        <svg class="sub-hero__eyebrow faq-hero__eyebrow" viewBox="0 0 220 70" role="img" aria-label="FAQ">
           <!-- 他ページと同じアーチ構造を流用 -->
           <path id="faq-hero-eyebrow-arc" d="M12,55 A220.3,220.3 0 0,1 208,55" fill="none" />
           <text text-anchor="middle">
             <textPath href="#faq-hero-eyebrow-arc" startOffset="50%">FAQ</textPath>
           </text>
         </svg>
-        <h1 class="faq-hero__heading">よくある質問</h1>
+        <h1 class="sub-hero__heading faq-hero__heading">よくある質問</h1>
       </div>
     </section>
 

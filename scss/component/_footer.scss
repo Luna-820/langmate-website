@@ -16,8 +16,11 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        // fluid化: sp=20px / pc=92px（431〜1023pxを線形補間）
-        gap: clamp(20px, calc(-32.12px + 12.12vw), 92px);
+        // fluid化: sp=20px / pc=92px（1024px以下だと2.4rem(pc上限)に達した
+        // nav文字が折り返してしまっていたため、pc到達点を1280pxまで伸ばして
+        // 768〜1024px帯でも余白に少し余裕が出るようにした。1280px以上の
+        // 見た目(92px)は変わらない）
+        gap: clamp(20px, calc(-16.42px + 8.471vw), 92px);
 
         @include mx.sp {
             flex-direction: column;
@@ -29,8 +32,9 @@
 
     &__brand {
         p {
-            // fluid化: sp=1.4rem / pc=1.8rem（431〜1023pxを線形補間）
-            font-size: clamp(1.4rem, calc(11.1px + 0.6734vw), 1.8rem);
+            // fluid化: sp=1.4rem / pc=1.8rem（pc到達点を1280pxまで伸ばして
+            // 768〜1024px帯での折り返しを緩和。1280px以上は変わらない）
+            font-size: clamp(1.4rem, calc(11.98px + 0.4706vw), 1.8rem);
             margin-block-end: 8px;
         }
 
@@ -66,10 +70,21 @@
     &__nav ul {
         display: grid;
         grid-template-columns: repeat(2, auto);
-        // fluid化: sp=12px 32px / pc=16px 64px（行間・列間ともに431〜1023pxを線形補間）
-        gap: clamp(12px, calc(9.104px + 0.6734vw), 16px) clamp(32px, calc(8.835px + 5.387vw), 64px);
-        // fluid化: sp=1.6rem / pc=2.4rem（431〜1023pxを線形補間）
-        font-size: clamp(1.6rem, calc(10.21px + 1.347vw), 2.4rem);
+        // fluid化: sp=12px 32px / pc=16px 64px（行間・列間ともに、pc到達点を
+        // 1280pxまで伸ばして768〜1024px帯での折り返しを緩和。1280px以上は
+        // 変わらない）
+        gap: clamp(12px, calc(9.976px + 0.4706vw), 16px) clamp(32px, calc(15.81px + 3.765vw), 64px);
+        // fluid化: sp=1.6rem / pc=2.4rem（同上、pc到達点を1280pxに伸ばした）
+        font-size: clamp(1.6rem, calc(11.95px + 0.9412vw), 2.4rem);
+
+        // grid-template-columnsのautoトラックはmin-width:autoの初期値のせいで
+        // 中身のmin-content（日本語だと1文字単位）まで潰れてしまい、フォント
+        // サイズを縮めただけでは768〜1024px帯で「初めての方へ」等が2行に
+        // 折り返んでしまっていた。nowrapで1行の幅をmin-contentとして
+        // 強制することで、幅が足りない時は折り返みではなく列側で吸収させる。
+        li a {
+            white-space: nowrap;
+        }
 
         @include mx.sp {
             justify-content: flex-start;
@@ -86,8 +101,12 @@
 
     &__sns {
         p {
-            font-size: 2.0rem;
+            // fluid化: sp=1.6rem / pc=2.0rem（元は固定2.0remで768〜1024px帯でも
+            // 縮まらず「公式SNSはこちら」が折り返してしまっていたため、他の
+            // 見出しと同じくfluid化。1280px以上は元の2.0remのまま）
+            font-size: clamp(1.6rem, calc(13.98px + 0.4706vw), 2.0rem);
             margin-block-end: 16px;
+            white-space: nowrap;
         }
 
         div {
