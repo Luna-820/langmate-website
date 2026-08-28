@@ -15,7 +15,10 @@
 .sub-hero {
     position: relative;
     overflow: hidden;
-    margin-block-start: -86px; // headerのsticky分だけ引き上げる（全ページ共通）
+    // headerがposition:absoluteでHeroにoverlayする構造になったため、
+    // sticky時代の引き上げ(-86px)は不要（headerが通常フローの高さを
+    // 占有しなくなったため、このsub-hero側は0で正しくviewport最上部から始まる）
+    margin-block-start: 0;
 
     &__map {
         position: absolute;

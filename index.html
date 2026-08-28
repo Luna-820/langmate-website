@@ -102,34 +102,26 @@
           </button>
           <ul class="language-switcher__list" id="language-switcher-list" role="listbox" hidden>
             <li role="option" data-lang="ja" aria-selected="true">
-            <img src="design-assets/flag-jp.svg" alt="" width="20" height="20" />日本語
+              <img src="design-assets/flag-jp.svg" alt="" width="20" height="20" />日本語
             </li>
             <li role="option" data-lang="en" aria-selected="false">
-            <img src="design-assets/flag-us.svg" alt="" width="20" height="20" />English
+              <img src="design-assets/flag-us.svg" alt="" width="20" height="20" />English
             </li>
           </ul>
         </div>
 
-        <button class="hamburger" type="button" aria-expanded="false" aria-controls="mobile-nav" data-mobile-nav-trigger>
+        <button class="hamburger" type="button" aria-expanded="false" aria-controls="mobile-nav"
+          data-mobile-nav-trigger>
           <span class="visually-hidden">メニューを開く</span>
-          <span class="hamburger__line" aria-hidden="true"></span>
-          <span class="hamburger__line" aria-hidden="true"></span>
-          <span class="hamburger__line" aria-hidden="true"></span>
+          <span class="hamburger__line hamburger__line--top" aria-hidden="true"></span>
+          <span class="hamburger__line hamburger__line--middle" aria-hidden="true"></span>
+          <span class="hamburger__line hamburger__line--bottom" aria-hidden="true"></span>
         </button>
       </div>
     </div>
   </header>
 
   <div class="mobile-nav" id="mobile-nav" data-mobile-nav hidden>
-    <div class="mobile-nav__header">
-      <a class="mobile-nav__logo" href="index.html">
-        <img src="design-assets/logo-langmate.svg" alt="Langmate" width="120" height="34" />
-      </a>
-      <button class="mobile-nav__close" type="button" data-mobile-nav-close>
-        <span class="visually-hidden">メニューを閉じる</span>
-        <span aria-hidden="true">✕</span>
-      </button>
-    </div>
     <nav aria-label="モバイルナビゲーション">
       <ul class="mobile-nav__list">
         <li><a href="index.html">ホーム</a></li>
@@ -140,12 +132,19 @@
       </ul>
     </nav>
     <div class="mobile-nav__sns">
-      <span class="visually-hidden">公式SNS</span>
-      <a href="https://www.instagram.com/langmate_app"><img src="design-assets/logo-instagram.svg" alt="Instagram" width="24" height="24" /></a>
-      <a href="https://x.com/LANGMATE_APP"><img src="design-assets/logo-x.svg" alt="X" width="24" height="24" /></a>
-      <a href="https://www.tiktok.com/@questions_about_japan"><img src="design-assets/logo-tiktok.svg" alt="TikTok" width="24" height="24" /></a>
+      <p>公式SNSはこちら<span aria-hidden="true">&#x25BC;</span></p>
+      <div class="sns__icons"><a href="https://www.instagram.com/langmate_app"><img
+            src="design-assets/logo-instagram.svg" alt="Instagram" width="24" height="24" /></a>
+        <a href="https://x.com/LANGMATE_APP"><img src="design-assets/logo-x.svg" alt="X" width="24" height="24" /></a>
+        <a href="https://www.tiktok.com/@questions_about_japan"><img src="design-assets/logo-tiktok.svg" alt="TikTok"
+            width="24" height="24" /></a>
+      </div>
+
     </div>
-    <a class="mobile-nav__download" href="#download">ダウンロードはこちら <span aria-hidden="true">⬇</span></a>
+    <a class="mobile-nav__download" href="#download">
+      <span>ダウンロードはこちら</span>
+      <img class="mobile-nav__download-icon" src="design-assets/icon-DL.svg" alt="" aria-hidden="true">
+    </a>
   </div>
 
   <div class="floating-dl" data-floating-dl>
@@ -155,8 +154,8 @@
         <span>D<br />L<br />は<br />こ<br />ち<br />ら</span>
       </button>
       <div class="floating-dl__panel" id="floating-dl-panel">
-        <a href="https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775" class="btn btn--store"><img src="design-assets/badge-appstore-ja.svg" alt="App Storeからダウンロード"
-            width="160" height="48" /></a>
+        <a href="https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775" class="btn btn--store"><img
+            src="design-assets/badge-appstore-ja.svg" alt="App Storeからダウンロード" width="160" height="48" /></a>
         <a href="https://play.google.com/store/apps/details?id=co.thoron.langmate" class="btn btn--store"><img
             src="design-assets/badge-googleplay-ja.svg" alt="Google Playで手に入れよう" width="160" height="48" /></a>
       </div>
@@ -166,26 +165,40 @@
   <main id="main">
     <!-- ===== Hero ===== -->
     <section class="hero">
-      <div class="hero__deco" aria-hidden="true"></div>
+      <div class="hero__visual" aria-hidden="true">
+        <picture>
+          <source media="(max-width: 780px)" srcset="design-assets/hero-visual-sp.webp" />
+          <img class="hero__visual-img" src="design-assets/hero-visual-pc.webp" alt="" />
+        </picture>
+      </div>
+
       <div class="hero__inner">
         <div class="hero__content">
           <h1 class="hero__heading">
-            世界中の人と話して、<br />外国人の友達になれる国際交流アプリ。
+            世界中の人と話して、<br />
+            外国人の友達になれる国際交流アプリ。
+
             <img class="hero__logo" src="design-assets/logo-langmate.svg" alt="Langmate" width="378" height="81" />
           </h1>
-          <p class="hero__lead">話したい相手ができると、英語を使う理由が生まれる。<br />英語に自信がなくても、まずは短いメッセージから。<br />楽しみながら、英語で伝える力を伸ばせます。</p>
+
+          <p class="hero__lead">
+            話したい相手ができると、<br class="sp-only">
+            英語を使う理由が生まれる。<br>
+            英語に自信がなくても、<br class="sp-only">
+            まずは短いメッセージから。<br>
+            楽しみながら、<br class="sp-only">
+            英語で伝える力を伸ばせます。
+          </p>
+
           <div class="hero__badges">
             <a href="https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775" class="btn btn--store">
-              <img src="design-assets/badge-appstore-ja.svg" alt="App Storeからダウンロード" width="160" height="48" />
+              <img src="design-assets/badge-appstore-ja.svg" alt="App Storeからダウンロード" />
             </a>
+
             <a href="https://play.google.com/store/apps/details?id=co.thoron.langmate" class="btn btn--store">
-              <img src="design-assets/badge-googleplay-ja.svg" alt="Google Playで手に入れよう" width="160" height="48" />
+              <img src="design-assets/badge-googleplay-ja.svg" alt="Google Playで手に入れよう" />
             </a>
           </div>
-        </div>
-        <div class="hero__visual" aria-hidden="true">
-          <div class="hero__pink-deco"></div>
-          <img class="hero__kv" src="design-assets/img-kv.webp" alt="" width="300" height="493" />
         </div>
       </div>
     </section>
@@ -748,10 +761,10 @@
         <p>外国人の友達になれる国際交流アプリ</p>
         <img src="design-assets/logo-langmate.svg" alt="Langmate" />
         <div class="site-footer__badges">
-          <a href="https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775"><img src="design-assets/badge-appstore-ja.svg" alt="App Storeからダウンロード" width="120"
-              height="36" /></a>
-          <a href="https://play.google.com/store/apps/details?id=co.thoron.langmate"><img src="design-assets/badge-googleplay-ja.svg" alt="Google Playで手に入れよう" width="120"
-              height="36" /></a>
+          <a href="https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775"><img
+              src="design-assets/badge-appstore-ja.svg" alt="App Storeからダウンロード" width="120" height="36" /></a>
+          <a href="https://play.google.com/store/apps/details?id=co.thoron.langmate"><img
+              src="design-assets/badge-googleplay-ja.svg" alt="Google Playで手に入れよう" width="120" height="36" /></a>
         </div>
       </div>
 
@@ -768,9 +781,11 @@
       <div class="site-footer__sns">
         <p>公式SNSはこちら</p>
         <div>
-          <a href="https://www.instagram.com/langmate_app"><img src="design-assets/logo-instagram.svg" alt="Instagram" width="24" height="24" /></a>
+          <a href="https://www.instagram.com/langmate_app"><img src="design-assets/logo-instagram.svg" alt="Instagram"
+              width="24" height="24" /></a>
           <a href="https://x.com/LANGMATE_APP"><img src="design-assets/logo-x.svg" alt="X" width="24" height="24" /></a>
-          <a href="https://www.tiktok.com/@questions_about_japan"><img src="design-assets/logo-tiktok.svg" alt="TikTok" width="24" height="24" /></a>
+          <a href="https://www.tiktok.com/@questions_about_japan"><img src="design-assets/logo-tiktok.svg" alt="TikTok"
+              width="24" height="24" /></a>
         </div>
       </div>
     </div>

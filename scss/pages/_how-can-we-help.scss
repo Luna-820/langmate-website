@@ -3,17 +3,16 @@
 
 // ==========================================================================
 // FAQ archive page（よくある質問 一覧 / how-can-we-help.html）
-// ここで定義する .faq-hero / .faq-search / .faq-categories は support.html（詳細）
-// とも共通なので、_support.scssからも参照される（値の重複定義はしない）。
 // ==========================================================================
 
 // ---- Hero ----
-// 地図＋eyebrow＋h1の見た目は他の下層ページと共通なので
-// scss/component/_sub-hero.scssに集約済み（HTML側で.sub-heroを併記）。
-// ここにはfaq-hero固有の下余白だけを残す（support.htmlもこのクラスを共有）。
 .faq-hero {
-    // fluid化: sp=60px / pc=80px（431〜1023pxを線形補間）
-    padding-block-end: clamp(60px, calc(45.52px + 3.367vw), 80px);
+    // fluid化: sp=24px / pc=80px（431〜1023pxを線形補間）
+    padding-block-end: clamp(26px, calc(45.52px + 3.367vw), 80px);
+
+    @include mx.sp {
+        padding-block-end: 26px;
+    }
 }
 
 // ---- Search / Categories ----
@@ -26,9 +25,6 @@
 .faq-search {
     display: flex;
     align-items: stretch;
-    // fluid化: PCのwidth:1000pxは.wrapperの内側パディングを越えて外枠(container-max)いっぱいまで
-    // 意図的にはみ出す仕様。sp(≤430px)は@include mx.spのwidth:100%のままなので、
-    // ここでは431px時点の実効幅(=390px、sp版.wrapperの内容幅)からpc=1000pxへ線形補間する。
     // fluid化: sp=390px（wrapperの実効内容幅） / pc=1000px（431〜1023pxを線形補間）
     width: clamp(390px, calc(-51.58px + 102.7vw), 1000px);
     // fluid化: sp=56px / pc=64px（431〜1023pxを線形補間）
@@ -41,8 +37,9 @@
     overflow: hidden; // ボタンの角を外枠の丸みに合わせてクリップ
 
     @include mx.sp {
+        max-width: 345px;
         width: 100%;
-        max-width: 700px;
+        margin-block-end: 24px;
     }
 
     &__input {
@@ -69,11 +66,12 @@
         flex-shrink: 0;
         font-family: v.$font-jp;
         font-weight: v.$fw-bold;
-        font-size: 1.6rem;
+        font-size: 2.4rem;
         color: v.$color-white;
         background-color: v.$color-pink;
         border: none;
-        border-radius: 8px;;
+        border-radius: 8px;
+        ;
         // fluid化: sp=32px / pc=48px（431〜1023pxを線形補間）
         padding-inline: clamp(32px, calc(20.42px + 2.694vw), 48px);
         cursor: pointer;
@@ -81,6 +79,10 @@
 
         &:hover {
             opacity: 0.85;
+        }
+
+        @include mx.sp {
+            font-size: 2.0rem;
         }
     }
 }
@@ -93,14 +95,14 @@
     // sp版のwidth:unset（実効幅390px）に一致させる
     // fluid化: sp=390px（wrapperの実効内容幅） / pc=1000px（431〜1023pxを線形補間）
     width: clamp(390px, calc(-51.58px + 102.7vw), 1000px);
-    // fluid化: sp=12px / pc=16px（431〜1023pxを線形補間）
-    gap: clamp(12px, calc(9.104px + 0.6734vw), 16px);
+    // fluid化: sp=16px / pc=12px（431〜1023pxを線形補間）
+    gap: clamp(16px, calc(9.104px + 0.6734vw), 12px);
     margin-inline: auto;
 
     @include mx.sp {
-        grid-template-columns: repeat(2, 1fr);
-        width: unset;
-        max-width: 700px;
+        grid-template-columns: repeat(1, 1fr);
+        max-width: 345px;
+        width: 100%;
     }
 
     &__item {
@@ -122,6 +124,11 @@
             background-color: v.$color-pink-light;
             opacity: 1; // 全体aルールのhover:opacity0.7を打ち消し、背景色変化のみにする
         }
+
+        @include mx.sp {
+            padding: 16px 24px;
+        }
+
     }
 
     &__arrow {
@@ -139,7 +146,7 @@
 
     // .faq-groups自体ではなく、実際に.faq-groupを並べている.wrapperの方に
     // グリッドを適用する（section > .wrapper > .faq-group という構造のため）
-    > .wrapper {
+    >.wrapper {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 56px;

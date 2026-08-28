@@ -9,14 +9,9 @@
 
 $bp-pc: 1024px;
 $bp-sp: 430px;
-// ヘッダーのグロナビ⇔ハンバーガー切り替えだけに使う専用ブレークポイント。
-// 5項目+ロゴ+言語切替だと1024px幅では窮屈で折り返すため、$bp-pcより広い
-// 1000pxで先にハンバーガーへ切り替える（他の要素の$bp-sp/$bp-pcには影響しない）。
 $bp-nav: 1000px;
-// VOICEセクションの3カードグリッドは、カード自体の中身（星評価・本文など）が
-// 詰まってくる874px前後から入りきらなくなるため、そこから先にスライド式へ
-// 切り替える専用ブレークポイント。
 $bp-voice: 880px;
+$bp-hero: 780px;
 
 @mixin pc {
     @media (min-width: $bp-pc) {
@@ -38,6 +33,12 @@ $bp-voice: 880px;
 
 @mixin voice-collapse {
     @media (max-width: $bp-voice) {
+        @content;
+    }
+}
+
+@mixin hero-sp {
+    @media (max-width: $bp-hero) {
         @content;
     }
 }

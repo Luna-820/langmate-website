@@ -9,7 +9,8 @@
 .gs-hero {
     position: relative;
     overflow: hidden;
-    margin-block-start: -86px;
+    // .sub-heroと同じ理由でheader overlay後は不要（0にする）
+    margin-block-start: 0;
     // fluid化: sp=40px / pc=200px（431〜1023pxを線形補間）
     padding-block-end: clamp(40px, calc(-75.82px + 26.94vw), 200px);
 
