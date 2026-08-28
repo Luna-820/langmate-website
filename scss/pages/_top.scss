@@ -682,7 +682,6 @@
     &__list {
         display: flex;
         flex-direction: column;
-        //sp=64px / pc=40px（431〜1023pxを線形補間）
         gap: clamp(40px, calc(81.37px + -4.04vw), 64px);
     }
 
@@ -695,7 +694,8 @@
         max-width: 1120px;
         margin-inline: auto;
 
-        @include mx.sp {
+        // 780px以下で縦並び
+        @include mx.hero-sp {
             flex-direction: column;
             align-items: center;
         }
@@ -704,15 +704,16 @@
         &--reverse {
             flex-direction: row-reverse;
 
-            @include mx.sp {
+            // ここも780px以下で解除
+            @include mx.hero-sp {
                 flex-direction: column;
             }
 
             .reason__illustration {
                 margin-inline-start: -90px;
 
-                @include mx.sp {
-                    margin-inline-start: unset;
+                @include mx.hero-sp {
+                    margin-inline-start: 0;
                 }
             }
         }
@@ -767,35 +768,54 @@
         height: auto;
         flex-shrink: 0;
 
-        @include mx.sp {
+        @include mx.hero-sp {
             width: 100%;
             max-width: 120px;
             position: absolute;
-            bottom: calc(100% - 50px);
+            bottom: calc(100% - 150px);
             right: 0;
+
+            @include mx.sp {
+                bottom: calc(100% - 50px);
+            }
         }
 
         &--01 {
             transform: rotate(-8deg);
 
+            @include mx.hero-sp {
+                min-width: 88px;
+            }
+
             @include mx.sp {
                 width: 88px;
+                transform: none;
             }
         }
 
         &--02 {
             transform: rotate(-1.36deg);
 
+            @include mx.hero-sp {
+                min-width: 122px;
+            }
+
             @include mx.sp {
                 width: 122px;
+                transform: none;
             }
         }
 
         &--03 {
             transform: rotate(-3.36deg);
 
+            @include mx.hero-sp {
+                min-width: 74px;
+            }
+
             @include mx.sp {
                 width: 74px;
+                transform: none;
             }
         }
     }
@@ -1046,21 +1066,21 @@
         height: auto;
 
         &--01 {
-            //sp=12px / pc=24px（431〜1023pxを線形補間）
-            top: clamp(12px, calc(3.313px + 2.02vw), 24px);
-            //sp=12px / pc=40px（431〜1023pxを線形補間）
-            right: clamp(12px, calc(-8.269px + 4.714vw), 40px);
-            //sp=110px / pc=227px（431〜1023pxを線形補間）
+            top: clamp(-50px, calc(-58.69px + 2.0202vw), -38px);
+            right: clamp(-10px, calc(-18.69px + 2.0202vw), 2px);
             width: clamp(110px, calc(25.3px + 19.7vw), 227px);
         }
 
         &--02 {
-            //sp=12px / pc=24px（431〜1023pxを線形補間）
-            bottom: clamp(12px, calc(3.313px + 2.02vw), 24px);
-            //sp=12px / pc=40px（431〜1023pxを線形補間）
-            left: clamp(12px, calc(-8.269px + 4.714vw), 40px);
-            //sp=100px / pc=226px（431〜1023pxを線形補間）
-            width: clamp(100px, calc(8.788px + 21.21vw), 226px);
+            bottom: clamp(-50px, calc(-58.69px + 2.0202vw), -38px);
+
+            left: clamp(-140px,
+                    calc(-120px + 2.0202vw),
+                    -110px);
+
+            width: clamp(100px,
+                    calc(8.788px + 21.21vw),
+                    226px);
         }
     }
 
@@ -1077,6 +1097,7 @@
         border: 2px solid v.$color-text;
         padding-block: 64px;
     }
+
 
     &__deco {
         display: block;
@@ -1108,25 +1129,40 @@
         display: flex;
         flex-direction: row;
         justify-content: center;
-        gap: 72px;
         align-items: center;
 
-        @include mx.sp {
+        gap: clamp(32px, 5vw, 72px);
+
+        @include mx.hero-sp {
             flex-direction: column;
             justify-content: unset;
+            gap: 32px;
         }
-    }
 
-    &__mockup {
-        max-width: 220px;
 
-        img {
-            display: block;
+        &__mockup {
+            flex: 0 1 clamp(190px, 22vw, 240px);
+
             width: 100%;
-            height: auto;
+            max-width: 240px;
+            min-width: 180px;
 
-            @include mx.sp {
-                width: 100px;
+            @include mx.hero-sp {
+                flex: none;
+
+                width: min(72vw, 220px);
+                max-width: 220px;
+                min-width: 0;
+            }
+
+            img,
+            video {
+                display: block;
+
+                width: 100%;
+                height: auto;
+
+                max-width: 100%;
             }
         }
     }
