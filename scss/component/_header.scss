@@ -6,9 +6,12 @@
 // ==========================================================================
 
 .site-header {
-    position: sticky;
+    position: absolute;
     top: clamp(12px, calc(6.209px + 1.347vw), 20px);
-    z-index: 200;
+    left: 0;
+    width: 100%;
+    // mobile-nav(z-index:300)のマスク/blurより必ず前面に出す
+    z-index: 400;
     padding-inline: clamp(12px, calc(3.313px + 2.02vw), 24px);
 
     &__inner {
@@ -65,25 +68,60 @@
 }
 
 .hamburger {
+    position: relative;
     display: none;
-    flex-direction: column;
-    justify-content: center;
-    gap: 5px;
     width: 32px;
     height: 32px;
+    padding: 0;
     background: none;
     border: none;
     cursor: pointer;
 
     @include mx.nav-collapse {
-        display: flex;
+        display: block;
     }
 
     &__line {
-        display: block;
+        position: absolute;
+        left: 50%;
+        width: 24px;
         height: 2px;
         background-color: v.$color-text;
-        border-radius: 1px;
+        border-radius: 999px;
+        transform: translateX(-50%);
+        // mobile-navのスライド(0.35s)と質感を揃える
+        transition:
+            top 0.3s ease,
+            transform 0.3s ease,
+            opacity 0.3s ease;
+
+        &--top {
+            top: 8px;
+        }
+
+        &--middle {
+            top: 15px;
+        }
+
+        &--bottom {
+            top: 22px;
+        }
+    }
+
+    &[aria-expanded="true"] {
+        .hamburger__line--top {
+            top: 15px;
+            transform: translateX(-50%) rotate(45deg);
+        }
+
+        .hamburger__line--middle {
+            opacity: 0;
+        }
+
+        .hamburger__line--bottom {
+            top: 15px;
+            transform: translateX(-50%) rotate(-45deg);
+        }
     }
 }
 
@@ -162,34 +200,28 @@
 }
 
 // ---- Mobile Navigation — フルスクリーンオーバーレイ ----
-// 開閉はJS側で.is-openクラスを付け外しして行う（[hidden]属性のみだと
-// display:none⇔flexの切り替えになりtransitionが効かないため、
-// 「[hidden]解除→次フレームで.is-open付与→height:0→100vh」の2段階にしている）
 .mobile-nav {
     position: fixed;
     inset: 0;
     z-index: 300;
     padding-inline: 24px;
-    padding-block: 24px 80px; // 下は固定表示の&__downloadぶんの余白を確保
+    padding-block: 150px;
     overflow: hidden;
     display: none !important;
     flex-direction: column;
-    height: 0;
-    transition: height 0.35s ease;
+    // 「上から降りてくるカーテン」(height:0→100vh)をやめ、右から左への
+    // スライドインに変更。高さは常にビューポート分で固定し、transformだけ動かす
+    width: 100%;
+    height: 100dvh;
+    transform: translateX(100%);
+    transition: transform 0.35s ease;
 
-    // 背景の半透明＋ぼかしは.mobile-nav自体ではなく::beforeに持たせる。
-    // 注意: backdrop-filter(やtransform/filter)を持つ要素は、子孫のposition:fixed
-    // の基準（containing block）をビューポートではなくその要素自身に変えてしまう
-    // 仕様がある。.mobile-nav自体に付けると&__downloadがopen中(height:0→100vh)の
-    // 「まだ小さい自分自身」を基準に画面上部へ描画され、閉じるボタンと重なって
-    // しまう。::beforeに逃がせば&__downloadは::beforeの子孫ではない（兄弟）ので
-    // 影響を受けず、素直にビューポート基準のposition:fixedとして機能する。
     &::before {
         content: "";
         position: absolute;
         inset: 0;
         z-index: -1;
-        background-color: rgba(255, 252, 243, 0.9); // v.$color-cream(#FFFCF3)の半透明版
+        background-color: rgba(255, 252, 243, 0.7); // v.$color-cream(#FFFCF3)の半透明版
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
     }
@@ -203,7 +235,7 @@
     }
 
     &.is-open {
-        height: 100vh;
+        transform: translateX(0);
         overflow-y: auto;
     }
 
@@ -215,13 +247,13 @@
     }
 
     &__logo img {
-        height: 32px;
+        height: 40px;
     }
 
     &__close {
         background: none;
         border: none;
-        font-size: 2.4rem;
+        font-size: 4rem;
         cursor: pointer;
     }
 
@@ -229,39 +261,60 @@
         display: flex;
         flex-direction: column;
         gap: 24px;
-        font-size: 2rem;
-        font-weight: v.$fw-bold;
+        font-size: 2.4rem;
+        font-weight: v.$fw-medium;
         text-align: center;
         margin-block: auto;
     }
 
     &__sns {
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
         gap: 16px;
-        margin-block: 24px;
+        margin-block: 40px;
+
+        p {
+            font-size: 1.6rem;
+        }
 
         img {
-            width: 24px;
-            height: 24px;
+            width: 40px;
+            height: 40px;
+        }
+
+        .sns__icons {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
         }
     }
 
-    // 画面下端に完全に固定。backdrop-filterを.mobile-nav本体から::beforeへ
-    // 逃がしたことで、position:fixedが素直にビューポート基準で効くようになった
-    // （中身の量に関わらず常に画面最下端に張り付く）
     &__download {
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+
         text-align: center;
         padding: 16px;
         background-color: v.$color-blue;
         color: v.$color-white;
         font-weight: v.$fw-bold;
         border-radius: v.$radius-button v.$radius-button 0 0;
+
         position: fixed;
         left: 0;
         right: 0;
         bottom: 0;
+
+        img {
+            display: block;
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+        }
     }
 }

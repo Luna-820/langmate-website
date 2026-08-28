@@ -26,10 +26,9 @@
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.08);
     border: 1px solid v.$color-gray-light;
 
-    // WordPress化後、投稿タイトルが入る想定のプレースホルダー見出し
     &__title {
-        // fluid化: sp=4rem / pc=2.4rem（431〜1023pxを線形補間）
-        font-size: clamp(2.4rem, calc(51.58px + -2.694vw), 4rem);
+        // fluid化: sp=4rem / pc=2.4rem
+        font-size: clamp(2.4rem, calc(12.35px + 2.703vw), 4rem);
         font-weight: v.$fw-bold;
         color: v.$color-text;
         margin-block-end: 12px;
@@ -38,7 +37,6 @@
     &__breadcrumb {
         margin-block-end: 24px;
 
-        // sp/pcで同じ1.4rem指定だったため、重複していたmx.spのfont-sizeは削除済み
         ol {
             display: flex;
             flex-wrap: wrap;
@@ -79,7 +77,7 @@
     // 1件のFAQ本文ブロック。WordPress化後はACFのフレキシブルコンテンツ／
     // リピーターの1要素としてループ出力される想定。
     &__block {
-        & + & {
+        &+& {
             margin-block-start: 64px;
         }
 
@@ -92,7 +90,7 @@
             margin-block-end: clamp(10px, calc(5.657px + 1.01vw), 16px);
         }
 
-        > p {
+        >p {
             // fluid化: sp=1.5rem / pc=1.6rem（431〜1023pxを線形補間）
             font-size: clamp(1.5rem, calc(14.28px + 0.1684vw), 1.6rem);
             line-height: 1.9;
