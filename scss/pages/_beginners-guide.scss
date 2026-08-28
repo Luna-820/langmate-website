@@ -245,6 +245,12 @@
 }
 
 // ---- REASON ----
+// breakpoint方針(既存mixinのみ使用): 1024px以上=PC 2カラム(無指定=base扱い) /
+// 881〜1023px=base(2カラム)がそのままfluidで縮小 / 880px以下=mx.voice-collapseで
+// 1カラムへ切り替え(以降430pxまで基本1カラムのままサイズだけ縮小) /
+// 780px以下=mx.hero-spで1カラムのサイズ・余白をさらに調整 /
+// 430px以下=mx.spでSP専用の最終調整(320pxもこの中で成立させる)。
+// voice-collapse→hero-sp→spの順で後に書くほど範囲が狭く上書きされる。
 .gs-reason {
     position: relative;
     overflow: hidden;
@@ -261,18 +267,28 @@
         -webkit-text-stroke: 2px v.$color-pink-light;
         color: transparent;
 
-        @include mx.sp {
-            left: -8%;
+        // 780px以下(blobが頭打ちサイズになり間隔が窮屈になる帯)は文字が
+        // 大きすぎてblob1の曲線ラベルと重なるため、フォントサイズを縮小しつつ
+        // さらに左へ逃がして完全に分離させる
+        @include mx.hero-sp {
+            font-size: 3.6rem;
+            left: -32px;
+            top: 24px;
         }
     }
 
     &__wrapper {
         position: relative;
         z-index: 1;
+        // gs-reason__list(max-width:1126px)を素直に収められるよう、
+        // 共通.wrapperのmax-width:1000pxをこのセクションだけ広げる
+        max-width: 1126px;
+        // headが絶対配置(PC〜Tablet2カラム)の間だけ、その高さぶんの余白を確保
         padding-block-start: 180px;
 
-        @include mx.sp {
-            padding-block-start: unset;
+        // headが通常フローに戻る(1カラム化と同時)ため、専用の上余白は不要になる
+        @include mx.voice-collapse {
+            padding-block-start: 0;
         }
     }
 
@@ -288,7 +304,8 @@
         padding-inline: clamp(0px, calc(27.58px - 2.694vw), 16px);
         text-align: right;
 
-        @include mx.sp {
+        // 1カラム化と合わせてheadも通常フローに戻し中央寄せにする
+        @include mx.voice-collapse {
             position: unset;
             top: unset;
             right: unset;
@@ -298,6 +315,12 @@
             align-items: unset;
             text-align: center;
             margin-block-start: 0;
+        }
+
+        // 430px以下は右上に浮く人物イラスト用のスペースを右側に確保しておく
+        // (人物側もこの帯に収まるよう縮小・位置調整する)
+        @include mx.sp {
+            padding-inline-end: 90px;
         }
     }
 
@@ -314,10 +337,20 @@
         // 元々sp/pcとも24pxで同じなので据え置き
         padding-inline-start: clamp(24px, calc(6.626px + 4.04vw), 48px);
         padding-inline-end: 24px;
+
+        // 320px対応: 2rem(=430px時点の値)だと「初めてでも安心な」が
+        // 320px幅では窮屈になるため、320〜430pxでさらに縮小する
+        @include mx.sp {
+            font-size: clamp(1.5rem, calc(0.6px + 0.4651vw), 2rem);
+            padding-inline-start: 16px;
+            padding-inline-end: 16px;
+        }
     }
 
     &__title {
-        display: inline-block;
+        // 中身の文字幅ぶんだけの帯にして中央寄せできるようにする
+        display: block;
+        width: fit-content;
         background-color: v.$color-white;
         color: v.$color-text;
         // fluid化: sp=3.2rem / pc=6.4rem（431〜1023pxを線形補間）
@@ -328,28 +361,36 @@
         padding-inline-start: clamp(24px, calc(6.626px + 4.04vw), 48px);
         padding-inline-end: 24px;
         margin-block-start: 9px; // 2つの帯のgap
+
+        @include mx.voice-collapse {
+            margin-inline: auto;
+        }
+
+        // 320px対応: 3.2rem(=430px時点の値)だと「４つの理由」が
+        // 320px幅ではみ出しやすいため、320〜430pxでさらに縮小する
+        @include mx.sp {
+            font-size: clamp(2.4rem, calc(0.084px + 0.7442vw), 3.2rem);
+            padding-inline-start: 16px;
+            padding-inline-end: 16px;
+        }
     }
 
     &__list {
         display: grid;
-        flex-direction: column;
-        gap: 56px;
-        max-width: none;
-        margin-inline: auto;
         grid-template-columns: 1fr 1fr;
         column-gap: clamp(24px, calc(79.16px - 5.387vw), 56px);
         row-gap: clamp(56px, calc(38.63px + 4.04vw), 80px);
-        width: 1126px;
-        margin-inline-start: -20px;
-        margin-inline-end: 0;
+        width: 100%;
+        max-width: 1126px;
+        margin-inline: auto;
 
-        @include mx.sp {
+        // 880px以下は2カラムの横幅が足りないため1カラム(縦積み)へ切り替え。
+        // row-gapは上のfluid clampをそのまま流用(430pxまで自然に縮む)
+        @include mx.voice-collapse {
             display: flex;
+            flex-direction: column;
             grid-template-columns: unset;
-            max-width: 760px;
-            width: unset;
-            margin-inline-start: auto;
-            margin-inline-end: auto;
+            max-width: 500px;
         }
     }
 
@@ -358,7 +399,7 @@
             grid-column: 1;
             grid-row: 1;
 
-            @include mx.sp {
+            @include mx.voice-collapse {
                 grid-column: unset;
                 grid-row: unset;
             }
@@ -367,36 +408,39 @@
         &:nth-child(2) {
             grid-column: 2;
             grid-row: 1;
-            margin-block-start: 180px;
+            // PCの段差配置。fluid化: sp=60px / pc=180px（431〜1023pxを線形補間）
+            margin-block-start: clamp(60px, calc(-26.87px + 20.2vw), 180px);
 
-            @include mx.sp {
+            @include mx.voice-collapse {
                 grid-column: unset;
                 grid-row: unset;
-                margin-block-start: unset;
+                margin-block-start: 0;
             }
         }
 
         &:nth-child(3) {
             grid-column: 1;
             grid-row: 2;
-            margin-block-start: 60px;
+            // fluid化: sp=20px / pc=60px（431〜1023pxを線形補間）
+            margin-block-start: clamp(20px, calc(-8.96px + 6.734vw), 60px);
 
-            @include mx.sp {
+            @include mx.voice-collapse {
                 grid-column: unset;
                 grid-row: unset;
-                margin-block-start: unset;
+                margin-block-start: 0;
             }
         }
 
         &:nth-child(4) {
             grid-column: 2;
             grid-row: 2;
-            margin-block-start: 400px;
+            // PCの大きな段差。fluid化: sp=100px / pc=400px（431〜1023pxを線形補間）
+            margin-block-start: clamp(100px, calc(-117.17px + 50.51vw), 400px);
 
-            @include mx.sp {
+            @include mx.voice-collapse {
                 grid-column: unset;
                 grid-row: unset;
-                margin-block-start: unset;
+                margin-block-start: 0;
             }
         }
     }
@@ -411,6 +455,13 @@
         &--01 {
             max-width: clamp(255px, calc(126.1px + 29.97vw), 433px); // 387 × 1.12
             aspect-ratio: 387 / 303;
+
+            // 780px以下はwatermarkと曲線ラベルの間隔を確保するため少し右へ寄せる
+            // (blobが頭打ちサイズになる431px付近から効かせる必要があるため、
+            // mx.spではなくもう一段広いmx.hero-spを使う)
+            @include mx.hero-sp {
+                margin-inline-start: 32px;
+            }
         }
 
         // fluid化: sp=308px / pc=507px（431〜1023pxを線形補間）
@@ -419,16 +470,25 @@
             aspect-ratio: 453 / 354;
         }
 
-        // fluid化: sp=305px / pc=551px（431〜1023pxを線形補間）
+        // fluid化: sp=305px / pc=551px（431〜1023pxを線形補間）だが、780px以下は
+        // 頭打ちサイズ(255px)のまま本文を収めるため、hero-spで早めに固定する
         &--03 {
-            max-width: clamp(305px, calc(126.9px + 41.41vw), 551px); // 492 × 1.12
+            max-width: clamp(255px, calc(76.9px + 41.41vw), 551px); // 492 × 1.12
             aspect-ratio: 492 / 328;
+
+            @include mx.hero-sp {
+                max-width: 255px;
+            }
         }
 
-        // fluid化: sp=315px / pc=551px（431〜1023pxを線形補間）
+        // --03と同じ理由。fluid化: sp=315px / pc=551px（431〜1023pxを線形補間）
         &--04 {
-            max-width: clamp(315px, calc(144.2px + 39.73vw), 551px); // 492 × 1.12
+            max-width: clamp(255px, calc(94.2px + 39.73vw), 551px); // 492 × 1.12
             aspect-ratio: 492 / 333;
+
+            @include mx.hero-sp {
+                max-width: 255px;
+            }
         }
     }
 
@@ -451,6 +511,12 @@
         line-height: 1.3;
         letter-spacing: -0.05em;
         fill: v.$color-white;
+
+        // 曲線に沿う文字が窮屈にならないよう、780px以下(blobが頭打ちサイズになる帯)
+        // だけさらに縮小する(PC/Tablet2カラムの見え方は変えない)
+        @include mx.hero-sp {
+            font-size: 1.6rem;
+        }
     }
 
     &__blob-label path {
@@ -469,22 +535,70 @@
         font-size: clamp(1.4rem, calc(9.657px + 1.01vw), 2rem);
         line-height: 1.3;
         text-align: left;
+
+        // 780px以下はblobサイズが頭打ちのまま(255px前後)なので、文章量に応じて
+        // blobごとにinset/font-sizeを個別調整し、白blobから本文がはみ出さないようにする
+        @include mx.hero-sp {
+            font-size: 1.3rem;
+            line-height: 1.35;
+        }
+    }
+
+    // 文章がやや長め。insetを少し狭めて表示エリアを広げる
+    &__blob-wrap--02 .gs-reason__blob-text {
+        @include mx.hero-sp {
+            inset: 24% 14%;
+        }
+    }
+
+    // 3番目はshapeが縦に低い割に文章が長いため、780px以下で本文がはみ出す。
+    // insetを狭めて表示エリアを広げる
+    &__blob-wrap--03 .gs-reason__blob-text {
+        @include mx.hero-sp {
+            inset: 16% 14%;
+            font-size: 1.2rem;
+        }
+    }
+
+    // 4番目は文章量が最も多いため専用調整(font-sizeも一段階小さく)
+    &__blob-wrap--04 .gs-reason__blob-text {
+        inset: 20% 16%;
+
+        @include mx.hero-sp {
+            inset: 13% 12%;
+            font-size: 1.15rem;
+            line-height: 1.3;
+        }
     }
 
     &__illust {
         display: block;
         position: absolute;
-        bottom: 400px;
+        // section基準ではなく、実際に隣り合う.gs-reason__wrapperを基準にする。
+        // これにより1440px以上に広がってもwrapper(max-width:1126px)との
+        // 位置関係が変わらず、4番目blob(row2)にも被らなくなる。
+        // 上に少し引き上げて2番目blobの本文とも被らないようにする
+        top: -40px;
         right: 0;
         // fluid化: sp=120px / pc=400px（431〜1023pxを線形補間）
         width: clamp(120px, calc(-82.69px + 47.14vw), 400px);
         height: auto;
         z-index: 2;
+        pointer-events: none;
 
+        // 880px以下は1カラム化に合わせて、通常フローに戻ったheadの右側に
+        // 収まる小さいサイズへ切り替える
+        @include mx.voice-collapse {
+            top: 0;
+            right: 0;
+            width: 100px;
+        }
+
+        // 320px幅でもtitleと重ならないよう、さらに一段階小さくする
         @include mx.sp {
-            bottom: unset;
-            top: 3%;
-            right: -4%;
+            width: 72px;
+            top: 4px;
+            right: 4px;
         }
     }
 }
