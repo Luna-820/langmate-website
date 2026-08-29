@@ -472,26 +472,72 @@
         display: flex;
         flex-direction: row;
         justify-content: center;
-        gap: clamp(0px, calc(-17.37px + 4.04vw), 24px);
         align-items: center;
-        padding-block: clamp(30px, calc(22.76px + 1.684vw), 40px);
-        padding-inline: clamp(16px, calc(-18.75px + 8.081vw), 64px); // Figma実測(W1000/padding 64・40)。.wrapperの既定paddingを上書き
+        gap: clamp(0px, calc(-17.37px + 4.04vw), 24px);
 
-        @include mx.sp {
+        padding-block: clamp(30px, calc(22.76px + 1.684vw), 40px);
+        padding-inline: clamp(16px, calc(-18.75px + 8.081vw), 64px);
+
+        // 780px以下で縦並び
+        @include mx.hero-sp {
             flex-direction: column;
-            justify-content: unset;
+            justify-content: center;
+            gap: 24px;
+            padding-inline: 24px;
+        }
+
+        // 小さいSPだけさらに余白調整
+        @include mx.sp {
+            gap: 20px;
+            padding-inline: 16px;
         }
     }
 
     &__visual {
-        flex-shrink: 0; // flexの縮小で幅だけ縮んで高さと比率が崩れるのを防ぐ
+        flex-shrink: 0;
+
+        @include mx.hero-sp {
+            width: 100%;
+        }
 
         img {
+            display: block;
             width: 295px;
-            height: 256px;
+            height: auto;
             max-width: 100%;
             object-fit: contain;
             margin-inline: auto;
+
+            // Pop animation
+            opacity: 0;
+            transform: scale(0.6);
+            transition:
+                opacity 0.4s ease-out,
+                transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+            &.is-visible {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+
+            @include mx.hero-sp {
+                width: min(240px, 70vw);
+            }
+
+            @include mx.sp {
+                width: min(220px, 72vw);
+            }
+        }
+    }
+
+    &__content {
+        min-width: 0;
+        flex: 1;
+
+        @include mx.hero-sp {
+            width: 100%;
+            max-width: 600px;
         }
     }
 
@@ -504,6 +550,10 @@
 
         strong {
             font-weight: inherit;
+        }
+
+        @include mx.sp {
+            font-size: 2.4rem;
         }
     }
 
@@ -518,32 +568,38 @@
 
 // Marquee — "Langmate"文字が横スクロールし続ける装飾帯
 .marquee {
+    width: 100%;
+    max-width: 100vw;
     overflow: hidden;
     white-space: nowrap;
     padding-block: 12px;
+}
 
-    &__track {
-        display: inline-flex;
-        align-items: center;
-        gap: clamp(40px, calc(-13.57px + 12.46vw), 114px); // "Langmate"同士の間隔
-        animation: marquee-scroll 20s linear infinite;
-    }
+.marquee__track {
+    display: flex;
+    width: max-content;
+    align-items: center;
+    gap: clamp(40px, calc(-13.57px + 12.46vw), 114px);
+    animation: marquee-scroll 20s linear infinite;
+    will-change: transform;
+}
 
-    img {
-        width: min(696px, 90vw);
-        height: auto;
-        aspect-ratio: 696 / 162.58;
-        flex-shrink: 0;
-    }
+.marquee img {
+    display: block;
+    width: min(696px, 90vw);
+    max-width: none;
+    height: auto;
+    aspect-ratio: 696 / 162.58;
+    flex: 0 0 auto;
 }
 
 @keyframes marquee-scroll {
     from {
-        transform: translateX(0);
+        transform: translate3d(0, 0, 0);
     }
 
     to {
-        transform: translateX(-50%);
+        transform: translate3d(-50%, 0, 0);
     }
 }
 
@@ -660,7 +716,6 @@
     aspect-ratio: 1280 / 240;
 
     &--top {
-        //sp=32px / pc=100px（431〜1023pxを線形補間）
         margin-block-start: clamp(32px, calc(-17.23px + 11.45vw), 100px);
     }
 }
@@ -677,6 +732,10 @@
 
     .wrapper {
         max-width: 1120px;
+
+        @include mx.sp {
+            padding-inline: 20px;
+        }
     }
 
     &__list {
@@ -694,17 +753,14 @@
         max-width: 1120px;
         margin-inline: auto;
 
-        // 780px以下で縦並び
         @include mx.hero-sp {
             flex-direction: column;
             align-items: center;
         }
 
-        // Reason 02
         &--reverse {
             flex-direction: row-reverse;
 
-            // ここも780px以下で解除
             @include mx.hero-sp {
                 flex-direction: column;
             }
@@ -719,17 +775,15 @@
         }
     }
 
-    // Reason 01の背景装飾（水玉模様の輪っか＋オレンジのうねり）。
     &__bg {
         display: block;
         pointer-events: none;
         position: absolute;
         animation: reason-bg-wobble 8s ease-in-out infinite;
 
-        @include mx.sp {
+        @include mx.hero-sp {
             display: none;
-            position: unset;
-            animation: unset;
+            animation: none;
         }
 
         &--01 {
@@ -745,7 +799,6 @@
             animation-delay: -3s;
         }
 
-        // Reason 02（reverse）用
         &--03 {
             bottom: -10px;
             left: -170px;
@@ -760,16 +813,31 @@
             animation-delay: -5s;
         }
     }
-}
 
-.reason {
     &__illustration {
+        position: relative;
+        z-index: 2;
+        max-width: 364px;
+        height: auto;
+        flex-shrink: 0;
+
         opacity: 0;
 
         transition:
             opacity 0.4s ease-out,
             transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 
+        // 780px以下ではカード右上に配置
+        @include mx.hero-sp {
+            position: absolute;
+            z-index: 3;
+            max-width: none;
+            margin: 0;
+        }
+
+        // =====================================================
+        // Reason 01
+        // =====================================================
         &--01 {
             transform: rotate(-8deg) scale(0.6);
 
@@ -779,14 +847,28 @@
             }
 
             @include mx.hero-sp {
+                top: -36px;
+                right: 10px;
+                width: 100px;
+
                 transform: scale(0.6);
 
                 &.is-visible {
+                    opacity: 1;
                     transform: scale(1);
                 }
             }
+
+            @include mx.sp {
+                top: -34px;
+                right: 10px;
+                width: 105px;
+            }
         }
 
+        // =====================================================
+        // Reason 02
+        // =====================================================
         &--02 {
             transform: rotate(-1.36deg) scale(0.6);
 
@@ -796,14 +878,28 @@
             }
 
             @include mx.hero-sp {
+                top: -48px;
+                right: 10px;
+                width: 140px;
+
                 transform: scale(0.6);
 
                 &.is-visible {
+                    opacity: 1;
                     transform: scale(1);
                 }
             }
+
+            @include mx.sp {
+                top: -42px;
+                right: 8px;
+                width: 120px;
+            }
         }
 
+        // =====================================================
+        // Reason 03
+        // =====================================================
         &--03 {
             transform: rotate(-3.36deg) scale(0.6);
 
@@ -813,11 +909,22 @@
             }
 
             @include mx.hero-sp {
+                top: -48px;
+                right: 16px;
+                width: 110px;
+
                 transform: scale(0.6);
 
                 &.is-visible {
+                    opacity: 1;
                     transform: scale(1);
                 }
+            }
+
+            @include mx.sp {
+                top: -40px;
+                right: 12px;
+                width: 95px;
             }
         }
     }
@@ -982,7 +1089,7 @@
             //sp=48px / pc=56px（431〜1023pxを線形補間）
             width: clamp(48px, calc(42.21px + 1.347vw), 56px);
             //sp=48px / pc=56px（431〜1023pxを線形補間）
-            height: clamp(48px, calc(42.21px + 1.347vw), 56px);
+            height: auto;
             border-radius: 50%;
             border: 2px solid v.$color-gray; // 非選択時: #E0E0E0
             background-color: v.$color-white;

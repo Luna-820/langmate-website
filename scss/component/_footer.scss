@@ -22,7 +22,7 @@
         // 見た目(92px)は変わらない）
         gap: clamp(20px, calc(-16.42px + 8.471vw), 92px);
 
-        @include mx.sp {
+        @include mx.hero-sp {
             flex-direction: column;
             align-items: center;
             justify-content: unset;
