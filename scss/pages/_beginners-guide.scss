@@ -77,11 +77,10 @@
         display: flex;
         flex-direction: row;
         align-items: stretch;
-        // fluid化: sp=40px / pc=56px（431〜1023pxを線形補間）
-        gap: clamp(40px, calc(28.42px + 2.694vw), 56px);
+        gap: clamp(40px, calc(32px + 1.8vw), 50px);
         justify-content: center;
 
-        @include mx.sp {
+        @include mx.hero-sp {
             flex-direction: column;
             align-items: center;
             justify-content: unset;
@@ -93,8 +92,6 @@
         display: block;
         width: 300px;
         max-width: 100%;
-        // fluid化: sp=24px / pc=48px（431〜1023pxを線形補間）。inlineは元々sp/pcとも
-        // 24pxで同じなので据え置き
         padding-block: clamp(24px, calc(6.626px + 4.04vw), 48px);
         padding-inline: 24px;
         border-radius: 12px;
@@ -103,10 +100,15 @@
         color: v.$color-text;
         transition: box-shadow 0.2s, transform 0.2s;
 
+        @include mx.hero-sp {
+            width: min(500px, 100%);
+        }
+
         @include mx.sp {
             width: 100%;
             max-width: 324px;
         }
+
 
 
         &:hover,
@@ -188,37 +190,54 @@
         pointer-events: none;
 
         .gs-hero__nav-card--reason & {
-            // fluid化: sp=10px / pc=-8px（431〜1023pxを線形補間）
-            bottom: clamp(-8px, calc(23.03px + -3.03vw), 10px);
-            // fluid化: sp=20px / pc=-54px（431〜1023pxを線形補間）
-            left: clamp(-54px, calc(73.57px + -12.46vw), 20px);
-            // fluid化: sp=65px / pc=100px（431〜1023pxを線形補間）
+            bottom: clamp(-18px, calc(13.03px + -3.03vw), 0px);
+            left: clamp(-64px, calc(63.57px + -12.46vw), 10px);
             width: clamp(65px, calc(39.66px + 5.892vw), 100px);
             transform: scaleX(-1);
-        }
 
-        .gs-hero__nav-card--started & {
-            // fluid化: sp=10px / pc=-64px（431〜1023pxを線形補間）
-            top: clamp(-64px, calc(63.57px + -12.46vw), 10px);
-            // fluid化: sp=10px / pc=-30px（431〜1023pxを線形補間）
-            right: clamp(-30px, calc(38.96px + -6.734vw), 10px);
-            // fluid化: sp=65px / pc=79px（431〜1023pxを線形補間）
-            width: clamp(65px, calc(54.87px + 2.357vw), 79px);
-            transform: scaleX(-1);
-        }
-
-        // このモディファイアだけSPで基準がright→leftに切り替わる（位置決めの軸自体が
-        // 変わる離散的な切り替えのため、bottom/left自体は補間せずSP値のまま）。
-        // widthのみ他と揃えてfluid化する。
-        .gs-hero__nav-card--safety & {
-            bottom: -8px;
-            right: -54px;
-            // fluid化: sp=73px / pc=100px（431〜1023pxを線形補間）
-            width: clamp(73px, calc(53.45px + 4.545vw), 100px);
+            @include mx.hero-sp {
+                bottom: 10px;
+                left: 20px;
+            }
 
             @include mx.sp {
                 bottom: 10px;
                 left: 4px;
+            }
+        }
+
+        .gs-hero__nav-card--started & {
+            top: clamp(-64px, calc(63.57px + -12.46vw), 10px);
+            right: clamp(-30px, calc(38.96px + -6.734vw), 10px);
+            width: clamp(65px, calc(54.87px + 2.357vw), 79px);
+            transform: scaleX(-1);
+
+            @include mx.hero-sp {
+                top: auto;
+                bottom: 10px;
+                right: 20px;
+            }
+
+            @include mx.sp {
+                bottom: 10px;
+                right: 4px;
+            }
+        }
+
+        .gs-hero__nav-card--safety & {
+            bottom: -8px;
+            right: -54px;
+            width: clamp(73px, calc(53.45px + 4.545vw), 100px);
+
+            @include mx.hero-sp {
+                right: auto;
+                left: 20px;
+                bottom: 16px;
+            }
+
+            @include mx.sp {
+                left: 4px;
+                bottom: 10px;
             }
         }
     }
@@ -252,205 +271,473 @@
     color: v.$color-white;
     padding-block: clamp(60px, calc(31.04px + 6.734vw), 100px);
 
+    // ==========================================================================
+    // INNER
+    // 1440px以内をこのセクション全体の座標基準にする
+    // ==========================================================================
+    &__inner {
+        position: relative;
+        width: min(100%, 1440px);
+        margin-inline: auto;
+    }
+
+
+    // ==========================================================================
+    // WATERMARK
+    // ==========================================================================
     &__watermark {
         @include watermark;
+
+        position: absolute;
         top: 40px;
-        left: clamp(-60px, calc(8.956px - 6.734vw), -20px);
+        left: 0;
+        z-index: 0;
+
         writing-mode: vertical-rl;
         transform: none;
+
         -webkit-text-stroke: 2px v.$color-pink-light;
         color: transparent;
 
+        pointer-events: none;
+
+        @include mx.nav-collapse {
+            left: -12px;
+            font-size: 8rem;
+        }
+
         @include mx.sp {
-            left: -8%;
+            left: -24px;
+            font-size: 7rem;
         }
     }
 
-    &__wrapper {
-        position: relative;
-        z-index: 1;
-        padding-block-start: 180px;
 
-        @include mx.sp {
-            padding-block-start: unset;
-        }
-    }
-
+    // ==========================================================================
+    // HEADING
+    // ==========================================================================
     &__head {
         position: absolute;
         top: 60px;
+
+        // inner自体がmax-width:1440pxなので、
+        // 1440px以下では画面右端、1440px以上では1440px枠の右端
         right: 0;
-        z-index: 2;
+
+        z-index: 3;
+
         display: flex;
         flex-direction: column;
         align-items: flex-end;
-        margin-block-end: clamp(0px, calc(68.96px - 6.734vw), 40px);
-        padding-inline: clamp(0px, calc(27.58px - 2.694vw), 16px);
+
         text-align: right;
 
-        @include mx.sp {
-            position: unset;
-            top: unset;
-            right: unset;
-            z-index: unset;
-            display: block;
-            flex-direction: unset;
-            align-items: unset;
+        // 1000px以下：1列レイアウト
+        @include mx.nav-collapse {
+            position: relative;
+            top: auto;
+            right: auto;
+
+            align-items: center;
+
+            width: 100%;
+            margin-inline: auto;
+
             text-align: center;
-            margin-block-start: 0;
         }
     }
 
     &__eyebrow {
         display: inline-block;
+
         background-color: v.$color-white;
         color: v.$color-text;
-        // fluid化: sp=2rem / pc=4rem（431〜1023pxを線形補間）
-        font-size: clamp(2rem, calc(5.522px + 3.367vw), 4rem);
+
+        font-size: clamp(2rem,
+                calc(5.522px + 3.367vw),
+                4rem);
+
         font-weight: v.$fw-bold;
         line-height: 1.32;
         letter-spacing: 0;
-        // fluid化: sp=24px / pc=48px（431〜1023pxを線形補間）。inline-endは
-        // 元々sp/pcとも24pxで同じなので据え置き
-        padding-inline-start: clamp(24px, calc(6.626px + 4.04vw), 48px);
+
+        padding-inline-start: clamp(24px,
+                calc(6.626px + 4.04vw),
+                48px);
+
         padding-inline-end: 24px;
+
+        @include mx.sp {
+            font-size: clamp(2rem, 6vw, 3.2rem);
+            padding-inline: 20px;
+        }
     }
 
     &__title {
         display: inline-block;
+
         background-color: v.$color-white;
         color: v.$color-text;
-        // fluid化: sp=3.2rem / pc=6.4rem（431〜1023pxを線形補間）
-        font-size: clamp(3.2rem, calc(8.835px + 5.387vw), 6.4rem);
+
+        font-size: clamp(3.2rem,
+                calc(8.835px + 5.387vw),
+                6.4rem);
+
         font-weight: v.$fw-bold;
         line-height: 1.32;
         letter-spacing: 0;
-        padding-inline-start: clamp(24px, calc(6.626px + 4.04vw), 48px);
-        padding-inline-end: 24px;
-        margin-block-start: 9px; // 2つの帯のgap
-    }
 
-    &__list {
-        display: grid;
-        flex-direction: column;
-        gap: 56px;
-        max-width: none;
-        margin-inline: auto;
-        grid-template-columns: 1fr 1fr;
-        column-gap: clamp(24px, calc(79.16px - 5.387vw), 56px);
-        row-gap: clamp(56px, calc(38.63px + 4.04vw), 80px);
-        width: 1126px;
-        margin-inline-start: -20px;
-        margin-inline-end: 0;
+        margin-block-start: 9px;
+
+        padding-inline-start: clamp(24px,
+                calc(6.626px + 4.04vw),
+                48px);
+
+        padding-inline-end: 24px;
 
         @include mx.sp {
-            display: flex;
-            grid-template-columns: unset;
-            max-width: 760px;
-            width: unset;
-            margin-inline-start: auto;
-            margin-inline-end: auto;
+            font-size: clamp(3.2rem, 9vw, 4.8rem);
+            padding-inline: 20px;
         }
     }
 
-    &__item {
-        &:nth-child(1) {
-            grid-column: 1;
-            grid-row: 1;
 
-            @include mx.sp {
-                grid-column: unset;
-                grid-row: unset;
-            }
+    // ==========================================================================
+    // CONTENT WRAPPER
+    // ==========================================================================
+    &__wrapper {
+        position: relative;
+        z-index: 1;
+
+        width: min(calc(100% - 48px), 1120px);
+        max-width: none;
+
+        margin-inline: auto;
+
+        padding-block-start: 180px;
+        padding-inline-start: 80px;
+        padding-inline-end: 0;
+
+        // 1000px以下：1列
+        @include mx.nav-collapse {
+            width: min(calc(100% - 48px), 900px);
+
+            // headingが通常フローになるので少し詰める
+            padding-block-start: 150px;
+
+            // 2列時のwatermark回避用paddingを解除
+            padding-inline: 0;
+        }
+
+        @include mx.sp {
+            width: min(calc(100% - 40px), 500px);
+            padding-block-start: 60px;
+        }
+    }
+
+
+    // ==========================================================================
+    // LIST
+    // ==========================================================================
+    &__list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        width: 100%;
+
+        margin: 0;
+        padding: 0;
+
+        column-gap: clamp(32px, 5vw, 64px);
+        row-gap: 72px;
+
+        list-style: none;
+
+        // 1000px以下：縦1列
+        @include mx.nav-collapse {
+            grid-template-columns: 1fr;
+
+            row-gap: 80px;
+
+            // watermarkと最初のblobが被らないように下げる
+            padding-block-start: 100px;
+        }
+
+        @include mx.sp {
+            row-gap: 64px;
+            padding-block-start: 80px;
+        }
+    }
+
+
+    // ==========================================================================
+    // ITEM / ZIGZAG
+    // ==========================================================================
+    &__item {
+        min-width: 0;
+
+        // watermarkとの重なりを避ける
+        &:nth-child(1) {
+            margin-block-start: 0;
+            transform: translateX(50px);
         }
 
         &:nth-child(2) {
-            grid-column: 2;
-            grid-row: 1;
             margin-block-start: 180px;
-
-            @include mx.sp {
-                grid-column: unset;
-                grid-row: unset;
-                margin-block-start: unset;
-            }
         }
 
         &:nth-child(3) {
-            grid-column: 1;
-            grid-row: 2;
-            margin-block-start: 60px;
-
-            @include mx.sp {
-                grid-column: unset;
-                grid-row: unset;
-                margin-block-start: unset;
-            }
+            margin-block-start: 40px;
         }
 
         &:nth-child(4) {
-            grid-column: 2;
-            grid-row: 2;
-            margin-block-start: 400px;
+            margin-block-start: 220px;
+        }
 
-            @include mx.sp {
-                grid-column: unset;
-                grid-row: unset;
-                margin-block-start: unset;
+        // 1000px以下：ジグザグ解除
+        @include mx.nav-collapse {
+            &:nth-child(n) {
+                margin-block-start: 0;
+                transform: none;
             }
         }
     }
 
-    // ---- ブロブ（オリジナル図形）----
+
+    // ==========================================================================
+    // BLOB
+    // ==========================================================================
     &__blob-wrap {
         position: relative;
         width: 100%;
         margin-inline: auto;
 
-        // fluid化: sp=255px / pc=433px（431〜1023pxを線形補間）
+
+        // ----------------------------------------------------------------------
+        // 01
+        // ----------------------------------------------------------------------
         &--01 {
-            max-width: clamp(255px, calc(126.1px + 29.97vw), 433px); // 387 × 1.12
+            max-width: 470px;
             aspect-ratio: 387 / 303;
+
+            .gs-reason__blob-text {
+                inset: 24% 17% 16% 20%;
+            }
         }
 
-        // fluid化: sp=308px / pc=507px（431〜1023pxを線形補間）
+
+        // ----------------------------------------------------------------------
+        // 02
+        // ----------------------------------------------------------------------
         &--02 {
-            max-width: clamp(308px, calc(163.9px + 33.5vw), 507px); // 453 × 1.12
+            max-width: 540px;
             aspect-ratio: 453 / 354;
+
+            .gs-reason__blob-text {
+                inset: 31% 16% 15% 20%;
+            }
         }
 
-        // fluid化: sp=305px / pc=551px（431〜1023pxを線形補間）
+
+        // ----------------------------------------------------------------------
+        // 03
+        // ----------------------------------------------------------------------
         &--03 {
-            max-width: clamp(305px, calc(126.9px + 41.41vw), 551px); // 492 × 1.12
+            max-width: 580px;
             aspect-ratio: 492 / 328;
+
+            .gs-reason__blob-text {
+                inset: 10% 16% 18% 18%;
+
+                // PCの2列時だけ少し抑える
+                font-size: clamp(1.3rem,
+                        calc(8.8px + 0.85vw),
+                        1.7rem);
+
+                line-height: 1.35;
+            }
         }
 
-        // fluid化: sp=315px / pc=551px（431〜1023pxを線形補間）
+
+        // ----------------------------------------------------------------------
+        // 04
+        // ----------------------------------------------------------------------
         &--04 {
-            max-width: clamp(315px, calc(144.2px + 39.73vw), 551px); // 492 × 1.12
+            max-width: 590px;
             aspect-ratio: 492 / 333;
+
+            .gs-reason__blob-text {
+                inset: 14% 16% 18% 18%;
+
+                // PCの2列時だけ少し抑える
+                font-size: clamp(1.25rem,
+                        calc(8.4px + 0.8vw),
+                        1.65rem);
+
+                line-height: 1.35;
+            }
+        }
+
+
+        // ======================================================================
+        // 1000px以下：1列レイアウト
+        // ======================================================================
+        @include mx.nav-collapse {
+            max-width: none;
+            margin-inline: auto;
+
+            &--01 {
+                width: min(calc(100% - 100px), 400px);
+                max-width: 400px;
+                margin-inline: auto;
+
+                .gs-reason__blob-text {
+                    inset: 10% 15% 16% 18%;
+                }
+            }
+
+
+            &--02 {
+                width: min(calc(100% - 40px), 460px);
+                max-width: 460px;
+                margin-inline: auto;
+
+                .gs-reason__blob-text {
+                    inset: 30% 16% 15% 19%;
+                }
+            }
+
+
+            &--03 {
+                width: min(calc(100% - 40px), 460px);
+                max-width: 460px;
+                margin-inline: auto;
+
+                .gs-reason__blob-text {
+                    inset: 12% 15% 14% 17%;
+
+                    // 1列になったら読みやすいサイズへ戻す
+                    font-size: clamp(1.6rem,
+                            calc(12px + 0.6vw),
+                            1.8rem);
+
+                    line-height: 1.45;
+                }
+            }
+
+
+            &--04 {
+                width: min(calc(100% - 40px), 460px);
+                max-width: 460px;
+                margin-inline: auto;
+
+                .gs-reason__blob-text {
+                    inset: 15% 15% 15% 17%;
+
+                    // 1列になったら読みやすいサイズへ戻す
+                    font-size: clamp(1.55rem,
+                            calc(11.5px + 0.6vw),
+                            1.75rem);
+
+                    line-height: 1.45;
+                }
+            }
+        }
+
+
+        // ======================================================================
+        // 430px以下
+        // ======================================================================
+        @include mx.sp {
+
+            &--02,
+            &--03,
+            &--04 {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            &--01 {
+                width: min(calc(100% - 48px), 300px);
+                max-width: 300px;
+                margin-inline: auto;
+                transform: none;
+
+                .gs-reason__blob-text {
+                    inset: 10% 17% 16% 20%;
+                }
+            }
+
+            &--02 {
+                .gs-reason__blob-text {
+                    inset: 29% 17% 15% 20%;
+                }
+            }
+
+            &--03 {
+                .gs-reason__blob-text {
+                    inset: 12% 16% 14% 18%;
+                    font-size: 1.4rem;
+                }
+            }
+
+            &--04 {
+                .gs-reason__blob-text {
+                    inset: 15% 16% 15% 18%;
+                    font-size: 1.4rem;
+                }
+            }
         }
     }
 
+
+    // ==========================================================================
+    // BLOB SVG
+    // ==========================================================================
     &__blob-shape,
     &__blob-label {
         position: absolute;
         inset: 0;
+
+        display: block;
+
         width: 100%;
         height: 100%;
     }
 
     &__blob-label {
         overflow: visible;
+        pointer-events: none;
     }
 
+
+    // ==========================================================================
+    // BLOB CURVED LABEL
+    // ==========================================================================
     &__blob-label text {
-        // fluid化: sp=2rem / pc=3.2rem（431〜1023pxを線形補間）
-        font-size: clamp(2rem, calc(11.31px + 2.02vw), 3.2rem);
+        font-size: clamp(2rem,
+                calc(11.31px + 2.02vw),
+                3.2rem);
+
         font-weight: v.$fw-bold;
         line-height: 1.3;
         letter-spacing: -0.05em;
+
         fill: v.$color-white;
+
+        // 1000px以下は1列なので、
+        // PC2列時ほど小さくする必要なし
+        @include mx.nav-collapse {
+            font-size: clamp(2.2rem,
+                    3vw,
+                    2.8rem);
+        }
+
+        @include mx.sp {
+            font-size: clamp(1.8rem,
+                    5vw,
+                    2.4rem);
+        }
     }
 
     &__blob-label path {
@@ -459,32 +746,96 @@
         transform: scale(1.15);
     }
 
+
+    // ==========================================================================
+    // BLOB TEXT
+    // ==========================================================================
     &__blob-text {
         position: absolute;
-        inset: 22% 18%;
+        z-index: 1;
+
         display: flex;
         align-items: center;
-        color: v.$color-text;
-        // fluid化: sp=1.4rem / pc=2rem（431〜1023pxを線形補間）
-        font-size: clamp(1.4rem, calc(9.657px + 1.01vw), 2rem);
-        line-height: 1.3;
-        text-align: left;
-    }
 
-    &__illust {
-        display: block;
-        position: absolute;
-        bottom: 400px;
-        right: 0;
-        // fluid化: sp=120px / pc=400px（431〜1023pxを線形補間）
-        width: clamp(120px, calc(-82.69px + 47.14vw), 400px);
-        height: auto;
-        z-index: 2;
+        margin: 0;
+
+        color: v.$color-text;
+
+        // 1001px以上：2列用
+        font-size: clamp(1.4rem,
+                calc(9.657px + 1.01vw),
+                2rem);
+
+        line-height: 1.45;
+        text-align: left;
+
+        overflow-wrap: anywhere;
+
+        // 1000px以下：1列なので読みやすいサイズへ
+        @include mx.nav-collapse {
+            font-size: clamp(1.6rem, calc(14px + 0.6vw), 2rem);
+            line-height: 1.5;
+        }
 
         @include mx.sp {
-            bottom: unset;
-            top: 3%;
-            right: -4%;
+            font-size: 1.4rem;
+            line-height: 1.5;
+        }
+    }
+
+
+    // ==========================================================================
+    // ILLUSTRATION
+    // ==========================================================================
+    &__illust {
+        position: absolute;
+
+        display: block;
+
+        // 1001px以上：2列ジグザグ
+        top: clamp(600px,
+                calc(505.17px + 12.14vw),
+                680px);
+
+        right: 0;
+        bottom: auto;
+
+        width: clamp(220px,
+                calc(180px + 7vw),
+                300px);
+
+        height: auto;
+
+        z-index: 2;
+
+        pointer-events: none;
+
+
+        // 1000px以下：見出し右横へ
+        @include mx.nav-collapse {
+            top: clamp(55px,
+                    8vw,
+                    80px);
+
+            right: 0;
+            bottom: auto;
+
+            width: clamp(160px,
+                    22vw,
+                    220px);
+
+            z-index: 5;
+        }
+
+
+        // 430px以下
+        @include mx.sp {
+            top: 42px;
+            right: -8px;
+
+            width: clamp(110px,
+                    32vw,
+                    140px);
         }
     }
 }
@@ -493,38 +844,71 @@
 .gs-started {
     position: relative;
     overflow: hidden;
-    background-color: v.$color-yellow;
-    padding-block: clamp(60px, calc(31.04px + 6.734vw), 100px);
 
+    background-color: v.$color-yellow;
+
+    padding-block: clamp(60px,
+            calc(31.04px + 6.734vw),
+            100px);
+
+
+    // ==========================================================================
+    // INNER
+    // セクション内レイアウトの基準。
+    // 画面幅に追従するのは1440pxまで。
+    // ==========================================================================
+    &__inner {
+        position: relative;
+
+        width: 100%;
+        max-width: 1440px;
+
+        margin-inline: auto;
+    }
+
+
+    // ==========================================================================
+    // WATERMARK
+    // ==========================================================================
     &__watermark {
         @include watermark;
+
+        position: absolute;
+
         top: 40px;
-        right: -3%;
+        right: 0;
+
         writing-mode: vertical-rl;
         transform: none;
+
         color: #FFFCE6;
 
+        pointer-events: none;
+
+        @include mx.nav-collapse {
+            right: -8px;
+        }
+
         @include mx.sp {
-            right: -8%;
+            right: -10px;
         }
     }
 
-    &__wrapper {
-        position: relative;
-        z-index: 1;
-    }
 
+    // ==========================================================================
+    // HEADING
+    // ==========================================================================
     &__head {
-        text-align: left;
         position: absolute;
         top: 60px;
         left: 0;
-        z-index: 2;
+        z-index: 3;
+
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        margin-block-end: clamp(0px, calc(68.96px - 6.734vw), 40px);
-        padding-inline: clamp(0px, calc(27.58px - 2.694vw), 16px);
+
+        text-align: left;
 
         p,
         h2 {
@@ -532,231 +916,542 @@
             color: v.$color-text;
             line-height: 1.32;
             padding-inline: 24px 48px;
+
+            @include mx.sp {
+                padding-inline: 32px;
+            }
+        }
+
+        @include mx.nav-collapse {
+            position: relative;
+            top: auto;
+            left: auto;
+
+            width: fit-content;
+            max-width: calc(100% - 180px);
+
+            margin-left: 160px;
+            margin-right: auto;
+
+            padding-inline: 0;
+
+            align-items: center;
+            text-align: center;
         }
 
         @include mx.sp {
-            position: unset;
-            top: unset;
-            left: unset;
-            right: unset;
-            z-index: unset;
-            display: block;
-            text-align: center;
-            margin-block-start: 0;
-        }
+            width: 100%;
+            max-width: none;
 
-        @media (min-width: 431px) and (max-width: 1023px) {
-            top: 24px;
-            left: 152px; // イラスト幅120px + 余白32px
-            text-align: center;
+            margin-left: 0;
+            margin-right: 0;
+
+            padding-inline: 0;
+
             align-items: center;
+            text-align: center;
         }
     }
 
     &__eyebrow {
         display: inline-block;
-        // fluid化: sp=2rem / pc=4rem（431〜1023pxを線形補間）
-        font-size: clamp(2rem, calc(5.522px + 3.367vw), 4rem);
+
+        font-size: clamp(2rem,
+                calc(5.522px + 3.367vw),
+                4rem);
+
         font-weight: v.$fw-bold;
+
+        @include mx.nav-collapse {
+            font-size: clamp(2rem, 3.5vw, 3.2rem);
+        }
+
+        @include mx.sp {
+            margin-inline: auto;
+            padding-inline: 16px;
+            font-size: 2rem;
+            white-space: nowrap;
+        }
     }
 
     &__title {
         display: block;
-        // display:blockでも中身の文字幅ぶんだけの「ピル」の見た目を保つため、
-        // 横幅いっぱいに広がらないようfit-contentにする
         width: fit-content;
-        // fluid化: sp=3.2rem / pc=6.4rem（431〜1023pxを線形補間）
-        font-size: clamp(3.2rem, calc(8.835px + 5.387vw), 6.4rem);
-        font-weight: v.$fw-bold;
+
         margin-block-start: 9px;
+
+        font-size: clamp(3.2rem,
+                calc(8.835px + 5.387vw),
+                6.4rem);
+
+        font-weight: v.$fw-bold;
+
+        @include mx.nav-collapse {
+            margin-inline: auto;
+            font-size: clamp(3.2rem, 5.5vw, 4.8rem);
+        }
 
         @include mx.sp {
             margin-inline: auto;
+            padding-inline: 16px;
+            font-size: 3.2rem;
+            white-space: nowrap;
         }
     }
 
-    &__illust {
-        display: block;
-        // fluid化: sp=100px / pc=400px（431〜1023pxを線形補間）
-        width: clamp(100px, calc(-117.2px + 50.51vw), 400px);
-        height: auto;
+
+    // ==========================================================================
+    // WRAPPER
+    // ==========================================================================
+    &__wrapper {
+        position: relative;
+
+        z-index: 1;
+
+        width: min(calc(100% - 48px),
+                1120px);
+
         max-width: none;
+
         margin-inline: auto;
-        margin-block-end: 32px;
-        position: absolute;
-        bottom: 100px;
-        left: -2%;
-        margin: 0;
+
+        // heading分のスペース
+        padding-block-start: 150px;
+
+        padding-inline: 0;
+
+
+        // ----------------------------------------------------------------------
+        // 1000px以下
+        // ----------------------------------------------------------------------
+        @include mx.nav-collapse {
+            width: min(calc(100% - 48px),
+                    760px);
+
+            padding-block-start: 72px;
+        }
+
 
         @include mx.sp {
-            top: 0%;
-            left: 1%;
-        }
+            width: min(calc(100% - 40px),
+                    500px);
 
-        @media (min-width: 431px) and (max-width: 1023px) {
-            top: 24px;
-            bottom: unset;
-            left: 16px;
-            width: 120px;
+            padding-block-start: 56px;
         }
     }
 
+
+    // ==========================================================================
+    // LIST
+    // ==========================================================================
     &__list {
         position: relative;
+
         display: flex;
         flex-direction: column;
-        // fluid化: sp=8px / pc=40px（431〜1023pxを線形補間）
-        gap: clamp(8px, calc(-15.16px + 5.387vw), 40px);
-        // fluid化: sp=345px / pc=700px（431〜1023pxを線形補間）
-        max-width: clamp(345px, calc(88.01px + 59.76vw), 700px);
-        margin-inline: auto;
-        margin-inline-start: 176px;
+
+        gap: clamp(16px,
+                calc(-15.16px + 5.387vw),
+                40px);
+
+        // PC時：
+        // 1440pxで最大700px。
+        // 画面幅が狭くなるにつれて右側のlist幅を縮める。
+        width: min(700px,
+                calc(100% - 330px));
+
+        min-width: 560px;
+
+        margin-left: auto;
+        margin-right: 0;
+
+        padding: 0;
+
+        list-style: none;
+
+
+        // ----------------------------------------------------------------------
+        // 1000px以下：縦直線型
+        // ----------------------------------------------------------------------
+        @include mx.nav-collapse {
+            width: min(100%,
+                    640px);
+
+            min-width: 0;
+
+            margin-inline: auto;
+
+            gap: 32px;
+        }
+
 
         @include mx.sp {
-            margin-inline-start: auto;
+            gap: 28px;
         }
     }
 
+
+    // ==========================================================================
+    // PC CURVE
+    // ==========================================================================
     &__list-curve {
-        display: block;
         position: absolute;
+
+        display: block;
+
         top: 24px;
         left: 0;
+
         width: 121px;
         height: calc(100% - 48px);
+
         overflow: visible;
+
         z-index: 0;
+
 
         path {
             fill: none;
+
             stroke: #FFFCE6;
+
             stroke-width: 4px;
             stroke-dasharray: 10 10;
             stroke-linecap: round;
-
-            @include mx.sp {
-                fill: unset;
-                stroke: unset;
-                stroke-width: unset;
-                stroke-dasharray: unset;
-                stroke-linecap: unset;
-            }
         }
 
-        @include mx.sp {
+
+        // 1000px以下はカーブを使わない
+        @include mx.nav-collapse {
             display: none;
-            position: unset;
-            top: unset;
-            left: unset;
-            width: unset;
-            height: unset;
-            overflow: hidden;
-            z-index: unset;
         }
     }
 
+
+    // ==========================================================================
+    // ITEM
+    // ==========================================================================
     &__item {
         position: relative;
+
         display: flex;
         align-items: flex-start;
-        // fluid化: sp=8px / pc=80px（431〜1023pxを線形補間）
-        gap: clamp(20px, calc(-44.12px + 12.12vw), 80px);
 
-        // アイコン同士をつなぐ点線コネクタ（
-        &:not(:last-child)::after {
-            content: "";
-            position: absolute;
-            top: 48px;
-            left: 24px;
-            width: 2px;
-            height: calc(100% + 16px);
-            border-left: 2px dashed v.$color-white;
-            display: none;
+        gap: clamp(28px,
+                calc(-10px + 4vw),
+                80px);
 
-            @include mx.sp {
-                display: unset;
+
+        // ----------------------------------------------------------------------
+        // 本文
+        // ----------------------------------------------------------------------
+        .gs-started__content {
+            flex: 1;
+
+            min-width: 0;
+
+            // 1279px付近などで
+            // 本文側から自然に縮むようにする
+            max-width: clamp(300px,
+                    calc(100vw - 760px),
+                    520px);
+        }
+
+
+        h3 {
+            margin-block-end: 4px;
+
+            font-size: clamp(2rem,
+                    calc(11.31px + 2.02vw),
+                    3.2rem);
+
+            font-weight: v.$fw-bold;
+
+            line-height: 1.3;
+            letter-spacing: 0;
+        }
+
+
+        p {
+            max-width: 100%;
+
+            font-size: clamp(1.6rem,
+                    calc(10.21px + 1.347vw),
+                    2.4rem);
+
+            font-weight: v.$fw-medium;
+
+            line-height: 1.3;
+            letter-spacing: 0;
+        }
+
+
+        // ======================================================================
+        // 1000px以下
+        // 直線型レイアウト
+        // ======================================================================
+        @include mx.nav-collapse {
+            --started-icon-size: 72px;
+
+            display: grid;
+
+            grid-template-columns:
+                var(--started-icon-size) minmax(0, 1fr);
+
+            align-items: start;
+
+            column-gap: 24px;
+
+
+            .gs-started__content {
+                max-width: none;
+                min-width: 0;
+            }
+
+
+            // ------------------------------------------------------------------
+            // アイコン中心を通る点線
+            // ------------------------------------------------------------------
+            &:not(:last-child)::after {
+                content: "";
+
+                position: absolute;
+
+                left: calc(var(--started-icon-size) / 2);
+
+                top: calc(var(--started-icon-size) / 2);
+
+                height: calc(100% + 32px);
+
+                border-left:
+                    2px dashed v.$color-white;
+
+                transform: translateX(-1px);
+
+                z-index: 0;
+
+                pointer-events: none;
+            }
+
+
+            h3 {
+                font-size: clamp(2rem,
+                        calc(14px + 1vw),
+                        2.6rem);
+            }
+
+
+            p {
+                font-size: clamp(1.6rem,
+                        calc(13px + 0.5vw),
+                        2rem);
+
+                line-height: 1.45;
             }
         }
 
-        h3 {
-            // fluid化: sp=2rem / pc=3.2rem（431〜1023pxを線形補間）
-            font-size: clamp(2rem, calc(11.31px + 2.02vw), 3.2rem);
-            font-weight: v.$fw-bold;
-            line-height: 1.3;
-            letter-spacing: 0;
-            margin-block-end: 4px;
-        }
 
-        p {
-            // fluid化: sp=1.6rem / pc=2.4rem（431〜1023pxを線形補間）
-            font-size: clamp(1.6rem, calc(10.21px + 1.347vw), 2.4rem);
-            font-weight: v.$fw-medium;
-            line-height: 1.3;
-            letter-spacing: 0;
+        @include mx.sp {
+            --started-icon-size: 64px;
+
+            grid-template-columns:
+                var(--started-icon-size) minmax(0, 1fr);
+
+            column-gap: 18px;
+
+
+            &:not(:last-child)::after {
+                left: calc(var(--started-icon-size) / 2);
+
+                top: calc(var(--started-icon-size) / 2);
+
+                height: calc(100% + 28px);
+            }
+
+
+            h3 {
+                font-size: 2rem;
+            }
+
+
+            p {
+                font-size: 1.5rem;
+            }
         }
     }
 
+
+    // ==========================================================================
+    // ICON
+    // ==========================================================================
     &__icon {
         position: relative;
+
         z-index: 1;
+
         display: flex;
         align-items: center;
         justify-content: center;
+
         flex-shrink: 0;
-        // fluid化: sp=70px / pc=90px（431〜1023pxを線形補間）
-        width: clamp(70px, calc(55.52px + 3.367vw), 90px);
-        height: clamp(70px, calc(55.52px + 3.367vw), 90px);
+
+        width: clamp(70px,
+                calc(55.52px + 3.367vw),
+                90px);
+
+        height: clamp(70px,
+                calc(55.52px + 3.367vw),
+                90px);
+
         border-radius: 50%;
+
         background-color: v.$color-white;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+
+        box-shadow:
+            0 4px 8px rgba(0, 0, 0, 0.12);
+
 
         img {
             width: 38.4px;
             height: auto;
-
-            @include mx.sp {
-                width: 30px;
-            }
         }
 
 
+        // ----------------------------------------------------------------------
+        // PCカーブ用の個別位置
+        // ----------------------------------------------------------------------
         &--download {
             margin-inline-start: -30px;
-
-            @include mx.sp {
-                margin-inline-start: unset;
-            }
         }
 
         &--register {
             margin-inline-start: 40px;
-
-            @include mx.sp {
-                margin-inline-start: unset;
-            }
         }
 
         &--profile {
             margin-inline-start: 70px;
-
-            @include mx.sp {
-                margin-inline-start: unset;
-            }
         }
 
         &--search {
             margin-inline-start: 60px;
-
-            @include mx.sp {
-                margin-inline-start: unset;
-            }
         }
 
         &--chat {
             margin-inline-start: -10px;
+        }
 
-            @include mx.sp {
-                margin-inline-start: unset;
+
+        // ----------------------------------------------------------------------
+        // 1000px以下：
+        // 全アイコンを同じX軸上へ
+        // ----------------------------------------------------------------------
+        @include mx.nav-collapse {
+            width: var(--started-icon-size);
+            height: var(--started-icon-size);
+
+            margin-inline-start: 0;
+
+            justify-self: center;
+
+
+            img {
+                width: 30px;
+                max-height: 36px;
+
+                object-fit: contain;
+            }
+        }
+
+
+        @include mx.sp {
+            img {
+                width: 27px;
+                max-height: 32px;
+            }
+        }
+    }
+
+
+    // ==========================================================================
+    // ILLUSTRATION
+    // ==========================================================================
+    &__illust {
+        position: absolute;
+
+        display: block;
+
+        // ----------------------------------------------------------------------
+        // 1001px以上
+        // 1440pxで最大400px
+        // ----------------------------------------------------------------------
+        left: 0;
+        bottom: 80px;
+
+        width: clamp(300px,
+                31.95vw,
+                400px);
+
+        max-width: 300px;
+        height: auto;
+
+        z-index: 2;
+
+        pointer-events: none;
+
+
+        // ----------------------------------------------------------------------
+        // 1000px以下
+        // heading横へ
+        // ----------------------------------------------------------------------
+        @include mx.nav-collapse {
+            top: -10px;
+            left: 0;
+            right: auto;
+            bottom: auto;
+
+            width: clamp(120px, 16vw, 160px);
+            max-width: 160px;
+
+            height: auto;
+
+            z-index: 4;
+        }
+
+        // ----------------------------------------------------------------------
+        // 430px以下
+        // ----------------------------------------------------------------------
+        @include mx.sp {
+            top: 0px;
+            right: -8px;
+
+            width: clamp(80px,
+                    29vw,
+                    100px);
+
+            max-width: 100px;
+        }
+    }
+
+    // ==========================================================================
+    // 1001px〜1200px：PCカーブ型の切り替え直前だけ微調整
+    // ==========================================================================
+    @media (min-width: 1001px) and (max-width: 1200px) {
+
+        &__wrapper {
+            // headingと1つ目のアイコンの距離を確保
+            padding-block-start: 180px;
+        }
+
+        &__list {
+            // 縦の間延びを抑える
+            gap: 16px;
+        }
+
+        &__item {
+            p {
+                // この幅で小さく見えすぎる本文を少し大きく
+                font-size: 2rem;
+                line-height: 1.35;
             }
         }
     }
@@ -766,171 +1461,459 @@
 .gs-safety {
     position: relative;
     overflow: hidden;
+
     background-color: v.$color-blue;
     color: v.$color-white;
-    padding-block: clamp(60px, calc(31.04px + 6.734vw), 100px) clamp(60px, calc(16.57px + 10.1vw), 120px);
 
+    padding-block:
+        clamp(60px, calc(31.04px + 6.734vw), 100px) clamp(60px, calc(16.57px + 10.1vw), 120px);
+
+
+    // ==========================================================================
+    // INNER
+    // セクション内のレイアウトは1440px以上広がらない
+    // ==========================================================================
+    &__inner {
+        position: relative;
+
+        width: 100%;
+        max-width: 1440px;
+
+        margin-inline: auto;
+    }
+
+
+    // ==========================================================================
+    // WATERMARK
+    // ==========================================================================
     &__watermark {
         @include watermark;
+
+        position: absolute;
+
         top: 280px;
-        left: clamp(-60px, calc(8.956px - 6.734vw), -20px);
+        left: 0;
+
         writing-mode: vertical-rl;
         transform: none;
+
         -webkit-text-stroke: 2px #F3F9FF;
         color: transparent;
 
+        pointer-events: none;
+
+
+        // ----------------------------------------------------------------------
+        // 1000px以下：右側へ移動
+        // ----------------------------------------------------------------------
+        @include mx.nav-collapse {
+            top: 140px;
+
+            right: -8px;
+            left: auto;
+        }
+
+
+        // ----------------------------------------------------------------------
+        // 430px以下
+        // ----------------------------------------------------------------------
         @include mx.sp {
-            top: 5%;
-            left: unset;
-            right: -8%;
+            top: 120px;
+            right: -10px;
+
+            font-size: 7rem;
         }
     }
 
-    &__wrapper {
-        position: relative;
-        z-index: 1;
-        padding-block-start: 180px;
 
-        @include mx.sp {
-            padding-block-start: unset;
-        }
-
-        @media (min-width: 431px) and (max-width: 1023px) {
-            padding-block-start: 140px;
-        }
-    }
-
+    // ==========================================================================
+    // HEADING
+    // ==========================================================================
     &__head {
-        text-align: left;
         position: absolute;
+
         top: 60px;
         left: 0;
-        z-index: 2;
+
+        z-index: 3;
+
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        margin-block-end: clamp(0px, calc(68.96px - 6.734vw), 40px);
-        padding-inline: clamp(0px, calc(27.58px - 2.694vw), 16px);
+
+        text-align: left;
+
 
         p,
         h2 {
             background-color: v.$color-white;
             color: v.$color-text;
+
             line-height: 1.32;
+
             padding-inline: 24px 48px;
         }
 
-        @include mx.sp {
-            position: unset;
-            top: unset;
-            left: unset;
-            z-index: unset;
-            display: block; // divのUAデフォルト（unsetだとinlineに戻ってしまうため明示）
-            flex-direction: unset;
+
+        // ----------------------------------------------------------------------
+        // 1000px以下：中央配置
+        // ----------------------------------------------------------------------
+        @include mx.nav-collapse {
+            position: relative;
+
+            top: auto;
+            left: auto;
+
+            width: 100%;
+
+            margin-inline: auto;
+
+            padding-inline: 120px;
+
             align-items: center;
             text-align: center;
-            margin-inline: auto;
-            width: fit-content;
         }
 
-        @media (min-width: 431px) and (max-width: 1023px) {
-            top: 24px;
-            left: 152px; // イラスト幅120px + 余白32px
-            text-align: center;
-            align-items: center;
+
+        // ----------------------------------------------------------------------
+        // 430px以下
+        // ----------------------------------------------------------------------
+        @include mx.sp {
+            padding-inline: 0;
+
+
+            p,
+            h2 {
+                padding-inline: 16px;
+            }
         }
     }
 
+
+    // ==========================================================================
+    // EYEBROW
+    // ==========================================================================
     &__eyebrow {
         display: inline-block;
-        // fluid化: sp=2rem / pc=4rem（431〜1023pxを線形補間）
-        font-size: clamp(2rem, calc(5.522px + 3.367vw), 4rem);
-        font-weight: v.$fw-bold;
-    }
 
-    &__title {
-        display: block;
-        // fluid化: sp=3.2rem / pc=6.4rem（431〜1023pxを線形補間）
-        font-size: clamp(3.2rem, calc(8.835px + 5.387vw), 6.4rem);
-        font-weight: v.$fw-bold;
-        margin-block-start: 9px; // 2つの帯のgap
-    }
+        font-size: clamp(2rem,
+                calc(5.522px + 3.367vw),
+                4rem);
 
-    &__grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: clamp(16px, calc(-1.374px + 4.04vw), 40px);
-        max-width: clamp(780px, calc(694.9px + 19.78vw), 897.5px);
+        font-weight: v.$fw-bold;
+
+
+        @include mx.nav-collapse {
+            font-size: clamp(2rem,
+                    3.5vw,
+                    3.2rem);
+        }
+
 
         @include mx.sp {
-            grid-template-columns: repeat(2, 1fr);
-            max-width: 100%;
+            margin-inline: auto;
+
+            font-size: 2rem;
+
+            white-space: nowrap;
+        }
+    }
+
+
+    // ==========================================================================
+    // TITLE
+    // ==========================================================================
+    &__title {
+        display: block;
+
+        width: fit-content;
+
+        margin-block-start: 9px;
+
+        font-size: clamp(3.2rem,
+                calc(8.835px + 5.387vw),
+                6.4rem);
+
+        font-weight: v.$fw-bold;
+
+
+        @include mx.nav-collapse {
+            margin-inline: auto;
+
+            font-size: clamp(3.2rem,
+                    5.5vw,
+                    4.8rem);
+        }
+
+
+        @include mx.sp {
+            margin-inline: auto;
+
+            font-size: 3.2rem;
+
+            white-space: nowrap;
+        }
+    }
+
+
+    // ==========================================================================
+    // WRAPPER
+    // ==========================================================================
+    &__wrapper {
+        position: relative;
+
+        z-index: 1;
+
+        // 1440px画面幅でもカード群は広がりすぎない
+        width: min(calc(100% - 48px), 1120px);
+        max-width: none;
+
+        margin-inline: auto;
+
+        // PCではabsoluteのheadingとカードを離す
+        padding-block-start: 260px;
+
+        padding-inline: 0;
+
+
+        // ----------------------------------------------------------------------
+        // 1000px以下
+        // ----------------------------------------------------------------------
+        @include mx.nav-collapse {
+            width: min(calc(100% - 48px), 760px);
+
+            padding-block-start: 140px;
+        }
+
+
+        // ----------------------------------------------------------------------
+        // 430px以下
+        // ----------------------------------------------------------------------
+        @include mx.sp {
+            width: min(calc(100% - 32px), 500px);
+
+            padding-block-start: 120px;
+        }
+    }
+
+
+    // ==========================================================================
+    // GRID
+    // ==========================================================================
+    &__grid {
+        display: grid;
+
+        // PC：3列
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+
+        gap: clamp(20px,
+                2.8vw,
+                40px);
+
+        // PC理想形：右側のイラスト用スペースを残す
+        width: min(100%, 900px);
+
+        margin-left: 0;
+        margin-right: auto;
+
+        padding: 0;
+
+        list-style: none;
+
+
+        // ----------------------------------------------------------------------
+        // 1000px以下：2列
+        // ----------------------------------------------------------------------
+        @include mx.nav-collapse {
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            width: min(100%, 600px);
+
+            margin-inline: auto;
+
+            gap: 20px;
+        }
+
+
+        // ----------------------------------------------------------------------
+        // 430px以下
+        // 2列のまま
+        // ----------------------------------------------------------------------
+        @include mx.sp {
+            width: 100%;
+
             gap: 16px;
         }
     }
 
+
+    // ==========================================================================
+    // CARD
+    // ==========================================================================
     &__card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        min-width: 0;
+
         background-color: v.$color-white;
         color: v.$color-text;
-        border-radius: 13.85px;
-        // fluid化: sp=20px 16px / pc=32px 20px（431〜1023pxを線形補間）
-        padding-block: clamp(20px, calc(11.31px + 2.02vw), 32px);
-        padding-inline: clamp(16px, calc(13.1px + 0.6734vw), 20px);
+
+        border-radius: 14px;
+
+        padding-block: clamp(24px,
+                calc(11.31px + 2.02vw),
+                32px);
+
+        padding-inline: clamp(16px,
+                calc(13.1px + 0.6734vw),
+                20px);
+
         text-align: center;
+
 
         img,
         svg {
-            // fluid化: sp=64px / pc=80px（431〜1023pxを線形補間）
-            width: clamp(64px, calc(52.42px + 2.694vw), 80px);
-            height: clamp(64px, calc(52.42px + 2.694vw), 80px);
+            display: block;
+
+            width: clamp(64px,
+                    calc(52.42px + 2.694vw),
+                    80px);
+
+            height: clamp(64px,
+                    calc(52.42px + 2.694vw),
+                    80px);
+
             margin-inline: auto;
-            margin-block-end: 24px; // アイコンとh3の間
+            margin-block-end: 24px;
+
+
+            @include mx.nav-collapse {
+                width: 64px;
+                height: 64px;
+
+                margin-block-end: 12px;
+            }
+
 
             @include mx.sp {
+                width: 56px;
+                height: 56px;
+
                 margin-block-end: 8px;
             }
         }
 
+
         h3 {
             @include v.heading-md;
-            // fluid化: sp=1.6rem / pc=3.2rem（431〜1023pxを線形補間）
-            font-size: clamp(1.6rem, calc(4.418px + 2.694vw), 3.2rem);
+
+            font-size: clamp(1.6rem,
+                    calc(4.418px + 2.694vw),
+                    3.2rem);
+
             margin-block-end: 8px;
+
+
+            @include mx.nav-collapse {
+                font-size: clamp(1.8rem,
+                        2.5vw,
+                        2.4rem);
+            }
+
+
+            @include mx.sp {
+                font-size: 1.6rem;
+            }
         }
 
+
         p {
-            // fluid化: sp=1.4rem / pc=2rem（431〜1023pxを線形補間）
-            font-size: clamp(1.4rem, calc(9.657px + 1.01vw), 2rem);
+            font-size: clamp(1.4rem,
+                    calc(9.657px + 1.01vw),
+                    2rem);
+
             font-weight: v.$fw-medium;
-            line-height: 1.3;
+
+            line-height: 1.4;
             letter-spacing: 0;
+
+
+            @include mx.nav-collapse {
+                font-size: clamp(1.4rem,
+                        1.8vw,
+                        1.8rem);
+            }
+
+
+            @include mx.sp {
+                font-size: 1.4rem;
+            }
         }
     }
 
-    &__illust {
-        display: block;
-        position: absolute;
-        bottom: 120px;
-        right: -110px;
-        z-index: 1;
 
-        @include mx.sp {
-            position: absolute;
-            bottom: unset;
-            top: 2%;
-            left: -8%;
-            width: 120px;
-            height: auto;
-            z-index: 1;
+    // ==========================================================================
+    // ILLUSTRATION
+    // ==========================================================================
+    &__illust {
+        position: absolute;
+
+        display: block;
+
+        // PC：右下
+        right: 0;
+        bottom: -50px;
+
+        // 1440pxで最大400px
+        width: clamp(280px,
+                27.78vw,
+                400px);
+
+        max-width: 400px;
+
+        height: auto;
+
+        z-index: 2;
+
+        pointer-events: none;
+
+
+        // ----------------------------------------------------------------------
+        // 1000px以下：headingの左側
+        // ----------------------------------------------------------------------
+        @include mx.nav-collapse {
+            top: 20px;
+            left: 0;
+
+            right: auto;
+            bottom: auto;
+
+            width: clamp(130px,
+                    18vw,
+                    180px);
+
+            max-width: 180px;
+
+            z-index: 4;
         }
 
-        @media (min-width: 431px) and (max-width: 1023px) {
-            bottom: unset;
-            right: unset;
-            top: 24px;
-            left: 16px;
-            width: 120px;
-            height: auto;
+
+        // ----------------------------------------------------------------------
+        // 430px以下
+        // ----------------------------------------------------------------------
+        @include mx.sp {
+            top: 30px;
+            left: -30px;
+
+            width: clamp(100px,
+                    34vw,
+                    130px);
+
+            max-width: 130px;
         }
     }
 }

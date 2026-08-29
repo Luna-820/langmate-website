@@ -1026,10 +1026,15 @@
         max-width: 1000px;
         margin-inline: auto;
         background-color: v.$color-white;
-        //sp=40px / pc=48px（431〜1023pxを線形補間）
-        padding-block: clamp(40px, calc(34.21px + 1.347vw), 48px);
-        //sp=32px / pc=80px（431〜1023pxを線形補間）
-        padding-inline: clamp(32px, calc(-2.747px + 8.081vw), 80px);
+
+        padding-block: clamp(40px,
+                calc(34.21px + 1.347vw),
+                48px);
+
+        // 431px: 8px → 1023px: 80px
+        padding-inline: clamp(8px,
+                calc(-44.42px + 12.162vw),
+                80px);
     }
 
     .section-title {
@@ -1086,22 +1091,28 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            //sp=48px / pc=56px（431〜1023pxを線形補間）
+
             width: clamp(48px, calc(42.21px + 1.347vw), 56px);
-            //sp=48px / pc=56px（431〜1023pxを線形補間）
-            height: auto;
+            height: clamp(48px, calc(42.21px + 1.347vw), 56px);
+            flex-shrink: 0;
+
             border-radius: 50%;
-            border: 2px solid v.$color-gray; // 非選択時: #E0E0E0
+            border: 2px solid v.$color-gray;
             background-color: v.$color-white;
             color: v.$color-gray;
-            //sp=6px / pc=12px（431〜1023pxを線形補間）
+
             padding: clamp(6px, calc(1.657px + 1.01vw), 12px);
+
             cursor: pointer;
-            transition: color 0.2s, border-color 0.2s;
+            transition:
+                color 0.2s,
+                border-color 0.2s;
 
             svg {
+                display: block;
                 width: 100%;
                 height: 100%;
+                object-fit: contain;
             }
 
             &:hover,
@@ -1878,7 +1889,7 @@
 
     // （4.0rem/2.4rem, Bold, lh1.4）
     h2 {
-        @include v.heading-lg;
+        font-size: clamp(1.8rem, calc(12.42px + 2.0vw), 4.0rem);
     }
 
     p {
