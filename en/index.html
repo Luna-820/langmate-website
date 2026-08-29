@@ -155,30 +155,37 @@
   <main id="main">
     <!-- ===== Hero ===== -->
     <section class="hero">
-      <div class="hero__deco" aria-hidden="true"></div>
+      <div class="hero__visual" aria-hidden="true">
+        <picture>
+          <source media="(max-width: 780px)" srcset="/design-assets/hero-visual-sp.webp" />
+          <img class="hero__visual-img" src="/design-assets/hero-visual-pc.webp" alt="" />
+        </picture>
+      </div>
+
       <div class="hero__inner">
         <div class="hero__content">
           <h1 class="hero__heading">
             Meet People in Japan. Make Real Friends.
+
             <img class="hero__logo" src="/design-assets/logo-langmate.svg" alt="Langmate" width="378" height="81" />
           </h1>
-          <p class="hero__lead">Find Japanese people you’ll actually click with. <br>
+
+          <p class="hero__lead">
+            Find Japanese people you’ll actually click with. <br>
             Check out their profiles, interests, and age,<br>
             and connect with people who share your hobbies and<br>
-            what you’re looking for.</p>
+            what you’re looking for.
+          </p>
+
           <div class="hero__badges">
             <a href="https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775" class="btn btn--store">
-              <img src="/design-assets/badge-appstore-ja.svg" alt="Download from the App Store" width="160"
-                height="48" />
+              <img src="/design-assets/badge-appstore-ja.svg" alt="Download from the App Store" />
             </a>
+
             <a href="https://play.google.com/store/apps/details?id=co.thoron.langmate" class="btn btn--store">
-              <img src="/design-assets/badge-googleplay-ja.svg" alt="Get it on Google Play" width="160" height="48" />
+              <img src="/design-assets/badge-googleplay-ja.svg" alt="Get it on Google Play" />
             </a>
           </div>
-        </div>
-        <div class="hero__visual" aria-hidden="true">
-          <div class="hero__pink-deco"></div>
-          <img class="hero__kv" src="/design-assets/img-kv.webp" alt="" width="300" height="493" />
         </div>
       </div>
     </section>
