@@ -1889,7 +1889,7 @@
 
     // （4.0rem/2.4rem, Bold, lh1.4）
     h2 {
-        @include v.heading-lg;
+        font-size: clamp(1.8rem, calc(12.42px + 2.0vw), 4.0rem);
     }
 
     p {
