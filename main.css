@@ -1666,7 +1666,7 @@ img {
   margin-inline: auto;
   background-color: #FFFFFF;
   padding-block: clamp(40px, 34.21px + 1.347vw, 48px);
-  padding-inline: clamp(32px, -2.747px + 8.081vw, 80px);
+  padding-inline: clamp(8px, -44.42px + 12.162vw, 80px);
 }
 @media (max-width: 430px) {
   .service .section-title {
@@ -1721,7 +1721,8 @@ img {
   align-items: center;
   justify-content: center;
   width: clamp(48px, 42.21px + 1.347vw, 56px);
-  height: auto;
+  height: clamp(48px, 42.21px + 1.347vw, 56px);
+  flex-shrink: 0;
   border-radius: 50%;
   border: 2px solid #A9A9A9;
   background-color: #FFFFFF;
@@ -1731,8 +1732,10 @@ img {
   transition: color 0.2s, border-color 0.2s;
 }
 .service-tabs__list button svg {
+  display: block;
   width: 100%;
   height: 100%;
+  object-fit: contain;
 }
 .service-tabs__list button:hover, .service-tabs__list button[aria-selected=true] {
   border-color: #FF3C71;
