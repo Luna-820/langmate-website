@@ -4,94 +4,165 @@
 // ==========================================================================
 // Footer
 // ==========================================================================
-
 .site-footer {
     margin-top: 64px;
     padding-block: 80px 40px;
-    // fluid化: sp=24px / pc=80px（431〜1023pxを線形補間）
-    padding-inline: clamp(24px, calc(-16.54px + 9.428vw), 80px);
+    padding-inline: clamp(24px, 4vw, 72px);
     border-top: 1px solid v.$color-gray;
 
     &__inner {
-        display: flex;
-        flex-direction: row;
+        display: grid;
+        grid-template-columns:auto auto auto;
+        align-items: start;
         justify-content: space-between;
-        // fluid化: sp=20px / pc=92px（1024px以下だと2.4rem(pc上限)に達した
-        // nav文字が折り返してしまっていたため、pc到達点を1280pxまで伸ばして
-        // 768〜1024px帯でも余白に少し余裕が出るようにした。1280px以上の
-        // 見た目(92px)は変わらない）
-        gap: clamp(20px, calc(-16.42px + 8.471vw), 92px);
+        column-gap: clamp(24px, 6vw, 60px);
+        max-width: 1200px;
 
         @include mx.hero-sp {
+            display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: unset;
+            gap: 40px;
             text-align: center;
         }
     }
 
+
+    // ==========================================================
+    // Brand
+    // ==========================================================
+
     &__brand {
+        width: fit-content;
+        min-width: 0;
+
         p {
-            // fluid化: sp=1.4rem / pc=1.8rem（pc到達点を1280pxまで伸ばして
-            // 768〜1024px帯での折り返しを緩和。1280px以上は変わらない）
-            font-size: clamp(1.4rem, calc(11.98px + 0.4706vw), 1.8rem);
+            font-size: clamp(1.4rem,
+                    calc(12.857px + 0.3571vw),
+                    1.8rem);
+
             margin-block-end: 8px;
+            white-space: nowrap;
         }
 
-        img {
-            // fluid化: sp=51px / pc=86px（431〜1023pxを線形補間）
-            height: clamp(51px, calc(25.66px + 5.892vw), 86px);
+        >img {
+            display: block;
+            width: clamp(240px, 2v7w, 330px);
+            height: auto;
+
             margin-block-end: 20px;
         }
 
-        @include mx.sp {
-            img {
+        @include mx.hero-sp {
+            p {
+                white-space: normal;
+            }
+
+            >img {
                 margin-inline: auto;
             }
         }
     }
 
+
+    // ==========================================================
+    // Store Badges
+    // ==========================================================
+
     &__badges {
         display: flex;
-        // fluid化: sp=16px / pc=40px（431〜1023pxを線形補間）
-        gap: clamp(16px, calc(-1.374px + 4.04vw), 40px);
+
+        gap: clamp(12px, 2vw, 28px);
+
+        width: fit-content;
+
+        a {
+            display: block;
+            flex-shrink: 0;
+        }
 
         img {
-            // fluid化: sp=48px / pc=56px（431〜1023pxを線形補間）
-            height: clamp(48px, calc(42.21px + 1.347vw), 56px);
+            display: block;
+
+            height: clamp(40px, 4vw, 52px);
             width: auto;
+
+            margin: 0;
         }
 
-        @include mx.sp {
+        @include mx.hero-sp {
             justify-content: center;
+            margin-inline: auto;
         }
     }
 
-    &__nav ul {
-        display: grid;
-        grid-template-columns: repeat(2, auto);
-        // fluid化: sp=12px 32px / pc=16px 64px（行間・列間ともに、pc到達点を
-        // 1280pxまで伸ばして768〜1024px帯での折り返しを緩和。1280px以上は
-        // 変わらない）
-        gap: clamp(12px, calc(9.976px + 0.4706vw), 16px) clamp(32px, calc(15.81px + 3.765vw), 64px);
-        // fluid化: sp=1.6rem / pc=2.4rem（同上、pc到達点を1280pxに伸ばした）
-        font-size: clamp(1.6rem, calc(11.95px + 0.9412vw), 2.4rem);
 
-        // grid-template-columnsのautoトラックはmin-width:autoの初期値のせいで
-        // 中身のmin-content（日本語だと1文字単位）まで潰れてしまい、フォント
-        // サイズを縮めただけでは768〜1024px帯で「初めての方へ」等が2行に
-        // 折り返んでしまっていた。nowrapで1行の幅をmin-contentとして
-        // 強制することで、幅が足りない時は折り返みではなく列側で吸収させる。
-        li a {
-            white-space: nowrap;
+    // ==========================================================
+    // Navigation
+    // ==========================================================
+
+    &__nav {
+        width: fit-content;
+        min-width: 0;
+
+        ul {
+            display: grid;
+
+            // liは必要な幅だけ
+            grid-template-columns: max-content max-content;
+
+            // nav内部の余白は控えめ
+            column-gap: clamp(24px, 3vw, 44px);
+            row-gap: clamp(12px, 1vw, 16px);
+
+            width: fit-content;
+
+            margin: 0;
+            padding: 0;
+
+            list-style: none;
+
+            font-size: clamp(1.6rem,
+                    calc(14.857px + 0.3571vw),
+                    2rem);
+
+            li {
+                width: auto;
+                min-width: 0;
+
+                a {
+                    display: inline-block;
+                    width: auto;
+                    white-space: nowrap;
+                }
+            }
+        }
+
+        @include mx.hero-sp {
+            ul {
+                justify-content: center;
+            }
         }
 
         @include mx.sp {
-            justify-content: flex-start;
+            width: 100%;
+
+            ul {
+                grid-template-columns: max-content max-content;
+                justify-content: center;
+
+                column-gap: 32px;
+
+                text-align: left;
+            }
         }
     }
 
-    // 1件目(ホーム)だけ2カラムの上に単独で中央寄せする
+
+    // ==========================================================
+    // Home
+    // ==========================================================
+
     &__nav-home {
         @include mx.sp {
             grid-column: 1 / -1;
@@ -99,53 +170,79 @@
         }
     }
 
+
+    // ==========================================================
+    // SNS
+    // ==========================================================
+
     &__sns {
+        width: fit-content;
+        min-width: 0;
+
         p {
-            // fluid化: sp=1.6rem / pc=2.0rem（元は固定2.0remで768〜1024px帯でも
-            // 縮まらず「公式SNSはこちら」が折り返してしまっていたため、他の
-            // 見出しと同じくfluid化。1280px以上は元の2.0remのまま）
-            font-size: clamp(1.6rem, calc(13.98px + 0.4706vw), 2.0rem);
+            font-size: clamp(1.6rem,
+                    calc(14.857px + 0.3571vw),
+                    2rem);
+
             margin-block-end: 16px;
+
             white-space: nowrap;
         }
 
-        div {
+        >div {
             display: flex;
-            // fluid化: sp=16px / pc=40px（431〜1023pxを線形補間）
-            gap: clamp(16px, calc(-1.374px + 4.04vw), 40px);
 
-            a {
-                flex-shrink: 0;
-            }
+            gap: clamp(16px, 2vw, 32px);
+
+            width: fit-content;
+        }
+
+        a {
+            display: block;
+            flex-shrink: 0;
         }
 
         img {
-            // fluid化: sp=40px / pc=56px（431〜1023pxを線形補間）
-            width: clamp(40px, calc(28.42px + 2.694vw), 56px);
-            // fluid化: sp=40px / pc=56px（431〜1023pxを線形補間）
-            height: clamp(40px, calc(28.42px + 2.694vw), 56px);
-            object-fit: cover;
+            display: block;
+            width: clamp(40px, 4vw, 48px);
+            height: clamp(40px, 4vw, 48px);
+
+            object-fit: contain;
         }
 
-        @include mx.sp {
-            div {
+        @include mx.hero-sp {
+            width: 100%;
+
+            >div {
                 justify-content: center;
+                margin-inline: auto;
             }
         }
     }
 
+
+    // ==========================================================
+    // Legal
+    // ==========================================================
+
     &__legal {
         display: flex;
         justify-content: center;
-        // fluid化: sp=16px / pc=24px（431〜1023pxを線形補間）
-        gap: clamp(16px, calc(10.21px + 1.347vw), 24px);
-        margin-block-start: 32px;
+        flex-wrap: wrap;
+
+        gap: 8px clamp(16px, 2vw, 24px);
+
+        margin-block-start: 48px;
 
         a {
-            // fluid化: sp=1.4rem / pc=1.6rem（431〜1023pxを線形補間）
-            font-size: clamp(1.4rem, calc(12.55px + 0.3367vw), 1.6rem);
+            font-size: clamp(1.4rem,
+                    calc(13.429px + 0.1786vw),
+                    1.6rem);
+
             text-decoration: underline;
             opacity: 0.7;
+
+            transition: opacity 0.2s ease;
 
             &:hover {
                 opacity: 1;
@@ -153,11 +250,17 @@
         }
     }
 
+
+    // ==========================================================
+    // Copyright
+    // ==========================================================
+
     &__copyright {
-        text-align: center;
-        // fluid化: sp=1.4rem / pc=2.0rem（431〜1023pxを線形補間）
-        font-size: clamp(1.4rem, calc(9.657px + 1.01vw), 2.0rem);
         margin-block-start: 16px;
+
+        font-size: 1.2rem;
+        text-align: center;
+
         opacity: 0.7;
     }
 }
