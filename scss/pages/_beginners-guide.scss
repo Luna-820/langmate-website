@@ -9,9 +9,7 @@
 .gs-hero {
     position: relative;
     overflow: hidden;
-    // .sub-heroと同じ理由でheader overlay後は不要（0にする）
     margin-block-start: 0;
-    // fluid化: sp=40px / pc=200px（431〜1023pxを線形補間）
     padding-block-end: clamp(40px, calc(-75.82px + 26.94vw), 200px);
 
     &__map {
@@ -250,10 +248,7 @@
     display: block;
     font-family: v.$font-en;
     font-weight: v.$fw-bold;
-    // fluid化: sp=8rem / pc(1280px時)=15.36rem（431〜1279pxを線形補間。他のsp/pc
-    // ペアと違い、元々12vwのvw基準フォーミュラだったため基準の1280pxまで伸ばして
-    // 1280px時点の見た目(12vw=153.6px)を保っている）
-    font-size: clamp(8rem, calc(4.277px + 8.659vw), 15.36rem);
+    font-size: clamp(8rem, calc(4.277px + 8.659vw), 24rem);
     line-height: 1.4;
     letter-spacing: 0em;
     white-space: nowrap;
@@ -292,14 +287,12 @@
         top: 40px;
         left: 0;
         z-index: 0;
-
         writing-mode: vertical-rl;
         transform: none;
-
         -webkit-text-stroke: 2px v.$color-pink-light;
         color: transparent;
-
         pointer-events: none;
+        font-size: clamp(8rem, calc(4.277px + 11vw), 30rem);
 
         @include mx.nav-collapse {
             left: -12px;
@@ -408,12 +401,9 @@
     &__wrapper {
         position: relative;
         z-index: 1;
-
         width: min(calc(100% - 48px), 1120px);
         max-width: none;
-
         margin-inline: auto;
-
         padding-block-start: 180px;
         padding-inline-start: 80px;
         padding-inline-end: 0;
@@ -421,11 +411,7 @@
         // 1000px以下：1列
         @include mx.nav-collapse {
             width: min(calc(100% - 48px), 900px);
-
-            // headingが通常フローになるので少し詰める
-            padding-block-start: 150px;
-
-            // 2列時のwatermark回避用paddingを解除
+            padding-block-start: 0px;
             padding-inline: 0;
         }
 
@@ -442,24 +428,17 @@
     &__list {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
-
         width: 100%;
-
         margin: 0;
         padding: 0;
-
         column-gap: clamp(32px, 5vw, 64px);
         row-gap: 72px;
-
         list-style: none;
 
         // 1000px以下：縦1列
         @include mx.nav-collapse {
             grid-template-columns: 1fr;
-
             row-gap: 80px;
-
-            // watermarkと最初のblobが被らないように下げる
             padding-block-start: 100px;
         }
 
@@ -789,53 +768,41 @@
     // ==========================================================================
     &__illust {
         position: absolute;
-
         display: block;
-
-        // 1001px以上：2列ジグザグ
-        top: clamp(600px,
-                calc(505.17px + 12.14vw),
-                680px);
-
+        top: clamp(600px, calc(505.17px + 12.14vw), 680px);
         right: 0;
         bottom: auto;
-
-        width: clamp(220px,
-                calc(180px + 7vw),
-                300px);
-
+        width: clamp(220px, calc(180px + 7vw), 300px);
         height: auto;
-
         z-index: 2;
-
         pointer-events: none;
-
 
         // 1000px以下：見出し右横へ
         @include mx.nav-collapse {
-            top: clamp(55px,
-                    8vw,
-                    80px);
-
+            top: clamp(55px, 8vw, 80px);
             right: 0;
             bottom: auto;
-
-            width: clamp(160px,
-                    22vw,
-                    220px);
-
+            width: clamp(160px, 22vw, 220px);
             z-index: 5;
         }
 
-
-        // 430px以下
-        @include mx.sp {
+        // 780px以下
+        @include mx.hero-sp {
             top: 42px;
             right: -8px;
+            width: clamp(110px, 32vw, 140px);
+        }
 
-            width: clamp(110px,
-                    32vw,
-                    140px);
+
+        // Pop animation
+        opacity: 0;
+        transform: scale(0.6);
+        transition: opacity 0.4s ease-out,
+        transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+        &.is-visible {
+            opacity: 1;
+            transform: scale(1);
         }
     }
 }
@@ -844,9 +811,7 @@
 .gs-started {
     position: relative;
     overflow: hidden;
-
     background-color: v.$color-yellow;
-
     padding-block: clamp(60px,
             calc(31.04px + 6.734vw),
             100px);
@@ -859,10 +824,8 @@
     // ==========================================================================
     &__inner {
         position: relative;
-
         width: 100%;
         max-width: 1440px;
-
         margin-inline: auto;
     }
 
@@ -872,18 +835,14 @@
     // ==========================================================================
     &__watermark {
         @include watermark;
-
         position: absolute;
-
         top: 40px;
         right: 0;
-
         writing-mode: vertical-rl;
         transform: none;
-
         color: #FFFCE6;
-
         pointer-events: none;
+        font-size: clamp(8rem, calc(4.277px + 11vw), 28rem);
 
         @include mx.nav-collapse {
             right: -8px;
@@ -1348,16 +1307,13 @@
         @include mx.nav-collapse {
             width: var(--started-icon-size);
             height: var(--started-icon-size);
-
             margin-inline-start: 0;
-
             justify-self: center;
 
 
             img {
                 width: 30px;
                 max-height: 36px;
-
                 object-fit: contain;
             }
         }
@@ -1377,8 +1333,19 @@
     // ==========================================================================
     &__illust {
         position: absolute;
-
         display: block;
+
+        // Pop animation
+        opacity: 0;
+        transform: scale(0.6);
+        transition: opacity 0.4s ease-out,
+            transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+        &.is-visible {
+            opacity: 1;
+            transform: scale(1);
+
+        }
 
         // ----------------------------------------------------------------------
         // 1001px以上
@@ -1386,16 +1353,13 @@
         // ----------------------------------------------------------------------
         left: 0;
         bottom: 80px;
-
         width: clamp(300px,
-                31.95vw,
-                400px);
+            31.95vw,
+            400px);
 
         max-width: 300px;
         height: auto;
-
         z-index: 2;
-
         pointer-events: none;
 
 
@@ -1408,12 +1372,9 @@
             left: 0;
             right: auto;
             bottom: auto;
-
             width: clamp(120px, 16vw, 160px);
             max-width: 160px;
-
             height: auto;
-
             z-index: 4;
         }
 
@@ -1423,11 +1384,9 @@
         @include mx.sp {
             top: 0px;
             right: -8px;
-
             width: clamp(80px,
                     29vw,
                     100px);
-
             max-width: 100px;
         }
     }
@@ -1475,10 +1434,8 @@
     // ==========================================================================
     &__inner {
         position: relative;
-
         width: 100%;
         max-width: 1440px;
-
         margin-inline: auto;
     }
 
@@ -1490,17 +1447,14 @@
         @include watermark;
 
         position: absolute;
-
         top: 280px;
-        left: 0;
-
+        left: -60px;
         writing-mode: vertical-rl;
         transform: none;
-
         -webkit-text-stroke: 2px #F3F9FF;
         color: transparent;
-
         pointer-events: none;
+        font-size: clamp(8rem, calc(4.277px + 11vw), 30rem);
 
 
         // ----------------------------------------------------------------------
@@ -1508,7 +1462,6 @@
         // ----------------------------------------------------------------------
         @include mx.nav-collapse {
             top: 140px;
-
             right: -8px;
             left: auto;
         }
@@ -1518,9 +1471,8 @@
         // 430px以下
         // ----------------------------------------------------------------------
         @include mx.sp {
-            top: 120px;
-            right: -10px;
-
+            top: 0;
+            right: -30px;
             font-size: 7rem;
         }
     }
@@ -1531,16 +1483,12 @@
     // ==========================================================================
     &__head {
         position: absolute;
-
         top: 60px;
         left: 0;
-
         z-index: 3;
-
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-
         text-align: left;
 
 
@@ -1548,9 +1496,7 @@
         h2 {
             background-color: v.$color-white;
             color: v.$color-text;
-
             line-height: 1.32;
-
             padding-inline: 24px 48px;
         }
 
@@ -1560,16 +1506,11 @@
         // ----------------------------------------------------------------------
         @include mx.nav-collapse {
             position: relative;
-
             top: auto;
             left: auto;
-
             width: 100%;
-
             margin-inline: auto;
-
             padding-inline: 120px;
-
             align-items: center;
             text-align: center;
         }
@@ -1625,32 +1566,19 @@
     // ==========================================================================
     &__title {
         display: block;
-
         width: fit-content;
-
         margin-block-start: 9px;
-
-        font-size: clamp(3.2rem,
-                calc(8.835px + 5.387vw),
-                6.4rem);
-
+        font-size: clamp(3.2rem, calc(8.835px + 5.387vw), 6.4rem);
         font-weight: v.$fw-bold;
-
 
         @include mx.nav-collapse {
             margin-inline: auto;
-
-            font-size: clamp(3.2rem,
-                    5.5vw,
-                    4.8rem);
+            font-size: clamp(3.2rem, 5.5vw, 4.8rem);
         }
-
 
         @include mx.sp {
             margin-inline: auto;
-
             font-size: 3.2rem;
-
             white-space: nowrap;
         }
     }
@@ -1661,28 +1589,19 @@
     // ==========================================================================
     &__wrapper {
         position: relative;
-
         z-index: 1;
-
-        // 1440px画面幅でもカード群は広がりすぎない
         width: min(calc(100% - 48px), 1120px);
         max-width: none;
-
         margin-inline: auto;
-
-        // PCではabsoluteのheadingとカードを離す
         padding-block-start: 260px;
-
         padding-inline: 0;
-
 
         // ----------------------------------------------------------------------
         // 1000px以下
         // ----------------------------------------------------------------------
         @include mx.nav-collapse {
             width: min(calc(100% - 48px), 760px);
-
-            padding-block-start: 140px;
+            padding-block-start: 80px;
         }
 
 
@@ -1692,7 +1611,7 @@
         @include mx.sp {
             width: min(calc(100% - 32px), 500px);
 
-            padding-block-start: 120px;
+            padding-block-start: 60px;
         }
     }
 
@@ -1704,23 +1623,12 @@
         display: grid;
 
         // PC：3列
-        grid-template-columns:
-            repeat(3, minmax(0, 1fr));
-
-        gap: clamp(20px,
-                2.8vw,
-                40px);
-
-        // PC理想形：右側のイラスト用スペースを残す
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: clamp(20px, 2.8vw, 40px);
         width: min(100%, 900px);
-
-        margin-left: 0;
-        margin-right: auto;
-
+        margin-inline: auto;
         padding: 0;
-
         list-style: none;
-
 
         // ----------------------------------------------------------------------
         // 1000px以下：2列
@@ -1861,26 +1769,27 @@
     // ==========================================================================
     &__illust {
         position: absolute;
-
         display: block;
-
-        // PC：右下
         right: 0;
         bottom: -50px;
-
-        // 1440pxで最大400px
         width: clamp(280px,
                 27.78vw,
                 400px);
-
         max-width: 400px;
-
         height: auto;
-
         z-index: 2;
-
         pointer-events: none;
 
+        // Pop animation
+        opacity: 0;
+        transform: scale(0.6);
+        transition: opacity 0.4s ease-out,
+            transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+        &.is-visible {
+            opacity: 1;
+            transform: scale(1);
+        }
 
         // ----------------------------------------------------------------------
         // 1000px以下：headingの左側
@@ -1888,17 +1797,13 @@
         @include mx.nav-collapse {
             top: 20px;
             left: 0;
-
             right: auto;
             bottom: auto;
-
             width: clamp(130px,
                     18vw,
                     180px);
-
             max-width: 180px;
-
-            z-index: 4;
+            z-index: 0;
         }
 
 
@@ -1906,7 +1811,7 @@
         // 430px以下
         // ----------------------------------------------------------------------
         @include mx.sp {
-            top: 30px;
+            top: 0px;
             left: -30px;
 
             width: clamp(100px,
