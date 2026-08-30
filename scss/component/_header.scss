@@ -10,7 +10,6 @@
     top: clamp(12px, calc(6.209px + 1.347vw), 20px);
     left: 0;
     width: 100%;
-    // mobile-nav(z-index:300)のマスク/blurより必ず前面に出す
     z-index: 400;
     padding-inline: clamp(12px, calc(3.313px + 2.02vw), 24px);
 
@@ -19,7 +18,7 @@
         align-items: center;
         justify-content: space-between;
         gap: 16px;
-        max-width: 1100px;
+        max-width: 1200px;
         margin-inline: auto;
         padding-block: 16px;
         padding-inline: clamp(20px, calc(5.522px + 3.367vw), 40px);
@@ -29,7 +28,7 @@
     }
 
     &__logo img {
-        height: clamp(40px, calc(29.87px + 2.357vw), 54px);
+        height: clamp(32px, calc(29.87px + 2.357vw), 54px);
         width: 250px;
 
         @include mx.sp {
@@ -47,11 +46,8 @@
 
     &__list {
         display: flex;
-        gap: 20px;
+        gap: 30px;
         font-weight: v.$fw-bold;
-        // ナビが出るのはnav-collapse(1000px)より上のみなので、1000px→1280pxを
-        // 基準に線形補間（1000pxで折り返しかけないギリギリの1.6rem、1280px以上は
-        // 通常の2rem）
         font-size: clamp(1.6rem, calc(1.714px + 1.429vw), 2rem);
 
         a[aria-current="page"] {

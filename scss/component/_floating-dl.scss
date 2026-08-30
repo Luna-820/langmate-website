@@ -47,31 +47,52 @@
 
     &__trigger {
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
+        gap: 10px;
         flex-shrink: 0;
+
         width: 72px;
         min-height: 240px;
         padding-block: 12px;
         padding-inline: 10px;
+
         border: none;
         background: none;
+
         color: v.$color-blue;
         font-family: v.$font-en;
         font-size: 2.4rem;
         font-weight: v.$fw-bold;
         line-height: 1;
         letter-spacing: -0.04em;
+
         cursor: pointer;
 
         @media (max-width: 1023px) {
             width: clamp(58px, calc(47.87px + 1.347vw), 72px);
             min-height: clamp(190px, calc(153.82px + 4.714vw), 240px);
+
             padding-block: 10px;
             padding-inline: 8px;
+
             font-size: clamp(1.8rem, calc(13.66px + 1.01vw), 2.4rem);
         }
+
+        // 600px以下：Downloadとアイコンを横並び
+        @media (max-width: 600px) {
+            flex-direction: row;
+            gap: 10px;
+
+            width: 100%;
+            min-height: 56px;
+            padding: 10px 24px;
+
+            font-size: 2rem;
+        }
     }
+
 
     // ==========================================================
     // Text
@@ -80,6 +101,30 @@
     &__text {
         writing-mode: vertical-rl;
         text-orientation: mixed;
+
+        @media (max-width: 600px) {
+            writing-mode: horizontal-tb;
+            text-orientation: initial;
+        }
+    }
+
+    // ==========================================================
+    // Icon
+    // ==========================================================
+
+    &__icon {
+        display: block;
+        width: 24px;
+        height: 24px;
+        flex-shrink: 0;
+
+        // SVG自体が黒などの場合、blueへ
+        filter: brightness(0) saturate(100%) invert(42%) sepia(98%) saturate(2696%) hue-rotate(193deg) brightness(101%) contrast(101%);
+
+        @media (max-width: 600px) {
+            width: 22px;
+            height: 22px;
+        }
     }
 
     // ==========================================================
