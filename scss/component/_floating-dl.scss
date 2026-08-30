@@ -2,138 +2,109 @@
 @use '../base/base' as v;
 
 // ==========================================================================
-// Floating DL Button — 画面右端に追従するダウンロード導線
-// PC：通常サイズ
-// Tablet：各要素を段階的に縮小
-// SP：非表示
+// Floating Download
+//
+// 601px以上
+// → 画面右端に固定
+// → hover / clickでストアパネル展開
+//
+// 600px以下
+// → 画面下部にwidth:100%で固定
+// → iOS / AndroidはJSで直接ストアへ
+// → 判定不能端末のみストアパネル展開
 // ==========================================================================
 
 .floating-dl {
-    display: block;
     position: fixed;
     top: 50%;
     right: 0;
     z-index: 100;
     transform: translateY(-50%);
-    transform-origin: right center;
 
-    @media (max-width: 600px) {
-        display: none;
-    }
+    // ==========================================================
+    // Box
+    // ==========================================================
 
     &__box {
         display: flex;
         align-items: stretch;
         background-color: v.$color-white;
-        border: 8px solid v.$color-blue;
+        border: 6px solid v.$color-blue;
         border-right: none;
-        border-radius: 60px 0 0 60px;
+        border-radius: 48px 0 0 48px;
         overflow: hidden;
 
-        // Tablet
         @media (max-width: 1023px) {
-            border-width: clamp(5px,
-                    calc(2.82px + 0.505vw),
-                    8px);
-
+            border-width: 5px;
             border-right: none;
-
-            border-radius:
-                clamp(36px,
-                    calc(18.56px + 4.04vw),
-                    60px) 0 0 clamp(36px,
-                    calc(18.56px + 4.04vw),
-                    60px);
+            border-radius: 40px 0 0 40px;
         }
     }
+
+    // ==========================================================
+    // Trigger
+    // ==========================================================
 
     &__trigger {
         display: flex;
-        flex-direction: column;
         align-items: center;
         justify-content: center;
         flex-shrink: 0;
-
-        width: 99px;
-        min-height: 310px;
-
-        padding-block: 20px;
-        padding-inline: 20px;
-
-        background: none;
+        width: 72px;
+        min-height: 240px;
+        padding-block: 12px;
+        padding-inline: 10px;
         border: none;
-
+        background: none;
         color: v.$color-blue;
         font-family: v.$font-en;
+        font-size: 2.4rem;
         font-weight: v.$fw-bold;
-        font-size: 3.2rem;
-        line-height: 1.19;
-        letter-spacing: -0.05em;
-        text-align: center;
-
+        line-height: 1;
+        letter-spacing: -0.04em;
         cursor: pointer;
 
-        // Tablet
         @media (max-width: 1023px) {
-            // 431px: 64px → 1023px: 99px
-            width: clamp(64px,
-                    calc(38.67px + 5.892vw),
-                    99px);
-
-            // 431px: 210px → 1023px: 310px
-            min-height: clamp(210px,
-                    calc(137.63px + 16.835vw),
-                    310px);
-
-            // 431px: 12px → 1023px: 20px
-            padding-block: clamp(12px,
-                    calc(6.21px + 1.347vw),
-                    20px);
-
-            // 431px: 10px → 1023px: 20px
-            padding-inline: clamp(10px,
-                    calc(2.76px + 1.684vw),
-                    20px);
-
-            // 431px: 2rem → 1023px: 3.2rem
-            font-size: clamp(2rem,
-                    calc(11.31px + 2.02vw),
-                    3.2rem);
+            width: clamp(58px, calc(47.87px + 1.347vw), 72px);
+            min-height: clamp(190px, calc(153.82px + 4.714vw), 240px);
+            padding-block: 10px;
+            padding-inline: 8px;
+            font-size: clamp(1.8rem, calc(13.66px + 1.01vw), 2.4rem);
         }
     }
+
+    // ==========================================================
+    // Text
+    // ==========================================================
+
+    &__text {
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+    }
+
+    // ==========================================================
+    // Panel
+    // ==========================================================
 
     &__panel {
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: flex-start;
-
+        justify-content: center;
         gap: 8px;
-
         width: 0;
         padding-inline: 0;
-
         overflow: hidden;
-
-        transition:
-            width 0.35s ease,
+        transition: width 0.35s ease,
             padding-inline 0.35s ease;
 
-        @media (max-width: 1023px) {
-            gap: clamp(6px,
-                    calc(4.55px + 0.337vw),
-                    8px);
-        }
-
         .btn--store {
-            width: 160px;
+            display: block;
+            width: 150px;
             flex-shrink: 0;
 
             @media (max-width: 1023px) {
-                // 431px: 120px → 1023px: 160px
-                width: clamp(120px,
-                        calc(91.05px + 6.734vw),
-                        160px);
+                width: clamp(120px, calc(98.29px + 5.051vw), 150px);
             }
 
             img {
@@ -144,27 +115,163 @@
         }
     }
 
+    // ==========================================================
+    // PC / Tablet Open
+    // ==========================================================
+
     &[data-open="true"] &__panel,
     &:hover &__panel,
     &:focus-within &__panel {
-        width: 184px;
+        width: 174px;
         padding-inline: 12px;
 
         @media (max-width: 1023px) {
-            // 431px: 140px → 1023px: 184px
-            width: clamp(140px,
-                    calc(108.15px + 7.407vw),
-                    184px);
-
-            // 431px: 8px → 1023px: 12px
-            padding-inline: clamp(8px,
-                    calc(5.1px + 0.673vw),
-                    12px);
+            width: clamp(140px, calc(115.39px + 5.724vw), 174px);
+            padding-inline: 10px;
         }
     }
 
-    .floating-dl__text--vertical {
-        writing-mode: vertical-rl;
-        text-orientation: mixed;
+    // ==========================================================================
+    // SP
+    // 600px以下
+    // ==========================================================================
+
+    @media (max-width: 600px) {
+        top: auto;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        transform: none;
+
+        // ======================================================
+        // Box
+        // PC版と同じ白背景＋青枠
+        // ======================================================
+
+        &__box {
+            position: relative;
+            display: flex;
+            flex-direction: column-reverse;
+            width: 100%;
+            background-color: v.$color-white;
+            border: 6px solid v.$color-blue;
+            border-bottom: none;
+            border-radius: 48px 48px 0 0;
+            overflow: visible;
+        }
+
+        // ======================================================
+        // Trigger
+        // PC版のトーンをそのまま横型に
+        // ======================================================
+
+        &__trigger {
+            position: relative;
+            z-index: 2;
+
+            width: 100%;
+            min-height: 54px;
+
+            padding-block: 10px;
+            padding-inline: 16px;
+
+            background: none;
+            border: none;
+
+            color: v.$color-blue;
+
+            font-family: v.$font-en;
+            font-size: 1.8rem;
+            font-weight: v.$fw-bold;
+            line-height: 1;
+            letter-spacing: -0.04em;
+
+            border-radius: 0;
+
+            cursor: pointer;
+        }
+
+        &__text {
+            writing-mode: horizontal-tb;
+            text-orientation: initial;
+        }
+
+        // ======================================================
+        // Panel
+        // ======================================================
+
+        &__panel {
+            position: absolute;
+
+            right: 0;
+            bottom: 100%;
+            left: 0;
+
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+
+            gap: 12px;
+
+            width: 100%;
+            max-height: 0;
+
+            padding-inline: 20px;
+            padding-block: 0;
+
+            background-color: v.$color-white;
+
+            border: 6px solid v.$color-blue;
+            border-bottom: none;
+            border-radius: 32px 32px 0 0;
+
+            overflow: hidden;
+
+            opacity: 0;
+            transform: translateY(10px);
+
+            transition:
+                max-height 0.3s ease,
+                padding-block 0.3s ease,
+                opacity 0.25s ease,
+                transform 0.3s ease;
+
+            .btn--store {
+                display: block;
+
+                width: calc((100% - 12px) / 2);
+                max-width: 160px;
+
+                flex-shrink: 1;
+
+                img {
+                    display: block;
+                    width: 100%;
+                    height: auto;
+                }
+            }
+        }
+
+        &[data-open="true"] &__panel {
+            width: 100%;
+            max-height: 110px;
+
+            padding-block: 16px;
+
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}
+
+// ==========================================================================
+// SP：固定Downloadバーにコンテンツが隠れないように
+// ==========================================================================
+
+@media (max-width: 600px) {
+    body {
+        padding-bottom: 56px;
     }
 }

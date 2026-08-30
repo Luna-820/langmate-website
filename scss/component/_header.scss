@@ -6,7 +6,7 @@
 // ==========================================================================
 
 .site-header {
-    position: absolute;
+    position: fixed;
     top: clamp(12px, calc(6.209px + 1.347vw), 20px);
     left: 0;
     width: 100%;

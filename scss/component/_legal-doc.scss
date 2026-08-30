@@ -3,12 +3,16 @@
 
 // ==========================================================================
 // Legal document（利用規約・プライバシーポリシー共通）
-// どの画面幅でも読みやすいことを優先したシンプルなレイアウト。
 // ==========================================================================
 
 .legal-hero {
-    // fluid化: 開始側 sp=60px / pc=100px、終了側 sp=40px / pc=60px（431〜1023pxを線形補間）
-    padding-block: clamp(60px, calc(31.04px + 6.734vw), 100px) clamp(40px, calc(25.52px + 3.367vw), 60px);
+    padding-top: 200px;
+    padding-bottom: 60px;
+
+    @include mx.sp {
+        padding-top: 160px;
+        padding-bottom: 40px;
+    }
 
     &__inner {
         max-width: 760px;
@@ -17,9 +21,13 @@
     }
 
     &__title {
-        // fluid化: sp=3.2rem / pc=4.8rem（431〜1023pxを線形補間）
         font-size: clamp(3.2rem, calc(20.42px + 2.694vw), 4.8rem);
         font-weight: v.$fw-bold;
+
+        @include mx.sp {
+            font-size: 2.8rem;
+        }
+
     }
 
     &__meta {
@@ -27,11 +35,16 @@
         font-size: 2rem;
         color: v.$color-text;
         line-height: 1.8;
+
+        @include mx.sp {
+            margin-block-start: 8px;
+            font-size: 1.6rem;
+            line-height: 1.5;
+        }
     }
 }
 
 .legal-doc {
-    // fluid化: sp=60px / pc=100px（431〜1023pxを線形補間）
     padding-block-end: clamp(60px, calc(31.04px + 6.734vw), 100px);
 
     &__inner {
@@ -55,7 +68,6 @@
         }
 
         h2 {
-            // fluid化: sp=2.2rem / pc=2.4rem（431〜1023pxを線形補間）
             font-size: clamp(2.2rem, calc(20.55px + 0.3367vw), 2.4rem);
             font-weight: v.$fw-bold;
             margin-block-start: 56px;

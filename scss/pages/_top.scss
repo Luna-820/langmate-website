@@ -7,129 +7,317 @@
 .hero {
     position: relative;
     overflow: hidden;
+    width: 100%;
+    height: 100vh;
     margin-block-start: 0;
-    min-height: clamp(620px, 54.6875vw, 720px);
     background-color: v.$color-cream;
 
-    @include mx.hero-sp {
-        height: clamp(600px, 152.7vw, 900px);
-    }
-
-    // ==============================
-    // Background Visual
-    // ==============================
-
-    &__visual {
-        position: absolute;
-        top: 0;
-        left: 50%;
-        z-index: 0;
-
-        width: 100%;
-        height: 100%;
-
-        transform: translateX(-50%);
-        pointer-events: none;
-
-        picture {
-            display: block;
-            width: 100%;
-            height: 100%;
-        }
-    }
-
-    &__visual-img {
-        display: block;
-        width: 100%;
-        height: auto;
-        object-fit: initial;
-        object-position: initial;
-
-        @include mx.hero-sp {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center top;
-        }
-    }
-
-    // ==============================
-    // Content Layer
-    // ==============================
+    // ==========================================================
+    // Inner
+    // FV内の座標系は最大1440px
+    // ==========================================================
 
     &__inner {
         position: relative;
         z-index: 1;
-
-        width: 100%;
-        max-width: 1440px;
+        width: min(100%, 1440px);
         height: 100%;
         margin-inline: auto;
 
-        padding-block-start: clamp(100px, 23vw, 320px);
-        padding-block-end: clamp(60px, 6vw, 90px);
+        // ------------------------------------------------------
+        // PC
+        // ------------------------------------------------------
+
+        padding-block-start: clamp(170px,
+                19vw,
+                270px);
+
+        padding-block-end: 60px;
+
+        // ------------------------------------------------------
+        // 780px以下
+        // ------------------------------------------------------
 
         @include mx.hero-sp {
-            padding-block-start: clamp(160px,
-                    calc(8.24px + 35.294vw),
-                    220px);
+            padding-block-start: 200px;
+            padding-inline: 32px;
+        }
+
+        // ------------------------------------------------------
+        // 600px以下
+        // コンテンツ全体を上へ
+        // ------------------------------------------------------
+
+        @media (max-width: 600px) {
+            padding-block-start: 190px;
+            padding-inline: 32px;
+            padding-block-end: 40px;
+        }
+
+        // ------------------------------------------------------
+        // 430px以下
+        // ------------------------------------------------------
+
+        @include mx.sp {
+            padding-block-start: 180px;
+            padding-inline: 24px;
         }
     }
+
+    // ==========================================================
+    // fv-parts01.svg
+    // ==========================================================
+
+    &__deco {
+        position: absolute;
+        z-index: 0;
+
+        display: block;
+
+        height: auto;
+
+        pointer-events: none;
+
+        // ------------------------------------------------------
+        // PC
+        // ------------------------------------------------------
+
+        top: clamp(-250px,
+                -16vw,
+                -120px);
+
+        left: clamp(-220px,
+                -12vw,
+                -80px);
+
+        width: clamp(300px,
+                33.333vw,
+                480px);
+
+        // ------------------------------------------------------
+        // 780px以下
+        //
+        // 780px = top:-180px
+        // 601px = top:-100px
+        // ------------------------------------------------------
+
+        @include mx.hero-sp {
+            top: clamp(-180px,
+                    calc(168.60px - 44.693vw),
+                    -100px);
+
+            left: -100px;
+
+            width: clamp(250px,
+                    46vw,
+                    360px);
+        }
+
+        // ------------------------------------------------------
+        // 600px以下
+        // ここからtopは-100px固定
+        // ------------------------------------------------------
+
+        @media (max-width: 600px) {
+            top: -100px;
+            left: -70px;
+
+            width: clamp(230px,
+                    60vw,
+                    290px);
+        }
+
+        // ------------------------------------------------------
+        // 430px以下
+        // ------------------------------------------------------
+
+        @include mx.sp {
+            top: -100px;
+            left: -65px;
+
+            width: clamp(220px,
+                    68vw,
+                    270px);
+        }
+    }
+
+    // ==========================================================
+    // fv-parts02.png
+    // ==========================================================
+
+    &__phones {
+        position: absolute;
+        z-index: 0;
+        display: block;
+        height: auto;
+        max-width: none;
+        pointer-events: none;
+
+        // ------------------------------------------------------
+        // PC
+        // ------------------------------------------------------
+
+        top: clamp(-130px, -7vw, -40px);
+        right: clamp(-100px, -4vw, 0px);
+        width: clamp(650px, 58vw, 840px);
+
+        // ------------------------------------------------------
+        // 781px〜1029px
+        // 狭くなるほど右へ逃がす
+        // 1029px = -120px
+        // 781px  = -280px
+        // ------------------------------------------------------
+
+        @media (min-width: 781px) and (max-width: 1029px) {
+            right: calc(-784px + 64.52vw);
+        }
+
+        // ------------------------------------------------------
+        // 780px以下-601px
+        // SPデザイン
+        // ------------------------------------------------------
+
+        @include mx.hero-sp {
+            top: 360px;
+            right: clamp(-300px, calc(-143.5px - 20.06vw), -230px);
+            width: clamp(620px, 97vw, 760px);
+        }
+
+        // ------------------------------------------------------
+        // 600px以下-431px
+        // 02自体を小さくして右へ逃がす
+        // ------------------------------------------------------
+
+        @media (max-width: 600px) {
+            top: 270px;
+            right: -220px;
+            width: clamp(470px, 103vw, 580px);
+        }
+
+        // ------------------------------------------------------
+        // 430px以下
+        // ------------------------------------------------------
+
+        @include mx.sp {
+            top: 255px;
+            right: -260px;
+            width: clamp(300px, 120vw, 520px);
+        }
+    }
+
+    // ==========================================================
+    // Content
+    // ==========================================================
 
     &__content {
         position: relative;
-        width: min(620px, 46vw);
+        z-index: 2;
+        width: min(620px, 47vw);
         margin-inline-start: clamp(60px, 7.8vw, 100px);
 
         @include mx.hero-sp {
-            width: min(300px, 65vw);
-            margin-inline-start: 24px;
+            width: min(100%, 520px);
+            margin-inline-start: 0;
+        }
+
+        @media (max-width: 600px) {
+            width: 100%;
+        }
+
+        @include mx.sp {
+            width: 100%;
         }
     }
 
-    // ==============================
+    // ==========================================================
     // Heading
-    // ==============================
+    // ==========================================================
 
     &__heading {
-        margin: 0 0 16px;
-        font-size: 2rem;
+        margin: 0 0 24px;
+        font-size: clamp(1.4rem, calc(10.52px + 0.658vw), 2rem);
         font-weight: v.$fw-bold;
         line-height: 1.4;
 
         @include mx.hero-sp {
-            font-size: 1.4rem;
+            font-size: clamp(1.8rem, 3vw, 2.4rem);
+        }
+
+        @media (max-width: 600px) {
+            margin-block-end: 14px;
+            font-size: clamp(1.7rem, 3.5vw, 2rem);
+            line-height: 1.4;
+        }
+
+        @include mx.sp {
+            font-size: clamp(1.6rem, 4.4vw, 1.9rem);
         }
     }
 
-    // ==============================
+    // ==========================================================
     // Logo
-    // ==============================
+    // ==========================================================
 
     &__logo {
         display: block;
-
-        width: min(clamp(240px, 26vw, 378px),
-                100%);
-
+        width: min(clamp(240px, 26vw, 378px), 100%);
         height: auto;
         margin-block-start: 12px;
 
         @include mx.hero-sp {
-            width: min(200px, 100%);
+            width: min(100%, 390px);
+            margin-block-start: 14px;
+        }
+
+        @media (max-width: 600px) {
+            width: min(320px, 74vw);
+            margin-block-start: 8px;
+        }
+
+        @include mx.sp {
+            width: min(300px, 80vw);
+            margin-block-start: 6px;
         }
     }
 
-    // ==============================
+    // ==========================================================
     // Lead
-    // ==============================
+    // ==========================================================
 
     &__lead {
-        margin: 0 0 24px;
-        font-size: clamp(1.4rem, calc(0.83rem + 1.34vw), 2.4rem);
+        position: relative;
+        z-index: 2;
+        margin: 0 0 28px;
+        font-size: clamp(1.4rem, calc(7.76px + 0.878vw), 2rem);
         font-weight: v.$fw-medium;
-        line-height: 1.3;
+        line-height: 1.4;
+
+        @include mx.hero-sp {
+            width: min(100%, 430px);
+            margin-block-start: 56px;
+            font-size: clamp(1.8rem, 3vw, 2.4rem);
+            line-height: 1.5;
+        }
+
+        @media (max-width: 600px) {
+            width: min(65%, 290px);
+            margin-block-start: 34px;
+            margin-block-end: 22px;
+            font-size: clamp(1.6rem, 3.5vw, 1.9rem);
+            line-height: 1.6;
+        }
+
+        @include mx.sp {
+            width: 78%;
+            margin-block-start: 30px;
+            font-size: clamp(1.5rem, 4vw, 1.7rem);
+            line-height: 1.5;
+        }
     }
+
+    // ==========================================================
+    // SP用改行
+    // ==========================================================
 
     .sp-only {
         display: none;
@@ -139,24 +327,49 @@
         }
     }
 
-    // ==============================
-    // Store Badges
-    // ==============================
+    // ==========================================================
+    // Store badges
+    // ==========================================================
 
     &__badges {
+        position: relative;
+        z-index: 3;
         display: flex;
-        gap: 12px;
+        align-items: center;
+        gap: 24px;
 
         @include mx.hero-sp {
             flex-direction: column;
+            align-items: flex-start;
+            gap: 20px;
+            margin-block-start: 40px;
+        }
+
+        @media (max-width: 600px) {
+            gap: 16px;
+            margin-block-start: 24px;
+        }
+
+        @include mx.sp {
+            gap: 14px;
+            margin-block-start: 20px;
         }
 
         .btn--store {
             display: block;
-            height: clamp(40px, 3.75vw, 48px);
+            flex-shrink: 0;
+            height: 48px;
 
             @include mx.hero-sp {
-                height: 36px;
+                height: clamp(56px, 8vw, 72px);
+            }
+
+            @media (max-width: 600px) {
+                height: clamp(48px, 11vw, 58px);
+            }
+
+            @include mx.sp {
+                height: clamp(46px, 13vw, 54px);
             }
         }
 
@@ -164,51 +377,21 @@
             display: block;
             width: auto;
             height: 100%;
-        }
-    }
-
-    // ==============================
-    // Intermediate
-    // 601px - 779px
-    // PC visualを維持しながら中間幅だけ補正
-    // ==============================
-
-    @media screen and (min-width: 601px) and (max-width: 779px) {
-        min-height: 760px;
-
-        &__inner {
-            padding-block-start: clamp(300px, calc(-3.88px + 50.562vw), 390px);
-            padding-block-end: 40px;
-        }
-
-        &__content {
-            width: 100%;
-            max-width: 500px;
-            margin-inline-start: 32px;
-        }
-
-        &__heading,
-        &__lead {
-            font-size: 2rem;
-        }
-
-        &__visual-img {
-            width: 130%;
             max-width: none;
-            margin-left: -10%;
-        }
-
-        &__badges {
-            .btn--store {
-                height: 48px;
-            }
         }
     }
 }
 
-// ---- Intro + 実績 ----
+// ==========================================================================
+// Intro + 実績
+// ==========================================================================
+
 .intro {
-    padding-block: 40px;
+    padding-block: clamp(60px, calc(-72.39px + 16.84vw), 100px);
+
+    // ==========================================================
+    // Inner
+    // ==========================================================
 
     &__inner {
         display: flex;
@@ -216,44 +399,43 @@
         gap: clamp(32px, calc(73.37px + -4.04vw), 56px);
     }
 
+    // ==========================================================
+    // Head
+    // ==========================================================
+
     &__head {
         margin-bottom: clamp(0px, calc(-72.39px + 16.84vw), 100px);
-    }
 
-    &__illustration {
-        @include mx.pc {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 400px;
+        @include mx.nav-collapse {
+            margin-bottom: 40px;
         }
 
         @include mx.sp {
-            float: right;
-            width: 45%;
-            margin-inline-start: 16px;
-            margin-block-end: 16px;
-        }
-
-        @media (min-width: 431px) and (max-width: 1023px) {
-            position: static;
-            float: none;
-            width: 200px;
-            margin-inline: auto;
-            margin-block: 24px;
-        }
-
-        img {
-            display: block;
-            width: 100%;
-            height: auto;
+            margin-bottom: 32px;
         }
     }
 
+    // ==========================================================
+    // Content
+    // ==========================================================
+
     &__content {
-        @include mx.pc {
-            position: relative;
-            padding-inline-start: 448px;
+        position: relative;
+        padding-inline-start: 448px;
+
+        &::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        // ------------------------------------------------------
+        // 1000px以下
+        // SPレイアウトへ切り替え
+        // ------------------------------------------------------
+
+        @include mx.nav-collapse {
+            padding-inline-start: 0;
         }
 
         h2 {
@@ -262,9 +444,28 @@
             font-weight: v.$fw-bold;
             line-height: 1.55;
             letter-spacing: 0;
-            border-bottom: 4px dotted v.$color-pink;
-            padding-block-end: 12px;
-            margin-block-end: clamp(16px, calc(29.79px + -1.347vw), 24px);
+
+            // 各行それぞれにピンクの点線
+            text-decoration-line: underline;
+            text-decoration-style: dotted;
+            text-decoration-color: v.$color-pink;
+            text-decoration-thickness: 4px;
+            text-underline-offset: 10px;
+
+            margin-block-end: clamp(24px, calc(13.66px + 2.404vw), 40px);
+
+            @include mx.nav-collapse {
+                width: fit-content;
+                margin-block-end: 32px;
+            }
+
+            @include mx.sp {
+                font-size: 2.3rem;
+                line-height: 1.55;
+                text-decoration-thickness: 3px;
+                text-underline-offset: 7px;
+                margin-block-end: 28px;
+            }
         }
 
         p {
@@ -273,8 +474,72 @@
             line-height: 1.5;
             letter-spacing: 0;
 
+            @include mx.nav-collapse {
+                line-height: 1.65;
+            }
+
             @include mx.sp {
+                font-size: 1.6rem;
+                line-height: 1.65;
                 margin-block-end: 0;
+            }
+        }
+    }
+
+    // ==========================================================
+    // Illustration
+    // ==========================================================
+
+    &__illustration {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+
+        width: 400px;
+
+        // ------------------------------------------------------
+        // 1000px以下
+        // 本文の右側へ回り込ませる
+        // 添付SPデザインに近い配置
+        // ------------------------------------------------------
+
+        @include mx.nav-collapse {
+            position: static;
+            float: right;
+            width: min(42%, 280px);
+            margin-block-start: 0;
+            margin-block-end: 12px;
+            margin-inline-start: 24px;
+            transform: unset;
+        }
+
+        // ------------------------------------------------------
+        // 430px以下
+        // ------------------------------------------------------
+
+        @include mx.sp {
+            width: 45%;
+            margin-inline-start: 16px;
+            margin-block-end: 8px;
+        }
+
+        img {
+            display: block;
+            width: 100%;
+            height: auto;
+
+            // Pop animation
+            opacity: 0;
+            transform: scale(0.6);
+            transition:
+                opacity 0.4s ease-out,
+                transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+            &.is-visible {
+                opacity: 1;
+                transform: scale(1);
+
             }
         }
     }
@@ -470,23 +735,20 @@
 .banner {
     &__inner {
         display: flex;
-        flex-direction: row;
-        justify-content: center;
         align-items: center;
-        gap: clamp(0px, calc(-17.37px + 4.04vw), 24px);
+        justify-content: center;
+
+        gap: clamp(32px, 4vw, 64px);
 
         padding-block: clamp(30px, calc(22.76px + 1.684vw), 40px);
         padding-inline: clamp(16px, calc(-18.75px + 8.081vw), 64px);
 
-        // 780px以下で縦並び
         @include mx.hero-sp {
             flex-direction: column;
-            justify-content: center;
             gap: 24px;
             padding-inline: 24px;
         }
 
-        // 小さいSPだけさらに余白調整
         @include mx.sp {
             gap: 20px;
             padding-inline: 16px;
@@ -494,50 +756,38 @@
     }
 
     &__visual {
-        flex-shrink: 0;
-
-        @include mx.hero-sp {
-            width: 100%;
-        }
+        flex: 0 0 340px;
 
         img {
             display: block;
-            width: 295px;
+            width: 340px;
             height: auto;
             max-width: 100%;
-            object-fit: contain;
             margin-inline: auto;
+        }
 
-            // Pop animation
-            opacity: 0;
-            transform: scale(0.6);
-            transition:
-                opacity 0.4s ease-out,
-                transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-
-            &.is-visible {
-                opacity: 1;
-                transform: scale(1);
-            }
-
-
-            @include mx.hero-sp {
-                width: min(240px, 70vw);
-            }
-
-            @include mx.sp {
-                width: min(220px, 72vw);
-            }
+        @include mx.hero-sp {
+            flex: none;
+            width: 100%;
         }
     }
+
 
     &__content {
         min-width: 0;
         flex: 1;
+        max-width: 620px;
 
         @include mx.hero-sp {
+            flex: none;
             width: 100%;
             max-width: 600px;
+        }
+
+        .btn--outline {
+            display: flex;
+            width: fit-content;
+            margin-inline: auto;
         }
     }
 
@@ -547,13 +797,14 @@
         line-height: 1.4;
         letter-spacing: 0;
         margin-block-end: 12px;
+        white-space: nowrap;
 
-        strong {
-            font-weight: inherit;
+        @include mx.hero-sp {
+            white-space: normal;
         }
 
         @include mx.sp {
-            font-size: 2.4rem;
+            font-size: 2rem;
         }
     }
 
@@ -1019,22 +1270,14 @@
 
 // ---- SERVICE ----
 .service {
-    //sp=40px / pc=60px（431〜1023pxを線形補間）
     padding-block: clamp(40px, calc(25.52px + 3.367vw), 60px);
 
     &__box {
         max-width: 1000px;
         margin-inline: auto;
         background-color: v.$color-white;
-
-        padding-block: clamp(40px,
-                calc(34.21px + 1.347vw),
-                48px);
-
-        // 431px: 8px → 1023px: 80px
-        padding-inline: clamp(8px,
-                calc(-44.42px + 12.162vw),
-                80px);
+        padding-block: clamp(40px, calc(34.21px + 1.347vw), 48px);
+        padding-inline: clamp(20px, calc(-44.42px + 12.162vw), 80px);
     }
 
     .section-title {
@@ -1047,17 +1290,17 @@
         display: flex;
         flex-direction: row;
         align-items: center;
-        gap: 32px;
+        gap: 64px;
 
-        @include mx.sp {
+        @include mx.voice-collapse {
             flex-direction: column;
             align-items: unset;
         }
     }
 
     &__mockup {
-        //sp=100px / pc=280px（431〜1023pxを線形補間）
-        max-width: clamp(100px, calc(-30.3px + 30.3vw), 280px);
+        width: clamp(250px, calc(219.7px + 3.03vw), 280px);
+        height: auto;
         margin-inline: auto;
         flex-shrink: 0;
 
@@ -1077,14 +1320,31 @@
 }
 
 .service-tabs {
+
+    // ==========================================================
+    // Icon tabs
+    // ==========================================================
     &__list {
         display: flex;
-        justify-content: flex-start;
-        gap: 16px;
-        margin-block-end: 24px;
+        align-items: center;
+        justify-content: center;
+        gap: 24px;
+        width: fit-content;
+        margin-inline: auto;
+        margin-block-end: 32px;
 
-        @include mx.sp {
+        // 880px以下
+        @include mx.voice-collapse {
+            width: min(100%, 500px);
             justify-content: center;
+            gap: 12px;
+            margin-inline: auto;
+        }
+
+        // 430px以下
+        @include mx.sp {
+            width: 100%;
+            gap: 8px;
         }
 
         button {
@@ -1092,27 +1352,38 @@
             align-items: center;
             justify-content: center;
 
-            width: clamp(48px, calc(42.21px + 1.347vw), 56px);
-            height: clamp(48px, calc(42.21px + 1.347vw), 56px);
-            flex-shrink: 0;
+            // PC
+            width: clamp(48px,calc(47.31px + 2.02vw),68px);
 
+            aspect-ratio: 1 / 1;
+            flex-shrink: 0;
             border-radius: 50%;
             border: 2px solid v.$color-gray;
             background-color: v.$color-white;
             color: v.$color-gray;
-
-            padding: clamp(6px, calc(1.657px + 1.01vw), 12px);
-
+            padding: clamp(9px,calc(6.1px + 0.673vw),13px);
             cursor: pointer;
-            transition:
-                color 0.2s,
-                border-color 0.2s;
+            transition:color 0.2s,border-color 0.2s;
+
+            // 880px以下
+            // gap 12px × 4箇所 = 48px を引いた残りを5等分
+            @include mx.voice-collapse {
+                width: calc((100% - 48px) / 5);
+                max-width: 64px;
+                min-width: 0;
+            }
+
+            // 430px以下
+            // gap 8px × 4箇所 = 32px
+            @include mx.sp {
+                width: calc((100% - 20px) / 5);
+                max-width: 58px;
+            }
 
             svg {
                 display: block;
                 width: 100%;
                 height: 100%;
-                object-fit: contain;
             }
 
             &:hover,
@@ -1123,34 +1394,46 @@
         }
     }
 
+    // ==========================================================
+    // Panels
+    // ==========================================================
     &__panels {
         text-align: left;
 
+        @include mx.voice-collapse {
+            width: min(100%, 500px);
+            margin-inline: auto;
+            text-align: center;
+        }
+
         h3 {
             display: inline-block;
-            //sp=2rem / pc=4rem（431〜1023pxを線形補間）
-            font-size: clamp(2rem, calc(5.522px + 3.367vw), 3.5rem);
+            font-size: clamp(2rem, calc(5.522px + 3.367vw), 3rem);
             font-weight: v.$fw-bold;
-            line-height: 1.55;
+            line-height: 1.5;
             letter-spacing: 0;
             border-bottom: 3px dotted v.$color-pink;
             padding-block-end: 8px;
             margin-block-end: 16px;
 
-            @include mx.sp {
-                display: block;
+            @include mx.voice-collapse {
                 width: fit-content;
+                max-width: 100%;
                 margin-inline: auto;
                 text-align: center;
             }
         }
 
         p {
-            //sp=1.6rem / pc=2.4rem（431〜1023pxを線形補間）
             font-size: clamp(1.5rem, calc(10.21px + 1.347vw), 2.4rem);
             font-weight: v.$fw-medium;
-            line-height: 1.219;
+            line-height: 1.5;
             letter-spacing: 0.08em;
+
+            @include mx.voice-collapse {
+                width: 100%;
+                text-align: center;
+            }
         }
     }
 }

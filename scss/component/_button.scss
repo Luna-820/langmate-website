@@ -46,7 +46,6 @@
 
     @include mx.sp {
         width: 100%;
-        // .btnがdisplay:inline-flexなので、text-alignではなくjustify-contentで中央寄せする
         justify-content: center;
     }
 

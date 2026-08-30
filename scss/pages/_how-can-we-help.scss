@@ -2,224 +2,418 @@
 @use '../base/base' as v;
 
 // ==========================================================================
-// FAQ archive page（よくある質問 一覧 / how-can-we-help.html）
+// HERO
 // ==========================================================================
-
-// ---- Hero ----
 .faq-hero {
-    // fluid化: sp=24px / pc=80px（431〜1023pxを線形補間）
-    padding-block-end: clamp(26px, calc(45.52px + 3.367vw), 80px);
+    padding-block-end: clamp(26px,
+            calc(45.52px + 3.367vw),
+            80px);
 
     @include mx.sp {
         padding-block-end: 26px;
     }
 }
 
-// ---- Search / Categories ----
+
+// ==========================================================================
+// SEARCH / CATEGORIES SECTION
+// ==========================================================================
 .faq-search-section {
-    // fluid化: sp=40px / pc=60px（431〜1023pxを線形補間）
-    padding-block-end: clamp(40px, calc(25.52px + 3.367vw), 60px);
+    padding-block-end: clamp(40px,
+            calc(25.52px + 3.367vw),
+            60px);
+
+    &__inner {
+        width: min(calc(100% - 48px), 1120px);
+        max-width: none;
+
+        margin-inline: auto;
+
+        @include mx.hero-sp {
+            width: min(calc(100% - 40px), 760px);
+        }
+
+        @include mx.sp {
+            width: min(calc(100% - 32px), 500px);
+        }
+    }
 }
 
-// 入力欄とボタンを1つの外枠でくくり、境目なくくっつける
+
+// ==========================================================================
+// SEARCH FORM
+// ==========================================================================
 .faq-search {
     display: flex;
     align-items: stretch;
-    // fluid化: sp=390px（wrapperの実効内容幅） / pc=1000px（431〜1023pxを線形補間）
-    width: clamp(390px, calc(-51.58px + 102.7vw), 1000px);
-    // fluid化: sp=56px / pc=64px（431〜1023pxを線形補間）
-    height: clamp(56px, calc(50.21px + 1.347vw), 64px);
+
+    // 親幅以上に広がらない
+    width: min(100%, 1000px);
+
+    height: clamp(56px,
+            calc(50.21px + 1.347vw),
+            64px);
+
     margin-inline: auto;
     margin-block-end: 32px;
+
     background-color: v.$color-white;
+
     border: 1px solid v.$color-text;
     border-radius: v.$radius-button;
-    overflow: hidden; // ボタンの角を外枠の丸みに合わせてクリップ
+
+    overflow: hidden;
+
+
+    @include mx.hero-sp {
+        width: 100%;
+    }
+
 
     @include mx.sp {
-        max-width: 345px;
-        width: 100%;
         margin-block-end: 24px;
     }
 
+
+    // ----------------------------------------------------------------------
+    // INPUT
+    // ----------------------------------------------------------------------
     &__input {
         flex: 1;
         min-width: 0;
+
         height: 100%;
+
+        padding-inline: 24px;
+
         font-family: v.$font-jp;
         font-size: 1.6rem;
+
         color: v.$color-text;
         background-color: transparent;
+
         border: none;
-        padding-inline: 24px;
+
 
         &::placeholder {
             color: v.$color-gray;
         }
 
+
         &:focus {
             outline: none;
         }
+
+
+        @include mx.sp {
+            padding-inline: 16px;
+
+            font-size: 1.4rem;
+        }
     }
 
+
+    // ----------------------------------------------------------------------
+    // SUBMIT
+    // ----------------------------------------------------------------------
     &__submit {
         flex-shrink: 0;
+
+        padding-inline: clamp(32px,
+                calc(20.42px + 2.694vw),
+                48px);
+
         font-family: v.$font-jp;
         font-weight: v.$fw-bold;
         font-size: 2.4rem;
+
         color: v.$color-white;
         background-color: v.$color-pink;
+
         border: none;
         border-radius: 8px;
-        ;
-        // fluid化: sp=32px / pc=48px（431〜1023pxを線形補間）
-        padding-inline: clamp(32px, calc(20.42px + 2.694vw), 48px);
+
         cursor: pointer;
+
         transition: opacity 0.3s;
+
 
         &:hover {
             opacity: 0.85;
         }
 
+
+        @include mx.hero-sp {
+            padding-inline: 32px;
+
+            font-size: 2rem;
+        }
+
+
         @include mx.sp {
-            font-size: 2.0rem;
+            padding-inline: 24px;
+
+            font-size: 1.8rem;
         }
     }
 }
 
-// 将来的にWordPressの親カテゴリー（タクソノミー）タームの一覧に対応する想定
+
+// ==========================================================================
+// FAQ CATEGORIES
+// ==========================================================================
 .faq-categories {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    // fluid化: .faq-searchと同じ理由・同じ値でwidth:1000pxをはみ出し防止しつつ431px時点は
-    // sp版のwidth:unset（実効幅390px）に一致させる
-    // fluid化: sp=390px（wrapperの実効内容幅） / pc=1000px（431〜1023pxを線形補間）
-    width: clamp(390px, calc(-51.58px + 102.7vw), 1000px);
-    // fluid化: sp=16px / pc=12px（431〜1023pxを線形補間）
-    gap: clamp(16px, calc(9.104px + 0.6734vw), 12px);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: min(100%, 1000px);
+    gap: 12px;
     margin-inline: auto;
 
-    @include mx.sp {
-        grid-template-columns: repeat(1, 1fr);
-        max-width: 345px;
+
+    // ----------------------------------------------------------------------
+    // 780px以下：SP系レイアウト
+    // ----------------------------------------------------------------------
+    @include mx.hero-sp {
+        grid-template-columns: 1fr;
         width: 100%;
+        max-width: 600px;
+        margin-inline: auto;
+        gap: 12px;
     }
 
+
+    @include mx.sp {
+        max-width: 100%;
+        gap: 12px;
+    }
+
+
+    // ----------------------------------------------------------------------
+    // ITEM
+    // ----------------------------------------------------------------------
     &__item {
         display: flex;
         align-items: center;
         gap: 8px;
-        // fluid化: sp=1.4rem / pc=1.6rem（431〜1023pxを線形補間）
-        font-size: clamp(1.4rem, calc(12.55px + 0.3367vw), 1.6rem);
+        padding: 12px 16px;
+        font-size: clamp(1.4rem,calc(12.55px + 0.3367vw),1.6rem);
         font-weight: v.$fw-bold;
         color: v.$color-text;
         background-color: v.$color-white;
         border: 1px solid v.$color-text;
         border-radius: v.$radius-button;
-        padding: 12px 16px;
-        transition: background-color 0.3s;
 
-        &:hover,
+        transition:
+            background-color 0.3s,
+            opacity 0.3s;
+
+        // hover
+        &:hover {
+            background-color: v.$color-pink-light;
+            opacity: 1;
+        }
+
+        // クリック中
+        &:active {
+            background-color: v.$color-pink-light;
+            opacity: 1;
+        }
+
+        // 現在選択中
         &--active {
             background-color: v.$color-pink-light;
-            opacity: 1; // 全体aルールのhover:opacity0.7を打ち消し、背景色変化のみにする
+            opacity: 1;
+        }
+
+        @include mx.hero-sp {
+            padding: 14px 20px;
         }
 
         @include mx.sp {
-            padding: 16px 24px;
+            padding: 16px 20px;
         }
-
     }
 
+
+    // ----------------------------------------------------------------------
+    // ARROW
+    // ----------------------------------------------------------------------
     &__arrow {
+        flex-shrink: 0;
+
         color: v.$color-text;
+
         font-size: 1rem;
     }
 }
 
-// ---- Groups（カテゴリー配下のFAQ一覧。1グループ = 将来の子タクソノミー1件） ----
-// 「機能について」は内部リストが2列あるため単独で全幅、残り3グループはPCで
-// 2カラムグリッドに自動配置（3番目のグループは自然に左カラム下へ回り込む）。
-.faq-groups {
-    // fluid化: sp=80px / pc=120px（431〜1023pxを線形補間）
-    padding-block-end: clamp(80px, calc(51.04px + 6.734vw), 120px);
 
-    // .faq-groups自体ではなく、実際に.faq-groupを並べている.wrapperの方に
-    // グリッドを適用する（section > .wrapper > .faq-group という構造のため）
+// ==========================================================================
+// FAQ GROUPS
+// ==========================================================================
+.faq-groups {
+    padding-block-end: clamp(80px,
+            calc(51.04px + 6.734vw),
+            120px);
+
+
+    // ----------------------------------------------------------------------
+    // GROUP WRAPPER
+    // ----------------------------------------------------------------------
     >.wrapper {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 56px;
-        // fluid化: sp=56px / pc=40px（431〜1023pxを線形補間）
-        column-gap: clamp(40px, calc(67.58px + -2.694vw), 56px);
-        // fluid化: sp=56px / pc=80px（431〜1023pxを線形補間）
-        row-gap: clamp(56px, calc(38.63px + 4.04vw), 80px);
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        column-gap: clamp(40px,
+                calc(67.58px - 2.694vw),
+                56px);
+
+        row-gap: clamp(56px,
+                calc(38.63px + 4.04vw),
+                80px);
+
+
+        // ------------------------------------------------------------------
+        // 780px以下：全グループ1列
+        // ------------------------------------------------------------------
+        @include mx.hero-sp {
+            grid-template-columns: 1fr;
+
+            width: min(calc(100% - 48px), 600px);
+            max-width: none;
+
+            margin-inline: auto;
+
+            row-gap: 56px;
+        }
+
 
         @include mx.sp {
-            grid-template-columns: 1fr;
+            width: min(calc(100% - 32px), 500px);
+
+            row-gap: 48px;
         }
     }
 
+
+    // ----------------------------------------------------------------------
+    // 「機能について」はPCでは全幅
+    // ----------------------------------------------------------------------
     .faq-group:first-child {
         grid-column: 1 / -1;
 
-        @include mx.sp {
-            grid-column: unset;
+
+        @include mx.hero-sp {
+            grid-column: auto;
         }
     }
 }
 
-// 1カテゴリー分のFAQブロック。WordPress化後は「子カテゴリー名 + そのタームに
-// 紐づくFAQ投稿一覧（ACFのQ&Aリピーター）」をループ出力する形にそのまま対応できる想定。
+
+// ==========================================================================
+// FAQ GROUP
+// ==========================================================================
 .faq-group {
+
+    // ----------------------------------------------------------------------
+    // TITLE
+    // ----------------------------------------------------------------------
     &__title {
         text-align: center;
-        // fluid化: sp=2.4rem / pc=3.2rem（431〜1023pxを線形補間）
-        font-size: clamp(2.4rem, calc(18.21px + 1.347vw), 3.2rem);
+        font-size: clamp(2.4rem,calc(18.21px + 1.347vw),3.2rem);
         font-weight: v.$fw-bold;
-        // fluid化: sp=24px / pc=16px（431〜1023pxを線形補間）
-        margin-block-end: clamp(16px, calc(29.79px + -1.347vw), 24px);
+        margin-block-end: clamp(16px,calc(29.79px - 1.347vw),24px);
+
+        @include mx.hero-sp {
+            font-size: clamp(2.4rem,4vw,3rem);
+        }
+
+
+        @include mx.sp {
+            font-size: 2.4rem;
+        }
     }
 
+    // ----------------------------------------------------------------------
+    // LIST
+    // ----------------------------------------------------------------------
     &__list {
         display: flex;
         flex-direction: column;
         gap: 16px;
+        width: 100%;
         max-width: 900px;
         margin-inline: auto;
 
+
+        // ------------------------------------------------------------------
+        // 780px以下：
+        // 全グループの横幅を600pxに統一
+        // ------------------------------------------------------------------
+        @include mx.hero-sp {
+            max-width: 600px;
+        }
+
+
+        // ------------------------------------------------------------------
+        // 機能について：PCのみ2列
+        // ------------------------------------------------------------------
         &--2col {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns:repeat(2, minmax(0, 1fr));
             gap: 16px 40px;
 
-            // `&--2col`はSPでは元々@include mx.pc外に単独のbase宣言が無く、同じ要素に付く
-            // `.faq-group__list`本体の値（display:flex, gap:16px）にフォールバックしていた。
-            // `unset`だとCSS初期値に戻ってそのフォールバックを再現できないため、
-            // 元の実効値を明示的に書き戻す。
-            @include mx.sp {
+            // --------------------------------------------------------------
+            // 780px以下：1列
+            // --------------------------------------------------------------
+            @include mx.hero-sp {
                 display: flex;
-                grid-template-columns: unset;
+                flex-direction: column;
+                width: 100%;
+                max-width: 600px;
+                margin-inline: auto;
                 gap: 16px;
             }
         }
     }
 }
 
-// 1件のFAQ（Q + 質問文）。WordPress化後はACFリピーターの1行に対応する想定。
+
+// ==========================================================================
+// FAQ ITEM
+// ==========================================================================
 .faq-item {
+
     a {
         display: flex;
         align-items: flex-start;
         gap: 20px;
         width: 100%;
-        // fluid化: sp=1.5rem / pc=2rem（431〜1023pxを線形補間）
-        font-size: clamp(1.5rem, calc(11.38px + 0.8418vw), 2rem);
-        line-height: 1.5;
         padding: 16px;
-        border-block-end: 1px dashed #707070;
+        font-size: clamp(1.5rem,calc(11.38px + 0.8418vw),2rem);
+        line-height: 1.5;
+        border-block-end:1px dashed #707070;
+
+        @include mx.hero-sp {
+            gap: 16px;
+            padding: 16px 12px;
+            font-size: clamp(1.6rem,2.4vw,1.9rem);
+        }
+
+
+        @include mx.sp {
+            gap: 14px;
+            padding: 14px 8px;
+            font-size: 1.5rem;
+        }
     }
 
+
+    // ----------------------------------------------------------------------
+    // Q ICON
+    // ----------------------------------------------------------------------
     &__icon {
         flex-shrink: 0;
         display: flex;
@@ -233,5 +427,11 @@
         color: v.$color-white;
         background-color: v.$color-pink;
         border-radius: 50%;
+
+        @include mx.sp {
+            width: 32px;
+            height: 32px;
+            font-size: 1.8rem;
+        }
     }
 }

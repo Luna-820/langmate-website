@@ -15,9 +15,6 @@
 .sub-hero {
     position: relative;
     overflow: hidden;
-    // headerがposition:absoluteでHeroにoverlayする構造になったため、
-    // sticky時代の引き上げ(-86px)は不要（headerが通常フローの高さを
-    // 占有しなくなったため、このsub-hero側は0で正しくviewport最上部から始まる）
     margin-block-start: 0;
 
     &__map {
@@ -29,8 +26,6 @@
         aspect-ratio: 1280 / 500;
         z-index: 0;
 
-        // <picture><source media="(max-width: 430px)" srcset="…bg-page-sp.svg">で
-        // 画像自体もこの幅で切り替える前提（アスペクト比もそれに合わせて切り替える）
         @include mx.sp {
             aspect-ratio: 393 / 235;
         }
@@ -40,12 +35,8 @@
         position: relative;
         z-index: 2;
         text-align: center;
-        // 地図画像(1280:500比)の下端にちょうど揃う高さから逆算した余白。
-        // 431px〜PCまでは画像と一緒に連続的に伸縮する
         padding-block-start: calc(100vw * 500 / 1280 - 100px);
 
-        // 430px以下は&__mapの画像自体がbg-page-sp.svg(393:235比)に切り替わるため、
-        // 上の計算式ではなく実測の固定値にする
         @include mx.sp {
             padding-block-start: 240px;
         }
@@ -62,7 +53,6 @@
         text {
             font-family: v.$font-en;
             font-weight: v.$fw-medium;
-            // fluid化: sp=1.6rem / pc=2.4rem（431〜1023pxを線形補間）
             font-size: clamp(1.6rem, calc(10.21px + 1.347vw), 2.4rem);
             fill: v.$color-blue;
             letter-spacing: 0.04em;
@@ -70,7 +60,6 @@
     }
 
     &__heading {
-        // fluid化: sp=2.4rem / pc=4.8rem（431〜1023pxを線形補間）
         font-size: clamp(2.4rem, calc(6.626px + 4.04vw), 4.8rem);
         font-weight: v.$fw-bold;
         letter-spacing: 0.1em;
@@ -78,7 +67,6 @@
     }
 
     &__lead {
-        // fluid化: sp=1.6rem / pc=2.4rem（431〜1023pxを線形補間）
         font-size: clamp(1.6rem, calc(10.21px + 1.347vw), 2.4rem);
         line-height: 1.4;
         margin-block-end: 24px;
