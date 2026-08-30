@@ -1757,7 +1757,6 @@
 
 // ---- VOICE ----
 .voice {
-    //sp=40px / pc=100px（431〜1023pxを線形補間）
     padding-block: clamp(40px, calc(-3.434px + 10.1vw), 100px);
 
     .section-title {
@@ -1895,10 +1894,16 @@
         margin-block-end: 8px;
     }
 
+    .card__title {
+        font-size: clamp(1.8rem, calc(16.857px + 0.3571vw), 2.2rem);
+        line-height: v.$lh-body;
+        margin-bottom:8px; 
+    }
+
     .card__body {
-        //sp=1.6rem / pc=2rem（431〜1023pxを線形補間）
         font-size: clamp(1.6rem, calc(13.1px + 0.6734vw), 2rem);
         line-height: v.$lh-body;
+        font-weight: v.$fw-normal;
     }
 }
 
@@ -2177,12 +2182,13 @@
 .faq-preview__arrow {
     flex-shrink: 0;
     margin-inline-start: auto;
-    font-family: v.$font-inter;
-    font-weight: v.$fw-medium;
-    font-size: 2rem;
-    line-height: 1.4;
-    letter-spacing: 0;
-    color: v.$color-text;
+
+    // フォントの三角グリフに頼ると形が歪むので、CSSのborderで正三角形を描画する
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 9px 0 9px 13px;
+    border-color: transparent transparent transparent v.$color-text;
     transition: transform 0.2s;
 
     [aria-expanded="true"] & {

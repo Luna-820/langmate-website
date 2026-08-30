@@ -2568,9 +2568,15 @@ img {
   text-align: right;
   margin-block-end: 8px;
 }
+.card--voice .card__title {
+  font-size: clamp(1.8rem, 16.857px + 0.3571vw, 2.2rem);
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
 .card--voice .card__body {
   font-size: clamp(1.6rem, 13.1px + 0.6734vw, 2rem);
   line-height: 1.5;
+  font-weight: normal;
 }
 
 .sns-divider {
@@ -2808,12 +2814,11 @@ img {
 .faq-preview__arrow {
   flex-shrink: 0;
   margin-inline-start: auto;
-  font-family: "Inter", sans-serif;
-  font-weight: 500;
-  font-size: 2rem;
-  line-height: 1.4;
-  letter-spacing: 0;
-  color: #202020;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 9px 0 9px 13px;
+  border-color: transparent transparent transparent #202020;
   transition: transform 0.2s;
 }
 [aria-expanded=true] .faq-preview__arrow {
