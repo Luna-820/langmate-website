@@ -7,7 +7,6 @@
 
 // ---- Hero ----
 .contact-hero {
-    // fluid化: sp=60px / pc=80px（431〜1023pxを線形補間）
     padding-block-end: clamp(60px, calc(45.52px + 3.367vw), 80px);
 
     &--thanks {
@@ -22,6 +21,24 @@
         }
     }
 
+    // ==========================================================================
+    // CONTACT PAGE ONLY
+    // SPでは説明文だけ左揃え
+    // eyebrow / heading / CTAは中央のまま
+    // ==========================================================================
+
+    &__lead {
+        @include mx.sp {
+            width: 100%;
+            max-width: 345px;
+            margin-inline: auto;
+            margin-block-end: 24px;
+            text-align: left;
+            font-size: 1.6rem;
+            line-height: 1.6;
+        }
+    }
+
     &__note {
         font-size: 2rem;
         color: v.$color-text;
@@ -29,7 +46,13 @@
         font-weight: v.$fw-normal;
 
         @include mx.sp {
+            width: 100%;
+            max-width: 345px;
+            margin-inline: auto;
+            margin-block-end: 24px;
+            text-align: left;
             font-size: 1.4rem;
+            line-height: 1.6;
         }
     }
 
@@ -41,9 +64,7 @@
 // ---- Form ----
 .contact-form-section {
     padding-block: 60px;
-    // fluid化: sp=60px / pc=100px（431〜1023pxを線形補間）
     padding-bottom: clamp(60px, calc(31.04px + 6.734vw), 100px);
-
 
     @include mx.sp {
         padding-top: 0;
@@ -78,13 +99,13 @@
         display: flex;
         align-items: center;
         gap: 8px;
-        font-size: 2rem;
+        font-size: 1.6rem;
         font-weight: v.$fw-bold;
     }
 
     &__required {
         display: inline-block;
-        font-size: 1.6rem;
+        font-size: 1.4rem;
         font-weight: v.$fw-bold;
         color: v.$color-white;
         background-color: v.$color-pink;
@@ -97,7 +118,7 @@
     &__textarea {
         width: 100%;
         font-family: v.$font-jp;
-        font-size: 2rem;
+        font-size: 1.6rem;
         color: v.$color-text;
         background-color: v.$color-white;
         border: 1px solid v.$color-gray;
@@ -244,6 +265,7 @@
 
         @include mx.sp {
             font-size: 1.6rem;
+            padding: 8px 24px 6px;
         }
     }
 
@@ -263,6 +285,7 @@
 
         @include mx.sp {
             font-size: 2rem;
+            padding: 16px 72px;
         }
 
         &:hover {
@@ -276,8 +299,6 @@
 }
 
 // ---- ユーザーIDを追加する方法（アコーディオン中身の手順リスト） ----
-// WordPress化は想定していないが、番号付き手順1件 = 繰り返し可能な1ブロックとして
-// 他の手順追加にも対応しやすいマークアップにしている。
 .user-id-steps {
     display: flex;
     flex-direction: column;

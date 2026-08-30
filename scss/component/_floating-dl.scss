@@ -39,11 +39,7 @@
             border-right: none;
 
             border-radius:
-                clamp(36px,
-                    calc(18.56px + 4.04vw),
-                    60px) 0 0 clamp(36px,
-                    calc(18.56px + 4.04vw),
-                    60px);
+                clamp(36px,calc(18.56px + 4.04vw),60px) 0 0 clamp(36px,calc(18.56px + 4.04vw),60px);
         }
     }
 

@@ -85,7 +85,7 @@
       <nav class="global-nav" aria-label="グローバルナビゲーション">
         <ul class="global-nav__list">
           <li><a href="index.html" aria-current="page">ホーム</a></li>
-          <li><a href="beginners-guide.html">初めてでも安心</a></li>
+          <li><a href="beginners-guide.html">初めての方へ</a></li>
           <li><a href="how-can-we-help.html">よくある質問</a></li>
           <li><a href="company.html">会社概要</a></li>
           <li><a href="contact.html">お問い合わせ</a></li>
@@ -125,7 +125,7 @@
     <nav aria-label="モバイルナビゲーション">
       <ul class="mobile-nav__list">
         <li><a href="index.html">ホーム</a></li>
-        <li><a href="beginners-guide.html">初めてでも安心</a></li>
+        <li><a href="beginners-guide.html">初めての方へ</a></li>
         <li><a href="how-can-we-help.html">よくある質問</a></li>
         <li><a href="company.html">会社概要</a></li>
         <li><a href="contact.html">お問い合わせ</a></li>
@@ -164,15 +164,16 @@
 
   <main id="main">
     <!-- ===== Hero ===== -->
+    <!-- ===== Hero ===== -->
     <section class="hero">
-      <div class="hero__visual" aria-hidden="true">
-        <picture>
-          <source media="(max-width: 780px)" srcset="design-assets/hero-visual-sp.webp" />
-          <img class="hero__visual-img" src="design-assets/hero-visual-pc.webp" alt="" />
-        </picture>
-      </div>
-
       <div class="hero__inner">
+
+        <!-- 左上の青い装飾 -->
+        <img class="hero__deco" src="design-assets/fv-parts01.svg" alt="" aria-hidden="true" />
+
+        <!-- 右側のスマホ群 -->
+        <img class="hero__phones" src="design-assets/fv-parts02.png" alt="" aria-hidden="true" />
+
         <div class="hero__content">
           <h1 class="hero__heading">
             世界中の人と話して、<br />
@@ -191,15 +192,18 @@
           </p>
 
           <div class="hero__badges">
-            <a href="https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775" class="btn btn--store">
+            <a href="https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775" class="btn btn--store"
+              target="_blank" rel="noopener">
               <img src="design-assets/badge-appstore-ja.svg" alt="App Storeからダウンロード" />
             </a>
 
-            <a href="https://play.google.com/store/apps/details?id=co.thoron.langmate" class="btn btn--store">
+            <a href="https://play.google.com/store/apps/details?id=co.thoron.langmate" class="btn btn--store"
+              target="_blank" rel="noopener">
               <img src="design-assets/badge-googleplay-ja.svg" alt="Google Playで手に入れよう" />
             </a>
           </div>
         </div>
+
       </div>
     </section>
 
@@ -339,7 +343,7 @@
             <img class="reason__bg reason__bg--04" src="design-assets/bg-reason-04.svg" alt="" aria-hidden="true"
               width="417" height="263" />
             <img class="reason__illustration reason__illustration--02" src="design-assets/illust-reason02.svg" alt=""
-              width="435" height="461" data-pop  />
+              width="435" height="461" data-pop />
             <div class="card card--reason">
               <p class="card__eyebrow">Reason <span>02</span></p>
               <h3 class="card__title">実際の人との会話だから、伝わる英語が身につく</h3>
@@ -351,7 +355,7 @@
           </li>
           <li class="reason__item">
             <img class="reason__illustration reason__illustration--03" src="design-assets/illust-reason03.svg" alt=""
-              width="370" height="503"  data-pop/>
+              width="370" height="503" data-pop />
             <div class="card card--reason">
               <p class="card__eyebrow">Reason <span>03</span></p>
               <h3 class="card__title">日本企業の運営と安全対策で、安心して交流できる</h3>

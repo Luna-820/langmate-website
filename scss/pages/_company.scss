@@ -5,11 +5,6 @@
 // Company page（会社概要 / company.html）
 // ==========================================================================
 
-// ---- Hero ----
-// 地図＋eyebrow＋h1の見た目は他の下層ページと完全に共通なので
-// scss/component/_sub-hero.scssに集約済み。HTML側で.sub-heroを
-// 併記しているため、ここではabout-hero固有の上書きは無し。
-
 // ---- Intro ----
 .about-intro {
     padding-block: 50px 100px;
@@ -18,6 +13,10 @@
         display: flex;
         flex-direction: column;
         gap: 40px;
+
+        @include mx.hero-sp {
+            gap: 28px;
+        }
 
         @include mx.sp {
             gap: 20px;
@@ -39,8 +38,7 @@
         width: 100%;
         max-width: 800px;
         height: 3px;
-        margin-block: 0;
-        margin-inline: auto;
+        margin: 0 auto;
         border: none;
         background-color: #C0C0C0;
     }
@@ -48,26 +46,40 @@
     &__text {
         display: flex;
         flex-direction: row;
-        // fluid化: sp=24px / pc=40px（431〜1023pxを線形補間）
-        gap: clamp(24px, calc(12.42px + 2.694vw), 40px);
+
+        gap: clamp(24px,
+                calc(12.42px + 2.694vw),
+                40px);
+
         font-size: 2rem;
         line-height: 1.5;
         letter-spacing: 0.2em;
 
-        @include mx.sp {
-            font-size: 1.6rem;
-        }
-
         p {
             flex: 1;
+            min-width: 0;
+        }
+
+        // 780px以下：1列
+        @include mx.hero-sp {
+            flex-direction: column;
+
+            max-width: 600px;
+            margin-inline: auto;
+
+            gap: 24px;
+
+            font-size: 1.7rem;
+            letter-spacing: 0.12em;
+
+            p {
+                flex: none;
+            }
         }
 
         @include mx.sp {
-            flex-direction: column;
-
-            p {
-                flex: unset;
-            }
+            font-size: 1.6rem;
+            gap: 20px;
         }
     }
 }
@@ -96,8 +108,17 @@
     overflow: hidden;
     background-color: v.$color-blue;
     color: v.$color-white;
-    // fluid化: sp=60px / pc=100px（431〜1023pxを線形補間）
+
     padding-block: clamp(60px, calc(31.04px + 6.734vw), 100px);
+
+    // 780px以下から少し詰める
+    @include mx.hero-sp {
+        padding-block: 56px;
+    }
+
+    @include mx.sp {
+        padding-block: 48px;
+    }
 
     &__deco {
         position: absolute;
@@ -105,7 +126,6 @@
         pointer-events: none;
         opacity: 73%;
 
-        // Figma実測: W355.03×H347.11、回転-170.11deg
         &--tl {
             top: 100px;
             left: 150px;
@@ -114,7 +134,6 @@
             transform: rotate(-170.11deg);
         }
 
-        // Figma実測: W282.63×H276.32
         &--br {
             bottom: 30px;
             right: 140px;
@@ -156,8 +175,14 @@
         letter-spacing: 0.1em;
         margin-block-end: 40px;
 
+        @include mx.hero-sp {
+            font-size: 3.2rem;
+            margin-block-end: 28px;
+        }
+
         @include mx.sp {
             font-size: 2.4rem;
+            margin-block-end: 24px;
         }
     }
 
@@ -166,44 +191,56 @@
         background-color: v.$color-white;
         color: v.$color-text;
         border-radius: v.$radius-card;
-        // fluid化: sp=16px / pc=56px（431〜1023pxを線形補間）
+
         padding-block: clamp(16px, calc(-12.96px + 6.734vw), 56px);
-        // fluid化: sp=24px / pc=64px（431〜1023pxを線形補間）
         padding-inline: clamp(24px, calc(-4.956px + 6.734vw), 64px);
+
         text-align: left;
         max-width: 1000px;
         margin-inline: auto;
 
+        @include mx.hero-sp {
+            padding: 24px 28px;
+        }
+
         @include mx.sp {
-            padding: 16px 24px;
+            padding: 16px 20px;
         }
     }
 
     &__row {
         display: flex;
         flex-direction: row;
-        // fluid化: sp=4px / pc=24px（431〜1023pxを線形補間）
+
         gap: clamp(4px, calc(-10.48px + 3.367vw), 24px);
-        // fluid化: sp=16px / pc=20px（431〜1023pxを線形補間）
-        padding-block: clamp(16px, calc(13.1px + 0.6734vw), 20px);
+
+        padding-block: clamp(16px,
+                calc(13.1px + 0.6734vw),
+                20px);
+
         border-block-end: 1px solid v.$color-gray-light;
 
         &:last-child {
             border-block-end: none;
         }
 
-        @include mx.sp {
+        // ★ 430pxではなく780px以下から縦積み
+        @include mx.hero-sp {
             flex-direction: column;
+            gap: 4px;
+            padding-block: 14px;
         }
 
         dt {
             font-weight: v.$fw-medium;
             flex: 0 0 160px;
 
-            @include mx.sp {
+            @include mx.hero-sp {
                 flex: unset;
                 font-size: 1.6rem;
-                padding: 16px 24px
+
+                // 元のSPにあった16px 24pxを削除
+                padding: 0;
             }
         }
 
@@ -212,10 +249,12 @@
             font-weight: v.$fw-regular;
             flex: 1;
 
-            @include mx.sp {
+            @include mx.hero-sp {
                 flex: unset;
                 font-size: 1.6rem;
-                padding: 0 24px
+
+                // 元のSPにあった0 24pxを削除
+                padding: 0;
             }
         }
     }
@@ -225,45 +264,75 @@
 .about-recruit {
     position: relative;
     overflow: hidden;
+
     padding-block: 60px;
-    // fluid化: sp=60px / pc=80px（431〜1023pxを線形補間、旧v.$section-padding-pcのtop分）
     padding-block-start: clamp(60px, calc(45.52px + 3.367vw), 80px);
-    // fluid化: sp=0px / pc=140px（431〜1023pxを線形補間、旧v.$section-padding-pcのinline分）
     padding-inline: clamp(0px, calc(-101.3px + 23.57vw), 140px);
-    // fluid化: sp=60px / pc=100px（431〜1023pxを線形補間、旧v.$section-padding-pcのbottom分）
     padding-block-end: clamp(60px, calc(31.04px + 6.734vw), 100px);
 
+
+    // ==========================================================================
+    // BACKGROUND
+    // ==========================================================================
     &__bg {
         position: absolute;
         inset: 0;
+
         z-index: 0;
+
         width: 100%;
         height: 100%;
+
         object-fit: cover;
         object-position: top;
+
         pointer-events: none;
     }
 
-    // 背景画像より前面に出す
+
+    // ==========================================================================
+    // WRAPPER
+    // ==========================================================================
     >.wrapper {
         position: relative;
         z-index: 1;
+
+        // 横に広がりすぎない
+        width: min(calc(100% - 48px), 1120px);
+        max-width: none;
+        margin-inline: auto;
+
+        @include mx.hero-sp {
+            width: min(calc(100% - 40px), 760px);
+        }
+
+        @include mx.sp {
+            width: min(calc(100% - 32px), 500px);
+        }
     }
 
-    // ABOUT US（.about-hero__eyebrow）と同じアーチ構造に統一
+
+    // ==========================================================================
+    // EYEBROW
+    // ==========================================================================
     &__eyebrow {
         display: block;
+
         width: 196px;
         aspect-ratio: 220 / 70;
+
         margin-inline: auto;
         margin-block-end: -16px;
+
         overflow: visible;
 
         text {
             font-family: v.$font-en;
             font-weight: v.$fw-medium;
             font-size: 2.4rem;
+
             fill: v.$color-blue;
+
             letter-spacing: 0.04em;
 
             @include mx.sp {
@@ -272,37 +341,69 @@
         }
     }
 
+
+    // ==========================================================================
+    // HEADING
+    // ==========================================================================
     &__heading {
         font-size: 4.8rem;
         font-weight: v.$fw-bold;
         letter-spacing: 0.1em;
+
         text-align: center;
+
         margin-block-end: 60px;
+
+        @include mx.hero-sp {
+            font-size: 3.2rem;
+            margin-block-end: 48px;
+        }
 
         @include mx.sp {
             font-size: 2.4rem;
+            margin-block-end: 40px;
         }
     }
 
-    // 4項目（iOSデベロッパー募集概要／私たちのチーム／募集している人材／応募方法）同士のgap
+
+    // ==========================================================================
+    // ITEMS
+    // ==========================================================================
     &__items {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+
         gap: 48px;
+
         max-width: 1000px;
         margin-inline: auto;
 
+        // 1000px以下
+        @include mx.nav-collapse {
+            align-items: center;
+            gap: 64px;
+        }
 
         @include mx.sp {
-            align-items: center;
+            gap: 52px;
         }
     }
 
+
+    // ==========================================================================
+    // ITEM
+    // ==========================================================================
     &__item {
         position: relative;
+
+        width: 100%;
         max-width: 560px;
 
+        // 1000px以下
+        @include mx.nav-collapse {
+            max-width: 520px;
+        }
 
         @include mx.sp {
             max-width: 345px;
@@ -311,8 +412,8 @@
         &:nth-child(even) {
             align-self: flex-end;
 
-            @include mx.sp {
-                align-self: unset;
+            @include mx.nav-collapse {
+                align-self: center;
             }
         }
 
@@ -322,39 +423,70 @@
             line-height: normal;
             letter-spacing: 0;
 
+            @include mx.nav-collapse {
+                font-size: 1.7rem;
+            }
+
             @include mx.sp {
                 font-size: 1.6rem;
             }
-
         }
     }
 
+
+    // ==========================================================================
+    // TITLE
+    // ==========================================================================
     &__title {
         position: relative;
         display: inline-block;
+
         font-size: 2.4rem;
         font-weight: v.$fw-bold;
+
         line-height: normal;
         letter-spacing: 0.1em;
+
         margin-block-end: 16px;
+
+        @include mx.nav-collapse {
+            font-size: 2.2rem;
+        }
 
         @include mx.sp {
             font-size: 2rem;
         }
     }
 
-    // タイトル文頭に重なる装飾円（テキストの後ろ側に配置）
+
+    // ==========================================================================
+    // BADGE
+    // ==========================================================================
     &__badge {
         position: absolute;
+
         top: 50%;
         left: -10%;
+
         transform: translateY(-50%);
+
         z-index: -1;
+
         width: 64px;
         height: 64px;
+
         border-radius: 50%;
+
         background-color: v.$color-blue;
+
         opacity: 58%;
+
+        @include mx.hero-sp {
+            width: 60px;
+            height: 60px;
+
+            left: -7%;
+        }
 
         @include mx.sp {
             width: 56px;
@@ -362,74 +494,188 @@
         }
     }
 
+
+    // ==========================================================================
+    // LEAD
+    // ==========================================================================
     &__lead {
         font-weight: v.$fw-bold;
+
         margin-block-end: 16px;
     }
 
+
+    // ==========================================================================
+    // LIST
+    // ==========================================================================
     &__list {
-        list-style: disc;
-        padding-inline-start: 20px;
         display: flex;
         flex-direction: column;
+
         gap: 4px;
+
+        list-style: disc;
+
+        padding-inline-start: 20px;
+
         font-size: 1.5rem;
         line-height: 1.8;
 
+        @include mx.hero-sp {
+            font-size: 1.5rem;
+        }
+
+        @include mx.sp {
+            font-size: 1.4rem;
+        }
     }
 
+
+    // ==========================================================================
+    // ILLUSTRATION COMMON
+    // ==========================================================================
     &__illust {
         display: block;
         height: auto;
-        // fluid化: sp=16px / pc=0px（431〜1023pxを線形補間）
-        margin-block-start: clamp(0px, calc(27.58px + -2.694vw), 16px);
+        margin: 0;
+        pointer-events: none;
     }
 
-    // 01: 募集している人材（左寄せテキスト）の右に配置
-    &__item--team &__illust {
-        width: 200px;
-        position: absolute;
-        top: -30px;
-        right: 150%;
-        margin-inline-end: 20px;
+    // ==========================================================================
+    // 01 TEAM
+    // PCでは左側に配置
+    // 1000px以下では非表示
+    // ==========================================================================
+    .about-recruit__item--team {
+        .about-recruit__illust {
+            position: absolute;
+            top: -40px;
+            // 1201〜1440px：
+            // 1201px = +200px
+            // 1440px = +400px
+            right: calc(100% + clamp(200px, calc(-805.44px + 83.682vw), 400px));
+            width: 240px;
+            height: auto;
+            margin: 0;
+            z-index: 2;
 
-        @include mx.sp {
-            width: 77px;
-            top: -30%;
-            right: 0%;
-            margin-inline-end: unset;
+
+            // ------------------------------------------------------------------
+            // 1001〜1200px
+            // PC配置のまま、画面外へ逃げないよう内側へ
+            // ------------------------------------------------------------------
+            @media (min-width: 1001px) and (max-width: 1200px) {
+                top: -30px;
+                right: calc(100% + 16px);
+                width: 190px;
+            }
+
+
+            // ------------------------------------------------------------------
+            // 1000px以下
+            // SPデザインではこのイラストは使わない
+            // ------------------------------------------------------------------
+            @include mx.nav-collapse {
+                display: none;
+            }
         }
     }
 
-    // 02: 募集している人材（左寄せテキスト）の右に配置
-    &__item--member &__illust {
-        width: 300px;
-        position: absolute;
-        top: 24px;
-        left: 170%;
-        margin-inline-start: 20px;
 
-        @include mx.sp {
-            width: 77px;
-            top: 10%;
-            right: 0%;
-            margin-inline-end: unset;
+    // ==========================================================================
+    // 02 MEMBER
+    // PCでは右側
+    // 1000px以下では「募集している人材」の右上
+    // ==========================================================================
+    .about-recruit__item--member {
+        .about-recruit__illust {
+            position: absolute;
+            top: 20px;
+            left: calc(100% + 40px);
+            max-width: 290px;
+            height: auto;
+            margin: 0;
+            z-index: 2;
+
+            // ------------------------------------------------------------------
+            // 1001〜1200px
+            // ------------------------------------------------------------------
+            @media (min-width: 1001px) and (max-width: 1200px) {
+                top: 20px;
+                left: calc(100% + 16px);
+                width: 220px;
+            }
+
+
+            // ------------------------------------------------------------------
+            // 1000px以下
+            // ------------------------------------------------------------------
+            @include mx.nav-collapse {
+                top: clamp(-60px, calc(-67.57px + 1.757vw), -50px);
+                right: -40px;
+                left: auto;
+                width: clamp(100px, calc(91.36px + 3vw), 150px);
+            }
+
+
+            // ------------------------------------------------------------------
+            // 430px以下
+            // ------------------------------------------------------------------
+            @include mx.sp {
+                top: -50px;
+                right: -4px;
+                width: clamp(70px,calc(-17.27px + 27.273vw),100px);
+            }
         }
     }
 
-    // 03: 応募方法（右寄せテキスト）の左に配置
-    &__item--apply &__illust {
-        width: 300px;
-        position: absolute;
-        top: 24px;
-        right: 120%;
-        margin-inline-end: 20px;
 
-        @include mx.sp {
-            width: 83px;
-            top: -30%;
-            right: 0%;
-            margin-inline-end: unset;
+    // ==========================================================================
+    // 03 APPLY
+    // PCでは左側
+    // 1000px以下では「応募方法」の右上
+    // ==========================================================================
+    .about-recruit__item--apply {
+        .about-recruit__illust {
+            position: absolute;
+            top: 20px;
+            right: calc(100% + 100px);
+            width: 300px;
+            height: auto;
+            margin: 0;
+            z-index: 2;
+
+            // ------------------------------------------------------------------
+            // 1001〜1200px
+            // ------------------------------------------------------------------
+            @media (min-width: 1001px) and (max-width: 1200px) {
+                top: 20px;
+                right: calc(100% + 40px);
+                width: 210px;
+            }
+
+
+            // ------------------------------------------------------------------
+            // 1000px以下
+            // 応募方法の右上
+            // 431px → 1000pxで位置を可変
+            // ------------------------------------------------------------------
+            @include mx.nav-collapse {
+                top: clamp(-80px, calc(-9.70px - 7.03vw), -40px);
+                right: clamp(-100px, calc(58.17px - 15.82vw), -10px);
+                left: auto;
+                width: clamp(125px, calc(83.69px + 9.583vw), 180px);
+            }
+
+
+            // ------------------------------------------------------------------
+            // 430px以下
+            // ------------------------------------------------------------------
+            @include mx.sp {
+                top: -40px;
+                right: -4px;
+                width: 115px;
+            }
         }
     }
 }
