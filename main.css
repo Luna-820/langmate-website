@@ -134,6 +134,27 @@ img {
     scroll-behavior: auto !important;
   }
 }
+.fuwafuwa {
+  animation: fuwafuwa 3s ease-in-out infinite alternate;
+  background: url(../img/ico-apple.svg) no-repeat center center/60px auto;
+  display: inline-block;
+  transition: 1.5s ease-in-out;
+  width: 70px;
+  height: 70px;
+  margin-top: 15px;
+}
+
+@keyframes fuwafuwa {
+  0% {
+    transform: translate(0, 0) rotate(-7deg);
+  }
+  50% {
+    transform: translate(0, -7px) rotate(0deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(7deg);
+  }
+}
 .site-header {
   position: absolute;
   top: clamp(12px, 6.209px + 1.347vw, 20px);
@@ -923,15 +944,15 @@ img {
 @media (max-width: 600px) {
   .hero__phones {
     top: 270px;
-    right: -210px;
+    right: -220px;
     width: clamp(470px, 103vw, 580px);
   }
 }
 @media (max-width: 430px) {
   .hero__phones {
     top: 255px;
-    right: -205px;
-    width: clamp(430px, 120vw, 520px);
+    right: -260px;
+    width: clamp(300px, 120vw, 520px);
   }
 }
 .hero__content {
@@ -971,7 +992,7 @@ img {
   .hero__heading {
     margin-block-end: 14px;
     font-size: clamp(1.7rem, 3.5vw, 2rem);
-    line-height: 1.45;
+    line-height: 1.4;
   }
 }
 @media (max-width: 430px) {
@@ -1009,19 +1030,19 @@ img {
   margin: 0 0 28px;
   font-size: clamp(1.4rem, 7.76px + 0.878vw, 2rem);
   font-weight: 500;
-  line-height: 1.45;
+  line-height: 1.4;
 }
 @media (max-width: 780px) {
   .hero__lead {
     width: min(100%, 430px);
     margin-block-start: 56px;
     font-size: clamp(1.8rem, 3vw, 2.4rem);
-    line-height: 1.6;
+    line-height: 1.5;
   }
 }
 @media (max-width: 600px) {
   .hero__lead {
-    width: min(58%, 290px);
+    width: min(65%, 290px);
     margin-block-start: 34px;
     margin-block-end: 22px;
     font-size: clamp(1.6rem, 3.5vw, 1.9rem);
@@ -1030,10 +1051,10 @@ img {
 }
 @media (max-width: 430px) {
   .hero__lead {
-    width: 58%;
+    width: 78%;
     margin-block-start: 30px;
     font-size: clamp(1.5rem, 4vw, 1.7rem);
-    line-height: 1.6;
+    line-height: 1.5;
   }
 }
 .hero .sp-only {

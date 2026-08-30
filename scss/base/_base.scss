@@ -5,52 +5,52 @@
 // ============================================================
 
 // ==== Colors ====
-$color-pink:       #FF3C71; // ピンク（メイン）
-$color-pink-deep:  #FF3C83; // ピンク（やや濃いめ）
+$color-pink: #FF3C71; // ピンク（メイン）
+$color-pink-deep: #FF3C83; // ピンク（やや濃いめ）
 $color-pink-light: #FFF2F7; // ピンク（淡い）
-$color-yellow:     #FFE940; // イエロー
+$color-yellow: #FFE940; // イエロー
 $color-yellow-deep: #FFD55B; // イエロー（やや濃いめ、ドロップシャドウ用）
-$color-blue:       #0083F8; // ブルー
-$color-cream:      #FFFCF3; // クリーム（ベース背景）
-$color-text:       #202020; // テキスト（黒）
-$color-gray:       #A9A9A9; // グレー
+$color-blue: #0083F8; // ブルー
+$color-cream: #FFFCF3; // クリーム（ベース背景）
+$color-text: #202020; // テキスト（黒）
+$color-gray: #A9A9A9; // グレー
 $color-gray-light: #E6E6E6; // グレー（淡い、枠線用）
-$color-white:      #FFFFFF; // ホワイト
+$color-white: #FFFFFF; // ホワイト
 
 // ==== Typography ====
 $font-en: "Poppins", sans-serif;
 $font-jp: "Zen Kaku Gothic New", sans-serif;
 $font-inter: "Inter", sans-serif; // Instagram見出し専用
-$fw-normal:  normal;
+$fw-normal: normal;
 $fw-regular: 400;
 $fw-medium: 500;
-$fw-bold:   700;
+$fw-bold: 700;
 
-$fs-eyebrow:       2.4rem;  // 英字ラベル(FAQ/CONTACT等)      Poppins Medium / lh100% / ls4%
-$fs-display:       12.8rem; // 背景の巨大装飾文字(REASON等)    Poppins Bold   / lh140%  ※PC値、SPは実装時に調整
-$fs-section-title: 4.8rem;  // 日本語見出し(よくある質問等)    Zen Kaku Gothic New Bold / lh auto / ls10%
-$fs-subheading:    3.2rem;  // section-title下の見出し(選ばれる理由) Bold / lh140%
-$fs-card-title:    4.0rem;  // カードタイトル                  Bold / lh140% / ls-7%
-$fs-banner-h3:     3.6rem;  // バナー見出し(英語に自信がなくても大丈夫) Bold / lh155%
-$fs-body:          2.0rem;  // 本文                            Medium / lh150% / ls0%
+$fs-eyebrow: 2.4rem; // 英字ラベル(FAQ/CONTACT等)      Poppins Medium / lh100% / ls4%
+$fs-display: 12.8rem; // 背景の巨大装飾文字(REASON等)    Poppins Bold   / lh140%  ※PC値、SPは実装時に調整
+$fs-section-title: 4.8rem; // 日本語見出し(よくある質問等)    Zen Kaku Gothic New Bold / lh auto / ls10%
+$fs-subheading: 3.2rem; // section-title下の見出し(選ばれる理由) Bold / lh140%
+$fs-card-title: 4.0rem; // カードタイトル                  Bold / lh140% / ls-7%
+$fs-banner-h3: 3.6rem; // バナー見出し(英語に自信がなくても大丈夫) Bold / lh155%
+$fs-body: 2.0rem; // 本文                            Medium / lh150% / ls0%
 
 $lh-eyebrow: 1;
 $lh-display: 1.4;
-$lh-title:   normal;
-$lh-sub:     1.4;
-$lh-card:    1.4;
-$lh-banner:  1.55;
-$lh-body:    1.5;
+$lh-title: normal;
+$lh-sub: 1.4;
+$lh-card: 1.4;
+$lh-banner: 1.55;
+$lh-body: 1.5;
 
 $ls-eyebrow: 0.04em;
-$ls-title:   0.1em;
-$ls-card:    -0.07em;
-$ls-base:    0;
+$ls-title: 0.1em;
+$ls-card: -0.07em;
+$ls-base: 0;
 
 // ==== Radius ====
 $radius-button: 12px;
-$radius-card:   12px;
-$radius-input:  4px;
+$radius-card: 12px;
+$radius-input: 4px;
 
 // ==== Layout ====
 $container-max: 1000px;
@@ -170,6 +170,7 @@ img {
 
 // 動きを抑えたいユーザーへの配慮（全アニメーション・トランジション共通）
 @media (prefers-reduced-motion: reduce) {
+
     *,
     *::before,
     *::after {
@@ -177,5 +178,29 @@ img {
         animation-iteration-count: 1 !important;
         transition-duration: 0.001ms !important;
         scroll-behavior: auto !important;
+    }
+}
+
+.fuwafuwa {
+    animation: fuwafuwa 3s ease-in-out infinite alternate;
+    background: url(../img/ico-apple.svg) no-repeat center center / 60px auto;
+    display: inline-block;
+    transition: 1.5s ease-in-out;
+    width: 70px;
+    height: 70px;
+    margin-top: 15px;
+}
+
+@keyframes fuwafuwa {
+    0% {
+        transform: translate(0, 0) rotate(-7deg);
+    }
+
+    50% {
+        transform: translate(0, -7px) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(0, 0) rotate(7deg);
     }
 }
