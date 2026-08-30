@@ -3570,7 +3570,7 @@ img {
   display: block;
   font-family: "Poppins", sans-serif;
   font-weight: 700;
-  font-size: clamp(8rem, 4.277px + 8.659vw, 15.36rem);
+  font-size: clamp(8rem, 4.277px + 8.659vw, 24rem);
   line-height: 1.4;
   letter-spacing: 0em;
   white-space: nowrap;
@@ -3587,6 +3587,7 @@ img {
   -webkit-text-stroke: 2px #FFF2F7;
   color: transparent;
   pointer-events: none;
+  font-size: clamp(8rem, 4.277px + 11vw, 30rem);
 }
 @media (max-width: 1000px) {
   .gs-reason__watermark {
@@ -3669,7 +3670,7 @@ img {
 @media (max-width: 1000px) {
   .gs-reason__wrapper {
     width: min(100% - 48px, 900px);
-    padding-block-start: 150px;
+    padding-block-start: 0px;
     padding-inline: 0;
   }
 }
@@ -3906,12 +3907,21 @@ img {
     z-index: 5;
   }
 }
-@media (max-width: 430px) {
+@media (max-width: 780px) {
   .gs-reason__illust {
     top: 42px;
     right: -8px;
     width: clamp(110px, 32vw, 140px);
   }
+}
+.gs-reason__illust {
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 0.4s ease-out, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.gs-reason__illust.is-visible {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .gs-started {
@@ -3932,7 +3942,7 @@ img {
   display: block;
   font-family: "Poppins", sans-serif;
   font-weight: 700;
-  font-size: clamp(8rem, 4.277px + 8.659vw, 15.36rem);
+  font-size: clamp(8rem, 4.277px + 8.659vw, 24rem);
   line-height: 1.4;
   letter-spacing: 0em;
   white-space: nowrap;
@@ -3947,6 +3957,7 @@ img {
   transform: none;
   color: #FFFCE6;
   pointer-events: none;
+  font-size: clamp(8rem, 4.277px + 11vw, 28rem);
 }
 @media (max-width: 1000px) {
   .gs-started__watermark {
@@ -4241,6 +4252,15 @@ img {
 .gs-started__illust {
   position: absolute;
   display: block;
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 0.4s ease-out, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.gs-started__illust.is-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+.gs-started__illust {
   left: 0;
   bottom: 80px;
   width: clamp(300px, 31.95vw, 400px);
@@ -4301,7 +4321,7 @@ img {
   display: block;
   font-family: "Poppins", sans-serif;
   font-weight: 700;
-  font-size: clamp(8rem, 4.277px + 8.659vw, 15.36rem);
+  font-size: clamp(8rem, 4.277px + 8.659vw, 24rem);
   line-height: 1.4;
   letter-spacing: 0em;
   white-space: nowrap;
@@ -4311,12 +4331,13 @@ img {
   z-index: 0;
   position: absolute;
   top: 280px;
-  left: 0;
+  left: -60px;
   writing-mode: vertical-rl;
   transform: none;
   -webkit-text-stroke: 2px #F3F9FF;
   color: transparent;
   pointer-events: none;
+  font-size: clamp(8rem, 4.277px + 11vw, 30rem);
 }
 @media (max-width: 1000px) {
   .gs-safety__watermark {
@@ -4327,8 +4348,8 @@ img {
 }
 @media (max-width: 430px) {
   .gs-safety__watermark {
-    top: 120px;
-    right: -10px;
+    top: 0;
+    right: -30px;
     font-size: 7rem;
   }
 }
@@ -4419,13 +4440,13 @@ img {
 @media (max-width: 1000px) {
   .gs-safety__wrapper {
     width: min(100% - 48px, 760px);
-    padding-block-start: 140px;
+    padding-block-start: 80px;
   }
 }
 @media (max-width: 430px) {
   .gs-safety__wrapper {
     width: min(100% - 32px, 500px);
-    padding-block-start: 120px;
+    padding-block-start: 60px;
   }
 }
 .gs-safety__grid {
@@ -4433,8 +4454,7 @@ img {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(20px, 2.8vw, 40px);
   width: min(100%, 900px);
-  margin-left: 0;
-  margin-right: auto;
+  margin-inline: auto;
   padding: 0;
   list-style: none;
 }
@@ -4532,6 +4552,13 @@ img {
   height: auto;
   z-index: 2;
   pointer-events: none;
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 0.4s ease-out, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.gs-safety__illust.is-visible {
+  opacity: 1;
+  transform: scale(1);
 }
 @media (max-width: 1000px) {
   .gs-safety__illust {
@@ -4541,12 +4568,12 @@ img {
     bottom: auto;
     width: clamp(130px, 18vw, 180px);
     max-width: 180px;
-    z-index: 4;
+    z-index: 0;
   }
 }
 @media (max-width: 430px) {
   .gs-safety__illust {
-    top: 30px;
+    top: 0px;
     left: -30px;
     width: clamp(100px, 34vw, 130px);
     max-width: 130px;

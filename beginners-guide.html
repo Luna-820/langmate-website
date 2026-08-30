@@ -54,7 +54,7 @@
       <nav class="global-nav" aria-label="グローバルナビゲーション">
         <ul class="global-nav__list">
           <li><a href="index.html">ホーム</a></li>
-          <li><a href="beginners-guide.html" aria-current="page">初めてでも安心</a></li>
+          <li><a href="beginners-guide.html" aria-current="page">初めての方へ</a></li>
           <li><a href="how-can-we-help.html">よくある質問</a></li>
           <li><a href="company.html">会社概要</a></li>
           <li><a href="contact.html">お問い合わせ</a></li>
@@ -94,7 +94,7 @@
     <nav aria-label="モバイルナビゲーション">
       <ul class="mobile-nav__list">
         <li><a href="index.html">ホーム</a></li>
-        <li><a href="beginners-guide.html">初めてでも安心</a></li>
+        <li><a href="beginners-guide.html">初めての方へ</a></li>
         <li><a href="how-can-we-help.html">よくある質問</a></li>
         <li><a href="company.html">会社概要</a></li>
         <li><a href="contact.html">お問い合わせ</a></li>
@@ -115,7 +115,8 @@
     <div class="floating-dl__box">
       <button class="floating-dl__trigger" type="button" aria-expanded="false" aria-controls="floating-dl-panel"
         data-floating-dl-trigger>
-        <span>D<br />L<br />は<br />こ<br />ち<br />ら</span>
+        <span class="floating-dl__text">Download</span> <img class="floating-dl__icon" src="design-assets/icon-DL.svg"
+          alt="" aria-hidden="true" />
       </button>
       <div class="floating-dl__panel" id="floating-dl-panel">
         <a href="https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775" class="btn btn--store"><img
@@ -327,7 +328,7 @@
         </div>
 
         <img class="gs-reason__illust" src="design-assets/illust-page-reason.svg" alt="" aria-hidden="true" width="405"
-          height="470" />
+          height="470" data-pop/>
 
       </div>
     </section>
@@ -451,13 +452,13 @@
 
 
         <img class="gs-started__illust" src="design-assets/illust-page-start.svg" alt="" aria-hidden="true" width="400"
-          height="556.54" />
+          height="556.54" data-pop/>
 
       </div>
     </section>
 
     <img class="gs-divider gs-divider--started" src="design-assets/get-started-bottom-divider.svg" alt=""
-      aria-hidden="true" width="1280" height="263" />
+      aria-hidden="true" width="1280" height="263"/>
 
     <!-- ===== SAFETY ===== -->
     <section class="gs-safety" id="safety" aria-labelledby="gs-safety-heading">
@@ -545,7 +546,7 @@
 
 
         <img class="gs-safety__illust" src="design-assets/illust-page-safety.svg" alt="" aria-hidden="true" width="400"
-          height="434.63" />
+          height="434.63" data-pop/>
 
       </div>
     </section>
@@ -571,39 +572,62 @@
               <button type="button" class="faq-preview__question" aria-expanded="false" aria-controls="gs-faq-a-1"
                 data-faq-accordion-trigger>
                 <span class="faq-preview__q-icon" aria-hidden="true">Q</span>
-                <span class="faq-preview__q-text">Langmate（ラングメイト）は無料ですか？</span>
+                <span class="faq-preview__q-text">何歳から利用できますか？</span>
                 <span class="faq-preview__arrow" aria-hidden="true">▶︎</span>
               </button>
-              <!-- TODO: 仮のテキスト。実際の回答文言は運用側で確定させる -->
               <div class="faq-preview__answer" id="gs-faq-a-1" hidden>
                 <span class="faq-preview__a-icon" aria-hidden="true">A</span>
-                <p>基本的な機能は無料でご利用いただけます。（仮テキスト）</p>
+                <p>Langmate（ラングメイト）をご利用するには、18歳以上である必要があります。
+                  Langmate（ラングメイト）では、未成年保護を重要視しておりますので、18歳未満のユーザーはアクセスをブロックします。
+                </p>
               </div>
             </li>
             <li class="faq-preview__item">
               <button type="button" class="faq-preview__question" aria-expanded="false" aria-controls="gs-faq-a-2"
                 data-faq-accordion-trigger>
                 <span class="faq-preview__q-icon" aria-hidden="true">Q</span>
-                <span class="faq-preview__q-text">英語初心者でも使えますか？</span>
+                <span class="faq-preview__q-text">Langmate（ラングメイト）は無料ですか？</span>
                 <span class="faq-preview__arrow" aria-hidden="true">▶︎</span>
               </button>
-              <!-- TODO: 仮のテキスト。実際の回答文言は運用側で確定させる -->
               <div class="faq-preview__answer" id="gs-faq-a-2" hidden>
                 <span class="faq-preview__a-icon" aria-hidden="true">A</span>
-                <p>翻訳・添削サポートがあるので、初心者の方でも安心してご利用いただけます。（仮テキスト）</p>
+                <p>Langmateは Apple App Store and Google Play Storeにて無料でダウンロードできます。
+                  世界中の人々とつながり、交流するための様々な機能を無料でご利用いただけます。
+                  <br><br>
+                  Langmateでは、ユーザーとのマッチやチャットは無料です。
+                  Langmateはスマイルと呼ばれる仮想クレジットシステムを使用しており、カードスワイプや高度なチャットツールなどの機能を利用することができます。
+                  プロフィールを右にスワイプすると相手にフレンドリクエストが送信され、左にスワイプするとパスされます。
+                  相手があなたのフレンド申請を承認するか、あなたが他のユーザーからのフレンド申請を承認すると、マッチ成立です！
+                  <br><br>
+                  限られた数の新しいフレンズと無料でチャットを始め、楽しむことができます。
+                  無料チャットのクレジットを使用した後、スマイルを使用するか、PREMIUMになることで、追加チャットをアンロックできます。
+                  「チャットを始める」機能についてもっと読む
+                  <br><br>
+                  すべてのプレミアム機能を楽しむ
+                  Langmateのすべての機能を完全にご利用いただくには、 PREMIUM か PLUS+にアップグレードする必要があります。
+                  どのプランが適用されるかを確認するには、Langmateアプリを開きます。
+                  > My Page を開く
+                  > ステータスをタップするかセッティング > マイステータスを確認
+                  > 画面に表示される手順に従ってください。
+
+                </p>
               </div>
             </li>
             <li class="faq-preview__item">
               <button type="button" class="faq-preview__question" aria-expanded="false" aria-controls="gs-faq-a-3"
                 data-faq-accordion-trigger>
                 <span class="faq-preview__q-icon" aria-hidden="true">Q</span>
-                <span class="faq-preview__q-text">どのくらいの国のユーザーが参加していますか？</span>
+                <span class="faq-preview__q-text">Langmateはどこの国のアプリですか？</span>
                 <span class="faq-preview__arrow" aria-hidden="true">▶︎</span>
               </button>
-              <!-- TODO: 仮のテキスト。実際の回答文言は運用側で確定させる -->
               <div class="faq-preview__answer" id="gs-faq-a-3" hidden>
                 <span class="faq-preview__a-icon" aria-hidden="true">A</span>
-                <p>世界各国のユーザーが参加しています。（仮テキスト）</p>
+                <p>Langmate（ラングメイト）は、日本で開発されたアプリです。
+                  <br><br>
+                  ※アプリの詳しい機能や特徴については、ダウンロードページをご覧ください。
+                  <br>
+                  世界へ旅立つ前に、事前に友達を作っちゃおう！
+                </p>
               </div>
             </li>
           </ul>
