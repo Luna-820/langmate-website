@@ -389,6 +389,15 @@
 .intro {
     padding-block: clamp(60px, calc(-72.39px + 16.84vw), 100px);
 
+    // 781px〜1440px
+    // illustration: 300px → 400px
+    // illustration と content の gap は48px固定
+    --intro-visual-width: clamp(300px,
+            calc(181.5px + 15.175vw),
+            400px);
+    --intro-visual-gap: 48px;
+
+
     // ==========================================================
     // Inner
     // ==========================================================
@@ -396,17 +405,23 @@
     &__inner {
         display: flex;
         flex-direction: column;
-        gap: clamp(32px, calc(73.37px + -4.04vw), 56px);
+
+        gap: clamp(32px,
+                calc(73.37px - 4.04vw),
+                56px);
     }
+
 
     // ==========================================================
     // Head
     // ==========================================================
 
     &__head {
-        margin-bottom: clamp(0px, calc(-72.39px + 16.84vw), 100px);
+        margin-bottom: clamp(0px,
+                calc(-72.39px + 16.84vw),
+                100px);
 
-        @include mx.nav-collapse {
+        @include mx.hero-sp {
             margin-bottom: 40px;
         }
 
@@ -415,32 +430,35 @@
         }
     }
 
+
     // ==========================================================
     // Content
+    // PC：左にillustration / 右にheading・text
+    // 780px以下：heading → illustration → text
     // ==========================================================
 
     &__content {
         position: relative;
-        padding-inline-start: 448px;
 
-        &::after {
-            content: "";
-            display: table;
-            clear: both;
-        }
+        // illustrationのサイズに連動して
+        // contentの開始位置も自動調整
+        padding-inline-start: calc(var(--intro-visual-width) + var(--intro-visual-gap));
 
-        // ------------------------------------------------------
-        // 1000px以下
-        // SPレイアウトへ切り替え
-        // ------------------------------------------------------
+        @include mx.hero-sp {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
 
-        @include mx.nav-collapse {
             padding-inline-start: 0;
         }
 
         h2 {
             width: fit-content;
-            font-size: clamp(24px, calc(15.31px + 2.02vw), 36px);
+
+            font-size: clamp(24px,
+                    calc(15.31px + 2.02vw),
+                    36px);
+
             font-weight: v.$fw-bold;
             line-height: 1.55;
             letter-spacing: 0;
@@ -452,66 +470,92 @@
             text-decoration-thickness: 4px;
             text-underline-offset: 10px;
 
-            margin-block-end: clamp(24px, calc(13.66px + 2.404vw), 40px);
+            margin-block-end: clamp(24px,
+                    calc(13.66px + 2.404vw),
+                    40px);
 
-            @include mx.nav-collapse {
-                width: fit-content;
+            // 780px以下
+            @include mx.hero-sp {
+                order: 1;
+
+                width: 100%;
                 margin-block-end: 32px;
+
+                text-align: center;
             }
 
+            // 430px以下
             @include mx.sp {
                 font-size: 2.3rem;
                 line-height: 1.55;
+
                 text-decoration-thickness: 3px;
                 text-underline-offset: 7px;
-                margin-block-end: 28px;
+
+                margin-block-end: 24px;
             }
         }
 
-        p {
-            font-size: clamp(16px, calc(13.1px + 0.6734vw), 20px);
+        >p {
+            font-size: clamp(16px,
+                    calc(13.1px + 0.6734vw),
+                    20px);
+
             font-weight: v.$fw-medium;
             line-height: 1.5;
             letter-spacing: 0;
 
-            @include mx.nav-collapse {
+            // 780px以下
+            @include mx.hero-sp {
+                order: 3;
+
+                width: 100%;
+
+                text-align: left;
                 line-height: 1.65;
             }
 
+            // 430px以下
             @include mx.sp {
                 font-size: 1.6rem;
                 line-height: 1.65;
+
                 margin-block-end: 0;
             }
         }
     }
 
+
     // ==========================================================
     // Illustration
+    // PC：左側にabsolute配置
+    // 781px〜1440px：300px → 400px
+    // 780px以下：headingの下に中央配置
     // ==========================================================
 
     &__illustration {
         position: absolute;
+
         top: 50%;
         left: 0;
+
+        width: var(--intro-visual-width);
+
         transform: translateY(-50%);
 
-        width: 400px;
-
         // ------------------------------------------------------
-        // 1000px以下
-        // 本文の右側へ回り込ませる
-        // 添付SPデザインに近い配置
+        // 780px以下
+        // heading → illustration → text
         // ------------------------------------------------------
 
-        @include mx.nav-collapse {
+        @include mx.hero-sp {
             position: static;
-            float: right;
-            width: min(42%, 280px);
-            margin-block-start: 0;
-            margin-block-end: 12px;
-            margin-inline-start: 24px;
-            transform: unset;
+            order: 2;
+            width: 50vw;
+            margin-inline: auto;
+            margin-block-end: 40px;
+
+            transform: none;
         }
 
         // ------------------------------------------------------
@@ -519,9 +563,7 @@
         // ------------------------------------------------------
 
         @include mx.sp {
-            width: 45%;
-            margin-inline-start: 16px;
-            margin-block-end: 8px;
+            margin-block-end: 32px;
         }
 
         img {
@@ -532,6 +574,7 @@
             // Pop animation
             opacity: 0;
             transform: scale(0.6);
+
             transition:
                 opacity 0.4s ease-out,
                 transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -539,7 +582,6 @@
             &.is-visible {
                 opacity: 1;
                 transform: scale(1);
-
             }
         }
     }
@@ -1635,8 +1677,9 @@
         position: relative; // 下向き三角(::after)の絶対配置の基準
         display: flex;
         align-items: center;
+        justify-content: flex-start;
         gap: 16px;
-        padding-inline-end: 24px;
+        // padding-inline-end: 24px;
         border-bottom: 3px dashed v.$color-blue;
 
         @media (max-width: 360px) {
@@ -1652,8 +1695,9 @@
         &:not(:last-child)::after {
             content: "";
             position: absolute;
-            top: calc(100% + 6px);
-            left: 40%;
+            top: calc(100% + 16px);
+            left: 50%;
+            transform: translateX(-50%);
             width: 24px;
             height: 16px;
             background-color: #D9D9D9;
@@ -1665,7 +1709,7 @@
             font-size: 2rem;
 
             @media (max-width: 360px) {
-                font-size: 1.8rem;
+                font-size: 1.6rem;
             }
         }
     }

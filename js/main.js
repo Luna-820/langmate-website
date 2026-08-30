@@ -9,6 +9,7 @@ import { initServiceTabs } from './service-tabs.js';
 import { initFaqAccordion } from './faq-accordion.js';
 import { initContactForm } from './contact-form.js';
 import { initVoiceSlider } from './voice-slider.js';
+import { initStartedCurve } from './started-curve.js';
 
 initMobileNav();
 initLanguageSwitcher();
@@ -19,3 +20,4 @@ initServiceTabs();
 initFaqAccordion();
 initContactForm();
 initVoiceSlider();
+initStartedCurve();
