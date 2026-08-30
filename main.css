@@ -1029,11 +1029,11 @@ img {
   position: relative;
   z-index: 2;
   text-align: center;
-  padding-block-start: calc(39.0625vw - 100px);
+  padding-block-start: max(180px, 39.0625vw - 100px);
 }
 @media (max-width: 430px) {
   .sub-hero__inner {
-    padding-block-start: 240px;
+    padding-block-start: 200px;
   }
 }
 .sub-hero__eyebrow {
@@ -3517,17 +3517,6 @@ img {
     aspect-ratio: 393/235;
   }
 }
-.gs-hero__inner {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  padding-block-start: calc(39.0625vw - 100px);
-}
-@media (max-width: 430px) {
-  .gs-hero__inner {
-    padding-block-start: 240px;
-  }
-}
 .gs-hero__eyebrow {
   display: block;
   width: 196px;
@@ -4266,12 +4255,21 @@ img {
   overflow: visible;
   z-index: 0;
 }
-.gs-started__list-curve path {
+.gs-started__list-curve-line {
   fill: none;
   stroke: #FFFCE6;
   stroke-width: 4px;
   stroke-dasharray: 10 10;
   stroke-linecap: round;
+}
+.gs-started__list-curve-mask {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 12px;
+  stroke-linecap: round;
+  stroke-dasharray: var(--curve-length, 1000);
+  stroke-dashoffset: var(--curve-length, 1000);
+  transition: stroke-dashoffset 0.05s linear;
 }
 @media (max-width: 1000px) {
   .gs-started__list-curve {
@@ -4306,6 +4304,7 @@ img {
 @media (max-width: 1000px) {
   .gs-started__item {
     --started-icon-size: 72px;
+    --line-progress: 0;
     display: grid;
     grid-template-columns: var(--started-icon-size) minmax(0, 1fr);
     align-items: start;
@@ -4322,9 +4321,11 @@ img {
     top: calc(var(--started-icon-size) / 2);
     height: calc(100% + 32px);
     border-left: 2px dashed #FFFFFF;
-    transform: translateX(-1px);
+    transform: translateX(-1px) scaleY(var(--line-progress));
+    transform-origin: top;
     z-index: 0;
     pointer-events: none;
+    transition: transform 0.05s linear;
   }
   .gs-started__item h3 {
     font-size: clamp(2rem, 14px + 1vw, 2.6rem);

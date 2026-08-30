@@ -35,10 +35,10 @@
         position: relative;
         z-index: 2;
         text-align: center;
-        padding-block-start: calc(100vw * 500 / 1280 - 100px);
+        padding-block-start: max(180px,calc(100vw * 500 / 1280 - 100px));
 
         @include mx.sp {
-            padding-block-start: 240px;
+            padding-block-start: 200px;
         }
     }
 

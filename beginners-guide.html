@@ -372,7 +372,16 @@
             <!-- PC用カーブ -->
             <svg class="gs-started__list-curve" viewBox="0 0 121 708" preserveAspectRatio="none" aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg">
-              <path d="M2.00003 2.00023C155.067 207.078 157.864 487.622 8.91684 695.711L2 705.375" />
+              <defs>
+                <mask id="gs-started-curve-mask">
+                  <path class="gs-started__list-curve-mask"
+                    d="M2.00003 2.00023C155.067 207.078 157.864 487.622 8.91684 695.711L2 705.375" />
+                </mask>
+              </defs>
+
+              <path class="gs-started__list-curve-line"
+                d="M2.00003 2.00023C155.067 207.078 157.864 487.622 8.91684 695.711L2 705.375"
+                mask="url(#gs-started-curve-mask)" />
             </svg>
 
 

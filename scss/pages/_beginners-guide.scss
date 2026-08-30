@@ -49,16 +49,6 @@
         }
     }
 
-    &__inner {
-        position: relative;
-        z-index: 2;
-        text-align: center;
-        padding-block-start: calc(100vw * 500 / 1280 - 100px);
-
-        @include mx.sp {
-            padding-block-start: 240px;
-        }
-    }
 
     &__eyebrow {
         display: block;
@@ -71,7 +61,6 @@
         text {
             font-family: v.$font-en;
             font-weight: v.$fw-medium;
-            // fluid化: sp=1.6rem / pc=2.4rem（431〜1023pxを線形補間）
             font-size: clamp(1.6rem, calc(10.21px + 1.347vw), 2.4rem);
             fill: v.$color-blue;
             letter-spacing: 0.04em;
@@ -79,7 +68,6 @@
     }
 
     &__heading {
-        // fluid化: sp=2.4rem / pc=4.8rem（431〜1023pxを線形補間）
         font-size: clamp(2.4rem, calc(6.626px + 4.04vw), 4.8rem);
         font-weight: v.$fw-bold;
         letter-spacing: 0.1em;
@@ -87,10 +75,8 @@
     }
 
     &__lead {
-        // fluid化: sp=1.6rem / pc=2.4rem（431〜1023pxを線形補間）
         font-size: clamp(1.6rem, calc(10.21px + 1.347vw), 2.4rem);
         line-height: 1.6;
-        // fluid化: sp=50px / pc=120px（431〜1023pxを線形補間）
         margin-bottom: clamp(50px, calc(-0.6734px + 11.78vw), 120px);
     }
 
@@ -159,34 +145,29 @@
 
     &__nav-eyebrow {
         display: block;
-        // fluid化: sp=1.6rem / pc=2rem（431〜1023pxを線形補間）
         font-size: clamp(1.6rem, calc(13.1px + 0.6734vw), 2rem);
     }
 
     &__nav-title {
         display: block;
-        // fluid化: sp=2.4rem / pc=3.2rem（431〜1023pxを線形補間）
         font-size: clamp(2.4rem, calc(18.21px + 1.347vw), 3.2rem);
         font-weight: v.$fw-bold;
     }
 
     &__nav-arrow {
         position: absolute;
-        // fluid化: sp=-20px / pc=-32px（431〜1023pxを線形補間）
         bottom: clamp(-32px, calc(-11.31px + -2.02vw), -20px); // 円の半分が枠線からはみ出す
         left: 50%;
         transform: translateX(-50%);
         display: flex;
         align-items: center;
         justify-content: center;
-        // fluid化: sp=36px / pc=64px（431〜1023pxを線形補間）
         width: clamp(36px, calc(15.73px + 4.714vw), 64px);
         height: clamp(36px, calc(15.73px + 4.714vw), 64px);
         border-radius: 50%;
         color: v.$color-white;
 
         svg {
-            // fluid化: sp=13px / pc=24px（431〜1023pxを線形補間）
             width: clamp(13px, calc(5.037px + 1.852vw), 24px);
             height: clamp(13px, calc(5.037px + 1.852vw), 24px);
         }
@@ -1075,40 +1056,45 @@
 
     // ==========================================================================
     // PC CURVE
+    // スクロールに合わせて上から描画
     // ==========================================================================
     &__list-curve {
         position: absolute;
-
         display: block;
-
         top: 24px;
         left: 0;
-
         width: 121px;
         height: calc(100% - 48px);
-
         overflow: visible;
-
         z-index: 0;
 
-
-        path {
+        // 実際に見える点線
+        &-line {
             fill: none;
-
             stroke: #FFFCE6;
-
             stroke-width: 4px;
             stroke-dasharray: 10 10;
             stroke-linecap: round;
         }
 
+        // 線を上から少しずつ開放するマスク
+        &-mask {
+            fill: none;
+            stroke: #fff;
+            // 点線全体を確実に覆える太さ
+            stroke-width: 12px;
+            stroke-linecap: round;
 
-        // 1000px以下はカーブを使わない
+            // JSで設定
+            stroke-dasharray: var(--curve-length, 1000);
+            stroke-dashoffset: var(--curve-length, 1000);
+            transition: stroke-dashoffset 0.05s linear;
+        }
+
         @include mx.nav-collapse {
             display: none;
         }
     }
-
 
     // ==========================================================================
     // ITEM
@@ -1174,6 +1160,7 @@
         // ======================================================================
         @include mx.nav-collapse {
             --started-icon-size: 72px;
+            --line-progress: 0;
 
             display: grid;
 
@@ -1184,44 +1171,46 @@
 
             column-gap: 24px;
 
-
             .gs-started__content {
                 max-width: none;
                 min-width: 0;
             }
 
-
-            // ------------------------------------------------------------------
+            // ==========================================================
             // アイコン中心を通る点線
-            // ------------------------------------------------------------------
+            // スクロールに合わせて上から伸びる
+            // ==========================================================
+
             &:not(:last-child)::after {
                 content: "";
 
                 position: absolute;
 
                 left: calc(var(--started-icon-size) / 2);
-
                 top: calc(var(--started-icon-size) / 2);
 
                 height: calc(100% + 32px);
 
-                border-left:
-                    2px dashed v.$color-white;
+                border-left: 2px dashed v.$color-white;
 
-                transform: translateX(-1px);
+                // 最初は縦方向0%
+                transform:
+                    translateX(-1px) scaleY(var(--line-progress));
+
+                transform-origin: top;
 
                 z-index: 0;
-
                 pointer-events: none;
-            }
 
+                // スクロールとの追従を少しだけ滑らかに
+                transition: transform 0.05s linear;
+            }
 
             h3 {
                 font-size: clamp(2rem,
                         calc(14px + 1vw),
                         2.6rem);
             }
-
 
             p {
                 font-size: clamp(1.6rem,
@@ -1232,7 +1221,6 @@
             }
         }
 
-
         @include mx.sp {
             --started-icon-size: 64px;
 
@@ -1241,20 +1229,15 @@
 
             column-gap: 18px;
 
-
             &:not(:last-child)::after {
                 left: calc(var(--started-icon-size) / 2);
-
                 top: calc(var(--started-icon-size) / 2);
-
                 height: calc(100% + 28px);
             }
-
 
             h3 {
                 font-size: 2rem;
             }
-
 
             p {
                 font-size: 1.5rem;
