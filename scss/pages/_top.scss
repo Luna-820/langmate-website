@@ -1353,7 +1353,7 @@
             justify-content: center;
 
             // PC
-            width: clamp(48px,calc(47.31px + 2.02vw),68px);
+            width: clamp(48px, calc(47.31px + 2.02vw), 68px);
 
             aspect-ratio: 1 / 1;
             flex-shrink: 0;
@@ -1361,9 +1361,9 @@
             border: 2px solid v.$color-gray;
             background-color: v.$color-white;
             color: v.$color-gray;
-            padding: clamp(9px,calc(6.1px + 0.673vw),13px);
+            padding: clamp(9px, calc(6.1px + 0.673vw), 13px);
             cursor: pointer;
-            transition:color 0.2s,border-color 0.2s;
+            transition: color 0.2s, border-color 0.2s;
 
             // 880px以下
             // gap 12px × 4箇所 = 48px を引いた残りを5等分
@@ -2103,11 +2103,8 @@
     background-color: v.$color-pink;
     color: v.$color-white;
     text-align: center;
-    // sp=80px / pc=100px（431〜1023pxを線形補間）
     padding-block: clamp(80px, calc(65.52px + 3.367vw), 100px);
-    // sp=24px / pc=80px（431〜1023pxを線形補間）
     padding-inline: clamp(24px, calc(-16.54px + 9.428vw), 80px);
-    // sp=40px / pc=80px（431〜1023pxを線形補間）
     margin-bottom: clamp(40px, calc(11.04px + 6.734vw), 80px);
 
     &__deco {
@@ -2119,7 +2116,7 @@
             top: 0;
             left: 0;
 
-            @include mx.sp {
+            @include mx.hero-sp {
                 top: -6%;
                 left: 0;
             }
@@ -2128,12 +2125,15 @@
 
         &--lt-circle {
             top: 24px;
-            // sp=0px / pc=-40px（431〜1023pxを線形補間）
             left: clamp(-40px, calc(28.96px + -6.734vw), 0px);
 
-            @include mx.sp {
+            @include mx.hero-sp {
                 width: 138px;
                 height: 170px;
+                top: -16%;
+            }
+
+            @include mx.sp {
                 top: -20%;
             }
         }
@@ -2142,11 +2142,15 @@
             bottom: 60px;
             right: -30px;
 
-            @include mx.sp {
+            @include mx.hero-sp {
                 width: 138px;
                 height: 170px;
-                bottom: -24%;
+                bottom: -10%;
                 right: -4%;
+            }
+
+            @include mx.sp {
+                bottom: -20%;
             }
         }
 
@@ -2154,7 +2158,7 @@
             bottom: 0;
             right: 0;
 
-            @include mx.sp {
+            @include mx.hero-sp {
                 bottom: -8%;
                 right: 0;
             }
@@ -2162,7 +2166,7 @@
     }
 
     &__inner {
-        position: relative; // 装飾(絶対配置)より確実に手前に来るようにする
+        position: relative;
         z-index: 1;
         display: flex;
         flex-direction: column;
@@ -2170,13 +2174,11 @@
         gap: 32px;
     }
 
-    // （4.0rem/2.4rem, Bold, lh1.4）
     h2 {
         font-size: clamp(1.8rem, calc(12.42px + 2.0vw), 4.0rem);
     }
 
     p {
-        // sp=1.6rem / pc=2.4rem（431〜1023pxを線形補間）
         font-size: clamp(1.6rem, calc(10.21px + 1.347vw), 2.4rem);
         line-height: 1.4;
         letter-spacing: 0;
@@ -2184,15 +2186,14 @@
 
     &__badges {
         display: flex;
-        // sp=32px / pc=40px（431〜1023pxを線形補間）
-        gap: clamp(32px, calc(26.21px + 1.347vw), 40px);
+        gap: clamp(24px, calc(18px + 1vw), 40px);
 
         .btn--store {
-            height: 48px;
+            height: 64px;
         }
 
         img {
-            height: 48px;
+            height: 64px;
             width: auto;
         }
     }
