@@ -82,9 +82,9 @@
         <button class="hamburger" type="button" aria-expanded="false" aria-controls="mobile-nav"
           data-mobile-nav-trigger>
           <span class="visually-hidden">メニューを開く</span>
-          <span class="hamburger__line" aria-hidden="true"></span>
-          <span class="hamburger__line" aria-hidden="true"></span>
-          <span class="hamburger__line" aria-hidden="true"></span>
+          <span class="hamburger__line hamburger__line--top" aria-hidden="true"></span>
+          <span class="hamburger__line hamburger__line--middle" aria-hidden="true"></span>
+          <span class="hamburger__line hamburger__line--bottom" aria-hidden="true"></span>
         </button>
       </div>
     </div>
@@ -146,6 +146,19 @@
         </svg>
         <h1 class="sub-hero__heading gs-hero__heading">初めての方へ</h1>
         <p class="sub-hero__lead gs-hero__lead">英語に自信がなくても、<br />世界中のユーザーと安心して交流を始められます。</p>
+
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb gs-hero__breadcrumb" aria-label="パンくずリスト">
+          <ol class="breadcrumb__list">
+            <li class="breadcrumb__item">
+              <a href="index.html">HOME</a>
+            </li>
+
+            <li class="breadcrumb__item" aria-current="page">
+              初めての方へ
+            </li>
+          </ol>
+        </nav>
 
         <div class="gs-hero__nav">
           <a class="gs-hero__nav-card gs-hero__nav-card--reason" href="#reason">
@@ -328,7 +341,7 @@
         </div>
 
         <img class="gs-reason__illust" src="design-assets/illust-page-reason.svg" alt="" aria-hidden="true" width="405"
-          height="470" data-pop/>
+          height="470" data-pop />
 
       </div>
     </section>
@@ -452,13 +465,13 @@
 
 
         <img class="gs-started__illust" src="design-assets/illust-page-start.svg" alt="" aria-hidden="true" width="400"
-          height="556.54" data-pop/>
+          height="556.54" data-pop />
 
       </div>
     </section>
 
     <img class="gs-divider gs-divider--started" src="design-assets/get-started-bottom-divider.svg" alt=""
-      aria-hidden="true" width="1280" height="263"/>
+      aria-hidden="true" width="1280" height="263" />
 
     <!-- ===== SAFETY ===== -->
     <section class="gs-safety" id="safety" aria-labelledby="gs-safety-heading">
@@ -546,7 +559,7 @@
 
 
         <img class="gs-safety__illust" src="design-assets/illust-page-safety.svg" alt="" aria-hidden="true" width="400"
-          height="434.63" data-pop/>
+          height="434.63" data-pop />
 
       </div>
     </section>

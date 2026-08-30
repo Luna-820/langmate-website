@@ -12,6 +12,29 @@
     margin-block-start: 0;
     padding-block-end: clamp(40px, calc(-75.82px + 26.94vw), 200px);
 
+    &__breadcrumb {
+        align-self: stretch;
+        width: 100%;
+        margin-block-start: 28px;
+        margin-block-end: 36px;
+        padding-inline-start: 16px;
+        text-align: left;
+
+        .breadcrumb__list {
+            justify-content: flex-start;
+        }
+
+        @include mx.hero-sp {
+            margin-block-start: 24px;
+            margin-block-end: 28px;
+        }
+
+        @include mx.sp {
+            margin-block-start: 20px;
+            margin-block-end: 24px;
+        }
+    }
+
     &__map {
         position: absolute;
         top: 0;

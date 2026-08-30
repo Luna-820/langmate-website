@@ -70,20 +70,20 @@
           </button>
           <ul class="language-switcher__list" id="language-switcher-list" role="listbox" hidden>
             <li role="option" data-lang="ja" aria-selected="true">
-            <img src="design-assets/flag-jp.svg" alt="" width="20" height="20" />日本語
+              <img src="design-assets/flag-jp.svg" alt="" width="20" height="20" />日本語
             </li>
             <li role="option" data-lang="en" aria-selected="false">
-            <img src="design-assets/flag-us.svg" alt="" width="20" height="20" />English
+              <img src="design-assets/flag-us.svg" alt="" width="20" height="20" />English
             </li>
           </ul>
         </div>
 
         <button class="hamburger" type="button" aria-expanded="false" aria-controls="mobile-nav"
-                data-mobile-nav-trigger>
+          data-mobile-nav-trigger>
           <span class="visually-hidden">メニューを開く</span>
-          <span class="hamburger__line" aria-hidden="true"></span>
-          <span class="hamburger__line" aria-hidden="true"></span>
-          <span class="hamburger__line" aria-hidden="true"></span>
+          <span class="hamburger__line hamburger__line--top" aria-hidden="true"></span>
+          <span class="hamburger__line hamburger__line--middle" aria-hidden="true"></span>
+          <span class="hamburger__line hamburger__line--bottom" aria-hidden="true"></span>
         </button>
       </div>
     </div>
@@ -101,9 +101,11 @@
     </nav>
     <div class="mobile-nav__sns">
       <span class="visually-hidden">公式SNS</span>
-      <a href="https://www.instagram.com/langmate_app"><img src="design-assets/logo-instagram.svg" alt="Instagram" width="24" height="24" /></a>
+      <a href="https://www.instagram.com/langmate_app"><img src="design-assets/logo-instagram.svg" alt="Instagram"
+          width="24" height="24" /></a>
       <a href="https://x.com/LANGMATE_APP"><img src="design-assets/logo-x.svg" alt="X" width="24" height="24" /></a>
-      <a href="https://www.tiktok.com/@questions_about_japan"><img src="design-assets/logo-tiktok.svg" alt="TikTok" width="24" height="24" /></a>
+      <a href="https://www.tiktok.com/@questions_about_japan"><img src="design-assets/logo-tiktok.svg" alt="TikTok"
+          width="24" height="24" /></a>
     </div>
     <a class="mobile-nav__download" href="#download">ダウンロードはこちら <span aria-hidden="true">⬇</span></a>
   </div>
@@ -116,10 +118,10 @@
           alt="" aria-hidden="true" />
       </button>
       <div class="floating-dl__panel" id="floating-dl-panel">
-        <a href="https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775" class="btn btn--store"><img src="design-assets/badge-appstore-ja.svg" alt="App Storeからダウンロード"
-            width="160" height="48" /></a>
-        <a href="https://play.google.com/store/apps/details?id=co.thoron.langmate" class="btn btn--store"><img src="design-assets/badge-googleplay-ja.svg" alt="Google Playで手に入れよう"
-            width="160" height="48" /></a>
+        <a href="https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775" class="btn btn--store"><img
+            src="design-assets/badge-appstore-ja.svg" alt="App Storeからダウンロード" width="160" height="48" /></a>
+        <a href="https://play.google.com/store/apps/details?id=co.thoron.langmate" class="btn btn--store"><img
+            src="design-assets/badge-googleplay-ja.svg" alt="Google Playで手に入れよう" width="160" height="48" /></a>
       </div>
     </div>
   </div>
@@ -141,6 +143,19 @@
           </text>
         </svg>
         <h1 class="sub-hero__heading faq-hero__heading">よくある質問</h1>
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb faq-hero__breadcrumb faq-search-section__inner" aria-label="パンくずリスト">
+          <ol class="breadcrumb__list">
+            <li class="breadcrumb__item">
+              <a href="index.html">HOME</a>
+            </li>
+
+            <li class="breadcrumb__item" aria-current="page">
+              よくある質問
+            </li>
+          </ol>
+        </nav>
+
       </div>
     </section>
 
@@ -183,51 +198,78 @@
         <div class="faq-group">
           <h2 class="faq-group__title">機能について</h2>
           <ul class="faq-group__list faq-group__list--2col">
-            <li class="faq-item"><a href="support.html"><span class="faq-item__icon" aria-hidden="true">Q</span>Cardsとは？</a></li>
-            <li class="faq-item"><a href="support.html"><span class="faq-item__icon" aria-hidden="true">Q</span>フレンドリクエストを送る方法</a></li>
-            <li class="faq-item"><a href="support.html"><span class="faq-item__icon" aria-hidden="true">Q</span>メッセージを送信する方法</a></li>
-            <li class="faq-item"><a href="support.html"><span class="faq-item__icon" aria-hidden="true">Q</span>スワイプしたカードを戻す方法 (Rewind)</a></li>
-            <li class="faq-item"><a href="support.html"><span class="faq-item__icon" aria-hidden="true">Q</span>Boostとは？</a></li>
-            <li class="faq-item"><a href="support.html"><span class="faq-item__icon" aria-hidden="true">Q</span>フィルターとは？</a></li>
-            <li class="faq-item"><a href="support.html"><span class="faq-item__icon" aria-hidden="true">Q</span>マッチする方法</a></li>
-            <li class="faq-item"><a href="support.html"><span class="faq-item__icon" aria-hidden="true">Q</span>Local peopleについて</a></li>
-            <li class="faq-item"><a href="support.html"><span class="faq-item__icon" aria-hidden="true">Q</span>スマイルとは何ですか？</a></li>
-            <li class="faq-item"><a href="support.html"><span class="faq-item__icon" aria-hidden="true">Q</span>レーティングとは？</a></li>
+            <li class="faq-item"><a href="support.html"><span class="faq-item__icon"
+                  aria-hidden="true">Q</span>Cardsとは？</a></li>
+            <li class="faq-item"><a href="support.html"><span class="faq-item__icon"
+                  aria-hidden="true">Q</span>フレンドリクエストを送る方法</a></li>
+            <li class="faq-item"><a href="support.html"><span class="faq-item__icon"
+                  aria-hidden="true">Q</span>メッセージを送信する方法</a></li>
+            <li class="faq-item"><a href="support.html"><span class="faq-item__icon"
+                  aria-hidden="true">Q</span>スワイプしたカードを戻す方法 (Rewind)</a></li>
+            <li class="faq-item"><a href="support.html"><span class="faq-item__icon"
+                  aria-hidden="true">Q</span>Boostとは？</a></li>
+            <li class="faq-item"><a href="support.html"><span class="faq-item__icon"
+                  aria-hidden="true">Q</span>フィルターとは？</a></li>
+            <li class="faq-item"><a href="support.html"><span class="faq-item__icon"
+                  aria-hidden="true">Q</span>マッチする方法</a></li>
+            <li class="faq-item"><a href="support.html"><span class="faq-item__icon" aria-hidden="true">Q</span>Local
+                peopleについて</a></li>
+            <li class="faq-item"><a href="support.html"><span class="faq-item__icon"
+                  aria-hidden="true">Q</span>スマイルとは何ですか？</a></li>
+            <li class="faq-item"><a href="support.html"><span class="faq-item__icon"
+                  aria-hidden="true">Q</span>レーティングとは？</a></li>
           </ul>
         </div>
 
         <div class="faq-group">
           <h2 class="faq-group__title">マッチ&amp;チャット</h2>
           <ul class="faq-group__list">
-            <li class="faq-item"><a href="support.html"><span class="faq-item__icon" aria-hidden="true">Q</span>『チャットを始めますか』機能について</a></li>
-            <li class="faq-item"><a href="support.html"><span class="faq-item__icon" aria-hidden="true">Q</span>マッチする方法</a></li>
-            <li class="faq-item"><a href="support.html"><span class="faq-item__icon" aria-hidden="true">Q</span>新しいフレンズとチャットするには？</a></li>
-            <li class="faq-item"><a href="support.html"><span class="faq-item__icon" aria-hidden="true">Q</span>Messagesで使える機能について</a></li>
-            <li class="faq-item"><a href="support.html"><span class="faq-item__icon" aria-hidden="true">Q</span>送信したメッセージを削除する方法</a></li>
-            <li class="faq-item"><a href="support.html"><span class="faq-item__icon" aria-hidden="true">Q</span>ユーザーをブロックするには？</a></li>
-            <li class="faq-item"><a href="support.html"><span class="faq-item__icon" aria-hidden="true">Q</span>悪質ユーザーを通報する</a></li>
+            <li class="faq-item"><a href="support.html"><span class="faq-item__icon"
+                  aria-hidden="true">Q</span>『チャットを始めますか』機能について</a></li>
+            <li class="faq-item"><a href="support.html"><span class="faq-item__icon"
+                  aria-hidden="true">Q</span>マッチする方法</a></li>
+            <li class="faq-item"><a href="support.html"><span class="faq-item__icon"
+                  aria-hidden="true">Q</span>新しいフレンズとチャットするには？</a></li>
+            <li class="faq-item"><a href="support.html"><span class="faq-item__icon"
+                  aria-hidden="true">Q</span>Messagesで使える機能について</a></li>
+            <li class="faq-item"><a href="support.html"><span class="faq-item__icon"
+                  aria-hidden="true">Q</span>送信したメッセージを削除する方法</a></li>
+            <li class="faq-item"><a href="support.html"><span class="faq-item__icon"
+                  aria-hidden="true">Q</span>ユーザーをブロックするには？</a></li>
+            <li class="faq-item"><a href="support.html"><span class="faq-item__icon"
+                  aria-hidden="true">Q</span>悪質ユーザーを通報する</a></li>
           </ul>
         </div>
 
         <div class="faq-group">
           <h2 class="faq-group__title">プロフィール&amp;アカウント設定</h2>
           <ul class="faq-group__list">
-            <li class="faq-item"><a href="support.html"><span class="faq-item__icon" aria-hidden="true">Q</span>プロフィールを変更する</a></li>
-            <li class="faq-item"><a href="support.html"><span class="faq-item__icon" aria-hidden="true">Q</span>あたらしい携帯電話にアカウントを移行したい</a></li>
-            <li class="faq-item"><a href="support.html"><span class="faq-item__icon" aria-hidden="true">Q</span>バックアップ方法は？</a></li>
-            <li class="faq-item"><a href="support.html"><span class="faq-item__icon" aria-hidden="true">Q</span>ログアウトできますか？</a></li>
-            <li class="faq-item"><a href="support.html"><span class="faq-item__icon" aria-hidden="true">Q</span>アカウントをリンクする</a></li>
+            <li class="faq-item"><a href="support.html"><span class="faq-item__icon"
+                  aria-hidden="true">Q</span>プロフィールを変更する</a></li>
+            <li class="faq-item"><a href="support.html"><span class="faq-item__icon"
+                  aria-hidden="true">Q</span>あたらしい携帯電話にアカウントを移行したい</a></li>
+            <li class="faq-item"><a href="support.html"><span class="faq-item__icon"
+                  aria-hidden="true">Q</span>バックアップ方法は？</a></li>
+            <li class="faq-item"><a href="support.html"><span class="faq-item__icon"
+                  aria-hidden="true">Q</span>ログアウトできますか？</a></li>
+            <li class="faq-item"><a href="support.html"><span class="faq-item__icon"
+                  aria-hidden="true">Q</span>アカウントをリンクする</a></li>
           </ul>
         </div>
 
         <div class="faq-group">
           <h2 class="faq-group__title">PREMIUM専用機能について</h2>
           <ul class="faq-group__list">
-            <li class="faq-item"><a href="support.html"><span class="faq-item__icon" aria-hidden="true">Q</span>フレンドリクエストが見えない</a></li>
-            <li class="faq-item"><a href="support.html"><span class="faq-item__icon" aria-hidden="true">Q</span>無制限でLocal peopleを！</a></li>
-            <li class="faq-item"><a href="support.html"><span class="faq-item__icon" aria-hidden="true">Q</span>Messagesで使える機能について</a></li>
-            <li class="faq-item"><a href="support.html"><span class="faq-item__icon" aria-hidden="true">Q</span>Rewind（リワインド）（Cardsを戻る）</a></li>
-            <li class="faq-item"><a href="support.html"><span class="faq-item__icon" aria-hidden="true">Q</span>メッセージを送信する方法</a></li>
+            <li class="faq-item"><a href="support.html"><span class="faq-item__icon"
+                  aria-hidden="true">Q</span>フレンドリクエストが見えない</a></li>
+            <li class="faq-item"><a href="support.html"><span class="faq-item__icon"
+                  aria-hidden="true">Q</span>無制限でLocal peopleを！</a></li>
+            <li class="faq-item"><a href="support.html"><span class="faq-item__icon"
+                  aria-hidden="true">Q</span>Messagesで使える機能について</a></li>
+            <li class="faq-item"><a href="support.html"><span class="faq-item__icon"
+                  aria-hidden="true">Q</span>Rewind（リワインド）（Cardsを戻る）</a></li>
+            <li class="faq-item"><a href="support.html"><span class="faq-item__icon"
+                  aria-hidden="true">Q</span>メッセージを送信する方法</a></li>
           </ul>
         </div>
       </div>
@@ -240,10 +282,10 @@
         <p>外国人の友達になれる国際交流アプリ</p>
         <img src="design-assets/logo-langmate.svg" alt="Langmate" />
         <div class="site-footer__badges">
-          <a href="https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775"><img src="design-assets/badge-appstore-ja.svg" alt="App Storeからダウンロード" width="120"
-              height="36" /></a>
-          <a href="https://play.google.com/store/apps/details?id=co.thoron.langmate"><img src="design-assets/badge-googleplay-ja.svg" alt="Google Playで手に入れよう" width="120"
-              height="36" /></a>
+          <a href="https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775"><img
+              src="design-assets/badge-appstore-ja.svg" alt="App Storeからダウンロード" width="120" height="36" /></a>
+          <a href="https://play.google.com/store/apps/details?id=co.thoron.langmate"><img
+              src="design-assets/badge-googleplay-ja.svg" alt="Google Playで手に入れよう" width="120" height="36" /></a>
         </div>
       </div>
 
@@ -260,9 +302,11 @@
       <div class="site-footer__sns">
         <p>公式SNSはこちら</p>
         <div>
-          <a href="https://www.instagram.com/langmate_app"><img src="design-assets/logo-instagram.svg" alt="Instagram" width="24" height="24" /></a>
+          <a href="https://www.instagram.com/langmate_app"><img src="design-assets/logo-instagram.svg" alt="Instagram"
+              width="24" height="24" /></a>
           <a href="https://x.com/LANGMATE_APP"><img src="design-assets/logo-x.svg" alt="X" width="24" height="24" /></a>
-          <a href="https://www.tiktok.com/@questions_about_japan"><img src="design-assets/logo-tiktok.svg" alt="TikTok" width="24" height="24" /></a>
+          <a href="https://www.tiktok.com/@questions_about_japan"><img src="design-assets/logo-tiktok.svg" alt="TikTok"
+              width="24" height="24" /></a>
         </div>
       </div>
     </div>

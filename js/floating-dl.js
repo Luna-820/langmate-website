@@ -3,22 +3,17 @@
 // 600px以下：iOSはApp Store、AndroidはGoogle Playへ直接
 // 判定できない端末はパネルを開く
 
-export function initFloatingDl() {
-  const el = document.querySelector('[data-floating-dl]');
-  const trigger = document.querySelector('[data-floating-dl-trigger]');
+const APP_STORE_URL =
+  'https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775';
 
-  if (!el || !trigger) return;
+const GOOGLE_PLAY_URL =
+  'https://play.google.com/store/apps/details?id=co.thoron.langmate';
 
-  const APP_STORE_URL =
-    'https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775';
+// ==========================================================
+// Device detection
+// ==========================================================
 
-  const GOOGLE_PLAY_URL =
-    'https://play.google.com/store/apps/details?id=co.thoron.langmate';
-
-  // ==========================================================
-  // Device detection
-  // ==========================================================
-
+function getDeviceType() {
   const isIOS =
     /iPhone|iPad|iPod/i.test(navigator.userAgent) ||
     (
@@ -26,8 +21,28 @@ export function initFloatingDl() {
       navigator.maxTouchPoints > 1
     );
 
-  const isAndroid =
-    /Android/i.test(navigator.userAgent);
+  if (isIOS) {
+    return 'ios';
+  }
+
+  if (/Android/i.test(navigator.userAgent)) {
+    return 'android';
+  }
+
+  return 'other';
+}
+
+// ==========================================================
+// Floating Download
+// ==========================================================
+
+export function initFloatingDl() {
+  const el = document.querySelector('[data-floating-dl]');
+  const trigger = document.querySelector('[data-floating-dl-trigger]');
+
+  if (!el || !trigger) return;
+
+  const deviceType = getDeviceType();
 
   // ==========================================================
   // Open / Close
@@ -55,13 +70,13 @@ export function initFloatingDl() {
       window.matchMedia('(max-width: 600px)').matches;
 
     // 600px以下 + iPhone / iPad
-    if (isMobileLayout && isIOS) {
+    if (isMobileLayout && deviceType === 'ios') {
       window.location.href = APP_STORE_URL;
       return;
     }
 
     // 600px以下 + Android
-    if (isMobileLayout && isAndroid) {
+    if (isMobileLayout && deviceType === 'android') {
       window.location.href = GOOGLE_PLAY_URL;
       return;
     }
@@ -96,7 +111,33 @@ export function initFloatingDl() {
   // 画面サイズ変更時にリセット
   // ==========================================================
 
-  window.addEventListener('resize', () => {
-    close();
+  window.addEventListener('resize', close);
+}
+
+// ==========================================================
+// Mobile Navigation Download
+// ==========================================================
+
+export function initMobileDownload() {
+  const mobileDownload = document.querySelector('[data-mobile-download]');
+
+  if (!mobileDownload) return;
+
+  const deviceType = getDeviceType();
+
+  mobileDownload.addEventListener('click', (e) => {
+    if (deviceType === 'ios') {
+      e.preventDefault();
+      window.location.href = APP_STORE_URL;
+      return;
+    }
+
+    if (deviceType === 'android') {
+      e.preventDefault();
+      window.location.href = GOOGLE_PLAY_URL;
+      return;
+    }
+
+    // その他の端末はHTMLの href="#download" をそのまま使用
   });
 }

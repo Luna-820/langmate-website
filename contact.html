@@ -71,20 +71,20 @@
           </button>
           <ul class="language-switcher__list" id="language-switcher-list" role="listbox" hidden>
             <li role="option" data-lang="ja" aria-selected="true">
-            <img src="design-assets/flag-jp.svg" alt="" width="20" height="20" />日本語
+              <img src="design-assets/flag-jp.svg" alt="" width="20" height="20" />日本語
             </li>
             <li role="option" data-lang="en" aria-selected="false">
-            <img src="design-assets/flag-us.svg" alt="" width="20" height="20" />English
+              <img src="design-assets/flag-us.svg" alt="" width="20" height="20" />English
             </li>
           </ul>
         </div>
 
         <button class="hamburger" type="button" aria-expanded="false" aria-controls="mobile-nav"
-                data-mobile-nav-trigger>
+          data-mobile-nav-trigger>
           <span class="visually-hidden">メニューを開く</span>
-          <span class="hamburger__line" aria-hidden="true"></span>
-          <span class="hamburger__line" aria-hidden="true"></span>
-          <span class="hamburger__line" aria-hidden="true"></span>
+          <span class="hamburger__line hamburger__line--top" aria-hidden="true"></span>
+          <span class="hamburger__line hamburger__line--middle" aria-hidden="true"></span>
+          <span class="hamburger__line hamburger__line--bottom" aria-hidden="true"></span>
         </button>
       </div>
     </div>
@@ -102,9 +102,11 @@
     </nav>
     <div class="mobile-nav__sns">
       <span class="visually-hidden">公式SNS</span>
-      <a href="https://www.instagram.com/langmate_app"><img src="design-assets/logo-instagram.svg" alt="Instagram" width="24" height="24" /></a>
+      <a href="https://www.instagram.com/langmate_app"><img src="design-assets/logo-instagram.svg" alt="Instagram"
+          width="24" height="24" /></a>
       <a href="https://x.com/LANGMATE_APP"><img src="design-assets/logo-x.svg" alt="X" width="24" height="24" /></a>
-      <a href="https://www.tiktok.com/@questions_about_japan"><img src="design-assets/logo-tiktok.svg" alt="TikTok" width="24" height="24" /></a>
+      <a href="https://www.tiktok.com/@questions_about_japan"><img src="design-assets/logo-tiktok.svg" alt="TikTok"
+          width="24" height="24" /></a>
     </div>
     <a class="mobile-nav__download" href="#download">ダウンロードはこちら <span aria-hidden="true">⬇</span></a>
   </div>
@@ -117,10 +119,10 @@
           alt="" aria-hidden="true" />
       </button>
       <div class="floating-dl__panel" id="floating-dl-panel">
-        <a href="https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775" class="btn btn--store"><img src="design-assets/badge-appstore-ja.svg" alt="App Storeからダウンロード"
-            width="160" height="48" /></a>
-        <a href="https://play.google.com/store/apps/details?id=co.thoron.langmate" class="btn btn--store"><img src="design-assets/badge-googleplay-ja.svg" alt="Google Playで手に入れよう"
-            width="160" height="48" /></a>
+        <a href="https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775" class="btn btn--store"><img
+            src="design-assets/badge-appstore-ja.svg" alt="App Storeからダウンロード" width="160" height="48" /></a>
+        <a href="https://play.google.com/store/apps/details?id=co.thoron.langmate" class="btn btn--store"><img
+            src="design-assets/badge-googleplay-ja.svg" alt="Google Playで手に入れよう" width="160" height="48" /></a>
       </div>
     </div>
   </div>
@@ -130,8 +132,8 @@
     <section class="sub-hero contact-hero">
       <picture>
         <source srcset="design-assets/bg-page-sp.svg" media="(max-width: 430px)">
-        <img class="sub-hero__map contact-hero__map" src="design-assets/bg-page.svg" alt="" aria-hidden="true" width="1280"
-          height="500" />
+        <img class="sub-hero__map contact-hero__map" src="design-assets/bg-page.svg" alt="" aria-hidden="true"
+          width="1280" height="500" />
       </picture>
       <div class="wrapper sub-hero__inner contact-hero__inner">
         <svg class="sub-hero__eyebrow contact-hero__eyebrow" viewBox="0 0 220 70" role="img" aria-label="CONTACT">
@@ -147,6 +149,18 @@
           予めご了承くださいませ。</p>
         <p class="contact-hero__note">お問合せ前に、以下のボタンより一般的なヘルプをチェックしてみてください。</p>
         <a class="btn btn--outline contact-hero__cta" href="how-can-we-help.html">よくある質問はこちら</a>
+
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb contact-hero__breadcrumb" aria-label="パンくずリスト">
+          <ol class="breadcrumb__list">
+            <li class="breadcrumb__item">
+              <a href="index.html">HOME</a>
+            </li>
+            <li class="breadcrumb__item" aria-current="page">
+              お問い合わせ
+            </li>
+          </ol>
+        </nav>
       </div>
     </section>
 
@@ -157,8 +171,7 @@
           <div class="contact-form__field">
             <label class="contact-form__label" for="contact-name">お名前 <span
                 class="contact-form__required">必須</span></label>
-            <input class="contact-form__input" type="text" id="contact-name" name="name" placeholder="山田太郎"
-              required />
+            <input class="contact-form__input" type="text" id="contact-name" name="name" placeholder="山田太郎" required />
           </div>
 
           <div class="contact-form__field">
@@ -216,12 +229,13 @@
                       ご利用する携帯電話によってスクリーンショット方法は異なります。ご利用中の携帯電話に応じて以下のリンクにアクセスしてください：<br>
                       <a href="https://support.apple.com/ja-jp/102616" target="_blank" rel="noopener">iPhone</a>
                       /
-                      <a href="https://support.google.com/android/answer/9075928?hl=ja" target="_blank" rel="noopener">Android</a>
+                      <a href="https://support.google.com/android/answer/9075928?hl=ja" target="_blank"
+                        rel="noopener">Android</a>
                     </p>
 
                     <div class="user-id-steps__screens">
-                      <img src="design-assets/screenshot-userid.png"
-                        alt="My Page画面→設定画面→My ID画面の操作手順スクリーンショット" width="688" height="402" />
+                      <img src="design-assets/screenshot-userid.png" alt="My Page画面→設定画面→My ID画面の操作手順スクリーンショット"
+                        width="688" height="402" />
                     </div>
                   </div>
                 </li>
@@ -254,10 +268,10 @@
         <p>外国人の友達になれる国際交流アプリ</p>
         <img src="design-assets/logo-langmate.svg" alt="Langmate" />
         <div class="site-footer__badges">
-          <a href="https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775"><img src="design-assets/badge-appstore-ja.svg" alt="App Storeからダウンロード" width="120"
-              height="36" /></a>
-          <a href="https://play.google.com/store/apps/details?id=co.thoron.langmate"><img src="design-assets/badge-googleplay-ja.svg" alt="Google Playで手に入れよう" width="120"
-              height="36" /></a>
+          <a href="https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775"><img
+              src="design-assets/badge-appstore-ja.svg" alt="App Storeからダウンロード" width="120" height="36" /></a>
+          <a href="https://play.google.com/store/apps/details?id=co.thoron.langmate"><img
+              src="design-assets/badge-googleplay-ja.svg" alt="Google Playで手に入れよう" width="120" height="36" /></a>
         </div>
       </div>
 
@@ -274,9 +288,11 @@
       <div class="site-footer__sns">
         <p>公式SNSはこちら</p>
         <div>
-          <a href="https://www.instagram.com/langmate_app"><img src="design-assets/logo-instagram.svg" alt="Instagram" width="24" height="24" /></a>
+          <a href="https://www.instagram.com/langmate_app"><img src="design-assets/logo-instagram.svg" alt="Instagram"
+              width="24" height="24" /></a>
           <a href="https://x.com/LANGMATE_APP"><img src="design-assets/logo-x.svg" alt="X" width="24" height="24" /></a>
-          <a href="https://www.tiktok.com/@questions_about_japan"><img src="design-assets/logo-tiktok.svg" alt="TikTok" width="24" height="24" /></a>
+          <a href="https://www.tiktok.com/@questions_about_japan"><img src="design-assets/logo-tiktok.svg" alt="TikTok"
+              width="24" height="24" /></a>
         </div>
       </div>
     </div>

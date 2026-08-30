@@ -60,20 +60,20 @@
           </button>
           <ul class="language-switcher__list" id="language-switcher-list" role="listbox" hidden>
             <li role="option" data-lang="ja" aria-selected="true">
-            <img src="design-assets/flag-jp.svg" alt="" width="20" height="20" />日本語
+              <img src="design-assets/flag-jp.svg" alt="" width="20" height="20" />日本語
             </li>
             <li role="option" data-lang="en" aria-selected="false">
-            <img src="design-assets/flag-us.svg" alt="" width="20" height="20" />English
+              <img src="design-assets/flag-us.svg" alt="" width="20" height="20" />English
             </li>
           </ul>
         </div>
 
         <button class="hamburger" type="button" aria-expanded="false" aria-controls="mobile-nav"
-                data-mobile-nav-trigger>
+          data-mobile-nav-trigger>
           <span class="visually-hidden">メニューを開く</span>
-          <span class="hamburger__line" aria-hidden="true"></span>
-          <span class="hamburger__line" aria-hidden="true"></span>
-          <span class="hamburger__line" aria-hidden="true"></span>
+          <span class="hamburger__line hamburger__line--top" aria-hidden="true"></span>
+          <span class="hamburger__line hamburger__line--middle" aria-hidden="true"></span>
+          <span class="hamburger__line hamburger__line--bottom" aria-hidden="true"></span>
         </button>
       </div>
     </div>
@@ -91,9 +91,11 @@
     </nav>
     <div class="mobile-nav__sns">
       <span class="visually-hidden">公式SNS</span>
-      <a href="https://www.instagram.com/langmate_app"><img src="design-assets/logo-instagram.svg" alt="Instagram" width="24" height="24" /></a>
+      <a href="https://www.instagram.com/langmate_app"><img src="design-assets/logo-instagram.svg" alt="Instagram"
+          width="24" height="24" /></a>
       <a href="https://x.com/LANGMATE_APP"><img src="design-assets/logo-x.svg" alt="X" width="24" height="24" /></a>
-      <a href="https://www.tiktok.com/@questions_about_japan"><img src="design-assets/logo-tiktok.svg" alt="TikTok" width="24" height="24" /></a>
+      <a href="https://www.tiktok.com/@questions_about_japan"><img src="design-assets/logo-tiktok.svg" alt="TikTok"
+          width="24" height="24" /></a>
     </div>
     <a class="mobile-nav__download" href="#download">ダウンロードはこちら <span aria-hidden="true">⬇</span></a>
   </div>
@@ -106,10 +108,10 @@
           alt="" aria-hidden="true" />
       </button>
       <div class="floating-dl__panel" id="floating-dl-panel">
-        <a href="https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775" class="btn btn--store"><img src="design-assets/badge-appstore-ja.svg" alt="App Storeからダウンロード"
-            width="160" height="48" /></a>
-        <a href="https://play.google.com/store/apps/details?id=co.thoron.langmate" class="btn btn--store"><img src="design-assets/badge-googleplay-ja.svg" alt="Google Playで手に入れよう"
-            width="160" height="48" /></a>
+        <a href="https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775" class="btn btn--store"><img
+            src="design-assets/badge-appstore-ja.svg" alt="App Storeからダウンロード" width="160" height="48" /></a>
+        <a href="https://play.google.com/store/apps/details?id=co.thoron.langmate" class="btn btn--store"><img
+            src="design-assets/badge-googleplay-ja.svg" alt="Google Playで手に入れよう" width="160" height="48" /></a>
       </div>
     </div>
   </div>
@@ -130,6 +132,24 @@
           </text>
         </svg>
         <h1 class="sub-hero__heading faq-hero__heading">よくある質問</h1>
+
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb faq-hero__breadcrumb aria-label=" パンくずリスト>
+          <ol class="breadcrumb__list">
+
+            <li class="breadcrumb__item">
+              <a href="index.html">HOME</a>
+            </li>
+
+            <li class="breadcrumb__item">
+              <a href="how-can-we-help.html">よくある質問</a>
+            </li>
+
+            <li class="breadcrumb__item" aria-current="page">
+              Cardsとは?
+            </li>
+          </ol>
+        </nav>
       </div>
     </section>
 
@@ -186,12 +206,15 @@
 
           <article class="faq-detail__block">
             <h2>ユーザー同士がフレンドリクエストを送り合いマッチしましょう</h2>
-            <p>ユーザー同士がお互いにフレンドリクエストをするとマッチします。Card表示時に［アイコン］をタップもしくは右にスワイプすると、そのユーザーにフレンドリクエストが送信されます。相手のユーザーも同様に［アイコン］をタップもしくは右にスワイプするとマッチ成立です。ポップアップが表示されるので、すぐにMessagesを始めることができます。</p>
+            <p>
+              ユーザー同士がお互いにフレンドリクエストをするとマッチします。Card表示時に［アイコン］をタップもしくは右にスワイプすると、そのユーザーにフレンドリクエストが送信されます。相手のユーザーも同様に［アイコン］をタップもしくは右にスワイプするとマッチ成立です。ポップアップが表示されるので、すぐにMessagesを始めることができます。
+            </p>
           </article>
 
           <article class="faq-detail__block">
             <h2>新しいマッチリストからメッセージを送る方法</h2>
-            <p>下部ボタン、Messageをタップ。画面上部に、フレンドリクエストが表示されます。チャットしたいユーザーの写真をタップします。チャットウィンドウが開きます。下部のテキストバーを使用してメッセージを送信できます。</p>
+            <p>下部ボタン、Messageをタップ。画面上部に、フレンドリクエストが表示されます。チャットしたいユーザーの写真をタップします。チャットウィンドウが開きます。下部のテキストバーを使用してメッセージを送信できます。
+            </p>
           </article>
 
           <article class="faq-detail__block">
@@ -200,7 +223,9 @@
 
             <div class="faq-detail__sub">
               <h3>良い写真をアップロードしましょう</h3>
-              <p>ユーザー同士がお互いにフレンドリクエストをするとマッチします。Card表示時に［アイコン］をタップもしくは右にスワイプすると、そのユーザーにフレンドリクエストが送信されます。相手のユーザーも同様に［アイコン］をタップもしくは右にスワイプするとマッチ成立です。ポップアップが表示されるので、すぐにMessagesを始めることができます。</p>
+              <p>
+                ユーザー同士がお互いにフレンドリクエストをするとマッチします。Card表示時に［アイコン］をタップもしくは右にスワイプすると、そのユーザーにフレンドリクエストが送信されます。相手のユーザーも同様に［アイコン］をタップもしくは右にスワイプするとマッチ成立です。ポップアップが表示されるので、すぐにMessagesを始めることができます。
+              </p>
             </div>
 
             <div class="faq-detail__sub">
@@ -219,10 +244,10 @@
         <p>外国人の友達になれる国際交流アプリ</p>
         <img src="design-assets/logo-langmate.svg" alt="Langmate" />
         <div class="site-footer__badges">
-          <a href="https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775"><img src="design-assets/badge-appstore-ja.svg" alt="App Storeからダウンロード" width="120"
-              height="36" /></a>
-          <a href="https://play.google.com/store/apps/details?id=co.thoron.langmate"><img src="design-assets/badge-googleplay-ja.svg" alt="Google Playで手に入れよう" width="120"
-              height="36" /></a>
+          <a href="https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775"><img
+              src="design-assets/badge-appstore-ja.svg" alt="App Storeからダウンロード" width="120" height="36" /></a>
+          <a href="https://play.google.com/store/apps/details?id=co.thoron.langmate"><img
+              src="design-assets/badge-googleplay-ja.svg" alt="Google Playで手に入れよう" width="120" height="36" /></a>
         </div>
       </div>
 
@@ -239,9 +264,11 @@
       <div class="site-footer__sns">
         <p>公式SNSはこちら</p>
         <div>
-          <a href="https://www.instagram.com/langmate_app"><img src="design-assets/logo-instagram.svg" alt="Instagram" width="24" height="24" /></a>
+          <a href="https://www.instagram.com/langmate_app"><img src="design-assets/logo-instagram.svg" alt="Instagram"
+              width="24" height="24" /></a>
           <a href="https://x.com/LANGMATE_APP"><img src="design-assets/logo-x.svg" alt="X" width="24" height="24" /></a>
-          <a href="https://www.tiktok.com/@questions_about_japan"><img src="design-assets/logo-tiktok.svg" alt="TikTok" width="24" height="24" /></a>
+          <a href="https://www.tiktok.com/@questions_about_japan"><img src="design-assets/logo-tiktok.svg" alt="TikTok"
+              width="24" height="24" /></a>
         </div>
       </div>
     </div>
