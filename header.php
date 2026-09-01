@@ -23,9 +23,6 @@ if ( is_singular( 'faq' ) ) {
   <meta charset="<?php bloginfo( 'charset' ); ?>" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/logo-langmate.svg" />
-
   <?php wp_head(); ?>
 </head>
 
