@@ -32,18 +32,6 @@
         }
     }
 
-    &--thanks {
-        padding-block-end: 40px;
-
-        .sub-hero__map {
-            position: static;
-            display: block;
-            aspect-ratio: 1280 / 380;
-            object-fit: cover;
-            object-position: top;
-        }
-    }
-
     // ==========================================================================
     // CONTACT PAGE ONLY
     // SPでは説明文だけ左揃え
@@ -97,7 +85,8 @@
 .contact-form {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
+    justify-content: center;
     gap: 24px;
     max-width: 1000px;
     margin-inline: auto;
@@ -107,10 +96,18 @@
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.08);
     border: 1px solid #A9A9A9;
 
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 24px;
+        width: 100%;
+    }
+
     &__field {
         display: flex;
         flex-direction: column;
-        align-items: flex-start; // label/inputを左揃えに（親のalign-items:centerで中央寄せされないよう明示）
+        // align-items: flex-start;
         gap: 8px;
         width: 100%;
         max-width: clamp(345px, calc(160.4px + 42.93vw), 600px);
@@ -140,6 +137,7 @@
     &__input,
     &__textarea {
         width: 100%;
+        max-width: clamp(345px, calc(160.4px + 42.93vw), 600px);
         font-family: v.$font-jp;
         font-size: 1.6rem;
         color: v.$color-text;
@@ -225,7 +223,7 @@
     &__user-id-help {
         margin-block-start: 24px;
         text-align: left;
-        max-width: 600px;
+        max-width: clamp(345px, calc(160.4px + 42.93vw), 600px);
         margin-inline: auto;
 
         p {
@@ -241,7 +239,6 @@
 
     &__dropzone {
         box-sizing: border-box;
-        // fluid化: width(sp=100%)は据え置き、max-widthのみsp=345px / pc=600pxで補間（__fieldと同じ幅）
         width: 100%;
         max-width: clamp(345px, calc(160.4px + 42.93vw), 600px);
         margin-inline: auto;
@@ -251,9 +248,37 @@
         background-color: #F4FAFF;
         padding: 32px 72px;
         margin-bottom: 20px;
+        transition: border-color 0.2s, background-color 0.2s;
 
         @include mx.sp {
             padding: 32px;
+        }
+
+        // ドラッグ中(ファイルを乗せている間)
+        &.is-dragover {
+            border-style: solid;
+            border-color: v.$color-blue;
+            background-color: #E6F2FF;
+        }
+
+        // ファイル選択済み: 案内文言とボタンは隠し、ファイル名表示＋やり直しボタンだけにする
+        &.has-file {
+            border-style: solid;
+            border-color: v.$color-blue;
+
+            .contact-form__dropzone-label,
+            .contact-form__dropzone-or,
+            .contact-form__file-button {
+                display: none;
+            }
+
+            .contact-form__dropzone-filename {
+                display: flex;
+            }
+
+            .contact-form__dropzone-actions {
+                display: flex;
+            }
         }
     }
 
@@ -272,6 +297,82 @@
         color: v.$color-text;
         font-weight: v.$fw-normal;
         margin-block-end: 16px;
+    }
+
+    // 選択済みファイル名の表示
+    // display:noneがデフォルト(HTMLのhidden属性には頼らない。CF7フォーム保存時に
+    // hidden属性がサニタイズで落ちるケースがあり、それだと常時表示されてしまうため)。
+    // .has-fileが付いた時だけ.contact-form__dropzoneの子として表示される。
+    &__dropzone-filename {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-block-start: 16px;
+        font-size: 1.4rem;
+        font-weight: v.$fw-bold;
+        color: v.$color-blue;
+        word-break: break-all;
+    }
+
+    &__dropzone-filename-icon {
+        flex-shrink: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: v.$color-blue;
+
+        &::before {
+            content: '';
+            width: 10px;
+            height: 5px;
+            margin-block-start: -2px;
+            border-left: 2px solid v.$color-white;
+            border-bottom: 2px solid v.$color-white;
+            transform: rotate(-45deg);
+        }
+    }
+
+    // 添付し直し／削除ボタンの並び(間違ったファイルを添付した時用)。
+    // デフォルト非表示、.has-fileの時だけ.contact-form__dropzone内に表示される。
+    &__dropzone-actions {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        margin-block-start: 12px;
+
+        // CF7側で各ボタンが<p>で自動的に囲まれるため、
+        // デフォルトのpマージンがflexの縦横バランスを崩さないようリセットする
+        p {
+            margin: 0;
+        }
+    }
+
+    &__dropzone-change,
+    &__dropzone-remove {
+        background: none;
+        border: none;
+        font-size: 1.3rem;
+        font-weight: v.$fw-bold;
+        text-decoration: underline;
+        cursor: pointer;
+        padding: 4px 8px;
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+
+    &__dropzone-change {
+        color: v.$color-blue;
+    }
+
+    &__dropzone-remove {
+        color: v.$color-text;
     }
 
     &__file-button {
@@ -293,8 +394,14 @@
     }
 
     &__submit {
-        display: inline-block;
-        width: auto;
+        // CF7がinput(type=submit)を<p>で自動的に囲むため、inline-block +
+        // margin:auto では中央揃えにならない(inline-blockはmargin:autoで center
+        // されない。<p>自体は幅いっぱいのblockなので、text-alignを継承しない限り
+        // ボタンは<p>の左端にくっつく)。block化してwidth:fit-content +
+        // margin-inline:autoにすることで、囲むタグの構成に関係なく確実に中央揃えにする。
+        display: block;
+        width: fit-content;
+        margin-inline: auto;
         font-family: v.$font-jp;
         font-weight: v.$fw-bold;
         font-size: 2.4rem;
@@ -321,7 +428,8 @@
     }
 }
 
-// ---- ユーザーIDを追加する方法（アコーディオン中身の手順リスト） ----
+
+// ---- ユーザーIDを追加する方法(アコーディオン中身の手順リスト) ----
 .user-id-steps {
     display: flex;
     flex-direction: column;
@@ -343,7 +451,10 @@
 
     &__num {
         flex-shrink: 0;
-        display: flex;
+        // Contact Form 7埋め込み時、wpautop対策でこのspanを直後の<p>の中に
+        // 埋め込む構成にするため、inline-flexにしてテキストと同じ行に収まるようにする。
+        // flexアイテムとして使われる場合(静的HTML側)はblockifyされるため見た目は変わらない。
+        display: inline-flex;
         align-items: center;
         justify-content: center;
         width: 24px;
@@ -355,6 +466,14 @@
         color: v.$color-white;
         background-color: v.$color-blue;
         border-radius: 50%;
+        vertical-align: top;
+
+        // <p>の中に埋め込まれる場合(CF7側の構成)だけ、テキストとの間隔をmarginで確保する。
+        // 静的HTML側(.user-id-steps__item直下、pの外)は今まで通りflexのgap:12pxのみで余白を作るため、
+        // ここに影響しないようp内限定のセレクタにしている。
+        p & {
+            margin-inline-end: 12px;
+        }
     }
 
     &__body {

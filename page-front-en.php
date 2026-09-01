@@ -1,0 +1,667 @@
+<?php
+/**
+ * Template Name: EN TOP
+ *
+ * page-front-en.php — EN TOP
+ *
+ * 既存の en/index.html の <main> 部分をそのまま移植したもの。
+ * デザイン・DOM構造・class名は完全に維持し、
+ * アセットパスと内部ページへのリンクのみPHP化している。
+ * WordPress管理画面で「TOP / EN」ページのテンプレートとしてこれを選択する。
+ */
+
+get_header();
+
+$langmate_theme_uri = get_template_directory_uri();
+?>
+
+  <main id="main">
+    <!-- ===== Hero ===== -->
+    <section class="hero">
+      <div class="hero__inner">
+
+        <!-- 左上の青い装飾 -->
+        <img class="hero__deco fuwafuwa" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/fv-parts01.svg" alt="" aria-hidden="true" />
+
+        <!-- 右側のスマホ群 -->
+        <img class="hero__phones" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/fv-parts02.png" alt="" aria-hidden="true" />
+
+        <div class="hero__content">
+          <h1 class="hero__heading">
+            Meet People in Japan. Make Real Friends.
+
+            <img class="hero__logo" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/logo-langmate.svg" alt="Langmate" width="378" height="81" />
+          </h1>
+
+          <p class="hero__lead">
+            Find Japanese people you’ll actually click with. <br>
+            Check out their profiles, interests, and age,<br>
+            and connect with people who share your hobbies and<br>
+            what you’re looking for.
+          </p>
+
+          <div class="hero__badges">
+            <a href="https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775" target="_blank" rel="noopener" class="btn btn--store">
+              <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/badge-appstore-en.svg" alt="Download from the App Store" />
+            </a>
+
+            <a href="https://play.google.com/store/apps/details?id=co.thoron.langmate" target="_blank" rel="noopener" class="btn btn--store">
+              <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/badge-googleplay-en.svg" alt="Get it on Google Play" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Intro + 実績 ===== -->
+    <section class="intro">
+      <div class="wrapper intro__inner">
+        <div class="intro__head">
+          <div class="intro__content">
+            <h2>Talk with friends.<br />Use Japanese every day.</h2>
+            <div class="intro__illustration">
+              <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/img-about.webp" alt="" aria-hidden="true" width="466" height="417"
+                data-pop-early />
+            </div>
+            <p>
+              Langmate started in Japan in 2015. It’s where people who love Japan come to meet Japanese people, make
+              friends, and just talk.
+              No AI pretending to be a conversation partner. You’re chatting with real people. You’ll pick up the
+              Japanese they actually use, notice little cultural differences, and get to know Japan in a way textbooks
+              can’t really show you.
+              And it’s not only about Japanese. There are people from all over the world, so you can meet native
+              speakers of Korean, French, and other languages too.
+              Still learning Japanese? No problem. Translation, corrections, and reply help are there when you need
+              them, so you can keep the conversation going without overthinking every message.
+            </p>
+          </div>
+        </div>
+        <div class="stat-grid">
+          <ul class="stat-grid__row stat-grid__row--top">
+            <li class="stat-box stat-box--sm">
+              <span class="stat-box__tag" data-pop>Connections made on Langmate</span>
+              <p class="stat-box__value"><strong>4.35M+ </strong>matches every year</p>
+            </li>
+            <li class="stat-box stat-box--sm">
+              <span class="stat-box__tag" data-pop>Downloads</span>
+              <p class="stat-box__value"><strong>Over 4M+</strong>downloads</p>
+            </li>
+            <li class="stat-box stat-box--lg">
+              <span class="stat-box__tag" data-pop>Featured in Japanese Media</span>
+              <ul class="stat-box__list">
+                <li>Langmate has been featured by TBS, Ameba, and many other media outlets in Japan.</li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="stat-grid__row stat-grid__row--bottom">
+            <li class="stat-box stat-box--chart">
+              <span class="stat-box__tag" data-pop>Users by Country/Region</span>
+              <div class="stat-box__chart">
+                <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/chart-country-en.png" alt="" width="140" height="140" />
+                <ul class="stat-box__legend">
+                  <li>Japanese 67%</li>
+                  <li>Non-Japanese 33%</li>
+                </ul>
+              </div>
+            </li>
+            <li class="stat-box">
+              <span class="stat-box__tag" data-pop>People from 120+ countries</span>
+              <p class="stat-box__value"><strong>People from more than 120 countries</strong> are on Langmate. And
+                it’s not just English—you can connect in many different languages.</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="marquee marquee--yellow" aria-hidden="true">
+      <div class="marquee__track">
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-yellow.svg" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-yellow.svg" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-yellow.svg" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-yellow.svg" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-yellow.svg" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-yellow.svg" alt="" width="706" height="172" />
+      </div>
+    </div>
+
+    <!-- ===== Banner ===== -->
+    <section class="banner">
+      <div class="wrapper banner__inner">
+        <div class="banner__visual">
+          <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/img-beginner.webp" alt="" width="295" height="256" data-pop />
+        </div>
+        <div class="banner__content">
+          <p class="banner__heading"><strong>Not confident in your Japanese?<br>
+              No problem.</strong></p>
+          <p>
+            It’s easy to find something to talk about.
+            Anime, travel, food, music—start with something you both like. Even a short message is enough. And if you’re
+            still learning Japanese, translation, corrections, and reply support can help you keep the conversation
+            going at your own pace.
+          </p>
+          <a href="<?php echo esc_url( langmate_get_page_url( 'beginners-guide', 'en' ) ); ?>" class="btn btn--outline">Why Langmate is easy to start with</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="marquee marquee--blue" aria-hidden="true">
+      <div class="marquee__track">
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
+      </div>
+    </div>
+
+    <img class="reason__divider reason__divider--top" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/reason-divider-top.svg" alt=""
+      aria-hidden="true" width="1280" height="240" />
+
+    <!-- ===== REASON ===== -->
+    <section class="reason" aria-labelledby="reason-heading">
+      <div class="wrapper">
+        <h2 id="reason-heading" class="section-title section-title--reason">
+          <span class="section-title__deco" aria-hidden="true">
+            <span class="section-title__deco-first">R</span>EASON
+          </span>
+
+          <span class="section-title__sub">
+            <span class="section-title__dot" aria-hidden="true"></span>
+            3 reasons people choose Langmate
+          </span>
+        </h2>
+        <ol class="reason__list">
+          <li class="reason__item">
+            <img class="reason__bg reason__bg--01" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/bg-reason-01.svg" alt="" aria-hidden="true">
+            <img class="reason__bg reason__bg--02" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/bg-reason-02.svg" alt="" aria-hidden="true"
+              width="270" height="206" />
+            <img class="reason__illustration reason__illustration--01" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-reason01-en.svg"
+              alt="" width="369" height="496" data-pop />
+            <div class="card card--reason">
+              <p class="card__eyebrow">Reason <span>01</span></p>
+              <h3 class="card__title">Meet Japanese people who are curious about your language and culture.</h3>
+              <p class="card__body">
+                Many Japanese people on Langmate are interested in other languages and cultures. That gives you
+                something to talk about from the start—anime, travel, food, music, or whatever you’re both into. Even
+                with someone new, it’s easy to get a conversation going.
+              </p>
+            </div>
+          </li>
+          <li class="reason__item reason__item--reverse">
+            <img class="reason__bg reason__bg--03" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/bg-reason-03.svg" alt="" aria-hidden="true"
+              width="304" height="176" />
+            <img class="reason__bg reason__bg--04" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/bg-reason-04.svg" alt="" aria-hidden="true"
+              width="417" height="263" />
+            <img class="reason__illustration reason__illustration--02" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-reason02.svg" alt=""
+              width="435" height="461" data-pop />
+            <div class="card card--reason">
+              <p class="card__eyebrow">Reason <span>02</span></p>
+              <h3 class="card__title">Real conversations. Real Japanese.</h3>
+              <p class="card__body">
+                Chat with Japanese people, hear the words they actually use, see how they react, and experience the
+                little cultural differences along the way. You’ll pick up natural Japanese that’s hard to learn from a
+                textbook—and get better at saying what you really mean.
+              </p>
+            </div>
+          </li>
+          <li class="reason__item">
+            <img class="reason__illustration reason__illustration--03" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-reason03.svg" alt=""
+              width="370" height="503" data-pop />
+            <div class="card card--reason">
+              <p class="card__eyebrow">Reason <span>03</span></p>
+              <h3 class="card__title">Run by a Japanese company, with safety in mind.</h3>
+              <p class="card__body">
+                Langmate is run by a Japanese company, with reporting and blocking tools to help keep the community
+                safe. We also take action against users who break the rules. If something goes wrong, there’s a team you
+                can reach out to—so you can focus on meeting people and enjoying the conversation.
+              </p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+    <img class="reason__divider reason__divider--bottom" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/reason-divider-bottom.svg" alt=""
+      aria-hidden="true" width="1280" height="240" />
+
+    <!-- ===== SERVICE ===== -->
+    <section class="service" aria-labelledby="service-heading">
+      <div class="wrapper">
+        <div class="service__box">
+          <h2 id="service-heading" class="section-title section-title--service">
+            <span class="section-title__deco" aria-hidden="true">
+              <span class="section-title__deco-first">S</span>ERVICE
+            </span>
+
+            <span class="section-title__sub">
+              <span class="section-title__dot" aria-hidden="true"></span>
+              What you can do on Langmate
+            </span>
+          </h2>
+          <div class="service__inner">
+            <img class="service__mockup" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/img-service.png" alt="" aria-hidden="true" width="176"
+              height="367" />
+            <div class="service__content">
+              <div class="service-tabs" data-service-tabs>
+                <p class="service-tabs__hint">Tap to explore the features!</p>
+                <div class="service-tabs__list" role="tablist" aria-label="What you can do on Langmate">
+                  <button type="button" role="tab" id="service-tab-1" aria-selected="true"
+                    aria-controls="service-panel-1" data-service-tab>
+                    <span class="visually-hidden">Meet Japanese people</span>
+                    <svg viewBox="0 0 42 48" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M39.2798 18.1381C38.9407 18.439 38.586 18.7242 38.2119 18.9907C37.346 19.6044 36.875 19.9416 36.5802 20.1969C37.4442 22.1263 37.9748 24.237 38.0799 26.4647H31.8532H30.2023H21.5352V15.9735H19.8785H13.2873C13.5468 15.3542 13.8246 14.7654 14.123 14.2174C15.0157 12.5708 16.0686 11.2658 17.1909 10.3938C17.2754 10.3281 17.3598 10.2699 17.4443 10.2086C17.958 10.1122 18.4816 10.0446 19.0096 9.99336C18.9789 9.64301 18.9576 9.29145 18.9576 8.93802C18.9576 8.15539 19.0339 7.39086 19.1753 6.64893C14.0717 7.02177 9.46911 9.24514 6.06458 12.651C2.32031 16.3934 -0.00121819 21.5808 5.56208e-07 27.2932C-0.00131194 33.0056 2.32031 38.193 6.06458 41.9354C9.80633 45.6797 14.9938 48.0013 20.7068 48C26.4198 48.0013 31.6067 45.6797 35.349 41.9354C39.0932 38.1931 41.4142 33.0057 41.4136 27.2932C41.4143 24.0093 40.6435 20.9001 39.2798 18.1381ZM8.40814 14.9944C10.0272 13.3759 11.9615 12.0798 14.1093 11.1983C13.0857 12.5233 12.2143 14.1424 11.5068 15.9736H7.5073C7.79633 15.6369 8.09408 15.3078 8.40814 14.9944ZM6.24421 17.63H10.9275C10.1111 20.2676 9.62811 23.2705 9.55554 26.4648H3.33393C3.48712 23.201 4.53693 20.1795 6.24421 17.63ZM5.56668 35.852C4.26168 33.5504 3.46593 30.9266 3.33393 28.1214H9.56117C9.62436 30.8809 9.99467 33.4909 10.6221 35.852H5.56668ZM8.40814 39.5919C7.76258 38.9462 7.17064 38.2481 6.63271 37.5086H11.117C11.5568 38.8261 12.0705 40.058 12.6666 41.1584C13.1083 41.9717 13.5925 42.7162 14.1124 43.3899C11.9635 42.5084 10.0285 41.2109 8.40814 39.5919ZM19.8785 44.6655C19.0502 44.6267 18.2383 44.5272 17.445 44.3777C17.3598 44.3164 17.2755 44.2583 17.1909 44.1932C15.5061 42.8856 13.9841 40.5972 12.9099 37.6587C12.8925 37.61 12.8768 37.5574 12.8586 37.5086H19.8785V44.6655ZM19.8785 35.852H12.3332C11.6769 33.5309 11.2784 30.909 11.2114 28.1214H19.8785V35.852ZM19.8785 26.4648H11.2058C11.2821 23.2267 11.8108 20.2076 12.6653 17.63H19.8784V26.4648H19.8785ZM21.5352 28.1215H30.2079C30.1422 30.9086 29.7405 33.531 29.0843 35.8521H21.5352V28.1215ZM24.2228 44.1932C24.139 44.2583 24.0539 44.3164 23.9687 44.3777C23.1754 44.5272 22.3635 44.6267 21.5352 44.6655V37.5086H28.5569C28.1852 38.544 27.7611 39.5036 27.2907 40.3689C26.398 42.0154 25.3451 43.3198 24.2228 44.1932ZM33.0062 39.5919C31.3859 41.2104 29.4522 42.5072 27.3039 43.3893C28.3999 41.9704 29.3264 40.2213 30.059 38.2293C30.1453 37.9953 30.223 37.7501 30.303 37.5086H34.7811C34.243 38.2481 33.6512 38.9462 33.0062 39.5919ZM35.847 35.852H30.8028C31.4284 33.4928 31.7951 30.8785 31.8582 28.1214H38.0799C37.9479 30.9267 37.1515 33.5504 35.847 35.852Z"
+                        fill="currentColor" />
+                      <path
+                        d="M26.1217 16.2882C28.2281 17.7834 28.6937 18.1394 29.435 19.5538C30.0212 20.6736 30.9715 22.6367 30.9715 22.6367C31.0165 22.7262 31.1073 22.7832 31.208 22.7832C31.3074 22.7832 31.4001 22.7262 31.4444 22.6367C31.4444 22.6367 32.3953 20.6736 32.9815 19.5538C33.7216 18.1393 34.1877 17.7834 36.2947 16.2882C38.6038 14.6504 40.1465 11.984 40.1465 8.93801C40.1464 4.00199 36.1439 0 31.2079 0C26.2712 0 22.2705 4.00199 22.2705 8.93801C22.2705 11.984 23.812 14.6503 26.1217 16.2882ZM31.2079 5.15746C33.2961 5.15746 34.989 6.85039 34.989 8.93801C34.989 11.0262 33.2961 12.7191 31.2079 12.7191C29.1196 12.7191 27.4273 11.0262 27.4273 8.93801C27.4274 6.85039 29.1196 5.15746 31.2079 5.15746Z"
+                        fill="currentColor" />
+                    </svg>
+                  </button>
+                  <button type="button" role="tab" id="service-tab-2" aria-selected="false"
+                    aria-controls="service-panel-2" tabindex="-1" data-service-tab>
+                    <span class="service-tabs__guide" aria-hidden="true" data-service-tip>
+                      <span class="service-tabs__guide-label"><span class="service-tabs__guide-label-pc">Click!</span><span class="service-tabs__guide-label-sp">Tap!</span></span>
+                    </span>
+                    <span class="visually-hidden">Find people you’ll click with</span>
+                    <svg viewBox="0 0 48 48" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M16.1832 9.6001C12.1825 9.6001 8.92773 12.8569 8.92773 16.8599C8.92773 17.416 9.3783 17.8668 9.93395 17.8668C10.4897 17.8668 10.9402 17.416 10.9402 16.8599C10.9402 13.9672 13.2922 11.6138 16.1832 11.6138C16.739 11.6138 17.1895 11.163 17.1895 10.6069C17.1895 10.0508 16.739 9.6001 16.1832 9.6001Z"
+                        fill="currentColor" />
+                      <path
+                        d="M33.9053 28.2667C35.7243 25.4133 36.7783 22.028 36.7783 18.4C36.7783 8.25337 28.5298 0 18.3892 0C14.7633 0 11.3799 1.05469 8.52834 2.87466C6.25631 4.32403 4.32281 6.25866 2.87428 8.532C1.05534 11.3854 0 14.772 0 18.4C0 28.5454 8.24981 36.8 18.3892 36.8C22.015 36.8 25.3997 35.744 28.2514 33.924C30.5233 32.4746 32.4568 30.54 33.9053 28.2667ZM24.3523 30.0227C22.564 30.9454 20.5359 31.4667 18.3892 31.4667C11.1894 31.4667 5.33016 25.6041 5.33016 18.4C5.33016 16.252 5.85122 14.2227 6.77334 12.4334C8.02191 10.0094 10.0061 8.02538 12.4286 6.77738C14.2169 5.85469 16.2437 5.33334 18.3891 5.33334C25.5902 5.33334 31.4481 11.1947 31.4481 18.4C31.4481 20.5467 30.927 22.5747 30.0049 24.364C28.7577 26.788 26.7748 28.7734 24.3523 30.0227Z"
+                        fill="currentColor" />
+                      <path
+                        d="M46.8299 41.1707L36.2135 30.5747C34.7024 32.7827 32.7663 34.7186 30.5596 36.2321L41.1759 46.828C41.9568 47.6094 42.9802 48 44.0023 48C45.0257 48 46.0491 47.6094 46.83 46.828C48.3904 45.2653 48.3904 42.7333 46.8299 41.1707Z"
+                        fill="currentColor" />
+                    </svg>
+                  </button>
+                  <button type="button" role="tab" id="service-tab-3" aria-selected="false"
+                    aria-controls="service-panel-3" tabindex="-1" data-service-tab>
+                    <span class="visually-hidden">Send voice and video messages</span>
+                    <svg viewBox="0 0 34 48" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M29.8217 21.0806V23.5282C29.8208 27.1943 28.3345 30.5068 25.9249 32.9195C23.5127 35.3291 20.1998 36.8158 16.533 36.8169C12.8663 36.8158 9.55341 35.3291 7.14113 32.9195C4.731 30.5068 3.24422 27.1943 3.24375 23.5282V21.0806H0V23.5282C0.002625 31.9133 6.27159 38.8359 14.3706 39.9023V48.0002H18.6956V39.9023C26.7945 38.8359 33.0624 31.9133 33.0656 23.5282V21.0806H29.8217Z"
+                        fill="currentColor" />
+                      <path
+                        d="M16.533 31.951C21.1822 31.9479 24.9534 28.1772 24.9565 23.528V8.42409C24.9534 3.77494 21.1827 0.0031875 16.533 0C11.8833 0.0031875 8.11256 3.77494 8.10938 8.42409V23.528C8.11256 28.1772 11.8837 31.9479 16.533 31.951ZM11.3532 8.42409C11.3538 6.99338 11.9313 5.70722 12.8727 4.76325C13.8167 3.82134 15.1023 3.24488 16.5331 3.24263C17.9639 3.24478 19.2494 3.82134 20.1935 4.76325C21.1348 5.70722 21.7124 6.99338 21.713 8.42409V23.528C21.7124 24.9587 21.1349 26.2448 20.1935 27.1877C19.25 28.1286 17.9639 28.7061 16.5331 28.7072C15.1023 28.7061 13.8162 28.1286 12.8727 27.1877C11.9314 26.2448 11.3538 24.9587 11.3532 23.528V8.42409Z"
+                        fill="currentColor" />
+                    </svg>
+                  </button>
+                  <button type="button" role="tab" id="service-tab-4" aria-selected="false"
+                    aria-controls="service-panel-4" tabindex="-1" data-service-tab>
+                    <span class="visually-hidden">Say it in your own handwriting</span>
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M4 20h4L18.5 9.5a2.121 2.121 0 00-3-3L5 17v3z" stroke="currentColor" stroke-width="1.6"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M14 6.5l3 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    </svg>
+                  </button>
+                  <button type="button" role="tab" id="service-tab-5" aria-selected="false"
+                    aria-controls="service-panel-5" tabindex="-1" data-service-tab>
+                    <span class="visually-hidden">Block or report when something feels wrong</span>
+                    <svg viewBox="0 0 38 48" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M35.5592 9.06422L33.7192 8.96325C28.7289 8.68603 24.4032 6.77044 21.8494 3.70397L18.7582 0L15.6664 3.70397C13.1126 6.77044 8.78597 8.68603 3.79659 8.96325L0 9.17325V26.7133C0 29.208 0.755531 31.56 1.95731 33.711C6.10669 41.196 15.549 46.32 16.8927 47.0254L18.7582 48L20.623 47.0254C22.3531 46.1181 37.5166 37.8694 37.5166 26.7133V9.17325L35.5592 9.06422ZM4.01494 24.4787C4.01494 20.1356 4.01494 12.978 4.01494 12.978C10.0462 12.6425 15.4064 10.2988 18.7583 6.27487V24.4787H33.5002V26.7133C33.5002 35.7603 18.7583 43.4634 18.7583 43.4634V24.4787H4.01494Z"
+                        fill="currentColor" />
+                    </svg>
+                  </button>
+                </div>
+                <div class="service-tabs__panels">
+                  <div role="tabpanel" id="service-panel-1" aria-labelledby="service-tab-1">
+                    <h3>Meet Japanese people</h3>
+                    <p>Find Japanese people who are open to meeting people from around the world. Start a chat, talk
+                      about
+                      everyday life or things you both like, and see where the conversation goes.</p>
+                  </div>
+                  <div role="tabpanel" id="service-panel-2" aria-labelledby="service-tab-2" hidden>
+                    <h3>Find people you’ll click with</h3>
+                    <p>Looking for someone specific? Use filters like nationality, age, and gender, then check out
+                      profiles and interests to find people you’d like to talk to.</p>
+                  </div>
+                  <div role="tabpanel" id="service-panel-3" aria-labelledby="service-tab-3" hidden>
+                    <h3>Send voice and video messages</h3>
+                    <p>Sometimes text isn’t enough. Send voice or video messages and make conversations feel more
+                      personal, with real voices, expressions, and reactions.</p>
+                  </div>
+                  <div role="tabpanel" id="service-panel-4" aria-labelledby="service-tab-4" hidden>
+                    <h3>Say it in your own handwriting</h3>
+                    <p>Write a quick note or draw something by hand and send it as a message. It’s a simple, more
+                      personal
+                      way to say things that don’t quite fit into words.</p>
+                  </div>
+                  <div role="tabpanel" id="service-panel-5" aria-labelledby="service-tab-5" hidden>
+                    <h3>Block or report when something feels wrong</h3>
+                    <p>If someone makes you uncomfortable, you can block or report them anytime. Our team reviews
+                      reports
+                      and takes action against users who break the rules, so you can focus on meeting people and
+                      enjoying
+                      the conversation.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <img class="step-divider step-divider--top" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/step-divider-top.svg" alt="" aria-hidden="true"
+      width="1280" height="317" />
+
+    <!-- ===== STEP ===== -->
+    <section class="step" aria-labelledby="step-heading">
+      <div class="wrapper">
+        <div class="step__box">
+          <img class="step__illust step__illust--01" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-step-01.svg" alt="" aria-hidden="true"
+            width="227" height="227" data-pop />
+          <img class="step__illust step__illust--02" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-step-02.svg" alt="" aria-hidden="true"
+            width="226" height="236" data-pop />
+          <img class="step__deco step__deco--01" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/deco-step-01.svg" alt="" aria-hidden="true"
+            width="330" height="304" />
+          <img class="step__deco step__deco--02" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/deco-step-02.svg" alt="" aria-hidden="true"
+            width="205" height="190" />
+
+          <h2 id="step-heading" class="section-title section-title--step">
+            <span class="section-title__deco" aria-hidden="true">
+              <span class="section-title__deco-first">S</span>TEP
+            </span>
+
+            <span class="section-title__sub">
+              <span class="section-title__dot" aria-hidden="true"></span>
+              Get started in 20 seconds
+            </span>
+          </h2>
+          <div class="step__inner">
+            <div class="step__mockup">
+              <video class="step__video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+                <source src="<?php echo esc_url( $langmate_theme_uri ); ?>/video/howtomakenewaccount_EN.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div>
+              <ol class="step-list">
+                <li class="step-list__item">
+                  <span class="step-list__icon" style="--icon-src: url('<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/icon-download.svg')"
+                    aria-hidden="true"></span>
+                  <span>Download the app</span>
+                </li>
+                <li class="step-list__item">
+                  <span class="step-list__icon" style="--icon-src: url('<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/icon-register.svg')"
+                    aria-hidden="true"></span>
+                  <span>Create your account</span>
+                </li>
+                <li class="step-list__item">
+                  <span class="step-list__icon" style="--icon-src: url('<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/icon-profile.svg')"
+                    aria-hidden="true"></span>
+                  <span>Set up your profile</span>
+                </li>
+                <li class="step-list__item">
+                  <span class="step-list__icon" style="--icon-src: url('<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/icon-search-blue.svg')"
+                    aria-hidden="true"></span>
+                  <span>Find Japanese people</span>
+                </li>
+                <li class="step-list__item">
+                  <span class="step-list__icon" style="--icon-src: url('<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/icon-chat.svg')"
+                    aria-hidden="true"></span>
+                  <span>Start chatting</span>
+                </li>
+              </ol>
+              <a href="<?php echo esc_url( langmate_get_page_url( 'beginners-guide', 'en' ) ); ?>" class="btn btn--outline">See how to get started</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <img class="step-divider step-divider--bottom" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/step-divider-bottom.svg" alt=""
+      aria-hidden="true" width="1280" height="319" />
+
+    <!-- ===== VOICE ===== -->
+    <section class="voice" aria-labelledby="voice-heading">
+      <div class="wrapper">
+        <h2 id="voice-heading" class="section-title section-title--voice">
+          <span class="section-title__deco" aria-hidden="true">
+            <span class="section-title__deco-first">V</span>OICE
+          </span>
+          <span class="section-title__sub">
+            <span class="section-title__dot" aria-hidden="true"></span>
+            What people are saying on the App Store
+          </span>
+        </h2>
+        <div class="voice__slider" data-voice-slider>
+          <button type="button" class="voice__nav voice__nav--prev" aria-label="Previous review" data-voice-prev>
+            <svg viewBox="0 0 48 48" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+              <rect width="48" height="48" rx="24" fill="#FF3C71" />
+              <path d="M35 24L18.5 36.1244V11.8756L35 24Z" fill="white" />
+            </svg>
+          </button>
+          <ul class="voice__list" data-voice-list>
+            <li class="card card--voice">
+              <img class="card--voice__illust" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-voice.svg" alt="" aria-hidden="true"
+                width="225" height="213" />
+              <p class="card__rating" aria-label="評価5段階中5">★★★★★</p>
+              <p class="card__author">Wisniewski2257</p>
+              <p class="card__title">Fun</p>
+              <p class="card__body">
+                I’ve been on this app for 5 days now and it’s fun. You get to talk to many different people all over the
+                world.</p>
+            </li>
+            <li class="card card--voice">
+              <img class="card--voice__illust" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-voice.svg" alt="" aria-hidden="true"
+                width="225" height="213" />
+              <p class="card__rating" aria-label="評価5段階中5">★★★★★</p>
+              <p class="card__author">gigi.1kim</p>
+              <p class="card__title">BEST TALKING APP EVER</p>
+              <p class="card__body">
+                Best app ever you can chat with anyone you want and the people are so sweet. You get friend request
+                within 5-10 minutes of using so I recommend you get it!:two_hearts:
+              </p>
+            </li>
+            <li class="card card--voice">
+              <img class="card--voice__illust" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-voice.svg" alt="" aria-hidden="true"
+                width="225" height="213" />
+              <p class="card__rating" aria-label="評価5段階中5">★★★★★</p>
+              <p class="card__author">Ijele billion</p>
+              <p class="card__title">Langmate is the best</p>
+              <p class="card__body">This app is so nice, you meet your match easily unlike other dating apps and sites
+                that will stress you and at the end of the day you won’t get a single match.</p>
+            </li>
+            <li class="card card--voice">
+              <img class="card--voice__illust" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-voice.svg" alt="" aria-hidden="true"
+                width="225" height="213" />
+              <p class="card__rating" aria-label="評価5段階中5">★★★★★</p>
+              <p class="card__author">thad mad</p>
+              <p class="card__title">Pretty good app for culture exchange</p>
+              <p class="card__body">I am glad they finally added translation functions. It’s full of friendly people and
+                they are pretty strict about scammers, which is great!</p>
+            </li>
+            <li class="card card--voice">
+              <img class="card--voice__illust" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-voice.svg" alt="" aria-hidden="true"
+                width="225" height="213" />
+              <p class="card__rating" aria-label="評価5段階中5">★★★★★</p>
+              <p class="card__author">Juli1421</p>
+              <p class="card__title">Meet nice people all over the world</p>
+              <p class="card__body">Nice and genuine locals sharing their favourite places。 if you have good intentions,
+                you will meet others with good intentions too</p>
+            </li>
+            <li class="card card--voice">
+              <img class="card--voice__illust" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-voice.svg" alt="" aria-hidden="true"
+                width="225" height="213" />
+              <p class="card__rating" aria-label="評価5段階中5">★★★★★</p>
+              <p class="card__author">ichigo sakura</p>
+              <p class="card__title">I’ve met the most amazing users!!!</p>
+              <p class="card__body">The love that I’m able to connect with everyone around the world!</p>
+            </li>
+          </ul>
+          <button type="button" class="voice__nav voice__nav--next" aria-label="Next review" data-voice-next>
+            <svg viewBox="0 0 48 48" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+              <rect width="48" height="48" rx="24" fill="#FF3C71" />
+              <path d="M35 24L18.5 36.1244V11.8756L35 24Z" fill="white" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <img class="sns-divider sns-divider--top" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/insta-divider-top.svg" alt="" aria-hidden="true"
+      width="1280" height="180" />
+
+    <!-- ===== SNS (Instagram) ===== -->
+    <section class="sns" aria-labelledby="sns-heading">
+      <div class="wrapper">
+        <div class="sns__inner">
+          <img class="sns__grid" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/img_insta.png" alt="Langmate公式Instagram(@langmate_app)の投稿一覧"
+            width="260" height="356" />
+          <div class="sns__content">
+            <p class="sns__label">\ follow me! /</p>
+            <h2 id="sns-heading">
+              <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/logo-instagram.svg" alt="" aria-hidden="true" width="56" height="56" />
+              <span class="sns__ig-text" data-text="Instagram">Instagram</span>
+            </h2>
+            <p>From interviews with travelers in Japan to international culture and short videos, there’s always
+              something new to check out.</p>
+            <a class="sns__link" href="https://www.instagram.com/langmate_app/" target="_blank" rel="noopener">
+              <span class="sns__link-text">langmate_app</span>
+              <span class="sns__link-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" />
+                  <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <img class="sns-divider sns-divider--bottom" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/insta-divider-bottom.svg" alt="" aria-hidden="true"
+      width="1280" height="180" />
+
+    <!-- ===== FAQ Preview ===== -->
+    <section class="faq-preview" aria-labelledby="faq-preview-heading">
+      <div class="wrapper">
+        <h2 id="faq-preview-heading" class="section-title section-title--faq">
+          <span class="section-title__deco" aria-hidden="true">
+            <span class="section-title__deco-first">F</span>AQ
+          </span>
+          <span class="section-title__sub">
+            <span class="section-title__dot" aria-hidden="true"></span>
+            Got questions?
+          </span>
+        </h2>
+        <div class="faq-preview__box">
+          <img class="faq-preview__illustration" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-faq.svg" alt="" aria-hidden="true"
+            width="160" height="160" data-pop />
+          <ul class="faq-preview__list">
+            <li class="faq-preview__item">
+              <button type="button" class="faq-preview__question" aria-expanded="false" aria-controls="faq-preview-a-1"
+                data-faq-accordion-trigger>
+                <span class="faq-preview__q-icon" aria-hidden="true">Q</span>
+                <span class="faq-preview__q-text">What is the minimum age?</span>
+                <span class="faq-preview__arrow" aria-hidden="true"></span>
+              </button>
+              <div class="faq-preview__answer" id="faq-preview-a-1" hidden>
+                <span class="faq-preview__a-icon" aria-hidden="true">A</span>
+                <p>You have to be at least 18 years old to create an account and use Langmate.
+                  At Langmate we take Child Protection very seriously, and we will block access to user under the age
+                  of 18.
+                </p>
+              </div>
+            </li>
+            <li class="faq-preview__item">
+              <button type="button" class="faq-preview__question" aria-expanded="false" aria-controls="faq-preview-a-2"
+                data-faq-accordion-trigger>
+                <span class="faq-preview__q-icon" aria-hidden="true">Q</span>
+                <span class="faq-preview__q-text">Is Langmate free?</span>
+                <span class="faq-preview__arrow" aria-hidden="true"></span>
+              </button>
+              <div class="faq-preview__answer" id="faq-preview-a-2" hidden>
+                <span class="faq-preview__a-icon" aria-hidden="true">A</span>
+                <p>Langmate is available for free in the Apple App Store and Google Play Store
+                  We offer a range of features that you can enjoy without any cost, helping you connect and engage
+                  with people from around the world.
+                  <br><br>
+                  Matching with users and chatting is free on Langmate.
+                  Langmate uses a virtual credit system called Smiles to give you access to features like Card swipe,
+                  advanced chat tools and more.
+                  Swipe right on a profile to send a Friend Request to someone, swipe left to pass.
+                  If someone accept your friend request, or if you accept a friend request from an other user, it's a
+                  match!
+                  <br><br>
+                  You can start chatting and having fun with a limited number of new friends for free.
+                  After you've used your free chats credit, you can unlock addtional chats by using Smiles, or by
+                  becoming PREMIUM.
+                  Read more about the "Start chatting" feature
+                  <br><br>
+                  Enjoy all the premium features
+                  To fully enjoy all the features of Langmate, you may need to upgrade to PREMIUM or PLUS+
+                  Please see withing the app which plan applies to you.
+                  To see which plan applies to you, open the Langmate app
+                  > go on the My Page section
+                  > tap the My Status icon or go on Settings > My Status
+                  > Follow the steps on screen.
+
+                </p>
+              </div>
+            </li>
+            <li class="faq-preview__item">
+              <button type="button" class="faq-preview__question" aria-expanded="false" aria-controls="faq-preview-a-3"
+                data-faq-accordion-trigger>
+                <span class="faq-preview__q-icon" aria-hidden="true">Q</span>
+                <span class="faq-preview__q-text">Which country is Langmate from?</span>
+                <span class="faq-preview__arrow" aria-hidden="true"></span>
+              </button>
+              <div class="faq-preview__answer" id="faq-preview-a-3" hidden>
+                <span class="faq-preview__a-icon" aria-hidden="true">A</span>
+                <p>Langmate is an app developed in Japan.
+                  <br><br>
+                  For more information about the app's features and functions, please visit our download page.
+                  <br>
+                  Make friends before you travel the world!
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <a href="<?php echo esc_url( langmate_get_page_url( 'how-can-we-help', 'en' ) ); ?>" class="btn btn--outline">View FAQs</a>
+      </div>
+    </section>
+
+    <!-- ===== CTA ===== -->
+    <section class="cta" aria-labelledby="cta-heading" id="download">
+      <img class="cta__deco cta__deco--lt-wave" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/cta-deco-lefttop.svg" alt="" aria-hidden="true"
+        width="554" height="132" />
+      <img class="cta__deco cta__deco--lt-circle" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/cta-deco-leftbottom.svg" alt="" aria-hidden="true"
+        width="172" height="296" />
+      <img class="cta__deco cta__deco--rb-circle" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/cta-deco-righttop.svg" alt="" aria-hidden="true"
+        width="185" height="218" />
+      <img class="cta__deco cta__deco--rb-wave" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/cta-deco-rightbottom.svg" alt="" aria-hidden="true"
+        width="509" height="138" />
+      <div class="cta__inner">
+        <h2 id="cta-heading">Start meeting Japanese people today.</h2>
+        <p>Don’t just study Japanese. <br>Use it.
+          Build your Japanese naturally <br>through real conversations with real people.</p>
+        <div class="cta__badges">
+          <a href="https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775" target="_blank" rel="noopener" class="btn btn--store">
+            <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/badge-appstore-en.svg" alt="Download from the App Store" width="160" height="48" />
+          </a>
+          <a href="https://play.google.com/store/apps/details?id=co.thoron.langmate" target="_blank" rel="noopener" class="btn btn--store">
+            <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/badge-googleplay-en.svg" alt="Get it on Google Play" width="160" height="48" />
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <div class="marquee marquee--blue" aria-hidden="true">
+      <div class="marquee__track">
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
+      </div>
+    </div>
+  </main>
+<?php get_footer(); ?>

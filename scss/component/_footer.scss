@@ -17,6 +17,7 @@
         justify-content: space-between;
         column-gap: clamp(24px, 6vw, 60px);
         max-width: 1200px;
+        margin-inline: auto;
 
         @include mx.hero-sp {
             display: flex;

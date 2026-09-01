@@ -1,7 +1,14 @@
 // 言語選択・保存・ページ遷移
-// URL構造は /en/ プレフィックス方式（例: /about.html ⇔ /en/about.html）。
+// URL構造は /en/ プレフィックス方式（例: /company.html ⇔ /en/company.html、
+// WordPress側では /company/ ⇔ /en/company/）。
 // セレクターの選択状態(aria-selected)は「今開いているページの実際の言語」を
 // 反映する（保存済みの好みではなく、URLから判定した実体に合わせる）。
+//
+// 遷移先の決め方は<li>の中身によって2通り対応する（静的HTML/WordPress共存のため）:
+//   - <li>の中に<a href>がある場合（WordPress側。サーバーでtranslation_keyから解決済み）
+//     → そのネイティブな遷移にそのまま任せる
+//   - <a>が無い場合（静的HTML側。今まで通り）
+//     → JSでURLを組み立てて遷移する
 const STORAGE_KEY = 'langmate-lang';
 
 // 現在のページがどの言語版か、URLの/en/プレフィックスの有無で判定する
@@ -9,10 +16,8 @@ function getCurrentLang() {
   return location.pathname.startsWith('/en/') ? 'en' : 'ja';
 }
 
-// 指定した言語版の、今のページに対応するURLを組み立てる
+// 指定した言語版の、今のページに対応するURLを組み立てる（静的HTML用フォールバック）
 // 例: /company.html + 'en' → /en/company.html　/en/company.html + 'ja' → /company.html
-// ※ 対応する言語版のページがまだ存在しない場合は404になる（多言語対応を
-//   ページ単位で順次進めている間の暫定挙動。翻訳が揃い次第解消する）。
 function buildUrlForLang(lang) {
   const path = location.pathname;
   const isEn = path.startsWith('/en/');
@@ -48,14 +53,25 @@ export function initLanguageSwitcher() {
     });
 
     list.querySelectorAll('[data-lang]').forEach((li) => {
-      li.addEventListener('click', () => {
+      const hasNativeLink = !!li.querySelector('a[href]');
+
+      li.addEventListener('click', (e) => {
         const lang = li.dataset.lang;
         localStorage.setItem(STORAGE_KEY, lang);
 
         if (lang === currentLang) {
+          // 今と同じ言語をクリック：遷移不要、パネルを閉じるだけ
+          e.preventDefault();
           close();
           return;
         }
+
+        if (hasNativeLink) {
+          // WordPress側：<a href>のネイティブな遷移にそのまま任せる
+          return;
+        }
+
+        // 静的HTML側：<a>が無いのでJSでURLを組み立てて遷移する
         location.href = buildUrlForLang(lang);
       });
     });

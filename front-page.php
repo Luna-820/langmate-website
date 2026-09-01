@@ -1,0 +1,639 @@
+<?php
+/**
+ * front-page.php — JP TOP
+ *
+ * 既存の index.html の <main> 部分をそのまま移植したもの。
+ * デザイン・DOM構造・class名は完全に維持し、
+ * アセットパスと内部ページへのリンクのみPHP化している。
+ */
+
+get_header();
+
+$langmate_theme_uri = get_template_directory_uri();
+?>
+
+  <main id="main">
+    <!-- ===== Hero ===== -->
+    <section class="hero">
+      <div class="hero__inner">
+
+        <!-- 左上の青い装飾 -->
+        <img class="hero__deco fuwafuwa" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/fv-parts01.svg" alt="" aria-hidden="true" />
+
+        <!-- 右側のスマホ群 -->
+        <img class="hero__phones" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/fv-parts02.png" alt="" aria-hidden="true" />
+
+        <div class="hero__content">
+          <h1 class="hero__heading">
+            世界中の人と話して、<br />
+            外国人と友達になれる国際交流アプリ。
+
+            <img class="hero__logo" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/logo-langmate.svg" alt="Langmate" width="378" height="81" />
+          </h1>
+
+          <p class="hero__lead">
+            話したい相手ができると、<br class="sp-only">
+            英語を使う理由が生まれる。<br>
+            英語に自信がなくても、<br class="sp-only">
+            まずは短いメッセージから。<br>
+            楽しみながら、<br class="sp-only">
+            英語で伝える力を伸ばせます。
+          </p>
+
+          <div class="hero__badges">
+            <a href="https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775" target="_blank" rel="noopener" class="btn btn--store"
+              target="_blank" rel="noopener">
+              <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/badge-appstore-ja.svg" alt="App Storeからダウンロード" />
+            </a>
+
+            <a href="https://play.google.com/store/apps/details?id=co.thoron.langmate" target="_blank" rel="noopener" class="btn btn--store"
+              target="_blank" rel="noopener">
+              <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/badge-googleplay-ja.svg" alt="Google Playで手に入れよう" />
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== Intro + 実績 ===== -->
+    <section class="intro">
+      <div class="wrapper intro__inner">
+        <div class="intro__head">
+          <div class="intro__content">
+            <h2>
+              友達との会話が、<br />
+              英語を使う毎日に変わる。
+            </h2>
+            <div class="intro__illustration">
+              <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/img-about.webp" alt="" aria-hidden="true" width="466" height="417"
+                data-pop-early />
+            </div>
+            <p>
+              Langmate（ラングメイト）は2015年にスタートした、日本が好きな世界中の人とつながり、交流できる国際交流アプリです。
+              会話の相手はAIではなく、世界で暮らす実際の人。日常のやり取りを重ねながら、自然な英語表現や、さまざまな国の文化・価値観に触れられます。
+              英語だけでなく、韓国語やフランス語など、学びたい言語を実際に使う人と出会うこともできます。
+              英語に自信がなくても、翻訳・添削・返信サポートを使いながら、自分のペースで会話を始められます。
+            </p>
+          </div>
+        </div>
+        <div class="stat-grid">
+          <ul class="stat-grid__row stat-grid__row--top">
+            <li class="stat-box stat-box--sm">
+              <span class="stat-box__tag" data-pop>マッチング実績</span>
+              <p class="stat-box__value">年間<strong>435万件</strong>以上</p>
+            </li>
+            <li class="stat-box stat-box--sm">
+              <span class="stat-box__tag" data-pop>DL数</span>
+              <p class="stat-box__value"><strong>400万</strong>DL突破</p>
+            </li>
+            <li class="stat-box stat-box--lg">
+              <span class="stat-box__tag" data-pop>メディア掲載</span>
+              <ul class="stat-box__list">
+                <li>・ABEMA「ななにー 地下ABEMA」</li>
+                <li>・TBS「マツコの知らない世界」</li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="stat-grid__row stat-grid__row--bottom">
+            <li class="stat-box stat-box--chart">
+              <span class="stat-box__tag" data-pop>国別利用者比率</span>
+              <div class="stat-box__chart">
+                <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/chart-country-ja.png" alt="" width="140" height="140" />
+                <ul class="stat-box__legend">
+                  <li>USA <strong>39%</strong></li>
+                  <li>ヨーロッパ諸国 <strong>25%</strong></li>
+                  <li>韓国 <strong>19%</strong></li>
+                  <li>台湾 <strong>10%</strong></li>
+                  <li>その他 <strong>7%</strong></li>
+                  <li class="stat-box__note">※日本を除く</li>
+                </ul>
+              </div>
+            </li>
+            <li class="stat-box">
+              <span class="stat-box__tag" data-pop>多言語に対応</span>
+              <p class="stat-box__value"><strong>120か国以上</strong>のユーザーが登録。<br>英語だけでなく多言語に対応しています。</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="marquee marquee--yellow" aria-hidden="true">
+      <div class="marquee__track">
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-yellow.svg" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-yellow.svg" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-yellow.svg" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-yellow.svg" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-yellow.svg" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-yellow.svg" alt="" width="706" height="172" />
+      </div>
+    </div>
+
+    <!-- ===== Banner ===== -->
+    <section class="banner">
+      <div class="wrapper banner__inner">
+        <div class="banner__visual">
+          <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/img-beginner.webp" alt="" width="295" height="256" data-pop>
+        </div>
+        <div class="banner__content">
+          <p class="banner__heading"><strong>英語に自信がなくても大丈夫。</strong></p>
+          <p>
+            日本が好きな海外の人が多いから、アニメや旅行、食文化など、共通の話題から会話を始められます。
+            まずは短いメッセージから。翻訳・添削・返信サポートを使いながら、自分のペースで英語に慣れ、伝える力を伸ばせます。
+          </p>
+          <a href="<?php echo esc_url( langmate_get_page_url( 'beginners-guide' ) ); ?>" class="btn btn--outline">初めてでも安心な理由</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="marquee marquee--blue" aria-hidden="true">
+      <div class="marquee__track">
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
+      </div>
+    </div>
+
+    <img class="reason__divider reason__divider--top" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/reason-divider-top.svg" alt=""
+      aria-hidden="true" width="1280" height="240" />
+
+    <!-- ===== REASON ===== -->
+    <section class="reason" aria-labelledby="reason-heading">
+      <div class="wrapper">
+        <h2 id="reason-heading" class="section-title section-title--reason">
+          <span class="section-title__deco" aria-hidden="true">
+            <span class="section-title__deco-first">R</span>EASON
+          </span>
+
+          <span class="section-title__sub">
+            <span class="section-title__dot" aria-hidden="true"></span>
+            選ばれる3つの理由
+          </span>
+        </h2>
+        <ol class="reason__list">
+          <li class="reason__item">
+            <img class="reason__bg reason__bg--01" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/bg-reason-01.svg" alt="" aria-hidden="true">
+            <img class="reason__bg reason__bg--02" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/bg-reason-02.svg" alt="" aria-hidden="true"
+              width="270" height="206" />
+            <img class="reason__illustration reason__illustration--01" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-reason01.png" alt=""
+              width="369" height="496" data-pop />
+            <div class="card card--reason">
+              <p class="card__eyebrow">Reason <span>01</span></p>
+              <h3 class="card__title">日本に興味を持つ世界の人と、会話が始まりやすい</h3>
+              <p class="card__body">
+                Langmateには、日本語や日本文化に興味を持つ海外の人が多く参加しています。
+                アニメや旅行、食べ物、音楽など、共通の話題をきっかけに、初めての相手とも自然に会話を始められます。
+              </p>
+            </div>
+          </li>
+          <li class="reason__item reason__item--reverse">
+            <img class="reason__bg reason__bg--03" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/bg-reason-03.svg" alt="" aria-hidden="true"
+              width="304" height="176" />
+            <img class="reason__bg reason__bg--04" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/bg-reason-04.svg" alt="" aria-hidden="true"
+              width="417" height="263" />
+            <img class="reason__illustration reason__illustration--02" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-reason02.png" alt=""
+              width="435" height="461" data-pop />
+            <div class="card card--reason">
+              <p class="card__eyebrow">Reason <span>02</span></p>
+              <h3 class="card__title">実際の人との会話だから、伝わる英語が身につく</h3>
+              <p class="card__body">
+                会話の相手はAIではなく、世界で暮らす実際の人。相手の言葉や反応、文化の違いに触れながら、
+                教科書だけでは学びにくい自然な表現と、英語で伝える力を磨けます。
+              </p>
+            </div>
+          </li>
+          <li class="reason__item">
+            <img class="reason__illustration reason__illustration--03" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-reason03.png" alt=""
+              width="370" height="503" data-pop />
+            <div class="card card--reason">
+              <p class="card__eyebrow">Reason <span>03</span></p>
+              <h3 class="card__title">日本企業の運営と安全対策で、安心して交流できる</h3>
+              <p class="card__body">
+                Langmateでは、通報・ブロック機能や悪質なユーザーへの対応など、安心して利用できる環境づくりに取り組んでいます。
+                困ったときに相談できる体制を整え、世界との交流を長く楽しめるサービスを目指しています。
+              </p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+    <img class="reason__divider reason__divider--bottom" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/reason-divider-bottom.svg" alt=""
+      aria-hidden="true" width="1280" height="240" />
+
+    <!-- ===== SERVICE ===== -->
+    <section class="service" aria-labelledby="service-heading">
+      <div class="wrapper">
+        <div class="service__box">
+          <h2 id="service-heading" class="section-title section-title--service">
+            <span class="section-title__deco" aria-hidden="true">
+              <span class="section-title__deco-first">S</span>ERVICE
+            </span>
+
+            <span class="section-title__sub">
+              <span class="section-title__dot" aria-hidden="true"></span>
+              Langmateでできること
+            </span>
+          </h2>
+          <div class="service__inner">
+            <img class="service__mockup" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/img-service.png" alt="" aria-hidden="true" width="176"
+              height="367" />
+            <div class="service__content">
+              <div class="service-tabs" data-service-tabs>
+                <p class="service-tabs__hint">気になる機能をタップしてチェック！</p>
+                <div class="service-tabs__list" role="tablist" aria-label="Langmateでできること">
+                  <button type="button" role="tab" id="service-tab-1" aria-selected="true"
+                    aria-controls="service-panel-1" data-service-tab>
+                    <span class="visually-hidden">世界中のユーザーとつながる</span>
+                    <svg viewBox="0 0 42 48" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M39.2798 18.1381C38.9407 18.439 38.586 18.7242 38.2119 18.9907C37.346 19.6044 36.875 19.9416 36.5802 20.1969C37.4442 22.1263 37.9748 24.237 38.0799 26.4647H31.8532H30.2023H21.5352V15.9735H19.8785H13.2873C13.5468 15.3542 13.8246 14.7654 14.123 14.2174C15.0157 12.5708 16.0686 11.2658 17.1909 10.3938C17.2754 10.3281 17.3598 10.2699 17.4443 10.2086C17.958 10.1122 18.4816 10.0446 19.0096 9.99336C18.9789 9.64301 18.9576 9.29145 18.9576 8.93802C18.9576 8.15539 19.0339 7.39086 19.1753 6.64893C14.0717 7.02177 9.46911 9.24514 6.06458 12.651C2.32031 16.3934 -0.00121819 21.5808 5.56208e-07 27.2932C-0.00131194 33.0056 2.32031 38.193 6.06458 41.9354C9.80633 45.6797 14.9938 48.0013 20.7068 48C26.4198 48.0013 31.6067 45.6797 35.349 41.9354C39.0932 38.1931 41.4142 33.0057 41.4136 27.2932C41.4143 24.0093 40.6435 20.9001 39.2798 18.1381ZM8.40814 14.9944C10.0272 13.3759 11.9615 12.0798 14.1093 11.1983C13.0857 12.5233 12.2143 14.1424 11.5068 15.9736H7.5073C7.79633 15.6369 8.09408 15.3078 8.40814 14.9944ZM6.24421 17.63H10.9275C10.1111 20.2676 9.62811 23.2705 9.55554 26.4648H3.33393C3.48712 23.201 4.53693 20.1795 6.24421 17.63ZM5.56668 35.852C4.26168 33.5504 3.46593 30.9266 3.33393 28.1214H9.56117C9.62436 30.8809 9.99467 33.4909 10.6221 35.852H5.56668ZM8.40814 39.5919C7.76258 38.9462 7.17064 38.2481 6.63271 37.5086H11.117C11.5568 38.8261 12.0705 40.058 12.6666 41.1584C13.1083 41.9717 13.5925 42.7162 14.1124 43.3899C11.9635 42.5084 10.0285 41.2109 8.40814 39.5919ZM19.8785 44.6655C19.0502 44.6267 18.2383 44.5272 17.445 44.3777C17.3598 44.3164 17.2755 44.2583 17.1909 44.1932C15.5061 42.8856 13.9841 40.5972 12.9099 37.6587C12.8925 37.61 12.8768 37.5574 12.8586 37.5086H19.8785V44.6655ZM19.8785 35.852H12.3332C11.6769 33.5309 11.2784 30.909 11.2114 28.1214H19.8785V35.852ZM19.8785 26.4648H11.2058C11.2821 23.2267 11.8108 20.2076 12.6653 17.63H19.8784V26.4648H19.8785ZM21.5352 28.1215H30.2079C30.1422 30.9086 29.7405 33.531 29.0843 35.8521H21.5352V28.1215ZM24.2228 44.1932C24.139 44.2583 24.0539 44.3164 23.9687 44.3777C23.1754 44.5272 22.3635 44.6267 21.5352 44.6655V37.5086H28.5569C28.1852 38.544 27.7611 39.5036 27.2907 40.3689C26.398 42.0154 25.3451 43.3198 24.2228 44.1932ZM33.0062 39.5919C31.3859 41.2104 29.4522 42.5072 27.3039 43.3893C28.3999 41.9704 29.3264 40.2213 30.059 38.2293C30.1453 37.9953 30.223 37.7501 30.303 37.5086H34.7811C34.243 38.2481 33.6512 38.9462 33.0062 39.5919ZM35.847 35.852H30.8028C31.4284 33.4928 31.7951 30.8785 31.8582 28.1214H38.0799C37.9479 30.9267 37.1515 33.5504 35.847 35.852Z"
+                        fill="currentColor" />
+                      <path
+                        d="M26.1217 16.2882C28.2281 17.7834 28.6937 18.1394 29.435 19.5538C30.0212 20.6736 30.9715 22.6367 30.9715 22.6367C31.0165 22.7262 31.1073 22.7832 31.208 22.7832C31.3074 22.7832 31.4001 22.7262 31.4444 22.6367C31.4444 22.6367 32.3953 20.6736 32.9815 19.5538C33.7216 18.1393 34.1877 17.7834 36.2947 16.2882C38.6038 14.6504 40.1465 11.984 40.1465 8.93801C40.1464 4.00199 36.1439 0 31.2079 0C26.2712 0 22.2705 4.00199 22.2705 8.93801C22.2705 11.984 23.812 14.6503 26.1217 16.2882ZM31.2079 5.15746C33.2961 5.15746 34.989 6.85039 34.989 8.93801C34.989 11.0262 33.2961 12.7191 31.2079 12.7191C29.1196 12.7191 27.4273 11.0262 27.4273 8.93801C27.4274 6.85039 29.1196 5.15746 31.2079 5.15746Z"
+                        fill="currentColor" />
+                    </svg>
+                  </button>
+                  <button type="button" role="tab" id="service-tab-2" aria-selected="false"
+                    aria-controls="service-panel-2" tabindex="-1" data-service-tab>
+                    <span class="service-tabs__guide" aria-hidden="true" data-service-tip>
+                      <span class="service-tabs__guide-label"><span class="service-tabs__guide-label-pc">Click!</span><span class="service-tabs__guide-label-sp">Tap!</span></span>
+                    </span>
+                    <span class="visually-hidden">相手を探す</span>
+                    <svg viewBox="0 0 48 48" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M16.1832 9.6001C12.1825 9.6001 8.92773 12.8569 8.92773 16.8599C8.92773 17.416 9.3783 17.8668 9.93395 17.8668C10.4897 17.8668 10.9402 17.416 10.9402 16.8599C10.9402 13.9672 13.2922 11.6138 16.1832 11.6138C16.739 11.6138 17.1895 11.163 17.1895 10.6069C17.1895 10.0508 16.739 9.6001 16.1832 9.6001Z"
+                        fill="currentColor" />
+                      <path
+                        d="M33.9053 28.2667C35.7243 25.4133 36.7783 22.028 36.7783 18.4C36.7783 8.25337 28.5298 0 18.3892 0C14.7633 0 11.3799 1.05469 8.52834 2.87466C6.25631 4.32403 4.32281 6.25866 2.87428 8.532C1.05534 11.3854 0 14.772 0 18.4C0 28.5454 8.24981 36.8 18.3892 36.8C22.015 36.8 25.3997 35.744 28.2514 33.924C30.5233 32.4746 32.4568 30.54 33.9053 28.2667ZM24.3523 30.0227C22.564 30.9454 20.5359 31.4667 18.3892 31.4667C11.1894 31.4667 5.33016 25.6041 5.33016 18.4C5.33016 16.252 5.85122 14.2227 6.77334 12.4334C8.02191 10.0094 10.0061 8.02538 12.4286 6.77738C14.2169 5.85469 16.2437 5.33334 18.3891 5.33334C25.5902 5.33334 31.4481 11.1947 31.4481 18.4C31.4481 20.5467 30.927 22.5747 30.0049 24.364C28.7577 26.788 26.7748 28.7734 24.3523 30.0227Z"
+                        fill="currentColor" />
+                      <path
+                        d="M46.8299 41.1707L36.2135 30.5747C34.7024 32.7827 32.7663 34.7186 30.5596 36.2321L41.1759 46.828C41.9568 47.6094 42.9802 48 44.0023 48C45.0257 48 46.0491 47.6094 46.83 46.828C48.3904 45.2653 48.3904 42.7333 46.8299 41.1707Z"
+                        fill="currentColor" />
+                    </svg>
+                  </button>
+                  <button type="button" role="tab" id="service-tab-3" aria-selected="false"
+                    aria-controls="service-panel-3" tabindex="-1" data-service-tab>
+                    <span class="visually-hidden">ボイスメッセージ</span>
+                    <svg viewBox="0 0 34 48" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M29.8217 21.0806V23.5282C29.8208 27.1943 28.3345 30.5068 25.9249 32.9195C23.5127 35.3291 20.1998 36.8158 16.533 36.8169C12.8663 36.8158 9.55341 35.3291 7.14113 32.9195C4.731 30.5068 3.24422 27.1943 3.24375 23.5282V21.0806H0V23.5282C0.002625 31.9133 6.27159 38.8359 14.3706 39.9023V48.0002H18.6956V39.9023C26.7945 38.8359 33.0624 31.9133 33.0656 23.5282V21.0806H29.8217Z"
+                        fill="currentColor" />
+                      <path
+                        d="M16.533 31.951C21.1822 31.9479 24.9534 28.1772 24.9565 23.528V8.42409C24.9534 3.77494 21.1827 0.0031875 16.533 0C11.8833 0.0031875 8.11256 3.77494 8.10938 8.42409V23.528C8.11256 28.1772 11.8837 31.9479 16.533 31.951ZM11.3532 8.42409C11.3538 6.99338 11.9313 5.70722 12.8727 4.76325C13.8167 3.82134 15.1023 3.24488 16.5331 3.24263C17.9639 3.24478 19.2494 3.82134 20.1935 4.76325C21.1348 5.70722 21.7124 6.99338 21.713 8.42409V23.528C21.7124 24.9587 21.1349 26.2448 20.1935 27.1877C19.25 28.1286 17.9639 28.7061 16.5331 28.7072C15.1023 28.7061 13.8162 28.1286 12.8727 27.1877C11.9314 26.2448 11.3538 24.9587 11.3532 23.528V8.42409Z"
+                        fill="currentColor" />
+                    </svg>
+                  </button>
+                  <button type="button" role="tab" id="service-tab-4" aria-selected="false"
+                    aria-controls="service-panel-4" tabindex="-1" data-service-tab>
+                    <span class="visually-hidden">翻訳・添削サポート</span>
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M4 20h4L18.5 9.5a2.121 2.121 0 00-3-3L5 17v3z" stroke="currentColor" stroke-width="1.6"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M14 6.5l3 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    </svg>
+                  </button>
+                  <button type="button" role="tab" id="service-tab-5" aria-selected="false"
+                    aria-controls="service-panel-5" tabindex="-1" data-service-tab>
+                    <span class="visually-hidden">安心・安全のサポート</span>
+                    <svg viewBox="0 0 38 48" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M35.5592 9.06422L33.7192 8.96325C28.7289 8.68603 24.4032 6.77044 21.8494 3.70397L18.7582 0L15.6664 3.70397C13.1126 6.77044 8.78597 8.68603 3.79659 8.96325L0 9.17325V26.7133C0 29.208 0.755531 31.56 1.95731 33.711C6.10669 41.196 15.549 46.32 16.8927 47.0254L18.7582 48L20.623 47.0254C22.3531 46.1181 37.5166 37.8694 37.5166 26.7133V9.17325L35.5592 9.06422ZM4.01494 24.4787C4.01494 20.1356 4.01494 12.978 4.01494 12.978C10.0462 12.6425 15.4064 10.2988 18.7583 6.27487V24.4787H33.5002V26.7133C33.5002 35.7603 18.7583 43.4634 18.7583 43.4634V24.4787H4.01494Z"
+                        fill="currentColor" />
+                    </svg>
+                  </button>
+                </div>
+                <div class="service-tabs__panels">
+                  <div role="tabpanel" id="service-panel-1" aria-labelledby="service-tab-1">
+                    <h3>世界中のユーザーとつながる</h3>
+                    <p>日本語や日本文化に興味を持つ海外の人とマッチして、チャットを始められます。趣味や日常の出来事を話しながら、国や言葉を越えた友達をつくれます。</p>
+                  </div>
+                  <div role="tabpanel" id="service-panel-2" aria-labelledby="service-tab-2" hidden>
+                    <h3>自分に合う相手を探す</h3>
+                    <p>国籍・年齢・性別などの条件から、話してみたい相手を探せます。プロフィールや興味を確認しながら、目的や話題の合いそうな人を見つけられます。</p>
+                  </div>
+                  <div role="tabpanel" id="service-panel-3" aria-labelledby="service-tab-3" hidden>
+                    <h3>音声・ビデオメッセージを送る</h3>
+                    <p>テキストの自動翻訳だけでなく、音声やビデオメッセージを使って交流もできます。実際の発音やイントネーション、表情にも触れながら、より身近なコミュニケーションを楽しめます。</p>
+                  </div>
+                  <div role="tabpanel" id="service-panel-4" aria-labelledby="service-tab-4" hidden>
+                    <h3>手書きで気持ちを伝える</h3>
+                    <p>文字やイラストを手書きして、そのままメッセージとして送れます。入力しにくい文字を書いたり、言葉だけでは伝えにくい気持ちを表現したりと、交流の方法が広がります。</p>
+                  </div>
+                  <div role="tabpanel" id="service-panel-5" aria-labelledby="service-tab-5" hidden>
+                    <h3>不安を感じた相手から自分を守る</h3>
+                    <p>不快なメッセージや迷惑行為に遭遇した場合は、相手をブロックしたり運営へ通報したりできます。運営も報告内容を確認し、悪質な利用への対応と、安全な環境づくりに取り組んでいます。</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <img class="step-divider step-divider--top" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/step-divider-top.svg" alt="" aria-hidden="true"
+      width="1280" height="317" />
+
+    <!-- ===== STEP ===== -->
+    <section class="step" aria-labelledby="step-heading">
+      <div class="wrapper">
+        <div class="step__box">
+          <img class="step__illust step__illust--01" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-step-01.svg" alt="" aria-hidden="true"
+            width="227" height="227" data-pop />
+          <img class="step__illust step__illust--02" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-step-02.svg" alt="" aria-hidden="true"
+            width="226" height="236" data-pop />
+          <img class="step__deco step__deco--01" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/deco-step-01.svg" alt="" aria-hidden="true"
+            width="330" height="304" />
+          <img class="step__deco step__deco--02" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/deco-step-02.svg" alt="" aria-hidden="true"
+            width="205" height="190" />
+
+          <h2 id="step-heading" class="section-title section-title--step">
+            <span class="section-title__deco" aria-hidden="true">
+              <span class="section-title__deco-first">S</span>TEP
+            </span>
+
+            <span class="section-title__sub">
+              <span class="section-title__dot" aria-hidden="true"></span>
+              20秒でわかるはじめ方
+            </span>
+          </h2>
+          <div class="step__inner">
+            <div class="step__mockup">
+              <video class="step__video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+                <source src="<?php echo esc_url( $langmate_theme_uri ); ?>/video/howtomakenewaccount_JP.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div>
+              <ol class="step-list">
+                <li class="step-list__item">
+                  <span class="step-list__icon" style="--icon-src: url('<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/icon-download.svg')"
+                    aria-hidden="true"></span>
+                  <span>ダウンロード</span>
+                </li>
+                <li class="step-list__item">
+                  <span class="step-list__icon" style="--icon-src: url('<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/icon-register.svg')"
+                    aria-hidden="true"></span>
+                  <span>アカウント登録</span>
+                </li>
+                <li class="step-list__item">
+                  <span class="step-list__icon" style="--icon-src: url('<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/icon-profile.svg')"
+                    aria-hidden="true"></span>
+                  <span>プロフィール作成</span>
+                </li>
+                <li class="step-list__item">
+                  <span class="step-list__icon" style="--icon-src: url('<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/icon-search-blue.svg')"
+                    aria-hidden="true"></span>
+                  <span>相手を探す</span>
+                </li>
+                <li class="step-list__item">
+                  <span class="step-list__icon" style="--icon-src: url('<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/icon-chat.svg')"
+                    aria-hidden="true"></span>
+                  <span>交流スタート</span>
+                </li>
+              </ol>
+              <a href="<?php echo esc_url( langmate_get_page_url( 'beginners-guide' ) ); ?>" class="btn btn--outline">詳しいはじめ方を見る</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <img class="step-divider step-divider--bottom" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/step-divider-bottom.svg" alt="" aria-hidden="true"
+      width="1280" height="319" />
+
+    <!-- ===== VOICE ===== -->
+    <section class="voice" aria-labelledby="voice-heading">
+      <div class="wrapper">
+        <h2 id="voice-heading" class="section-title section-title--voice">
+          <span class="section-title__deco" aria-hidden="true">
+            <span class="section-title__deco-first">V</span>OICE
+          </span>
+
+          <span class="section-title__sub">
+            <span class="section-title__dot" aria-hidden="true"></span>
+            App Storeでのリアルな口コミ
+          </span>
+        </h2>
+        <div class="voice__slider" data-voice-slider>
+          <button type="button" class="voice__nav voice__nav--prev" aria-label="前の口コミ" data-voice-prev>
+            <svg viewBox="0 0 48 48" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+              <rect width="48" height="48" rx="24" fill="#FF3C71" />
+              <path d="M35 24L18.5 36.1244V11.8756L35 24Z" fill="white" />
+            </svg>
+          </button>
+          <ul class="voice__list" data-voice-list>
+            <li class="card card--voice">
+              <img class="card--voice__illust" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-voice.svg" alt="" aria-hidden="true"
+                width="225" height="213" />
+              <p class="card__rating" aria-label="評価5段階中5">★★★★★</p>
+              <p class="card__author">伊達メガネ1987</p>
+              <p class="card__body">
+                HelloTalkよりもUIがすっきりしていて、私にはLangmateの方が遥かに使いやすいです。また、海外の方ともスムーズにチャットを楽しめ、満足しています。ありがとうございます。</p>
+            </li>
+            <li class="card card--voice">
+              <img class="card--voice__illust" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-voice.svg" alt="" aria-hidden="true"
+                width="225" height="213" />
+              <p class="card__rating" aria-label="評価5段階中5">★★★★★</p>
+              <p class="card__author">i_lovepudding</p>
+              <p class="card__body">
+                英語の勉強のために使い始めてしばらく経ちました。どの方も日本に興味を持っていたり日本語を勉強していたりして、お互いの文化について話すのがすごく楽しいです！なにより英語が自然に出てくるようになったのが嬉しいです✨
+              </p>
+            </li>
+            <li class="card card--voice">
+              <img class="card--voice__illust" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-voice.svg" alt="" aria-hidden="true"
+                width="225" height="213" />
+              <p class="card__rating" aria-label="評価5段階中5">★★★★★</p>
+              <p class="card__author">tms0212</p>
+              <p class="card__body">こういう形で外国人の方と知り合うのも、現代的で面白いかも知れません。チャットから入るので、長い文章を作る必要もなく、単語だけでも会話はできそうな感じです。</p>
+            </li>
+            <li class="card card--voice">
+              <img class="card--voice__illust" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-voice.svg" alt="" aria-hidden="true"
+                width="225" height="213" />
+              <p class="card__rating" aria-label="評価5段階中5">★★★★★</p>
+              <p class="card__author">チョビ🐶</p>
+              <p class="card__body">男女関係なくお話が楽しく出来とても良いアプリだと私は思います。国際交流できるのって視野が広がります。</p>
+            </li>
+            <li class="card card--voice">
+              <img class="card--voice__illust" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-voice.svg" alt="" aria-hidden="true"
+                width="225" height="213" />
+              <p class="card__rating" aria-label="評価5段階中4">★★★★</p>
+              <p class="card__author">てるてるひこひこ</p>
+              <p class="card__body">いろんな言語を学べる。暇を持て余した際に、英語のリハビリをしています。がんがん多言語が使える人は大いに楽しめると私は思います:)</p>
+            </li>
+            <li class="card card--voice">
+              <img class="card--voice__illust" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-voice.svg" alt="" aria-hidden="true"
+                width="225" height="213" />
+              <p class="card__rating" aria-label="評価5段階中5">★★★★★</p>
+              <p class="card__author">tikitikiki</p>
+              <p class="card__body">常に世界中の楽しい人と10人ぐらい連絡しています</p>
+            </li>
+          </ul>
+          <button type="button" class="voice__nav voice__nav--next" aria-label="次の口コミ" data-voice-next>
+            <svg viewBox="0 0 48 48" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+              <rect width="48" height="48" rx="24" fill="#FF3C71" />
+              <path d="M35 24L18.5 36.1244V11.8756L35 24Z" fill="white" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <img class="sns-divider sns-divider--top" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/insta-divider-top.svg" alt="" aria-hidden="true"
+      width="1280" height="180" />
+
+    <!-- ===== SNS (Instagram) ===== -->
+    <section class="sns" aria-labelledby="sns-heading">
+      <div class="wrapper">
+        <div class="sns__inner">
+          <img class="sns__grid" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/img_insta.png" alt="Langmate公式Instagram(@langmate_app)の投稿一覧"
+            width="260" height="356" />
+          <div class="sns__content">
+            <p class="sns__label">\ follow me! /</p>
+            <h2 id="sns-heading">
+              <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/logo-instagram.svg" alt="" aria-hidden="true" width="56" height="56" />
+              <span class="sns__ig-text" data-text="Instagram">Instagram</span>
+            </h2>
+            <p>英会話フレーズ・国際交流ネタ・ショート動画を日々発信しています！</p>
+            <a class="sns__link" href="https://www.instagram.com/langmate_app/" target="_blank" rel="noopener">
+              <span class="sns__link-text">langmate_app</span>
+              <span class="sns__link-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" />
+                  <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <img class="sns-divider sns-divider--bottom" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/insta-divider-bottom.svg" alt="" aria-hidden="true"
+      width="1280" height="180" />
+
+    <!-- ===== FAQ Preview ===== -->
+    <section class="faq-preview" aria-labelledby="faq-preview-heading">
+      <div class="wrapper">
+        <h2 id="faq-preview-heading" class="section-title section-title--faq">
+          <span class="section-title__deco" aria-hidden="true">
+            <span class="section-title__deco-first">F</span>AQ
+          </span>
+
+          <span class="section-title__sub">
+            <span class="section-title__dot" aria-hidden="true"></span>
+            よくある質問
+          </span>
+        </h2>
+        <div class="faq-preview__box">
+          <img class="faq-preview__illustration" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-faq.svg" alt="" aria-hidden="true"
+            width="160" height="160" data-pop />
+          <ul class="faq-preview__list">
+            <li class="faq-preview__item">
+              <button type="button" class="faq-preview__question" aria-expanded="false" aria-controls="faq-preview-a-1"
+                data-faq-accordion-trigger>
+                <span class="faq-preview__q-icon" aria-hidden="true">Q</span>
+                <span class="faq-preview__q-text">何歳から利用できますか？</span>
+                <span class="faq-preview__arrow" aria-hidden="true"></span>
+              </button>
+              <div class="faq-preview__answer" id="faq-preview-a-1" hidden>
+                <span class="faq-preview__a-icon" aria-hidden="true">A</span>
+                <p>Langmate（ラングメイト）をご利用するには、18歳以上である必要があります。
+                  Langmate（ラングメイト）では、未成年保護を重要視しておりますので、18歳未満のユーザーはアクセスをブロックします。
+                </p>
+              </div>
+            </li>
+            <li class="faq-preview__item">
+              <button type="button" class="faq-preview__question" aria-expanded="false" aria-controls="faq-preview-a-2"
+                data-faq-accordion-trigger>
+                <span class="faq-preview__q-icon" aria-hidden="true">Q</span>
+                <span class="faq-preview__q-text">Langmate（ラングメイト）は無料ですか？</span>
+                <span class="faq-preview__arrow" aria-hidden="true"></span>
+              </button>
+              <div class="faq-preview__answer" id="faq-preview-a-2" hidden>
+                <span class="faq-preview__a-icon" aria-hidden="true">A</span>
+                <p>Langmateは Apple App Store and Google Play Storeにて無料でダウンロードできます。
+                  世界中の人々とつながり、交流するための様々な機能を無料でご利用いただけます。
+                  <br><br>
+                  Langmateでは、ユーザーとのマッチやチャットは無料です。
+                  Langmateはスマイルと呼ばれる仮想クレジットシステムを使用しており、カードスワイプや高度なチャットツールなどの機能を利用することができます。
+                  プロフィールを右にスワイプすると相手にフレンドリクエストが送信され、左にスワイプするとパスされます。
+                  相手があなたのフレンド申請を承認するか、あなたが他のユーザーからのフレンド申請を承認すると、マッチ成立です！
+                  <br><br>
+                  限られた数の新しいフレンズと無料でチャットを始め、楽しむことができます。
+                  無料チャットのクレジットを使用した後、スマイルを使用するか、PREMIUMになることで、追加チャットをアンロックできます。
+                  「チャットを始める」機能についてもっと読む
+                  <br><br>
+                  すべてのプレミアム機能を楽しむ
+                  Langmateのすべての機能を完全にご利用いただくには、 PREMIUM か PLUS+にアップグレードする必要があります。
+                  どのプランが適用されるかを確認するには、Langmateアプリを開きます。
+                  > My Page を開く
+                  > ステータスをタップするかセッティング > マイステータスを確認
+                  > 画面に表示される手順に従ってください。
+
+                </p>
+              </div>
+            </li>
+            <li class="faq-preview__item">
+              <button type="button" class="faq-preview__question" aria-expanded="false" aria-controls="faq-preview-a-3"
+                data-faq-accordion-trigger>
+                <span class="faq-preview__q-icon" aria-hidden="true">Q</span>
+                <span class="faq-preview__q-text">Langmateはどこの国のアプリですか？</span>
+                <span class="faq-preview__arrow" aria-hidden="true"></span>
+              </button>
+              <div class="faq-preview__answer" id="faq-preview-a-3" hidden>
+                <span class="faq-preview__a-icon" aria-hidden="true">A</span>
+                <p>Langmate（ラングメイト）は、日本で開発されたアプリです。
+                  <br><br>
+                  ※アプリの詳しい機能や特徴については、ダウンロードページをご覧ください。
+                  <br>
+                  世界へ旅立つ前に、事前に友達を作っちゃおう！
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <a href="<?php echo esc_url( langmate_get_page_url( 'how-can-we-help' ) ); ?>" class="btn btn--outline">よくある質問を見る</a>
+      </div>
+    </section>
+
+    <!-- ===== CTA ===== -->
+    <section class="cta" aria-labelledby="cta-heading" id="download">
+      <img class="cta__deco cta__deco--lt-wave" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/cta-deco-lefttop.svg" alt="" aria-hidden="true"
+        width="554" height="132" />
+      <img class="cta__deco cta__deco--lt-circle" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/cta-deco-leftbottom.svg" alt="" aria-hidden="true"
+        width="172" height="296" />
+      <img class="cta__deco cta__deco--rb-circle" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/cta-deco-righttop.svg" alt="" aria-hidden="true"
+        width="185" height="218" />
+      <img class="cta__deco cta__deco--rb-wave" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/cta-deco-rightbottom.svg" alt="" aria-hidden="true"
+        width="509" height="138" />
+      <div class="cta__inner">
+        <h2 id="cta-heading">世界中のユーザーとの交流を、<br />今日から始めてみませんか？</h2>
+        <p>英語を勉強するだけではなく、<br>実際に使いながら自然な語学力を身につけましょう。</p>
+        <div class="cta__badges">
+          <a href="https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775" target="_blank" rel="noopener" class="btn btn--store">
+            <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/badge-appstore-ja.svg" alt="App Storeからダウンロード" width="160" height="48" />
+          </a>
+          <a href="https://play.google.com/store/apps/details?id=co.thoron.langmate" target="_blank" rel="noopener" class="btn btn--store">
+            <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/badge-googleplay-ja.svg" alt="Google Playで手に入れよう" width="160" height="48" />
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <div class="marquee marquee--blue" aria-hidden="true">
+      <div class="marquee__track">
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
+      </div>
+    </div>
+  </main>
+<?php get_footer(); ?>

@@ -1392,6 +1392,18 @@
 .service-tabs {
 
     // ==========================================================
+    // Hint text（タップ誘導の案内文）
+    // ==========================================================
+    &__hint {
+        text-align: center;
+        color: v.$color-pink;
+        font-size: 1.4rem;
+        font-weight: v.$fw-medium;
+        // 誘導ラベル(Tap!)がアイコンの上に浮くため、被らないよう広めに余白を取る
+        margin-block-end: 28px;
+    }
+
+    // ==========================================================
     // Icon tabs
     // ==========================================================
     &__list {
@@ -1402,7 +1414,9 @@
         width: fit-content;
         // margin-inline: auto;
         margin-block-end: 32px;
-        margin-block-start: 16px;
+        // hintとの間はmargin collapseするため、Tap!ラベル(top:-28px)と
+        // 被らないよう充分な余白を確保(実効の隙間は概ね20px程度)
+        margin-block-start: 48px;
 
         // 880px以下
         @include mx.voice-collapse {
@@ -1419,6 +1433,7 @@
         }
 
         button {
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1434,7 +1449,7 @@
             color: v.$color-gray;
             padding: clamp(9px, calc(6.1px + 0.673vw), 13px);
             cursor: pointer;
-            transition: color 0.2s, border-color 0.2s;
+            transition: color 0.2s, border-color 0.2s, transform 0.25s ease;
 
             // 880px以下
             // gap 12px × 4箇所 = 48px を引いた残りを5等分
@@ -1462,6 +1477,87 @@
                 border-color: v.$color-pink;
                 color: v.$color-pink;
             }
+
+            // PC：未選択アイコンだけhoverで少し浮かせて押せることを伝える
+            // タッチ端末でのhover誤爆を避けるため(hover: hover)で絞る
+            @media (hover: hover) and (pointer: fine) {
+                &:hover:not([aria-selected="true"]) {
+                    transform: translateY(-4px);
+                }
+
+                // hover中はTap!ラベルの誘導を隠す。hover自体の色変化で十分伝わるため。
+                // opacityはアニメーション(keyframes)側で常に上書きされるのでvisibilityで隠す
+                &:hover {
+                    .service-tabs__guide-label {
+                        visibility: hidden;
+                    }
+                }
+            }
+        }
+    }
+
+    // ==========================================================
+    // アイコン誘導（2個目=検索アイコンのみ、PC/SP共通）
+    // ページ表示時からラベルをループ演出。
+    // どれか1つのアイコンを1回クリックしたら非表示（JSはservice-tabs.jsで共通制御）。
+    // display:contentsでラッパー自体は箱を持たせず、
+    // labelを直接buttonの子として重ね順(z-index)を制御する。
+    // ==========================================================
+    &__guide {
+        display: contents;
+    }
+
+    &__guide-label {
+        position: absolute;
+        top: -28px;
+        left: 50%;
+        z-index: 1;
+        transform: translateX(-50%) scale(0.6);
+        opacity: 0;
+        padding: 2px 10px;
+        border-radius: 999px;
+        background-color: v.$color-pink;
+        color: v.$color-white;
+        font-size: 1.1rem;
+        font-weight: v.$fw-bold;
+        white-space: nowrap;
+        pointer-events: none;
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: v.$color-pink;
+        }
+
+        // PC表記は「Click!」、SP表記(タップ操作)は「Tap!」に出し分け
+        &-pc {
+            display: inline;
+        }
+
+        &-sp {
+            display: none;
+        }
+
+        @include mx.voice-collapse {
+            &-pc {
+                display: none;
+            }
+
+            &-sp {
+                display: inline;
+            }
+        }
+    }
+
+    &__guide.is-visible {
+        .service-tabs__guide-label {
+            animation:
+                service-tabs-guide-pop 0.4s ease-out forwards,
+                service-tabs-tip-bounce 1.4s ease-in-out 0.4s infinite;
         }
     }
 
@@ -1506,6 +1602,36 @@
                 text-align: center;
             }
         }
+    }
+}
+
+@keyframes service-tabs-tip-bounce {
+
+    0%,
+    100% {
+        transform: translateX(-50%) translateY(0);
+    }
+
+    50% {
+        transform: translateX(-50%) translateY(-2px);
+    }
+}
+
+// ラベルの初回ポップイン（data-popと同じ「小さく透明→少し弾んで等倍」の入り方）
+@keyframes service-tabs-guide-pop {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) scale(0.6);
+    }
+
+    60% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1.08);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1);
     }
 }
 

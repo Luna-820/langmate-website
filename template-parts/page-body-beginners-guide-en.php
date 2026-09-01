@@ -1,0 +1,590 @@
+<?php
+/**
+ * template-parts/page-body-beginners-guide-en.php
+ *
+ * 既存の en/beginners-guide.html の <main> 部分をそのまま移植したもの。
+ * デザイン・DOM構造・class名は完全に維持し、
+ * アセットパスと内部ページへのリンクのみPHP化している。
+ */
+
+$lang      = 'en';
+$theme_uri = get_template_directory_uri();
+?>
+
+<main id="main">
+    <!-- ===== Hero ===== -->
+    <section class="sub-hero gs-hero">
+      <picture>
+        <source srcset="<?php echo esc_url( $theme_uri ); ?>/design-assets/bg-page-sp.svg" media="(max-width: 430px)">
+        <img class="sub-hero__map gs-hero__map" src="<?php echo esc_url( $theme_uri ); ?>/design-assets/bg-page.svg" alt="" aria-hidden="true" width="1280"
+          height="500" />
+      </picture>
+
+      <div class="wrapper sub-hero__inner gs-hero__inner">
+        <svg class="sub-hero__eyebrow gs-hero__eyebrow" viewBox="0 0 220 70" role="img" aria-label="GET STARTED">
+          <!-- Figma実測: バウンディングボックス W196×H23 → 半径R=H/2+W²/(8H)≒220.3 で逆算 -->
+          <path id="gs-hero-eyebrow-arc" d="M12,55 A220.3,220.3 0 0,1 208,55" fill="none" />
+          <text text-anchor="middle">
+            <textPath href="#gs-hero-eyebrow-arc" startOffset="50%">GET STARTED</textPath>
+          </text>
+        </svg>
+        <h1 class="sub-hero__heading gs-hero__heading">New to Langmate?</h1>
+        <p class="sub-hero__lead gs-hero__lead">Langmate is a language exchange app where people from around the world
+          can connect with Japanese people. Whether you’re just starting out or already fluent, you can use it to
+          practice languages, share cultures, and make friends in a safe, welcoming space.
+          Meet Japanese people, connect with others who share your interest in Japan, and enjoy real conversations at
+          your own pace.</p>
+
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb gs-hero__breadcrumb" aria-label="Breadcrumb">
+          <ol class="breadcrumb__list">
+            <li class="breadcrumb__item">
+              <a href="<?php echo esc_url( langmate_get_page_url( 'home', $lang ) ); ?>">HOME</a>
+            </li>
+
+            <li class="breadcrumb__item" aria-current="page">
+              New to Langmate?
+            </li>
+          </ol>
+        </nav>
+
+        <div class="gs-hero__nav">
+          <a class="gs-hero__nav-card gs-hero__nav-card--reason" href="#reason">
+            <img class="gs-hero__nav-illust" src="<?php echo esc_url( $theme_uri ); ?>/design-assets/illust-page-reason.svg" alt="" aria-hidden="true" />
+            <span class="gs-hero__nav-eyebrow">4 reasons</span>
+            <span class="gs-hero__nav-title">it's easy to get started</span>
+            <span class="gs-hero__nav-arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 4v16m0 0l-7-7m7 7l7-7" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </span>
+          </a>
+          <a class="gs-hero__nav-card gs-hero__nav-card--started" href="#get-started">
+            <img class="gs-hero__nav-illust" src="<?php echo esc_url( $theme_uri ); ?>/design-assets/illust-page-start.svg" alt="" aria-hidden="true" />
+            <span class="gs-hero__nav-eyebrow">How to Get Started</span>
+            <span class="gs-hero__nav-title">with Langmate </span>
+            <span class="gs-hero__nav-arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 4v16m0 0l-7-7m7 7l7-7" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </span>
+          </a>
+          <a class="gs-hero__nav-card gs-hero__nav-card--safety" href="#safety">
+            <img class="gs-hero__nav-illust" src="<?php echo esc_url( $theme_uri ); ?>/design-assets/illust-page-safety.svg" alt="" aria-hidden="true" />
+            <span class="gs-hero__nav-eyebrow">A safer place </span>
+            <span class="gs-hero__nav-title"> to connect</span>
+            <span class="gs-hero__nav-arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 4v16m0 0l-7-7m7 7l7-7" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== REASON ===== -->
+    <section class="gs-reason" id="reason" aria-labelledby="gs-reason-heading">
+
+      <div class="gs-reason__inner">
+
+        <span class="gs-reason__watermark" aria-hidden="true">REASON</span>
+
+        <div class="gs-reason__head">
+          <p class="gs-reason__eyebrow">It's Easy to Get Started</p>
+          <h2 id="gs-reason-heading" class="gs-reason__title">4 Reasons</h2>
+        </div>
+
+        <div class="wrapper gs-reason__wrapper">
+          <ul class="gs-reason__list">
+
+            <!-- Reason 01 -->
+            <li class="gs-reason__item">
+              <div class="gs-reason__blob-wrap gs-reason__blob-wrap--01">
+
+                <svg class="gs-reason__blob-shape" viewBox="0 0 387 303" aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M0.0515811 169.048C-0.473394 140.836 2.91216 116.372 14.6652 93.5788C27.5378 68.6222 47.5029 51.3722 72.6749 39.5902C113.735 20.3586 156.783 8.24453 201.781 2.80336C236.992 -1.45425 272.031 -1.38998 306.733 6.69679C327.143 11.4525 346.299 19.2393 363.655 31.2785C382.196 44.1423 389.24 61.8154 386.385 83.7729C378.853 141.698 352.99 188.788 305.046 223.396C257.375 257.81 205.954 283.864 148.218 296.46C123.887 301.768 99.3146 304.365 74.3676 301.736C44.2405 298.554 24.6557 282.284 14.7187 254.013C7.52979 233.544 4.19245 212.256 1.814 190.802C0.903325 182.598 0.469418 174.339 0.0515811 169.048Z"
+                    fill="white" />
+                </svg>
+
+                <svg class="gs-reason__blob-label" viewBox="0 0 387 303" aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path id="gs-reason-path-01"
+                    d="M0.0515811 169.048C-0.473394 140.836 2.91216 116.372 14.6652 93.5788C27.5378 68.6222 47.5029 51.3722 72.6749 39.5902C113.735 20.3586 156.783 8.24453 201.781 2.80336C236.992 -1.45425 272.031 -1.38998 306.733 6.69679"
+                    fill="none" />
+                  <text>
+                    <textPath href="#gs-reason-path-01" startOffset="8%" textLength="340"
+                      lengthAdjust="spacing" lengthAdjust="spacing">
+                      New to Japanese? That's fine.
+                    </textPath>
+                  </text>
+                </svg>
+
+                <p class="gs-reason__blob-text">
+                  Don't know a word or how to reply? Use translation, corrections, and reply support whenever you need
+                  them. Even if your Japanese isn't great yet, you can still chat naturally and start making Japanese
+                  friends.
+                </p>
+
+              </div>
+            </li>
+
+            <!-- Reason 02 -->
+            <li class="gs-reason__item">
+              <div class="gs-reason__blob-wrap gs-reason__blob-wrap--02">
+
+                <svg class="gs-reason__blob-shape" viewBox="0 0 453 354" aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M452.092 156.253C452.705 189.219 448.75 217.804 435.018 244.437C419.978 273.599 396.652 293.755 367.242 307.522C319.269 329.994 268.973 344.149 216.4 350.506C175.261 355.481 134.322 355.406 93.7778 345.957C69.9319 340.4 47.5505 331.301 27.2721 317.234C5.61053 302.203 -2.61972 281.552 0.716187 255.895C9.51602 188.211 39.7333 133.187 95.7493 92.7494C151.446 52.537 211.524 22.093 278.981 7.37479C307.408 1.17334 336.117 -1.86166 365.264 1.21091C400.464 4.92801 423.346 23.9391 434.956 56.9738C443.355 80.8909 447.254 105.766 450.033 130.834C451.097 140.421 451.604 150.07 452.092 156.253Z"
+                    fill="white" />
+                </svg>
+
+                <svg class="gs-reason__blob-label" viewBox="0 0 453 354" aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path id="gs-reason-path-02"
+                    d="M0.716187 255.895C9.51602 188.211 39.7333 133.187 95.7493 92.7494C151.446 52.537 211.524 22.093 278.981 7.37479C307.408 1.17334 336.117 -1.86166 365.264 1.21091"
+                    fill="none" />
+                  <text>
+                    <textPath href="#gs-reason-path-02" startOffset="2%" textLength="460"
+                      lengthAdjust="spacing">
+                      Help when you get stuck
+                    </textPath>
+                  </text>
+                </svg>
+
+                <p class="gs-reason__blob-text">
+                  Don't know a word or how to reply? Use translation, corrections, and reply support whenever you need
+                  them. Even if your Japanese isn't great yet, you can still chat naturally and start making Japanese
+                  friends.
+                </p>
+
+              </div>
+            </li>
+
+            <!-- Reason 03 -->
+            <li class="gs-reason__item">
+              <div class="gs-reason__blob-wrap gs-reason__blob-wrap--03">
+
+                <svg class="gs-reason__blob-shape" viewBox="0 0 492 328" aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M453.259 240.204C436.807 268.777 418.693 291.242 393.206 306.999C365.295 324.249 334.919 329.512 302.62 326.165C249.925 320.719 199.523 306.948 151.184 285.321C113.358 268.397 78.306 247.248 48.4194 218.266C30.8415 201.222 16.3432 181.895 6.20646 159.393C-4.61954 135.352 -1.0384 113.412 15.0353 93.1381C57.438 39.6539 111.679 8.0518 180.521 2.24032C248.973 -3.54244 316.15 1.30436 381.552 23.4313C409.113 32.7568 435.285 44.9414 458.686 62.587C486.943 83.9022 496.766 111.983 489.703 146.279C484.585 171.106 475.115 194.436 464.586 217.355C460.561 226.12 456.025 234.653 453.259 240.204Z"
+                    fill="white" />
+                </svg>
+
+                <svg class="gs-reason__blob-label" viewBox="0 0 492 328" aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path id="gs-reason-path-03"
+                    d="M15.0353 93.1381C57.438 39.6539 111.679 8.0518 180.521 2.24032C248.973 -3.54244 316.15 1.30436 381.552 23.4313"
+                    fill="none" />
+                  <text>
+                    <textPath href="#gs-reason-path-03" startOffset="2%" textLength="375"
+                      lengthAdjust="spacing">
+                      Find the right people faster
+                    </textPath>
+                  </text>
+                </svg>
+
+                <p class="gs-reason__blob-text">
+                  Use filters like nationality and age to find Japanese people you'd like to talk to. Check their
+                  profiles and interests, and it's easier to find something you both want to chat about.
+                </p>
+
+              </div>
+            </li>
+
+            <!-- Reason 04 -->
+            <li class="gs-reason__item">
+              <div class="gs-reason__blob-wrap gs-reason__blob-wrap--04">
+
+                <svg class="gs-reason__blob-shape" viewBox="0 0 492 333" aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M44.9611 79.7792C62.9488 52.1465 82.2609 30.7031 108.57 16.3609C137.381 0.659864 167.999 -2.93791 200.068 2.16631C252.387 10.4801 301.962 26.9809 349.049 51.2143C385.894 70.177 419.74 93.2076 448.001 123.777C464.622 141.755 478.044 161.844 486.938 184.866C496.436 209.462 491.663 231.174 474.507 250.54C429.248 301.631 373.364 330.226 304.307 332.272C235.641 334.31 168.829 325.805 104.732 300.142C77.7209 289.326 52.2533 275.731 29.8497 256.835C2.79775 234.01 -5.47751 205.435 3.44596 171.575C9.91184 147.065 20.64 124.286 32.4043 101.976C36.9023 93.4431 41.8964 85.171 44.9611 79.7792Z"
+                    fill="white" />
+                </svg>
+
+                <svg class="gs-reason__blob-label" viewBox="0 0 492 333" aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path id="gs-reason-path-04"
+                    d="M44.9611 79.7792C62.9488 52.1465 82.2609 30.7031 108.57 16.3609C137.381 0.659864 167.999 -2.93791 200.068 2.16631C252.387 10.4801 301.962 26.9809 349.049 51.2143"
+                    fill="none" />
+                  <text>
+                    <textPath href="#gs-reason-path-04" startOffset="1%" textLength="325"
+                      lengthAdjust="spacing">
+                      A safer place to connect
+                    </textPath>
+                  </text>
+                </svg>
+
+                <p class="gs-reason__blob-text">
+                  If someone sends you an inappropriate message or makes you uncomfortable, you can block or report them
+                  anytime. We also review suspicious or inappropriate accounts and take action when needed.
+
+                  Langmate is run by a Japanese company, and we work continuously to keep the community safe and
+                  comfortable for everyone.
+                </p>
+
+              </div>
+            </li>
+
+          </ul>
+        </div>
+
+        <img class="gs-reason__illust" src="<?php echo esc_url( $theme_uri ); ?>/design-assets/illust-page-reason-en.svg" alt="" aria-hidden="true" width="405"
+          height="470" data-pop />
+
+      </div>
+    </section>
+
+    <img class="gs-divider gs-divider--reason" src="<?php echo esc_url( $theme_uri ); ?>/design-assets/reason-bottom-divider.svg" alt="" aria-hidden="true"
+      width="1280" height="237" />
+    <!-- ===== GET STARTED ===== -->
+    <section class="gs-started" id="get-started" aria-labelledby="gs-started-heading">
+      <div class="gs-started__inner">
+
+        <span class="gs-started__watermark" aria-hidden="true">
+          GET STARTED
+        </span>
+
+        <div class="gs-started__head">
+          <p class="gs-started__eyebrow">
+            How to Get Started
+          </p>
+
+          <h2 id="gs-started-heading" class="gs-started__title">
+            with Langmate
+          </h2>
+        </div>
+
+        <div class="wrapper gs-started__wrapper">
+          <ol class="gs-started__list">
+
+            <!-- PC用カーブ -->
+            <svg class="gs-started__list-curve" viewBox="0 0 121 708" preserveAspectRatio="none" aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <mask id="gs-started-curve-mask">
+                  <path class="gs-started__list-curve-mask"
+                    d="M2.00003 2.00023C155.067 207.078 157.864 487.622 8.91684 695.711L2 705.375" />
+                </mask>
+              </defs>
+
+              <path class="gs-started__list-curve-line"
+                d="M2.00003 2.00023C155.067 207.078 157.864 487.622 8.91684 695.711L2 705.375"
+                mask="url(#gs-started-curve-mask)" />
+            </svg>
+
+
+            <!-- Step 01 -->
+            <li class="gs-started__item">
+
+              <span class="gs-started__icon gs-started__icon--download">
+                <img src="<?php echo esc_url( $theme_uri ); ?>/design-assets/icon-download.svg" alt="" aria-hidden="true" width="38.4" height="60" />
+              </span>
+
+              <div class="gs-started__content">
+                <h3>Download the app</h3>
+                <p>
+                  Get Langmate from the App Store or Google Play and start connecting with Japanese people.
+                </p>
+              </div>
+
+            </li>
+
+
+            <!-- Step 02 -->
+            <li class="gs-started__item">
+
+              <span class="gs-started__icon gs-started__icon--register">
+                <img src="<?php echo esc_url( $theme_uri ); ?>/design-assets/icon-register.svg" alt="" aria-hidden="true" width="56" height="42.57" />
+              </span>
+
+              <div class="gs-started__content">
+                <h3>Create your account</h3>
+                <p>
+                  Sign up quickly using your social media account.
+                </p>
+              </div>
+
+            </li>
+
+
+            <!-- Step 03 -->
+            <li class="gs-started__item">
+
+              <span class="gs-started__icon gs-started__icon--profile">
+                <img src="<?php echo esc_url( $theme_uri ); ?>/design-assets/icon-profile.svg" alt="" aria-hidden="true" width="52.42" height="60" />
+              </span>
+
+              <div class="gs-started__content">
+                <h3>Set up your profile</h3>
+                <p>
+                  Add the language you want to practice and your interests, so it's easier to find Japanese people
+                  you'll enjoy talking to.
+                </p>
+              </div>
+
+            </li>
+
+
+            <!-- Step 04 -->
+            <li class="gs-started__item">
+
+              <span class="gs-started__icon gs-started__icon--search">
+                <img src="<?php echo esc_url( $theme_uri ); ?>/design-assets/icon-search-blue.svg" alt="" aria-hidden="true" width="60" height="60" />
+              </span>
+
+              <div class="gs-started__content">
+                <h3>Find people</h3>
+                <p>
+                  Use filters like nationality and age to find Japanese people who match what you're looking for.
+                </p>
+              </div>
+
+            </li>
+
+
+            <!-- Step 05 -->
+            <li class="gs-started__item">
+
+              <span class="gs-started__icon gs-started__icon--chat">
+                <img src="<?php echo esc_url( $theme_uri ); ?>/design-assets/icon-chat.svg" alt="" aria-hidden="true" width="60" height="43.86" />
+              </span>
+
+              <div class="gs-started__content">
+                <h3>Start connecting!</h3>
+                <p>
+                  Chat, send voice messages, or share video messages—and enjoy real conversations with Japanese people.
+                </p>
+              </div>
+
+            </li>
+
+          </ol>
+        </div>
+
+
+        <img class="gs-started__illust" src="<?php echo esc_url( $theme_uri ); ?>/design-assets/illust-page-start.svg" alt="" aria-hidden="true" width="400"
+          height="556.54" data-pop />
+
+      </div>
+    </section>
+
+    <img class="gs-divider gs-divider--started" src="<?php echo esc_url( $theme_uri ); ?>/design-assets/get-started-bottom-divider.svg" alt=""
+      aria-hidden="true" width="1280" height="263" />
+
+    <!-- ===== SAFETY ===== -->
+    <section class="gs-safety" id="safety" aria-labelledby="gs-safety-heading">
+      <div class="gs-safety__inner">
+
+        <span class="gs-safety__watermark" aria-hidden="true">
+          SAFETY
+        </span>
+
+        <div class="gs-safety__head">
+          <p class="gs-safety__eyebrow">
+            A safer place
+          </p>
+
+          <h2 id="gs-safety-heading" class="gs-safety__title">
+            to connect
+          </h2>
+        </div>
+
+        <div class="wrapper gs-safety__wrapper">
+
+          <ul class="gs-safety__grid">
+
+            <li class="gs-safety__card">
+              <img src="<?php echo esc_url( $theme_uri ); ?>/design-assets/icon-report.svg" alt="" aria-hidden="true" width="40" height="40" />
+
+              <h3>Report Feature</h3>
+
+              <p>
+                Easily report inappropriate users directly to our support team.
+              </p>
+            </li>
+
+
+            <li class="gs-safety__card">
+              <img src="<?php echo esc_url( $theme_uri ); ?>/design-assets/icon-security.svg" alt="" aria-hidden="true" width="40" height="40" />
+
+              <h3>Block users</h3>
+
+              <p>
+                Don't want to hear from someone anymore? Block them anytime and stop further contact.
+              </p>
+            </li>
+
+
+            <li class="gs-safety__card">
+              <img src="<?php echo esc_url( $theme_uri ); ?>/design-assets/icon-spam.svg" alt="" aria-hidden="true" width="40" height="40" />
+
+              <h3>Spam protection</h3>
+
+              <p>
+                We check for spam and suspicious accounts every day and take action when needed.
+              </p>
+            </li>
+
+
+            <li class="gs-safety__card">
+              <img src="<?php echo esc_url( $theme_uri ); ?>/design-assets/icon-privacy.svg" alt="" aria-hidden="true" width="40" height="40" />
+
+              <h3>Privacy protection</h3>
+
+              <p>
+                We handle your personal information carefully and keep it properly protected.
+              </p>
+            </li>
+
+
+            <li class="gs-safety__card">
+              <svg viewBox="0 0 40 40" fill="none" aria-hidden="true" width="40" height="40"
+                xmlns="http://www.w3.org/2000/svg">
+                <rect x="3" y="8" width="34" height="24" rx="4" stroke="#21A3FF" stroke-width="2.5" />
+
+                <circle cx="20" cy="20" r="6" fill="#21A3FF" />
+              </svg>
+
+              <h3>Run by a Japanese company</h3>
+
+              <p>
+                Langmate is operated by a Japan-based team, with support in place to help you use the app with
+                confidence.
+              </p>
+            </li>
+
+          </ul>
+        </div>
+
+
+        <img class="gs-safety__illust" src="<?php echo esc_url( $theme_uri ); ?>/design-assets/illust-page-safety.svg" alt="" aria-hidden="true" width="400"
+          height="434.63" data-pop />
+
+      </div>
+    </section>
+
+    <!-- ===== FAQ Preview ===== -->
+    <section class="faq-preview" aria-labelledby="faq-preview-heading">
+      <div class="wrapper">
+        <h2 id="faq-preview-heading" class="section-title section-title--faq">
+          <span class="section-title__deco" aria-hidden="true">
+            <span class="section-title__deco-first">F</span>AQ
+          </span>
+
+          <span class="section-title__sub">
+            <span class="section-title__dot" aria-hidden="true"></span>
+            Frequently Asked Questions
+          </span>
+        </h2>
+        <div class="faq-preview__box">
+          <img class="faq-preview__illustration" src="<?php echo esc_url( $theme_uri ); ?>/design-assets/illust-faq.svg" alt="" aria-hidden="true"
+            width="160" height="160" />
+          <ul class="faq-preview__list">
+            <li class="faq-preview__item">
+              <button type="button" class="faq-preview__question" aria-expanded="false" aria-controls="gs-faq-a-1"
+                data-faq-accordion-trigger>
+                <span class="faq-preview__q-icon" aria-hidden="true">Q</span>
+                <span class="faq-preview__q-text">What is the minimum age?</span>
+                <span class="faq-preview__arrow" aria-hidden="true"></span>
+              </button>
+              <div class="faq-preview__answer" id="gs-faq-a-1" hidden>
+                <span class="faq-preview__a-icon" aria-hidden="true">A</span>
+                <p>LYou have to be at least 18 years old to create an account and use Langmate.
+                  At Langmate we take Child Protection very seriously, and we will block access to user under the age of
+                  18.
+                </p>
+              </div>
+            </li>
+            <li class="faq-preview__item">
+              <button type="button" class="faq-preview__question" aria-expanded="false" aria-controls="gs-faq-a-2"
+                data-faq-accordion-trigger>
+                <span class="faq-preview__q-icon" aria-hidden="true">Q</span>
+                <span class="faq-preview__q-text">Is Langmate free?</span>
+                <span class="faq-preview__arrow" aria-hidden="true"></span>
+              </button>
+              <div class="faq-preview__answer" id="gs-faq-a-2" hidden>
+                <span class="faq-preview__a-icon" aria-hidden="true">A</span>
+                <p>Langmate is available for free in the Apple App Store and Google Play Store
+                  We offer a range of features that you can enjoy without any cost, helping you connect and engage with
+                  people from around the world.
+                  <br><br>
+                  Matching with users and chatting is free on Langmate.
+                  Langmate uses a virtual credit system called Smiles to give you access to features like Card swipe,
+                  advanced chat tools and more.
+                  Swipe right on a profile to send a Friend Request to someone, swipe left to pass.
+                  If someone accept your friend request, or if you accept a friend request from an other user, it’s a
+                  match!
+                  <br><br>
+                  You can start chatting and having fun with a limited number of new friends for free.
+                  After you’ve used your free chats credit, you can unlock addtional chats by using Smiles, or by
+                  becoming PREMIUM.
+                  Read more about the “Start chatting” feature
+                  <br><br>
+                  Enjoy all the premium features
+                  To fully enjoy all the features of Langmate, you may need to upgrade to PREMIUM or PLUS+
+                  Please see withing the app which plan applies to you.
+                  To see which plan applies to you, open the Langmate app
+                  > go on the My Page section
+                  > tap the My Status icon or go on Settings > My Status
+                  > Follow the steps on screen.
+
+                </p>
+              </div>
+            </li>
+            <li class="faq-preview__item">
+              <button type="button" class="faq-preview__question" aria-expanded="false" aria-controls="gs-faq-a-3"
+                data-faq-accordion-trigger>
+                <span class="faq-preview__q-icon" aria-hidden="true">Q</span>
+                <span class="faq-preview__q-text">Which country is Langmate from?</span>
+                <span class="faq-preview__arrow" aria-hidden="true"></span>
+              </button>
+              <div class="faq-preview__answer" id="gs-faq-a-3" hidden>
+                <span class="faq-preview__a-icon" aria-hidden="true">A</span>
+                <p>Langmate is an app developed in Japan.
+                  <br><br>
+                  For more information about the app’s features and functions, please visit our download page.
+                  <br>
+                  Make friends before you travel the world!
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <a href="<?php echo esc_url( langmate_get_page_url( 'how-can-we-help', $lang ) ); ?>" class="btn btn--outline">View FAQs</a>
+      </div>
+    </section>
+
+    <!-- ===== CTA ===== -->
+    <section class="cta" aria-labelledby="cta-heading" id="download">
+      <img class="cta__deco cta__deco--lt-wave" src="<?php echo esc_url( $theme_uri ); ?>/design-assets/cta-deco-lefttop.svg" alt="" aria-hidden="true"
+        width="554" height="132" />
+      <img class="cta__deco cta__deco--lt-circle" src="<?php echo esc_url( $theme_uri ); ?>/design-assets/cta-deco-leftbottom.svg" alt="" aria-hidden="true"
+        width="172" height="296" />
+      <img class="cta__deco cta__deco--rb-circle" src="<?php echo esc_url( $theme_uri ); ?>/design-assets/cta-deco-righttop.svg" alt="" aria-hidden="true"
+        width="185" height="218" />
+      <img class="cta__deco cta__deco--rb-wave" src="<?php echo esc_url( $theme_uri ); ?>/design-assets/cta-deco-rightbottom.svg" alt="" aria-hidden="true"
+        width="509" height="138" />
+      <div class="cta__inner">
+        <h2 id="cta-heading">Start meeting Japanese people today.</h2>
+        <p>Don’t just study Japanese. <br>Use it.
+          Build your Japanese naturally <br>through real conversations with real people.</p>
+        <div class="cta__badges">
+          <a href="https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775" target="_blank" rel="noopener" class="btn btn--store">
+            <img src="<?php echo esc_url( $theme_uri ); ?>/design-assets/badge-appstore-en.svg" alt="Download on the App Store" width="160" height="48" />
+          </a>
+          <a href="https://play.google.com/store/apps/details?id=co.thoron.langmate" target="_blank" rel="noopener" class="btn btn--store">
+            <img src="<?php echo esc_url( $theme_uri ); ?>/design-assets/badge-googleplay-en.svg" alt="Get it on Google Play" width="160" height="48" />
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>

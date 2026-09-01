@@ -268,7 +268,7 @@
     overflow: hidden;
     background-color: v.$color-pink-deep;
     color: v.$color-white;
-    padding-block: clamp(60px, calc(31.04px + 6.734vw), 100px);
+    padding-block: clamp(70px, calc(31.04px + 6.734vw), 100px);
 
     // ==========================================================================
     // INNER
@@ -299,13 +299,14 @@
         font-size: clamp(8rem, calc(4.277px + 11vw), 30rem);
 
         @include mx.nav-collapse {
-            left: -12px;
+            left: -30px;
+            top: -20px;
             font-size: 8rem;
         }
 
         @include mx.sp {
-            left: -24px;
-            font-size: 7rem;
+            left: -20px;
+            font-size: 5rem;
         }
     }
 
@@ -442,13 +443,13 @@
         // 1000px以下：縦1列
         @include mx.nav-collapse {
             grid-template-columns: 1fr;
-            row-gap: 80px;
+            row-gap: 60px;
             padding-block-start: 100px;
         }
 
         @include mx.sp {
-            row-gap: 64px;
-            padding-block-start: 80px;
+            row-gap: 54px;
+            padding-block-start: 40px;
         }
     }
 
@@ -462,7 +463,7 @@
         // watermarkとの重なりを避ける
         &:nth-child(1) {
             margin-block-start: 0;
-            transform: translateX(50px);
+            transform: translateX(80px);
         }
 
         &:nth-child(2) {
@@ -504,7 +505,9 @@
             aspect-ratio: 387 / 303;
 
             .gs-reason__blob-text {
-                inset: 24% 17% 16% 20%;
+                // 英語版は本文が長く、PC幅ではみ出していたため
+                // 上下の余白を減らして調整。
+                inset: 18% 17% 11% 20%;
             }
         }
 
@@ -513,11 +516,18 @@
         // 02
         // ----------------------------------------------------------------------
         &--02 {
-            max-width: 540px;
+            // 02は453/354(≈1.28)と03・04(≈1.5)より縦長寄りの形なので、
+            // 同じ幅だと02だけ縦に大きく見えてしまう。03・04と高さの
+            // 見た目が揃うよう、幅を少し絞っている。
+            // (PCの2列グリッドはトラック幅が優先されるため、
+            // トラック幅より確実に小さくなる値にする必要がある)
+            max-width: 416px;
             aspect-ratio: 453 / 354;
 
             .gs-reason__blob-text {
-                inset: 31% 16% 15% 20%;
+                // 英語版は本文が長く、PC幅ではみ出していたため
+                // 上下の余白を減らして調整。
+                inset: 16% 16% 6% 20%;
             }
         }
 
@@ -550,7 +560,9 @@
             aspect-ratio: 492 / 333;
 
             .gs-reason__blob-text {
-                inset: 14% 16% 18% 18%;
+                // 英語版は本文が長く、PC幅ではみ出していたため
+                // 上下の余白を減らして調整。
+                inset: 9% 16% 11% 18%;
 
                 // PCの2列時だけ少し抑える
                 font-size: clamp(1.25rem,
@@ -575,54 +587,76 @@
                 margin-inline: auto;
 
                 .gs-reason__blob-text {
-                    inset: 10% 15% 16% 18%;
+                    inset: 7% 15% 12% 18%;
                 }
             }
 
 
             &--02 {
-                width: min(calc(100% - 40px), 460px);
-                max-width: 460px;
+                // 03・04と高さの見た目を揃えるため、幅は少し狭くしている
+                // (理由はPC版の&--02コメントを参照)。
+                width: min(calc(100% - 64px), 393px);
+                max-width: 393px;
                 margin-inline: auto;
 
                 .gs-reason__blob-text {
-                    inset: 30% 16% 15% 19%;
+                    // 英語版はこの2個目だけ本文が長く、431〜1000px幅で
+                    // はみ出していたため上下の余白を減らして調整。
+                    inset: 14% 16% 6% 19%;
                 }
             }
 
 
             &--03 {
-                width: min(calc(100% - 40px), 460px);
-                max-width: 460px;
+                width: min(calc(100% - 64px), 500px);
+                max-width: 500px;
                 margin-inline: auto;
 
                 .gs-reason__blob-text {
                     inset: 12% 15% 14% 17%;
 
-                    // 1列になったら読みやすいサイズへ戻す
-                    font-size: clamp(1.6rem,
-                            calc(12px + 0.6vw),
+                    // 1列になったら読みやすいサイズへ戻す。
+                    // 下限は430px以下(sp)の1.15remに合わせて、境界での
+                    // 急なジャンプ(=はみ出し)を防いでいる。
+                    font-size: clamp(1.15rem,
+                            calc(6.58px + 1.142vw),
                             1.8rem);
 
                     line-height: 1.45;
+
+                    // 430px以下は&__blob-text本体側の縮小指定より詳細度が
+                    // 高くここが勝ってしまうため、明示的に上書きする。
+                    @include mx.sp {
+                        font-size: 1.15rem;
+                        line-height: 1.3;
+                    }
                 }
             }
 
 
             &--04 {
-                width: min(calc(100% - 40px), 460px);
-                max-width: 460px;
+                width: min(calc(100% - 64px), 500px);
+                max-width: 500px;
                 margin-inline: auto;
 
                 .gs-reason__blob-text {
                     inset: 15% 15% 15% 17%;
 
-                    // 1列になったら読みやすいサイズへ戻す
-                    font-size: clamp(1.55rem,
-                            calc(11.5px + 0.6vw),
+                    // 1列になったら読みやすいサイズへ戻す。
+                    // 下限は430px以下(sp)の1.15remに合わせて、境界での
+                    // 急なジャンプ(=はみ出し)を防いでいる。
+                    font-size: clamp(1.15rem,
+                            calc(6.96px + 1.054vw),
                             1.75rem);
 
                     line-height: 1.45;
+
+                    // 430px以下は&__blob-text本体側の縮小指定より詳細度が
+                    // 高くここが勝ってしまうため、明示的に上書きする。
+                    @include mx.sp {
+                        font-size: 1.15rem;
+                        line-height: 1.3;
+                    }
                 }
             }
         }
@@ -633,11 +667,29 @@
         // ======================================================================
         @include mx.sp {
 
-            &--02,
-            &--03,
+            // 02・03・04も1個目と同じく左右に余白を持たせる
+            // (余白が無いと、テキストが図形からわずかにはみ出す分だけ
+            // 画面端で見切れやすくなるため)。
+            &--03 {
+                width: min(calc(100% - 48px), 360px);
+                max-width: 360px;
+                margin-inline: auto;
+            }
+
+            // 英語版は本文が長く、02・04は文字サイズをこれ以上落とさずに
+            // 収めるため、余白(左右)を減らして図形自体を一回り大きくする。
             &--04 {
-                width: 100%;
-                max-width: 100%;
+                width: min(calc(100% - 4px), 360px);
+                max-width: 360px;
+                margin-inline: auto;
+            }
+
+            &--02 {
+                // 03・04と高さの見た目を揃えるための幅(PC版コメント参照)。
+                // 余白は04と同じ理由で減らしている。
+                width: min(calc(100% - 16px), 307px);
+                max-width: 307px;
+                margin-inline: auto;
             }
 
             &--01 {
@@ -653,21 +705,23 @@
 
             &--02 {
                 .gs-reason__blob-text {
-                    inset: 29% 17% 15% 20%;
+                    // 英語版の本文が収まるよう上下の余白を減らして
+                    // 文字エリアを広げている(曲線文字と被らない範囲で調整済み)。
+                    inset: 15% 17% 6% 20%;
                 }
             }
 
             &--03 {
                 .gs-reason__blob-text {
                     inset: 12% 16% 14% 18%;
-                    font-size: 1.4rem;
                 }
             }
 
             &--04 {
                 .gs-reason__blob-text {
-                    inset: 15% 16% 15% 18%;
-                    font-size: 1.4rem;
+                    // 英語版の本文が収まるよう上下の余白を減らして
+                    // 文字エリアを広げている(曲線文字と被らない範囲で調整済み)。
+                    inset: 6% 14% 6% 16%;
                 }
             }
         }
@@ -698,9 +752,12 @@
     // BLOB CURVED LABEL
     // ==========================================================================
     &__blob-label text {
+        // 上限を3.2remのままにすると、textLengthで指定した長さに対して
+        // 文字が大きくなりすぎて強く圧縮され、1024px以上で文字間隔が
+        // 詰まって見える(特に1つ目)。上限を2.5remまで落としている。
         font-size: clamp(2rem,
                 calc(11.31px + 2.02vw),
-                3.2rem);
+                2.5rem);
 
         font-weight: v.$fw-bold;
         line-height: 1.3;
@@ -724,9 +781,12 @@
     }
 
     &__blob-label path {
+        // ガイド用パス(非表示)を中心から少しだけ拡大し、白い図形の外周と
+        // 曲線テキストの間に余白を作る。大きくしすぎるとSP等の狭い幅で
+        // 画面端にはみ出すため、控えめな値にしている。
         transform-box: fill-box;
         transform-origin: center;
-        transform: scale(1.15);
+        transform: scale(1.06);
     }
 
 
@@ -754,15 +814,19 @@
 
         overflow-wrap: anywhere;
 
-        // 1000px以下：1列なので読みやすいサイズへ
+        // 1000px以下：1列なので読みやすいサイズへ。
+        // 下限を430px以下(sp)の1.15remに合わせることで、430→431pxの
+        // 境界で文字サイズが急に跳ね上がって枠からはみ出すのを防ぐ。
         @include mx.nav-collapse {
-            font-size: clamp(1.6rem, calc(14px + 0.6vw), 2rem);
+            font-size: clamp(1.15rem, calc(5.06px + 1.494vw), 2rem);
             line-height: 1.5;
         }
 
         @include mx.sp {
-            font-size: 1.4rem;
-            line-height: 1.5;
+            // 430px以下は白い図形自体が小さくなる分、本文が枠から
+            // はみ出さないよう文字サイズ・行間をさらに落とす。
+            font-size: 1.15rem;
+            line-height: 1.3;
         }
     }
 
@@ -885,32 +949,22 @@
             }
         }
 
+        // ----------------------------------------------------------------------
+        // 1000px以下：中央配置
+        // ----------------------------------------------------------------------
         @include mx.nav-collapse {
             position: relative;
             top: auto;
             left: auto;
-
-            width: fit-content;
-            max-width: calc(100% - 180px);
-
-            margin-left: 160px;
-            margin-right: auto;
-
-            padding-inline: 0;
-
+            width: 100%;
+            margin-inline: auto;
+            padding-inline: 120px;
             align-items: center;
             text-align: center;
         }
 
         @include mx.sp {
-            width: 100%;
-            max-width: none;
-
-            margin-left: 0;
-            margin-right: 0;
-
             padding-inline: 0;
-
             align-items: center;
             text-align: center;
         }
@@ -1359,10 +1413,7 @@
         // ----------------------------------------------------------------------
         left: 0;
         bottom: 80px;
-        width: clamp(300px,
-            31.95vw,
-            400px);
-
+        width: clamp(300px,31.95vw,400px);
         max-width: 300px;
         height: auto;
         z-index: 2;
@@ -1378,7 +1429,7 @@
             left: 0;
             right: auto;
             bottom: auto;
-            width: clamp(120px, 16vw, 160px);
+            width: clamp(100px, 13vw, 160px);
             max-width: 160px;
             height: auto;
             z-index: 4;
@@ -1390,9 +1441,7 @@
         @include mx.sp {
             top: 0px;
             right: -8px;
-            width: clamp(80px,
-                    29vw,
-                    100px);
+            width: clamp(80px,29vw,90px);
             max-width: 100px;
         }
     }
@@ -1504,6 +1553,10 @@
             color: v.$color-text;
             line-height: 1.32;
             padding-inline: 24px 48px;
+
+            @include mx.nav-collapse {
+                padding-inline: 24px;
+            }
         }
 
 

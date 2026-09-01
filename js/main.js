@@ -10,6 +10,8 @@ import { initFaqAccordion } from './faq-accordion.js';
 import { initContactForm } from './contact-form.js';
 import { initVoiceSlider } from './voice-slider.js';
 import { initStartedCurve } from './started-curve.js';
+import { initCf7Redirect } from './cf7-redirect.js';
+import { initDropzone } from './dropzone.js';
 
 initMobileNav();
 initLanguageSwitcher();
@@ -21,3 +23,5 @@ initFaqAccordion();
 initContactForm();
 initVoiceSlider();
 initStartedCurve();
+initCf7Redirect();
+initDropzone();
