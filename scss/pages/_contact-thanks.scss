@@ -5,8 +5,34 @@
 // Contact Thanks page（お問い合わせありがとうございます）
 // ==========================================================================
 
+// ---- Hero（contact.htmlの.contact-heroに--thanksモディファイアを付けて使用） ----
+.contact-hero--thanks {
+    padding-block-end: 0;
+
+    .sub-hero__map {
+        position: static;
+        display: block;
+        aspect-ratio: 1280 / 400;
+        object-fit: cover;
+        object-position: bottom;
+
+        // hero-sp以下は地図がもう少し見えるように高さを増やす
+        @include mx.hero-sp {
+            aspect-ratio: 1280 / 700;
+        }
+    }
+}
+
 .contact-thanks {
-    padding-block: 0 clamp(80px, calc(114.5px + -3.367vw), 100px);
+    position: relative;
+    z-index: 1; // アーチ画像(.contact-hero--thanks)と重なった時に必ず手前に来るように
+    padding-top: 0;
+    margin-block-start: clamp(-90px, -9vw, -50px);
+    padding-bottom: clamp(100px, 24vw, 240px);
+
+    @include mx.hero-sp {
+        margin-block-start: 0;
+    }
 
     &__inner {
         margin-inline: auto;
@@ -17,9 +43,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-
-        // 431px = 80px / 1023px = 180px
-        width: clamp(80px,calc(7.20px + 16.879vw),180px);
+        width: clamp(80px, calc(7.20px + 16.879vw), 180px);
         aspect-ratio: 1 / 1;
 
         margin-inline: auto;

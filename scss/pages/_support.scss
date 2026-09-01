@@ -97,8 +97,12 @@
         margin-block-end: 24px;
     }
 
-    // 1件のFAQ本文ブロック。WordPress化後はACFのフレキシブルコンテンツ／
-    // リピーターの1要素としてループ出力される想定。
+    // 1件のFAQ本文ブロック。
+    // WordPress化後：ACFは使わず、投稿本文(the_content)をそのまま出力する。
+    // the_content()はh2/h3/pがフラットに並ぶ(.faq-detail__subのような
+    // ラッパーdivは付けられない)ため、h2/h3/pへ直接スタイルを当てる。
+    // (静的プロトタイプ側の.faq-detail__sub入れ子構造は下記でそのまま残しており、
+    // 互換のため動作は変えていない)
     &__block {
         &+& {
             margin-block-start: 64px;
@@ -113,12 +117,26 @@
             margin-block-end: clamp(10px, calc(5.657px + 1.01vw), 16px);
         }
 
+        // the_content()から出力される小見出し(以前の.faq-detail__sub h3相当)
+        h3 {
+            // fluid化: sp=1.6rem / pc=2rem（431〜1023pxを線形補間）
+            font-size: clamp(1.6rem, calc(13.1px + 0.6734vw), 2rem);
+            font-weight: v.$fw-medium;
+            line-height: 1.4;
+            margin-block-start: 24px;
+            margin-block-end: 16px;
+        }
+
         >p {
             // fluid化: sp=1.5rem / pc=1.6rem（431〜1023pxを線形補間）
             font-size: clamp(1.5rem, calc(14.28px + 0.1684vw), 1.6rem);
             line-height: 1.9;
             color: v.$color-text;
             font-weight: v.$fw-normal;
+
+            &:not(:last-child) {
+                margin-block-end: 16px;
+            }
         }
     }
 
@@ -140,5 +158,75 @@
             color: v.$color-text;
             font-weight: v.$fw-normal;
         }
+    }
+}
+
+// ==========================================================================
+// FAQ 目次(セクションリンク) / single-faq.php
+// 本文中のH3/H4見出しを拾って自動生成される、任意表示のジャンプリンク一覧。
+// 枠のトーンはcontact-form__dropzoneと同じ(破線＋薄い青背景)、
+// 中のリストは左に青い縦線＋インデントで見出しレベルを表現する。
+// ==========================================================================
+.faq-toc {
+    box-sizing: border-box;
+    width: 100%;
+    margin-block-end: 32px;
+    padding: 32px;
+    text-align: left;
+    background-color: #F4FAFF;
+    border: 1px dashed v.$color-text;
+    border-radius: v.$radius-card;
+
+    @include mx.sp {
+        padding: 24px 20px;
+    }
+
+    &__title {
+        margin-block-end: 16px;
+        font-size: 1.8rem;
+        font-weight: v.$fw-bold;
+        color: v.$color-text;
+    }
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin: 0;
+        padding-inline-start: 16px;
+        list-style: none;
+        border-left: 2px solid v.$color-blue;
+    }
+
+    &__sub-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin: 12px 0 0;
+        padding-inline-start: 20px;
+        list-style: none;
+    }
+
+    &__link {
+        display: inline-block;
+        color: v.$color-text;
+        text-decoration: underline;
+        transition: opacity 0.2s;
+
+        &:hover {
+            opacity: 0.7;
+        }
+    }
+
+    // H3見出し(トップレベル): 太字
+    &__list > li > &__link {
+        font-size: 1.6rem;
+        font-weight: v.$fw-bold;
+    }
+
+    // H4見出し(サブ): 通常の太さ・少し小さめ
+    &__sub-list &__link {
+        font-size: 1.4rem;
+        font-weight: v.$fw-normal;
     }
 }
