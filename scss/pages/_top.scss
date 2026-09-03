@@ -23,23 +23,24 @@
         width: min(100%, 1440px);
         height: 100%;
         margin-inline: auto;
+        display: flex;
+        align-items: flex-start;
+        --hero-pad-top: clamp(200px, 20vw, 400px);
+        --hero-pad-bottom: 60px;
 
         // ------------------------------------------------------
         // PC
         // ------------------------------------------------------
 
-        padding-block-start: clamp(170px,
-                19vw,
-                270px);
-
-        padding-block-end: 60px;
+        padding-block-start: var(--hero-pad-top);
+        padding-block-end: var(--hero-pad-bottom);
 
         // ------------------------------------------------------
         // 780px以下
         // ------------------------------------------------------
 
         @include mx.hero-sp {
-            padding-block-start: 200px;
+            --hero-pad-top: 200px;
             padding-inline: 32px;
         }
 
@@ -49,9 +50,9 @@
         // ------------------------------------------------------
 
         @media (max-width: 600px) {
-            padding-block-start: 190px;
+            --hero-pad-top: 200px;
+            --hero-pad-bottom: 40px;
             padding-inline: 32px;
-            padding-block-end: 40px;
         }
 
         // ------------------------------------------------------
@@ -59,7 +60,7 @@
         // ------------------------------------------------------
 
         @include mx.sp {
-            padding-block-start: 180px;
+            --hero-pad-top: 180px;
             padding-inline: 24px;
         }
     }
@@ -71,11 +72,8 @@
     &__deco {
         position: absolute;
         z-index: 0;
-
         display: block;
-
         height: auto;
-
         pointer-events: none;
 
         // ------------------------------------------------------
@@ -107,7 +105,6 @@
                     -100px);
 
             left: -100px;
-
             width: clamp(250px,
                     46vw,
                     360px);
@@ -153,11 +150,16 @@
         max-width: none;
         pointer-events: none;
 
+        // hero__contentと同じ「ヘッダー分の余白を除いた実質表示領域」の
+        // 中央に合わせる。hero__inner側の--hero-pad-top/--hero-pad-bottomを
+        // 継承して使うことで、ブレークポイントごとに個別のtop値を持たなくてよい
+        top: calc(var(--hero-pad-top) + (100% - var(--hero-pad-top) - var(--hero-pad-bottom)) / 2);
+        transform: translateY(-50%);
+
         // ------------------------------------------------------
         // PC
         // ------------------------------------------------------
 
-        top: clamp(-130px, -7vw, -40px);
         right: clamp(-100px, -4vw, 0px);
         width: clamp(650px, 58vw, 840px);
 
@@ -178,7 +180,6 @@
         // ------------------------------------------------------
 
         @include mx.hero-sp {
-            top: 360px;
             right: clamp(-300px, calc(-143.5px - 20.06vw), -230px);
             width: clamp(620px, 97vw, 760px);
         }
@@ -189,9 +190,13 @@
         // ------------------------------------------------------
 
         @media (max-width: 600px) {
-            top: 270px;
-            right: -220px;
-            width: clamp(470px, 103vw, 580px);
+            // 600px以下は縦中央寄せをやめ、画面右下に配置する
+            top: auto;
+            bottom: 0;
+            transform: none;
+
+            right: -250px;
+            width: clamp(470px, 95vw, 580px);
         }
 
         // ------------------------------------------------------
@@ -199,9 +204,8 @@
         // ------------------------------------------------------
 
         @include mx.sp {
-            top: 255px;
-            right: -260px;
-            width: clamp(300px, 120vw, 520px);
+            right: -140px;
+            width: 85vw;
         }
     }
 
@@ -235,7 +239,7 @@
 
     &__heading {
         margin: 0 0 24px;
-        font-size: clamp(1.4rem, calc(10.52px + 0.658vw), 2rem);
+        font-size: clamp(1.4rem, calc(10.52px + 0.658vw), 2.4rem);
         font-weight: v.$fw-bold;
         line-height: 1.4;
 
@@ -269,6 +273,11 @@
             margin-block-start: 14px;
         }
 
+        // 601px〜741px：ロゴ幅を300px固定に
+        @media (max-width: 741px) and (min-width: 601px) {
+            width: 300px;
+        }
+
         @media (max-width: 600px) {
             width: min(320px, 74vw);
             margin-block-start: 8px;
@@ -288,12 +297,12 @@
         position: relative;
         z-index: 2;
         margin: 0 0 28px;
-        font-size: clamp(1.4rem, calc(7.76px + 0.878vw), 2rem);
+        font-size: clamp(1.4rem, calc(7.76px + 0.878vw), 2.4rem);
         font-weight: v.$fw-medium;
         line-height: 1.4;
 
         @include mx.hero-sp {
-            width: min(100%, 430px);
+            width: min(100%, 300px);
             margin-block-start: 56px;
             font-size: clamp(1.8rem, 3vw, 2.4rem);
             line-height: 1.5;
@@ -358,7 +367,7 @@
         .btn--store {
             display: block;
             flex-shrink: 0;
-            height: 48px;
+            height: 56px;
 
             @include mx.hero-sp {
                 height: clamp(56px, 8vw, 72px);
@@ -661,18 +670,29 @@
     // 吹き出し（スピーチバブル）: 角丸の帯＋下向き三角＋右端にくっつく四分円デコ
     &__tag {
         position: absolute;
-        top: -30px;
+        // 2行以上に折り返した時に本文へ被らないよう、tagの「下端」を基準に
+        // box上端から一定距離の位置に固定する(top固定だと行数が増えるほど
+        // 下に伸びて本文と重なってしまうため、bottom基準の計算に変更)
+        top: 0;
         left: 50%;
         z-index: 1;
+        // 英語版など文言が長い場合、box幅を超えて画面外へはみ出さないよう
+        // 最大幅をboxより少し広い程度に制限し、収まらなければ2行に折り返す
+        // width:auto のままだと、絶対配置(left:50%のみ指定)のshrink-to-fit計算で
+        // 日本語(区切り文字なし)が不必要に折り返されることがあるため、
+        // 「本来の1行分の幅」を明示してからmax-widthで上限を掛ける
+        width: max-content;
+        max-width: calc(100% + 24px);
         background-color: v.$color-pink;
         color: v.$color-white;
         font-size: clamp(16px, calc(13.1px + 0.6734vw), 20px);
         font-weight: v.$fw-bold;
         padding: 6px 18px;
         border-radius: 8px;
-        white-space: nowrap;
+        white-space: normal;
+        text-align: center;
         opacity: 0;
-        transform: translateX(-50%) scale(0.6);
+        transform: translate(-50%, calc(-100% + 6px)) scale(0.6);
         transition: opacity 0.4s ease-out, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 
         // 下向きの吹き出し三角（しっぽ）
@@ -702,7 +722,7 @@
 
         &.is-visible {
             opacity: 1;
-            transform: translateX(-50%) scale(1);
+            transform: translate(-50%, calc(-100% + 6px)) scale(1);
         }
     }
 
@@ -842,6 +862,10 @@
         .btn--outline {
             display: flex;
             width: fit-content;
+            // 英語版など文言が長い場合、containerより広がって画面外へ
+            // はみ出さないよう上限を掛け、収まらなければ折り返す
+            max-width: 100%;
+            white-space: normal;
             margin-inline: auto;
         }
     }
@@ -860,6 +884,13 @@
 
         @include mx.sp {
             font-size: 2rem;
+        }
+
+        // 英語版のみ、430px以下で中央揃えに
+        &--en {
+            @include mx.sp {
+                text-align: center;
+            }
         }
     }
 
@@ -944,7 +975,8 @@
         text-shadow: 6px 6px 0 rgba(32, 32, 32, 0.3);
 
         @include mx.sp {
-            font-size: 4rem;
+            // sp=5rem(320px) / 6rem(430px)を線形補間
+            font-size: clamp(5rem, calc(20.909px + 9.091vw), 6rem);
         }
     }
 
@@ -2142,6 +2174,11 @@
         font-size: clamp(1.6rem, calc(10.21px + 1.347vw), 2.4rem);
         line-height: 1.4;
         letter-spacing: 0;
+    }
+
+    // 英語版のみ、見出し(h2)と本文が詰まって見えるため上余白を追加
+    &__desc--en {
+        margin-block-start: 16px;
     }
 
     &__link {

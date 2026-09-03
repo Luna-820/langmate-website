@@ -1,34 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- TODO: クライアント提供の英訳が届いたら、下記の仮訳(Claudeによる翻訳)と差し替える -->
-  <title>FAQ | Langmate</title>
-  <meta name="description" content="Frequently asked questions about Langmate. Find answers by category, including how to use the app, account settings, and payments." />
+  <title>よくある質問｜Langmate（ラングメイト）</title>
+  <meta name="description" content="Langmate（ラングメイト）のよくある質問（FAQ）一覧です。使い方やアカウント設定、お支払いなどカテゴリーごとにご確認いただけます。" />
 
   <!-- Canonical -->
-  <link rel="canonical" href="https://www.langmate.jp/en/how-can-we-help.html" />
+  <link rel="canonical" href="https://www.langmate.jp/ja/how-can-we-help/" />
 
   <!-- 日英の相互参照。検索エンジンに言語違いの同一ページであることを伝える -->
-  <link rel="alternate" hreflang="ja" href="https://www.langmate.jp/how-can-we-help.html" />
-  <link rel="alternate" hreflang="en" href="https://www.langmate.jp/en/how-can-we-help.html" />
-  <link rel="alternate" hreflang="x-default" href="https://www.langmate.jp/how-can-we-help.html" />
+  <link rel="alternate" hreflang="ja" href="https://www.langmate.jp/ja/how-can-we-help/" />
+  <link rel="alternate" hreflang="en" href="https://www.langmate.jp/how-can-we-help/" />
+  <link rel="alternate" hreflang="x-default" href="https://www.langmate.jp/how-can-we-help/" />
 
   <!-- OGP -->
   <meta property="og:site_name" content="Langmate" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="FAQ | Langmate" />
-  <meta property="og:description" content="Frequently asked questions about Langmate." />
-  <meta property="og:url" content="https://www.langmate.jp/en/how-can-we-help.html" />
-  <meta property="og:locale" content="en_US" />
+  <meta property="og:title" content="よくある質問｜Langmate（ラングメイト）" />
+  <meta property="og:description" content="Langmate（ラングメイト）のよくある質問（FAQ）一覧です。" />
+  <meta property="og:url" content="https://www.langmate.jp/ja/how-can-we-help/" />
+  <meta property="og:locale" content="ja_JP" />
 
   <!-- X(Twitter)カード -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="FAQ | Langmate" />
-  <meta name="twitter:description" content="Frequently asked questions about Langmate." />
+  <meta name="twitter:title" content="よくある質問｜Langmate（ラングメイト）" />
+  <meta name="twitter:description" content="Langmate（ラングメイト）のよくある質問（FAQ）一覧です。" />
 
   <!-- Favicon（暫定。後日ちゃんとしたfavicon一式に差し替え予定） -->
   <link rel="icon" type="image/svg+xml" href="/design-assets/logo-langmate.svg" />
@@ -43,21 +42,21 @@
 </head>
 
 <body>
-  <a class="skip-link" href="#main">Skip to main content</a>
+  <a class="skip-link" href="#main">メインコンテンツへスキップ</a>
 
   <header class="site-header">
     <div class="site-header__inner">
-      <a class="site-header__logo" href="/en/index.html">
+      <a class="site-header__logo" href="/ja/">
         <img src="/design-assets/logo-langmate.svg" alt="Langmate" width="140" height="40" />
       </a>
 
-      <nav class="global-nav" aria-label="global navigation">
+      <nav class="global-nav" aria-label="グローバルナビゲーション">
         <ul class="global-nav__list">
-          <li><a href="/en/index.html">Home</a></li>
-          <li><a href="/en/beginners-guide.html">Getting Started</a></li>
-          <li><a href="/en/how-can-we-help.html" aria-current="page">FAQ</a></li>
-          <li><a href="/en/company.html">Company</a></li>
-          <li><a href="/en/contact.html">Contact</a></li>
+          <li><a href="/ja/">ホーム</a></li>
+          <li><a href="/ja/beginners-guide/">初めての方へ</a></li>
+          <li><a href="/ja/how-can-we-help/" aria-current="page">よくある質問</a></li>
+          <li><a href="/ja/company/">会社概要</a></li>
+          <li><a href="/ja/contact/">お問い合わせ</a></li>
         </ul>
       </nav>
 
@@ -65,15 +64,15 @@
         <div class="language-switcher" data-language-switcher>
           <button class="language-switcher__trigger" type="button" aria-haspopup="listbox" aria-expanded="false"
             aria-controls="language-switcher-list">
-            <img src="/design-assets/flag-us.svg" alt="" width="24" height="24" />
-            <span class="visually-hidden">Language</span>
+            <img src="/design-assets/flag-jp.svg" alt="" width="24" height="24" />
+            <span class="visually-hidden">言語を選択</span>
             <span class="language-switcher__caret" aria-hidden="true"></span>
           </button>
           <ul class="language-switcher__list" id="language-switcher-list" role="listbox" hidden>
-            <li role="option" data-lang="ja" aria-selected="false">
+            <li role="option" data-lang="ja" aria-selected="true">
               <img src="/design-assets/flag-jp.svg" alt="" width="20" height="20" />日本語
             </li>
-            <li role="option" data-lang="en" aria-selected="true">
+            <li role="option" data-lang="en" aria-selected="false">
               <img src="/design-assets/flag-us.svg" alt="" width="20" height="20" />English
             </li>
           </ul>
@@ -81,7 +80,7 @@
 
         <button class="hamburger" type="button" aria-expanded="false" aria-controls="mobile-nav"
           data-mobile-nav-trigger>
-          <span class="visually-hidden">Menu</span>
+          <span class="visually-hidden">メニューを開く</span>
           <span class="hamburger__line hamburger__line--top" aria-hidden="true"></span>
           <span class="hamburger__line hamburger__line--middle" aria-hidden="true"></span>
           <span class="hamburger__line hamburger__line--bottom" aria-hidden="true"></span>
@@ -91,28 +90,24 @@
   </header>
 
   <div class="mobile-nav" id="mobile-nav" data-mobile-nav hidden>
-    <nav aria-label="Mobile navigation">
+    <nav aria-label="モバイルナビゲーション">
       <ul class="mobile-nav__list">
-        <li><a href="/en/index.html">Home</a></li>
-        <li><a href="/en/beginners-guide.html">Getting Started</a></li>
-        <li><a href="/en/how-can-we-help.html">FAQ</a></li>
-        <li><a href="/en/company.html">Company</a></li>
-        <li><a href="/en/contact.html">Contact</a></li>
+        <li><a href="/ja/">ホーム</a></li>
+        <li><a href="/ja/beginners-guide/">初めての方へ</a></li>
+        <li><a href="/ja/how-can-we-help/">よくある質問</a></li>
+        <li><a href="/ja/company/">会社概要</a></li>
+        <li><a href="/ja/contact/">お問い合わせ</a></li>
       </ul>
     </nav>
-      <div class="mobile-nav__sns">
-    <div class="sns__icons"> <!-- <p>公式SNSはこちら<span aria-hidden="true">&#x25BC;</span></p> -->
+    <div class="mobile-nav__sns">
+      <!-- <p>公式SNSはこちら<span aria-hidden="true">&#x25BC;</span></p> -->
       <a href="https://www.instagram.com/langmate_app" target="_blank" rel="noopener"><img src="/design-assets/logo-instagram.svg" alt="Instagram"
           width="24" height="24" /></a>
       <a href="https://x.com/LANGMATE_APP" target="_blank" rel="noopener"><img src="/design-assets/logo-x.svg" alt="X" width="24" height="24" /></a>
       <a href="https://www.tiktok.com/@questions_about_japan" target="_blank" rel="noopener"><img src="/design-assets/logo-tiktok.svg" alt="TikTok"
           width="24" height="24" /></a>
     </div>
-  </div>
-    <a class="mobile-nav__download" href="#download" data-mobile-download>
-      <span>Download Here</span>
-      <img class="mobile-nav__download-icon" src="/design-assets/icon-DL.svg" alt="" aria-hidden="true">
-    </a>
+    <a class="mobile-nav__download" href="#download">ダウンロードはこちら <span aria-hidden="true">⬇</span></a>
   </div>
 
   <div class="floating-dl" data-floating-dl>
@@ -124,9 +119,9 @@
       </button>
       <div class="floating-dl__panel" id="floating-dl-panel">
         <a href="https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775" target="_blank" rel="noopener" class="btn btn--store"><img
-            src="/design-assets/badge-appstore-en.svg" alt="Download from the App Store" width="160" height="48" /></a>
+            src="/design-assets/badge-appstore-ja.svg" alt="App Storeからダウンロード" width="160" height="48" /></a>
         <a href="https://play.google.com/store/apps/details?id=co.thoron.langmate" target="_blank" rel="noopener" class="btn btn--store"><img
-            src="/design-assets/badge-googleplay-en.svg" alt="Get it on Google Play" width="160" height="48" /></a>
+            src="/design-assets/badge-googleplay-ja.svg" alt="Google Playで手に入れよう" width="160" height="48" /></a>
       </div>
     </div>
   </div>
@@ -147,16 +142,16 @@
             <textPath href="#faq-hero-eyebrow-arc" startOffset="50%">FAQ</textPath>
           </text>
         </svg>
-        <h1 class="sub-hero__heading faq-hero__heading">Frequently Asked Questions</h1>
+        <h1 class="sub-hero__heading faq-hero__heading">よくある質問</h1>
         <!-- Breadcrumb -->
-        <nav class="breadcrumb faq-hero__breadcrumb faq-search-section__inner" aria-label="Breadcrumb">
+        <nav class="breadcrumb faq-hero__breadcrumb faq-search-section__inner" aria-label="パンくずリスト">
           <ol class="breadcrumb__list">
             <li class="breadcrumb__item">
-              <a href="/en/index.html">HOME</a>
+              <a href="/ja/">HOME</a>
             </li>
 
             <li class="breadcrumb__item" aria-current="page">
-              Frequently Asked Questions
+              よくある質問
             </li>
           </ol>
         </nav>
@@ -167,30 +162,30 @@
     <!-- ===== Search ===== -->
     <section class="faq-search-section">
       <div class="wrapper  faq-search-section__inner">
-        <form class="faq-search" action="/en/how-can-we-help.html" method="get">
-          <input class="faq-search__input" type="search" name="q" placeholder="Enter a keyword" />
-          <button class="faq-search__submit" type="submit">Search</button>
+        <form class="faq-search" action="/ja/how-can-we-help/" method="get">
+          <input class="faq-search__input" type="search" name="q" placeholder="キーワード入力" />
+          <button class="faq-search__submit" type="submit">検索</button>
         </form>
 
         <!-- カテゴリーは将来的にWordPressの親カテゴリー（タクソノミー）に対応する想定 -->
         <nav class="faq-categories" aria-label="FAQカテゴリー">
-          <a class="faq-categories__item" href="/en/how-can-we-help.html">
-            <span class="faq-categories__arrow" aria-hidden="true">▶︎</span>Frequently Asked Questions
+          <a class="faq-categories__item" href="/ja/how-can-we-help/">
+            <span class="faq-categories__arrow" aria-hidden="true">▶︎</span>よくある質問
           </a>
-          <a class="faq-categories__item faq-categories__item--active" href="/en/how-can-we-help.html">
-            <span class="faq-categories__arrow" aria-hidden="true">▶︎</span>How to Use
+          <a class="faq-categories__item faq-categories__item--active" href="/ja/how-can-we-help/">
+            <span class="faq-categories__arrow" aria-hidden="true">▶︎</span>使い方
           </a>
-          <a class="faq-categories__item" href="/en/how-can-we-help.html">
-            <span class="faq-categories__arrow" aria-hidden="true">▶︎</span>About Langmate
+          <a class="faq-categories__item" href="/ja/how-can-we-help/">
+            <span class="faq-categories__arrow" aria-hidden="true">▶︎</span>Langmateについて
           </a>
-          <a class="faq-categories__item" href="/en/how-can-we-help.html">
-            <span class="faq-categories__arrow" aria-hidden="true">▶︎</span>Troubleshooting
+          <a class="faq-categories__item" href="/ja/how-can-we-help/">
+            <span class="faq-categories__arrow" aria-hidden="true">▶︎</span>トラブルシューティング
           </a>
-          <a class="faq-categories__item" href="/en/how-can-we-help.html">
-            <span class="faq-categories__arrow" aria-hidden="true">▶︎</span>Billing & Payments
+          <a class="faq-categories__item" href="/ja/how-can-we-help/">
+            <span class="faq-categories__arrow" aria-hidden="true">▶︎</span>請求と支払い
           </a>
-          <a class="faq-categories__item" href="/en/how-can-we-help.html">
-            <span class="faq-categories__arrow" aria-hidden="true">▶︎</span>Security
+          <a class="faq-categories__item" href="/ja/how-can-we-help/">
+            <span class="faq-categories__arrow" aria-hidden="true">▶︎</span>セキュリティ
           </a>
         </nav>
       </div>
@@ -203,25 +198,25 @@
         <div class="faq-group">
           <h2 class="faq-group__title">機能について</h2>
           <ul class="faq-group__list faq-group__list--2col">
-            <li class="faq-item"><a href="/en/support.html"><span class="faq-item__icon"
+            <li class="faq-item"><a href="/ja/support/"><span class="faq-item__icon"
                   aria-hidden="true">Q</span>Cardsとは？</a></li>
-            <li class="faq-item"><a href="/en/support.html"><span class="faq-item__icon"
+            <li class="faq-item"><a href="/ja/support/"><span class="faq-item__icon"
                   aria-hidden="true">Q</span>フレンドリクエストを送る方法</a></li>
-            <li class="faq-item"><a href="/en/support.html"><span class="faq-item__icon"
+            <li class="faq-item"><a href="/ja/support/"><span class="faq-item__icon"
                   aria-hidden="true">Q</span>メッセージを送信する方法</a></li>
-            <li class="faq-item"><a href="/en/support.html"><span class="faq-item__icon"
+            <li class="faq-item"><a href="/ja/support/"><span class="faq-item__icon"
                   aria-hidden="true">Q</span>スワイプしたカードを戻す方法 (Rewind)</a></li>
-            <li class="faq-item"><a href="/en/support.html"><span class="faq-item__icon"
+            <li class="faq-item"><a href="/ja/support/"><span class="faq-item__icon"
                   aria-hidden="true">Q</span>Boostとは？</a></li>
-            <li class="faq-item"><a href="/en/support.html"><span class="faq-item__icon"
+            <li class="faq-item"><a href="/ja/support/"><span class="faq-item__icon"
                   aria-hidden="true">Q</span>フィルターとは？</a></li>
-            <li class="faq-item"><a href="/en/support.html"><span class="faq-item__icon"
+            <li class="faq-item"><a href="/ja/support/"><span class="faq-item__icon"
                   aria-hidden="true">Q</span>マッチする方法</a></li>
-            <li class="faq-item"><a href="/en/support.html"><span class="faq-item__icon" aria-hidden="true">Q</span>Local
+            <li class="faq-item"><a href="/ja/support/"><span class="faq-item__icon" aria-hidden="true">Q</span>Local
                 peopleについて</a></li>
-            <li class="faq-item"><a href="/en/support.html"><span class="faq-item__icon"
+            <li class="faq-item"><a href="/ja/support/"><span class="faq-item__icon"
                   aria-hidden="true">Q</span>スマイルとは何ですか？</a></li>
-            <li class="faq-item"><a href="/en/support.html"><span class="faq-item__icon"
+            <li class="faq-item"><a href="/ja/support/"><span class="faq-item__icon"
                   aria-hidden="true">Q</span>レーティングとは？</a></li>
           </ul>
         </div>
@@ -229,19 +224,19 @@
         <div class="faq-group">
           <h2 class="faq-group__title">マッチ&amp;チャット</h2>
           <ul class="faq-group__list">
-            <li class="faq-item"><a href="/en/support.html"><span class="faq-item__icon"
+            <li class="faq-item"><a href="/ja/support/"><span class="faq-item__icon"
                   aria-hidden="true">Q</span>『チャットを始めますか』機能について</a></li>
-            <li class="faq-item"><a href="/en/support.html"><span class="faq-item__icon"
+            <li class="faq-item"><a href="/ja/support/"><span class="faq-item__icon"
                   aria-hidden="true">Q</span>マッチする方法</a></li>
-            <li class="faq-item"><a href="/en/support.html"><span class="faq-item__icon"
+            <li class="faq-item"><a href="/ja/support/"><span class="faq-item__icon"
                   aria-hidden="true">Q</span>新しいフレンズとチャットするには？</a></li>
-            <li class="faq-item"><a href="/en/support.html"><span class="faq-item__icon"
+            <li class="faq-item"><a href="/ja/support/"><span class="faq-item__icon"
                   aria-hidden="true">Q</span>Messagesで使える機能について</a></li>
-            <li class="faq-item"><a href="/en/support.html"><span class="faq-item__icon"
+            <li class="faq-item"><a href="/ja/support/"><span class="faq-item__icon"
                   aria-hidden="true">Q</span>送信したメッセージを削除する方法</a></li>
-            <li class="faq-item"><a href="/en/support.html"><span class="faq-item__icon"
+            <li class="faq-item"><a href="/ja/support/"><span class="faq-item__icon"
                   aria-hidden="true">Q</span>ユーザーをブロックするには？</a></li>
-            <li class="faq-item"><a href="/en/support.html"><span class="faq-item__icon"
+            <li class="faq-item"><a href="/ja/support/"><span class="faq-item__icon"
                   aria-hidden="true">Q</span>悪質ユーザーを通報する</a></li>
           </ul>
         </div>
@@ -249,15 +244,15 @@
         <div class="faq-group">
           <h2 class="faq-group__title">プロフィール&amp;アカウント設定</h2>
           <ul class="faq-group__list">
-            <li class="faq-item"><a href="/en/support.html"><span class="faq-item__icon"
+            <li class="faq-item"><a href="/ja/support/"><span class="faq-item__icon"
                   aria-hidden="true">Q</span>プロフィールを変更する</a></li>
-            <li class="faq-item"><a href="/en/support.html"><span class="faq-item__icon"
+            <li class="faq-item"><a href="/ja/support/"><span class="faq-item__icon"
                   aria-hidden="true">Q</span>あたらしい携帯電話にアカウントを移行したい</a></li>
-            <li class="faq-item"><a href="/en/support.html"><span class="faq-item__icon"
+            <li class="faq-item"><a href="/ja/support/"><span class="faq-item__icon"
                   aria-hidden="true">Q</span>バックアップ方法は？</a></li>
-            <li class="faq-item"><a href="/en/support.html"><span class="faq-item__icon"
+            <li class="faq-item"><a href="/ja/support/"><span class="faq-item__icon"
                   aria-hidden="true">Q</span>ログアウトできますか？</a></li>
-            <li class="faq-item"><a href="/en/support.html"><span class="faq-item__icon"
+            <li class="faq-item"><a href="/ja/support/"><span class="faq-item__icon"
                   aria-hidden="true">Q</span>アカウントをリンクする</a></li>
           </ul>
         </div>
@@ -265,15 +260,15 @@
         <div class="faq-group">
           <h2 class="faq-group__title">PREMIUM専用機能について</h2>
           <ul class="faq-group__list">
-            <li class="faq-item"><a href="/en/support.html"><span class="faq-item__icon"
+            <li class="faq-item"><a href="/ja/support/"><span class="faq-item__icon"
                   aria-hidden="true">Q</span>フレンドリクエストが見えない</a></li>
-            <li class="faq-item"><a href="/en/support.html"><span class="faq-item__icon"
+            <li class="faq-item"><a href="/ja/support/"><span class="faq-item__icon"
                   aria-hidden="true">Q</span>無制限でLocal peopleを！</a></li>
-            <li class="faq-item"><a href="/en/support.html"><span class="faq-item__icon"
+            <li class="faq-item"><a href="/ja/support/"><span class="faq-item__icon"
                   aria-hidden="true">Q</span>Messagesで使える機能について</a></li>
-            <li class="faq-item"><a href="/en/support.html"><span class="faq-item__icon"
+            <li class="faq-item"><a href="/ja/support/"><span class="faq-item__icon"
                   aria-hidden="true">Q</span>Rewind（リワインド）（Cardsを戻る）</a></li>
-            <li class="faq-item"><a href="/en/support.html"><span class="faq-item__icon"
+            <li class="faq-item"><a href="/ja/support/"><span class="faq-item__icon"
                   aria-hidden="true">Q</span>メッセージを送信する方法</a></li>
           </ul>
         </div>
@@ -284,28 +279,28 @@
   <footer class="site-footer">
     <div class="site-footer__inner">
       <div class="site-footer__brand">
-        <p>Meet People in Japan. Make Real Friends.</p>
+        <p>外国人の友達になれる国際交流アプリ</p>
         <img src="/design-assets/logo-langmate.svg" alt="Langmate" />
         <div class="site-footer__badges">
           <a href="https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775" target="_blank" rel="noopener"><img
-              src="/design-assets/badge-appstore-en.svg" alt="Download from the App Store" width="120" height="36" /></a>
+              src="/design-assets/badge-appstore-ja.svg" alt="App Storeからダウンロード" width="120" height="36" /></a>
           <a href="https://play.google.com/store/apps/details?id=co.thoron.langmate" target="_blank" rel="noopener"><img
-              src="/design-assets/badge-googleplay-en.svg" alt="Get it on Google Play" width="120" height="36" /></a>
+              src="/design-assets/badge-googleplay-ja.svg" alt="Google Playで手に入れよう" width="120" height="36" /></a>
         </div>
       </div>
 
-      <nav class="site-footer__nav" aria-label="Footer navigation">
+      <nav class="site-footer__nav" aria-label="フッターナビゲーション">
         <ul>
-          <li class="site-footer__nav-home"><a href="/en/index.html">Home</a></li>
-          <li><a href="/en/beginners-guide.html">Getting Started</a></li>
-          <li><a href="/en/company.html">Company</a></li>
-          <li><a href="/en/how-can-we-help.html">FAQs</a></li>
-          <li><a href="/en/contact.html">Contact Us</a></li>
+          <li class="site-footer__nav-home"><a href="/ja/">ホーム</a></li>
+          <li><a href="/ja/beginners-guide/">初めての方へ</a></li>
+          <li><a href="/ja/company/">会社概要</a></li>
+          <li><a href="/ja/how-can-we-help/">よくある質問</a></li>
+          <li><a href="/ja/contact/">お問い合わせ</a></li>
         </ul>
       </nav>
 
       <div class="site-footer__sns">
-        <p>Follow Us on Social Media</p>
+        <p>公式SNSはこちら</p>
         <div>
           <a href="https://www.instagram.com/langmate_app" target="_blank" rel="noopener"><img src="/design-assets/logo-instagram.svg" alt="Instagram"
               width="24" height="24" /></a>
@@ -316,8 +311,8 @@
       </div>
     </div>
     <nav class="site-footer__legal" aria-label="法的情報">
-      <a href="/en/terms-of-service.html">Terms of Service</a>
-      <a href="/en/privacy-policy.html">Privacy Policy</a>
+      <a href="/ja/terms-of-service/">利用規約</a>
+      <a href="/ja/privacy-policy/">プライバシーポリシー</a>
     </nav>
     <p class="site-footer__copyright">Copyright &copy; 2026 Langmate Inc.</p>
   </footer>

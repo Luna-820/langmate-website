@@ -18,7 +18,7 @@ export function initContactForm() {
   // ==========================================================================
   //
   // 静的HTML側：バックエンド未実装のため、必須項目チェックのみ行い、
-  // 正常なら contact-thanks.html へ遷移する。
+  // 正常なら contact-thanks/ へ遷移する（言語プレフィックス /ja/ の有無で絶対パスを組み立てる）。
   //
   // WordPress側：.contact-form は <form> ではなく、
   // Contact Form 7 を囲む <div> として使用する（実際の送信処理はCF7、
@@ -36,6 +36,7 @@ export function initContactForm() {
       form.reportValidity();
       return;
     }
-    window.location.href = 'contact-thanks.html';
+    const isJa = location.pathname.startsWith('/ja/');
+    window.location.href = isJa ? '/ja/contact-thanks/' : '/contact-thanks/';
   });
 }

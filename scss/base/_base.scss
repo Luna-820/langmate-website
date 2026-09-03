@@ -182,8 +182,12 @@ img {
 }
 
 .fuwafuwa {
+    // 元々 background: url(../img/ico-apple.svg) ... を指定していたが、
+    // ico-apple.svgはリポジトリ内に存在せず404の原因だった。
+    // このクラスは常に自前のsrcを持つ<img>にのみ適用されており、
+    // <img>自体の描画がbackgroundを完全に覆い隠すため、
+    // 視覚的には一切表示されていなかった(削除しても見た目に影響なし)。
     animation: fuwafuwa 3s ease-in-out infinite alternate;
-    background: url(../img/ico-apple.svg) no-repeat center center / 60px auto;
     display: inline-block;
     transition: 1.5s ease-in-out;
     width: 70px;

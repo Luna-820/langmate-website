@@ -189,6 +189,18 @@
         width: 100%;
         transform: none;
 
+        // FV(hero)が画面内にある間は非表示。スクロールでFVを通過したら表示する
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+
+        &.is-past-hero {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
         // ======================================================
         // Box
         // PC版と同じ白背景＋青枠

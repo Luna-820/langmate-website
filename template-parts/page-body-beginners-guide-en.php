@@ -50,9 +50,9 @@ $theme_uri = get_template_directory_uri();
 
         <div class="gs-hero__nav">
           <a class="gs-hero__nav-card gs-hero__nav-card--reason" href="#reason">
-            <img class="gs-hero__nav-illust" src="<?php echo esc_url( $theme_uri ); ?>/design-assets/illust-page-reason.svg" alt="" aria-hidden="true" />
-            <span class="gs-hero__nav-eyebrow">4 reasons</span>
-            <span class="gs-hero__nav-title">it's easy to get started</span>
+            <img class="gs-hero__nav-illust" src="<?php echo esc_url( $theme_uri ); ?>/design-assets/illust-page-reason.png" alt="" aria-hidden="true" />
+            <span class="gs-hero__nav-eyebrow">it's easy to get started</span>
+            <span class="gs-hero__nav-title">4 reasons</span>
             <span class="gs-hero__nav-arrow" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 4v16m0 0l-7-7m7 7l7-7" stroke="currentColor" stroke-width="3" stroke-linecap="round"
@@ -61,7 +61,7 @@ $theme_uri = get_template_directory_uri();
             </span>
           </a>
           <a class="gs-hero__nav-card gs-hero__nav-card--started" href="#get-started">
-            <img class="gs-hero__nav-illust" src="<?php echo esc_url( $theme_uri ); ?>/design-assets/illust-page-start.svg" alt="" aria-hidden="true" />
+            <img class="gs-hero__nav-illust" src="<?php echo esc_url( $theme_uri ); ?>/design-assets/illust-page-start.png" alt="" aria-hidden="true" />
             <span class="gs-hero__nav-eyebrow">How to Get Started</span>
             <span class="gs-hero__nav-title">with Langmate </span>
             <span class="gs-hero__nav-arrow" aria-hidden="true">
@@ -72,7 +72,7 @@ $theme_uri = get_template_directory_uri();
             </span>
           </a>
           <a class="gs-hero__nav-card gs-hero__nav-card--safety" href="#safety">
-            <img class="gs-hero__nav-illust" src="<?php echo esc_url( $theme_uri ); ?>/design-assets/illust-page-safety.svg" alt="" aria-hidden="true" />
+            <img class="gs-hero__nav-illust" src="<?php echo esc_url( $theme_uri ); ?>/design-assets/illust-page-safety.png" alt="" aria-hidden="true" />
             <span class="gs-hero__nav-eyebrow">A safer place </span>
             <span class="gs-hero__nav-title"> to connect</span>
             <span class="gs-hero__nav-arrow" aria-hidden="true">
@@ -151,7 +151,7 @@ $theme_uri = get_template_directory_uri();
                     d="M0.716187 255.895C9.51602 188.211 39.7333 133.187 95.7493 92.7494C151.446 52.537 211.524 22.093 278.981 7.37479C307.408 1.17334 336.117 -1.86166 365.264 1.21091"
                     fill="none" />
                   <text>
-                    <textPath href="#gs-reason-path-02" startOffset="2%" textLength="460"
+                    <textPath href="#gs-reason-path-02" startOffset="2%" textLength="276"
                       lengthAdjust="spacing">
                       Help when you get stuck
                     </textPath>
@@ -184,7 +184,7 @@ $theme_uri = get_template_directory_uri();
                     d="M15.0353 93.1381C57.438 39.6539 111.679 8.0518 180.521 2.24032C248.973 -3.54244 316.15 1.30436 381.552 23.4313"
                     fill="none" />
                   <text>
-                    <textPath href="#gs-reason-path-03" startOffset="2%" textLength="375"
+                    <textPath href="#gs-reason-path-03" startOffset="2%" textLength="350"
                       lengthAdjust="spacing">
                       Find the right people faster
                     </textPath>
@@ -216,7 +216,7 @@ $theme_uri = get_template_directory_uri();
                     d="M44.9611 79.7792C62.9488 52.1465 82.2609 30.7031 108.57 16.3609C137.381 0.659864 167.999 -2.93791 200.068 2.16631C252.387 10.4801 301.962 26.9809 349.049 51.2143"
                     fill="none" />
                   <text>
-                    <textPath href="#gs-reason-path-04" startOffset="1%" textLength="325"
+                    <textPath href="#gs-reason-path-04" startOffset="1%" textLength="274"
                       lengthAdjust="spacing">
                       A safer place to connect
                     </textPath>
@@ -371,7 +371,7 @@ $theme_uri = get_template_directory_uri();
         </div>
 
 
-        <img class="gs-started__illust" src="<?php echo esc_url( $theme_uri ); ?>/design-assets/illust-page-start.svg" alt="" aria-hidden="true" width="400"
+        <img class="gs-started__illust" src="<?php echo esc_url( $theme_uri ); ?>/design-assets/illust-page-start.png" alt="" aria-hidden="true" width="400"
           height="556.54" data-pop />
 
       </div>
@@ -466,7 +466,7 @@ $theme_uri = get_template_directory_uri();
         </div>
 
 
-        <img class="gs-safety__illust" src="<?php echo esc_url( $theme_uri ); ?>/design-assets/illust-page-safety.svg" alt="" aria-hidden="true" width="400"
+        <img class="gs-safety__illust" src="<?php echo esc_url( $theme_uri ); ?>/design-assets/illust-page-safety.png" alt="" aria-hidden="true" width="400"
           height="434.63" data-pop />
 
       </div>
