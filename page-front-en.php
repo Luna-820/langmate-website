@@ -132,7 +132,7 @@ $langmate_theme_uri = get_template_directory_uri();
           <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/img-beginner.webp" alt="" width="295" height="256" data-pop />
         </div>
         <div class="banner__content">
-          <p class="banner__heading"><strong>Not confident in your Japanese?<br>
+          <p class="banner__heading banner__heading--en"><strong>Not confident in your Japanese?<br>
               No problem.</strong></p>
           <p>
             It’s easy to find something to talk about.
@@ -519,7 +519,7 @@ $langmate_theme_uri = get_template_directory_uri();
               <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/logo-instagram.svg" alt="" aria-hidden="true" width="56" height="56" />
               <span class="sns__ig-text" data-text="Instagram">Instagram</span>
             </h2>
-            <p>From interviews with travelers in Japan to international culture and short videos, there’s always
+            <p class="sns__desc--en">From interviews with travelers in Japan to international culture and short videos, there’s always
               something new to check out.</p>
             <a class="sns__link" href="https://www.instagram.com/langmate_app/" target="_blank" rel="noopener">
               <span class="sns__link-text">langmate_app</span>

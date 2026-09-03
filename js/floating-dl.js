@@ -45,6 +45,28 @@ export function initFloatingDl() {
   const deviceType = getDeviceType();
 
   // ==========================================================
+  // FV(hero)通過後に表示（600px以下のみ。CSS側で範囲を絞っている）
+  // ==========================================================
+
+  const hero = document.querySelector('.hero');
+
+  if (hero) {
+    const heroObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          el.classList.toggle('is-past-hero', !entry.isIntersecting);
+        });
+      },
+      { threshold: 0 }
+    );
+
+    heroObserver.observe(hero);
+  } else {
+    // heroが無いページでは常時表示のまま
+    el.classList.add('is-past-hero');
+  }
+
+  // ==========================================================
   // Open / Close
   // ==========================================================
 
