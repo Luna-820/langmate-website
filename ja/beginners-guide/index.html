@@ -1,36 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>Getting Started | Langmate</title>
-  <meta name="description"
-    content="A guide for first-time Langmate users. Learn why Langmate is easy and safe to start with, how to get set up, and what we do to keep the community safe." />
+  <title>初めての方へ｜Langmate（ラングメイト）</title>
+  <meta name="description" content="Langmateをはじめて使う方向けのガイド。安心して使える理由、はじめ方の手順、安全に交流するための取り組みをご紹介します。" />
 
   <!-- Canonical -->
-  <link rel="canonical" href="https://www.langmate.jp/en/beginners-guide.html" />
+  <link rel="canonical" href="https://www.langmate.jp/ja/beginners-guide/" />
 
   <!-- 日英の相互参照。検索エンジンに言語違いの同一ページであることを伝える -->
-  <link rel="alternate" hreflang="ja" href="https://www.langmate.jp/beginners-guide.html" />
-  <link rel="alternate" hreflang="en" href="https://www.langmate.jp/en/beginners-guide.html" />
-  <link rel="alternate" hreflang="x-default" href="https://www.langmate.jp/beginners-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://www.langmate.jp/ja/beginners-guide/" />
+  <link rel="alternate" hreflang="en" href="https://www.langmate.jp/beginners-guide/" />
+  <link rel="alternate" hreflang="x-default" href="https://www.langmate.jp/beginners-guide/" />
 
   <!-- OGP -->
   <meta property="og:site_name" content="Langmate" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Getting Started | Langmate" />
-  <meta property="og:description"
-    content="A guide for first-time Langmate users. Learn why Langmate is easy and safe to start with, how to get set up, and what we do to keep the community safe." />
-  <meta property="og:url" content="https://www.langmate.jp/en/beginners-guide.html" />
-  <meta property="og:locale" content="en_US" />
+  <meta property="og:title" content="初めての方へ｜Langmate（ラングメイト）" />
+  <meta property="og:description" content="Langmateをはじめて使う方向けのガイド。安心して使える理由、はじめ方の手順、安全に交流するための取り組みをご紹介します。" />
+  <meta property="og:url" content="https://www.langmate.jp/ja/beginners-guide/" />
+  <meta property="og:locale" content="ja_JP" />
   <!-- TODO: og:image 用のOGP画像(1200x630)を用意して追加する -->
 
   <!-- X(Twitter)カード -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Getting Started | Langmate" />
-  <meta name="twitter:description" content="A guide for first-time Langmate users." />
+  <meta name="twitter:title" content="初めての方へ｜Langmate（ラングメイト）" />
+  <meta name="twitter:description" content="Langmateをはじめて使う方向けのガイド。" />
 
   <!-- Favicon（暫定。後日ちゃんとしたfavicon一式に差し替え予定） -->
   <link rel="icon" type="image/svg+xml" href="/design-assets/logo-langmate.svg" />
@@ -45,21 +43,21 @@
 </head>
 
 <body>
-  <a class="skip-link" href="#main">Skip to main content</a>
+  <a class="skip-link" href="#main">メインコンテンツへスキップ</a>
 
   <header class="site-header">
     <div class="site-header__inner">
-      <a class="site-header__logo" href="/en/index.html">
+      <a class="site-header__logo" href="/ja/">
         <img src="/design-assets/logo-langmate.svg" alt="Langmate" width="140" height="40" />
       </a>
 
-      <nav class="global-nav" aria-label="global navigation">
+      <nav class="global-nav" aria-label="グローバルナビゲーション">
         <ul class="global-nav__list">
-          <li><a href="/en/index.html">Home</a></li>
-          <li><a href="/en/beginners-guide.html" aria-current="page">Getting Started</a></li>
-          <li><a href="/en/how-can-we-help.html">FAQ</a></li>
-          <li><a href="/en/company.html">Company</a></li>
-          <li><a href="/en/contact.html">Contact</a></li>
+          <li><a href="/ja/">ホーム</a></li>
+          <li><a href="/ja/beginners-guide/" aria-current="page">初めての方へ</a></li>
+          <li><a href="/ja/how-can-we-help/">よくある質問</a></li>
+          <li><a href="/ja/company/">会社概要</a></li>
+          <li><a href="/ja/contact/">お問い合わせ</a></li>
         </ul>
       </nav>
 
@@ -67,15 +65,15 @@
         <div class="language-switcher" data-language-switcher>
           <button class="language-switcher__trigger" type="button" aria-haspopup="listbox" aria-expanded="false"
             aria-controls="language-switcher-list">
-            <img src="/design-assets/flag-us.svg" alt="" width="24" height="24" />
-            <span class="visually-hidden">Language</span>
+            <img src="/design-assets/flag-jp.svg" alt="" width="24" height="24" />
+            <span class="visually-hidden">言語を選択</span>
             <span class="language-switcher__caret" aria-hidden="true"></span>
           </button>
           <ul class="language-switcher__list" id="language-switcher-list" role="listbox" hidden>
-            <li role="option" data-lang="ja" aria-selected="false">
+            <li role="option" data-lang="ja" aria-selected="true">
               <img src="/design-assets/flag-jp.svg" alt="" width="20" height="20" />日本語
             </li>
-            <li role="option" data-lang="en" aria-selected="true">
+            <li role="option" data-lang="en" aria-selected="false">
               <img src="/design-assets/flag-us.svg" alt="" width="20" height="20" />English
             </li>
           </ul>
@@ -83,7 +81,7 @@
 
         <button class="hamburger" type="button" aria-expanded="false" aria-controls="mobile-nav"
           data-mobile-nav-trigger>
-          <span class="visually-hidden">Menu</span>
+          <span class="visually-hidden">メニューを開く</span>
           <span class="hamburger__line hamburger__line--top" aria-hidden="true"></span>
           <span class="hamburger__line hamburger__line--middle" aria-hidden="true"></span>
           <span class="hamburger__line hamburger__line--bottom" aria-hidden="true"></span>
@@ -93,28 +91,24 @@
   </header>
 
   <div class="mobile-nav" id="mobile-nav" data-mobile-nav hidden>
-    <nav aria-label="Mobile navigation">
+    <nav aria-label="モバイルナビゲーション">
       <ul class="mobile-nav__list">
-        <li><a href="/en/index.html">Home</a></li>
-        <li><a href="/en/beginners-guide.html">Getting Started</a></li>
-        <li><a href="/en/how-can-we-help.html">FAQ</a></li>
-        <li><a href="/en/company.html">Company</a></li>
-        <li><a href="/en/contact.html">Contact</a></li>
+        <li><a href="/ja/">ホーム</a></li>
+        <li><a href="/ja/beginners-guide/">初めての方へ</a></li>
+        <li><a href="/ja/how-can-we-help/">よくある質問</a></li>
+        <li><a href="/ja/company/">会社概要</a></li>
+        <li><a href="/ja/contact/">お問い合わせ</a></li>
       </ul>
     </nav>
     <div class="mobile-nav__sns">
-      <div class="sns__icons"> <!-- <p>公式SNSはこちら<span aria-hidden="true">&#x25BC;</span></p> -->
-        <a href="https://www.instagram.com/langmate_app" target="_blank" rel="noopener"><img src="/design-assets/logo-instagram.svg" alt="Instagram"
-            width="24" height="24" /></a>
-        <a href="https://x.com/LANGMATE_APP" target="_blank" rel="noopener"><img src="/design-assets/logo-x.svg" alt="X" width="24" height="24" /></a>
-        <a href="https://www.tiktok.com/@questions_about_japan" target="_blank" rel="noopener"><img src="/design-assets/logo-tiktok.svg" alt="TikTok"
-            width="24" height="24" /></a>
-      </div>
+      <!-- <p>公式SNSはこちら<span aria-hidden="true">&#x25BC;</span></p> -->
+      <a href="https://www.instagram.com/langmate_app" target="_blank" rel="noopener"><img src="/design-assets/logo-instagram.svg" alt="Instagram"
+          width="24" height="24" /></a>
+      <a href="https://x.com/LANGMATE_APP" target="_blank" rel="noopener"><img src="/design-assets/logo-x.svg" alt="X" width="24" height="24" /></a>
+      <a href="https://www.tiktok.com/@questions_about_japan" target="_blank" rel="noopener"><img src="/design-assets/logo-tiktok.svg" alt="TikTok"
+          width="24" height="24" /></a>
     </div>
-    <a class="mobile-nav__download" href="#download" data-mobile-download>
-      <span>Download Here</span>
-      <img class="mobile-nav__download-icon" src="/design-assets/icon-DL.svg" alt="" aria-hidden="true">
-    </a>
+    <a class="mobile-nav__download" href="#download">ダウンロードはこちら <span aria-hidden="true">⬇</span></a>
   </div>
 
   <div class="floating-dl" data-floating-dl>
@@ -126,9 +120,9 @@
       </button>
       <div class="floating-dl__panel" id="floating-dl-panel">
         <a href="https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775" target="_blank" rel="noopener" class="btn btn--store"><img
-            src="/design-assets/badge-appstore-en.svg" alt="Download from the App Store" width="160" height="48" /></a>
+            src="/design-assets/badge-appstore-ja.svg" alt="App Storeからダウンロード" width="160" height="48" /></a>
         <a href="https://play.google.com/store/apps/details?id=co.thoron.langmate" target="_blank" rel="noopener" class="btn btn--store"><img
-            src="/design-assets/badge-googleplay-en.svg" alt="Get it on Google Play" width="160" height="48" /></a>
+            src="/design-assets/badge-googleplay-ja.svg" alt="Google Playで手に入れよう" width="160" height="48" /></a>
       </div>
     </div>
   </div>
@@ -150,22 +144,18 @@
             <textPath href="#gs-hero-eyebrow-arc" startOffset="50%">GET STARTED</textPath>
           </text>
         </svg>
-        <h1 class="sub-hero__heading gs-hero__heading">New to Langmate?</h1>
-        <p class="sub-hero__lead gs-hero__lead">Langmate is a language exchange app where people from around the world
-          can connect with Japanese people. Whether you’re just starting out or already fluent, you can use it to
-          practice languages, share cultures, and make friends in a safe, welcoming space.
-          Meet Japanese people, connect with others who share your interest in Japan, and enjoy real conversations at
-          your own pace.</p>
+        <h1 class="sub-hero__heading gs-hero__heading">初めての方へ</h1>
+        <p class="sub-hero__lead gs-hero__lead">英語に自信がなくても、<br />世界中のユーザーと安心して交流を始められます。</p>
 
         <!-- Breadcrumb -->
-        <nav class="breadcrumb gs-hero__breadcrumb" aria-label="Breadcrumb">
+        <nav class="breadcrumb gs-hero__breadcrumb" aria-label="パンくずリスト">
           <ol class="breadcrumb__list">
             <li class="breadcrumb__item">
-              <a href="/en/index.html">HOME</a>
+              <a href="/ja/">HOME</a>
             </li>
 
             <li class="breadcrumb__item" aria-current="page">
-              New to Langmate?
+              初めての方へ
             </li>
           </ol>
         </nav>
@@ -173,19 +163,19 @@
         <div class="gs-hero__nav">
           <a class="gs-hero__nav-card gs-hero__nav-card--reason" href="#reason">
             <img class="gs-hero__nav-illust" src="/design-assets/illust-page-reason.png" alt="" aria-hidden="true" />
-            <span class="gs-hero__nav-eyebrow">it's easy to get started</span>
-            <span class="gs-hero__nav-title">4 reasons</span>
+            <span class="gs-hero__nav-eyebrow">初めてでも安心な</span>
+            <span class="gs-hero__nav-title">４つの理由</span>
             <span class="gs-hero__nav-arrow" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 4v16m0 0l-7-7m7 7l7-7" stroke="currentColor" stroke-width="3" stroke-linecap="round"
                   stroke-linejoin="round" />
               </svg>
             </span>
-          </a>
+          </a> 
           <a class="gs-hero__nav-card gs-hero__nav-card--started" href="#get-started">
             <img class="gs-hero__nav-illust" src="/design-assets/illust-page-start.png" alt="" aria-hidden="true" />
-            <span class="gs-hero__nav-eyebrow">How to Get Started</span>
-            <span class="gs-hero__nav-title">with Langmate </span>
+            <span class="gs-hero__nav-eyebrow">Langmateの</span>
+            <span class="gs-hero__nav-title">はじめ方</span>
             <span class="gs-hero__nav-arrow" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 4v16m0 0l-7-7m7 7l7-7" stroke="currentColor" stroke-width="3" stroke-linecap="round"
@@ -195,8 +185,8 @@
           </a>
           <a class="gs-hero__nav-card gs-hero__nav-card--safety" href="#safety">
             <img class="gs-hero__nav-illust" src="/design-assets/illust-page-safety.png" alt="" aria-hidden="true" />
-            <span class="gs-hero__nav-eyebrow">A safer place </span>
-            <span class="gs-hero__nav-title"> to connect</span>
+            <span class="gs-hero__nav-eyebrow">安心して交流できる</span>
+            <span class="gs-hero__nav-title">環境づくり</span>
             <span class="gs-hero__nav-arrow" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 4v16m0 0l-7-7m7 7l7-7" stroke="currentColor" stroke-width="3" stroke-linecap="round"
@@ -216,8 +206,8 @@
         <span class="gs-reason__watermark" aria-hidden="true">REASON</span>
 
         <div class="gs-reason__head">
-          <p class="gs-reason__eyebrow">It's Easy to Get Started</p>
-          <h2 id="gs-reason-heading" class="gs-reason__title">4 Reasons</h2>
+          <p class="gs-reason__eyebrow">初めてでも安心な</p>
+          <h2 id="gs-reason-heading" class="gs-reason__title">４つの理由</h2>
         </div>
 
         <div class="wrapper gs-reason__wrapper">
@@ -240,17 +230,15 @@
                     d="M0.0515811 169.048C-0.473394 140.836 2.91216 116.372 14.6652 93.5788C27.5378 68.6222 47.5029 51.3722 72.6749 39.5902C113.735 20.3586 156.783 8.24453 201.781 2.80336C236.992 -1.45425 272.031 -1.38998 306.733 6.69679"
                     fill="none" />
                   <text>
-                    <textPath href="#gs-reason-path-01" startOffset="8%" textLength="340"
+                    <textPath href="#gs-reason-path-01" startOffset="8%" textLength="360"
                       lengthAdjust="spacing" lengthAdjust="spacing">
-                      New to Japanese? That's fine.
+                      まずは短いチャットから始められる
                     </textPath>
                   </text>
                 </svg>
 
                 <p class="gs-reason__blob-text">
-                  Don't know a word or how to reply? Use translation, corrections, and reply support whenever you need
-                  them. Even if your Japanese isn't great yet, you can still chat naturally and start making Japanese
-                  friends.
+                  最初から流暢に話す必要はありません。一言のメッセージから、自分のペースで世界の人との交流を始められます。
                 </p>
 
               </div>
@@ -273,17 +261,15 @@
                     d="M0.716187 255.895C9.51602 188.211 39.7333 133.187 95.7493 92.7494C151.446 52.537 211.524 22.093 278.981 7.37479C307.408 1.17334 336.117 -1.86166 365.264 1.21091"
                     fill="none" />
                   <text>
-                    <textPath href="#gs-reason-path-02" startOffset="2%" textLength="276"
+                    <textPath href="#gs-reason-path-02" startOffset="2%" textLength="396"
                       lengthAdjust="spacing">
-                      Help when you get stuck
+                      会話を助けるサポート機能がある
                     </textPath>
                   </text>
                 </svg>
 
                 <p class="gs-reason__blob-text">
-                  Don't know a word or how to reply? Use translation, corrections, and reply support whenever you need
-                  them. Even if your Japanese isn't great yet, you can still chat naturally and start making Japanese
-                  friends.
+                  分からない表現があっても、翻訳・添削・返信サポートを使いながら会話を続けられます。英語に自信がない方でも、実際に使いながら少しずつ慣れていけます。
                 </p>
 
               </div>
@@ -303,19 +289,18 @@
                 <svg class="gs-reason__blob-label" viewBox="0 0 492 328" aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg">
                   <path id="gs-reason-path-03"
-                    d="M15.0353 93.1381C57.438 39.6539 111.679 8.0518 180.521 2.24032C248.973 -3.54244 316.15 1.30436 381.552 23.4313"
+                    d="M15.0353 93.1381C57.438 39.6539 111.679 8.0518 180.521 2.24032C248.973 -3.54244 316.15 1.30436 381.552 23.4313C409.113 32.7568 435.285 44.9414 458.686 62.587"
                     fill="none" />
                   <text>
-                    <textPath href="#gs-reason-path-03" startOffset="2%" textLength="350"
+                    <textPath href="#gs-reason-path-03" startOffset="1%" textLength="459"
                       lengthAdjust="spacing">
-                      Find the right people faster
+                      話の合いそうな相手を見つけやすい
                     </textPath>
                   </text>
                 </svg>
 
                 <p class="gs-reason__blob-text">
-                  Use filters like nationality and age to find Japanese people you'd like to talk to. Check their
-                  profiles and interests, and it's easier to find something you both want to chat about.
+                  プロフィールや興味、国籍・年齢などの条件から、話してみたい相手を探せます。日本語や日本文化に興味を持つ海外の人も多いため、共通の話題を見つけやすい環境です。
                 </p>
 
               </div>
@@ -338,19 +323,15 @@
                     d="M44.9611 79.7792C62.9488 52.1465 82.2609 30.7031 108.57 16.3609C137.381 0.659864 167.999 -2.93791 200.068 2.16631C252.387 10.4801 301.962 26.9809 349.049 51.2143"
                     fill="none" />
                   <text>
-                    <textPath href="#gs-reason-path-04" startOffset="1%" textLength="274"
+                    <textPath href="#gs-reason-path-04" startOffset="1%" textLength="326"
                       lengthAdjust="spacing">
-                      A safer place to connect
+                      困ったときに自分を守れる
                     </textPath>
                   </text>
                 </svg>
 
                 <p class="gs-reason__blob-text">
-                  If someone sends you an inappropriate message or makes you uncomfortable, you can block or report them
-                  anytime. We also review suspicious or inappropriate accounts and take action when needed.
-
-                  Langmate is run by a Japanese company, and we work continuously to keep the community safe and
-                  comfortable for everyone.
+                  不快なメッセージや迷惑行為に遭遇した場合は、相手をブロックしたり、運営へ通報したりできます。Langmateは日本企業が運営し、安心して交流を続けられる環境づくりに取り組んでいます。
                 </p>
 
               </div>
@@ -359,7 +340,7 @@
           </ul>
         </div>
 
-        <img class="gs-reason__illust" src="/design-assets/illust-page-reason-en.svg" alt="" aria-hidden="true" width="405"
+        <img class="gs-reason__illust" src="/design-assets/illust-page-reason.png" alt="" aria-hidden="true" width="405"
           height="470" data-pop />
 
       </div>
@@ -377,11 +358,11 @@
 
         <div class="gs-started__head">
           <p class="gs-started__eyebrow">
-            How to Get Started
+            Langmateの
           </p>
 
           <h2 id="gs-started-heading" class="gs-started__title">
-            with Langmate
+            はじめ方
           </h2>
         </div>
 
@@ -412,9 +393,9 @@
               </span>
 
               <div class="gs-started__content">
-                <h3>Download the app</h3>
+                <h3>ダウンロード</h3>
                 <p>
-                  Get Langmate from the App Store or Google Play and start connecting with Japanese people.
+                  App StoreまたはGoogle Playからアプリをダウンロードして始めましょう。
                 </p>
               </div>
 
@@ -429,9 +410,9 @@
               </span>
 
               <div class="gs-started__content">
-                <h3>Create your account</h3>
+                <h3>アカウント登録</h3>
                 <p>
-                  Sign up quickly using your social media account.
+                  メールアドレスやSNSアカウントで簡単に登録できます。
                 </p>
               </div>
 
@@ -446,10 +427,9 @@
               </span>
 
               <div class="gs-started__content">
-                <h3>Set up your profile</h3>
+                <h3>プロフィールを作成</h3>
                 <p>
-                  Add the language you want to practice and your interests, so it's easier to find Japanese people
-                  you'll enjoy talking to.
+                  話したい言語や趣味を設定して、自分に合う相手とつながりやすくしましょう。
                 </p>
               </div>
 
@@ -464,9 +444,9 @@
               </span>
 
               <div class="gs-started__content">
-                <h3>Find people</h3>
+                <h3>相手を探す</h3>
                 <p>
-                  Use filters like nationality and age to find Japanese people who match what you're looking for.
+                  フィルター機能を使って、国籍や年齢など条件に合うユーザーを探せます。
                 </p>
               </div>
 
@@ -481,9 +461,9 @@
               </span>
 
               <div class="gs-started__content">
-                <h3>Start connecting!</h3>
+                <h3>交流スタート！</h3>
                 <p>
-                  Chat, send voice messages, or share video messages—and enjoy real conversations with Japanese people.
+                  チャットや音声・ビデオメッセージで、世界中のユーザーとの交流を楽しみましょう。
                 </p>
               </div>
 
@@ -512,11 +492,11 @@
 
         <div class="gs-safety__head">
           <p class="gs-safety__eyebrow">
-            A safer place
+            安心して交流できる
           </p>
 
           <h2 id="gs-safety-heading" class="gs-safety__title">
-            to connect
+            環境づくり
           </h2>
         </div>
 
@@ -527,10 +507,10 @@
             <li class="gs-safety__card">
               <img src="/design-assets/icon-report.svg" alt="" aria-hidden="true" width="40" height="40" />
 
-              <h3>Report Feature</h3>
+              <h3>通報機能</h3>
 
               <p>
-                Easily report inappropriate users directly to our support team.
+                迷惑ユーザーを運営へ報告できます。
               </p>
             </li>
 
@@ -538,10 +518,10 @@
             <li class="gs-safety__card">
               <img src="/design-assets/icon-security.svg" alt="" aria-hidden="true" width="40" height="40" />
 
-              <h3>Block users</h3>
+              <h3>ブロック機能</h3>
 
               <p>
-                Don't want to hear from someone anymore? Block them anytime and stop further contact.
+                苦手な相手とのやり取りを制限できます。
               </p>
             </li>
 
@@ -549,10 +529,10 @@
             <li class="gs-safety__card">
               <img src="/design-assets/icon-spam.svg" alt="" aria-hidden="true" width="40" height="40" />
 
-              <h3>Spam protection</h3>
+              <h3>スパム対策</h3>
 
               <p>
-                We check for spam and suspicious accounts every day and take action when needed.
+                毎日迷惑ユーザーをチェックしています。
               </p>
             </li>
 
@@ -560,10 +540,10 @@
             <li class="gs-safety__card">
               <img src="/design-assets/icon-privacy.svg" alt="" aria-hidden="true" width="40" height="40" />
 
-              <h3>Privacy protection</h3>
+              <h3>個人情報保護</h3>
 
               <p>
-                We handle your personal information carefully and keep it properly protected.
+                個人情報を適切に管理しています。
               </p>
             </li>
 
@@ -576,11 +556,10 @@
                 <circle cx="20" cy="20" r="6" fill="#21A3FF" />
               </svg>
 
-              <h3>Run by a Japanese company</h3>
+              <h3>日本企業が運営</h3>
 
               <p>
-                Langmate is operated by a Japan-based team, with support in place to help you use the app with
-                confidence.
+                安心して利用できるサポート体制を整えています。
               </p>
             </li>
 
@@ -604,7 +583,7 @@
 
           <span class="section-title__sub">
             <span class="section-title__dot" aria-hidden="true"></span>
-            Frequently Asked Questions
+            よくある質問
           </span>
         </h2>
         <div class="faq-preview__box">
@@ -615,14 +594,13 @@
               <button type="button" class="faq-preview__question" aria-expanded="false" aria-controls="gs-faq-a-1"
                 data-faq-accordion-trigger>
                 <span class="faq-preview__q-icon" aria-hidden="true">Q</span>
-                <span class="faq-preview__q-text">What is the minimum age?</span>
+                <span class="faq-preview__q-text">何歳から利用できますか？</span>
                 <span class="faq-preview__arrow" aria-hidden="true"></span>
               </button>
               <div class="faq-preview__answer" id="gs-faq-a-1" hidden>
                 <span class="faq-preview__a-icon" aria-hidden="true">A</span>
-                <p>LYou have to be at least 18 years old to create an account and use Langmate.
-                  At Langmate we take Child Protection very seriously, and we will block access to user under the age of
-                  18.
+                <p>Langmate（ラングメイト）をご利用するには、18歳以上である必要があります。
+                  Langmate（ラングメイト）では、未成年保護を重要視しておりますので、18歳未満のユーザーはアクセスをブロックします。
                 </p>
               </div>
             </li>
@@ -630,34 +608,29 @@
               <button type="button" class="faq-preview__question" aria-expanded="false" aria-controls="gs-faq-a-2"
                 data-faq-accordion-trigger>
                 <span class="faq-preview__q-icon" aria-hidden="true">Q</span>
-                <span class="faq-preview__q-text">Is Langmate free?</span>
+                <span class="faq-preview__q-text">Langmate（ラングメイト）は無料ですか？</span>
                 <span class="faq-preview__arrow" aria-hidden="true"></span>
               </button>
               <div class="faq-preview__answer" id="gs-faq-a-2" hidden>
                 <span class="faq-preview__a-icon" aria-hidden="true">A</span>
-                <p>Langmate is available for free in the Apple App Store and Google Play Store
-                  We offer a range of features that you can enjoy without any cost, helping you connect and engage with
-                  people from around the world.
+                <p>Langmateは Apple App Store and Google Play Storeにて無料でダウンロードできます。
+                  世界中の人々とつながり、交流するための様々な機能を無料でご利用いただけます。
                   <br><br>
-                  Matching with users and chatting is free on Langmate.
-                  Langmate uses a virtual credit system called Smiles to give you access to features like Card swipe,
-                  advanced chat tools and more.
-                  Swipe right on a profile to send a Friend Request to someone, swipe left to pass.
-                  If someone accept your friend request, or if you accept a friend request from an other user, it’s a
-                  match!
+                  Langmateでは、ユーザーとのマッチやチャットは無料です。
+                  Langmateはスマイルと呼ばれる仮想クレジットシステムを使用しており、カードスワイプや高度なチャットツールなどの機能を利用することができます。
+                  プロフィールを右にスワイプすると相手にフレンドリクエストが送信され、左にスワイプするとパスされます。
+                  相手があなたのフレンド申請を承認するか、あなたが他のユーザーからのフレンド申請を承認すると、マッチ成立です！
                   <br><br>
-                  You can start chatting and having fun with a limited number of new friends for free.
-                  After you’ve used your free chats credit, you can unlock addtional chats by using Smiles, or by
-                  becoming PREMIUM.
-                  Read more about the “Start chatting” feature
+                  限られた数の新しいフレンズと無料でチャットを始め、楽しむことができます。
+                  無料チャットのクレジットを使用した後、スマイルを使用するか、PREMIUMになることで、追加チャットをアンロックできます。
+                  「チャットを始める」機能についてもっと読む
                   <br><br>
-                  Enjoy all the premium features
-                  To fully enjoy all the features of Langmate, you may need to upgrade to PREMIUM or PLUS+
-                  Please see withing the app which plan applies to you.
-                  To see which plan applies to you, open the Langmate app
-                  > go on the My Page section
-                  > tap the My Status icon or go on Settings > My Status
-                  > Follow the steps on screen.
+                  すべてのプレミアム機能を楽しむ
+                  Langmateのすべての機能を完全にご利用いただくには、 PREMIUM か PLUS+にアップグレードする必要があります。
+                  どのプランが適用されるかを確認するには、Langmateアプリを開きます。
+                  > My Page を開く
+                  > ステータスをタップするかセッティング > マイステータスを確認
+                  > 画面に表示される手順に従ってください。
 
                 </p>
               </div>
@@ -666,22 +639,22 @@
               <button type="button" class="faq-preview__question" aria-expanded="false" aria-controls="gs-faq-a-3"
                 data-faq-accordion-trigger>
                 <span class="faq-preview__q-icon" aria-hidden="true">Q</span>
-                <span class="faq-preview__q-text">Which country is Langmate from?</span>
+                <span class="faq-preview__q-text">Langmateはどこの国のアプリですか？</span>
                 <span class="faq-preview__arrow" aria-hidden="true"></span>
               </button>
               <div class="faq-preview__answer" id="gs-faq-a-3" hidden>
                 <span class="faq-preview__a-icon" aria-hidden="true">A</span>
-                <p>Langmate is an app developed in Japan.
+                <p>Langmate（ラングメイト）は、日本で開発されたアプリです。
                   <br><br>
-                  For more information about the app’s features and functions, please visit our download page.
+                  ※アプリの詳しい機能や特徴については、ダウンロードページをご覧ください。
                   <br>
-                  Make friends before you travel the world!
+                  世界へ旅立つ前に、事前に友達を作っちゃおう！
                 </p>
               </div>
             </li>
           </ul>
         </div>
-        <a href="/en/how-can-we-help.html" class="btn btn--outline">View FAQs</a>
+        <a href="/ja/how-can-we-help/" class="btn btn--outline">よくある質問を見る</a>
       </div>
     </section>
 
@@ -696,15 +669,14 @@
       <img class="cta__deco cta__deco--rb-wave" src="/design-assets/cta-deco-rightbottom.svg" alt="" aria-hidden="true"
         width="509" height="138" />
       <div class="cta__inner">
-        <h2 id="cta-heading">Start meeting Japanese people today.</h2>
-        <p>Don’t just study Japanese. <br>Use it.
-          Build your Japanese naturally <br>through real conversations with real people.</p>
+        <h2 id="cta-heading">世界中のユーザーとの交流を、<br />今日から始めてみませんか？</h2>
+        <p>英語を勉強するだけではなく、<br>実際に使いながら自然な語学力を身につけましょう。</p>
         <div class="cta__badges">
           <a href="https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775" target="_blank" rel="noopener" class="btn btn--store">
-            <img src="/design-assets/badge-appstore-en.svg" alt="Download on the App Store" width="160" height="48" />
+            <img src="/design-assets/badge-appstore-ja.svg" alt="App Storeからダウンロード" width="160" height="48" />
           </a>
           <a href="https://play.google.com/store/apps/details?id=co.thoron.langmate" target="_blank" rel="noopener" class="btn btn--store">
-            <img src="/design-assets/badge-googleplay-en.svg" alt="Get it on Google Play" width="160" height="48" />
+            <img src="/design-assets/badge-googleplay-ja.svg" alt="Google Playで手に入れよう" width="160" height="48" />
           </a>
         </div>
       </div>
@@ -714,41 +686,40 @@
   <footer class="site-footer">
     <div class="site-footer__inner">
       <div class="site-footer__brand">
-        <p>Meet People in Japan. Make Real Friends.</p>
+        <p>外国人の友達になれる国際交流アプリ</p>
         <img src="/design-assets/logo-langmate.svg" alt="Langmate" />
         <div class="site-footer__badges">
           <a href="https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775" target="_blank" rel="noopener"><img
-              src="/design-assets/badge-appstore-en.svg" alt="Download from the App Store" width="120" height="36" /></a>
+              src="/design-assets/badge-appstore-ja.svg" alt="App Storeからダウンロード" width="120" height="36" /></a>
           <a href="https://play.google.com/store/apps/details?id=co.thoron.langmate" target="_blank" rel="noopener"><img
-              src="/design-assets/badge-googleplay-en.svg" alt="Get it on Google Play" width="120" height="36" /></a>
+              src="/design-assets/badge-googleplay-ja.svg" alt="Google Playで手に入れよう" width="120" height="36" /></a>
         </div>
       </div>
 
-      <nav class="site-footer__nav" aria-label="Footer navigation">
+      <nav class="site-footer__nav" aria-label="フッターナビゲーション">
         <ul>
-          <li class="site-footer__nav-home"><a href="/en/index.html">Home</a></li>
-          <li><a href="/en/beginners-guide.html">Getting Started</a></li>
-          <li><a href="/en/company.html">Company</a></li>
-          <li><a href="/en/how-can-we-help.html">FAQs</a></li>
-          <li><a href="/en/contact.html">Contact Us</a></li>
+          <li class="site-footer__nav-home"><a href="/ja/">ホーム</a></li>
+          <li><a href="/ja/beginners-guide/">初めての方へ</a></li>
+          <li><a href="/ja/company/">会社概要</a></li>
+          <li><a href="/ja/how-can-we-help/">よくある質問</a></li>
+          <li><a href="/ja/contact/">お問い合わせ</a></li>
         </ul>
       </nav>
 
       <div class="site-footer__sns">
-        <p>Follow Us on Social Media</p>
+        <p>公式SNSはこちら</p>
         <div>
           <a href="https://www.instagram.com/langmate_app" target="_blank" rel="noopener"><img src="/design-assets/logo-instagram.svg" alt="Instagram"
               width="56" height="56" /></a>
-          <a href="https://x.com/LANGMATE_APP" target="_blank" rel="noopener"><img src="/design-assets/logo-x.svg" alt="X" width="56"
-              height="56" /></a>
+          <a href="https://x.com/LANGMATE_APP" target="_blank" rel="noopener"><img src="/design-assets/logo-x.svg" alt="X" width="56" height="56" /></a>
           <a href="https://www.tiktok.com/@questions_about_japan" target="_blank" rel="noopener"><img src="/design-assets/logo-tiktok.svg" alt="TikTok"
               width="56" height="56" /></a>
         </div>
       </div>
     </div>
     <nav class="site-footer__legal" aria-label="法的情報">
-      <a href="/en/terms-of-service.html">Terms of Service</a>
-      <a href="/en/privacy-policy.html">Privacy Policy</a>
+      <a href="/ja/terms-of-service/">利用規約</a>
+      <a href="/ja/privacy-policy/">プライバシーポリシー</a>
     </nav>
     <p class="site-footer__copyright">Copyright &copy; 2026 Langmate Inc.</p>
   </footer>

@@ -61,9 +61,9 @@ function langmate_get_nav_items() {
 
 /**
  * ==========================================================
- * 多言語: 「Englishページ(スラッグ en)」の子孫かどうかで言語判定する。
- * 将来 /ko/ /zh/ 等を追加する場合も、この関数の中身を拡張するだけで
- * 他のテンプレート・関数は一切変更不要にする。
+ * 多言語: 「Japaneseページ(スラッグ ja)」の子孫かどうかで言語判定する。
+ * English = デフォルト/ルート。将来 /ko/ /zh/ 等を追加する場合も、
+ * この関数の中身を拡張するだけで他のテンプレート・関数は一切変更不要にする。
  * ==========================================================
  */
 
@@ -74,30 +74,30 @@ function langmate_get_nav_items() {
  * @return string 'ja' | 'en'
  */
 function langmate_get_page_language( $post_id ) {
-	static $en_root_id = null;
+	static $ja_root_id = null;
 
-	if ( null === $en_root_id ) {
-		$en_root    = get_page_by_path( 'en' );
-		$en_root_id = $en_root ? (int) $en_root->ID : 0;
+	if ( null === $ja_root_id ) {
+		$ja_root    = get_page_by_path( 'ja' );
+		$ja_root_id = $ja_root ? (int) $ja_root->ID : 0;
 	}
 
-	if ( ! $en_root_id ) {
-		return 'ja';
+	if ( ! $ja_root_id ) {
+		return 'en';
 	}
 
 	$post_id = (int) $post_id;
 
-	if ( $post_id === $en_root_id ) {
-		return 'en';
+	if ( $post_id === $ja_root_id ) {
+		return 'ja';
 	}
 
 	$ancestors = get_post_ancestors( $post_id );
 
-	if ( in_array( $en_root_id, array_map( 'intval', $ancestors ), true ) ) {
-		return 'en';
+	if ( in_array( $ja_root_id, array_map( 'intval', $ancestors ), true ) ) {
+		return 'ja';
 	}
 
-	return 'ja';
+	return 'en';
 }
 
 /**
@@ -111,8 +111,8 @@ function langmate_get_current_language() {
 	}
 
 	if ( ! is_page() ) {
-		// front-page.php(JPのTOP)、アーカイブ等は現状すべてja扱い。
-		return 'ja';
+		// front-page.php(ENのTOP)、アーカイブ等は現状すべてen扱い(Englishがデフォルト)。
+		return 'en';
 	}
 
 	return langmate_get_page_language( get_queried_object_id() );
@@ -131,12 +131,13 @@ function langmate_get_page_url( $key, $lang = null ) {
 		$lang = langmate_get_current_language();
 	}
 
-	// JPのホームはfront-page.phpがサイトルート(/)自体に表示される特殊テンプレートで、
+	// ENのホームはfront-page.phpがサイトルート(/)自体に表示される特殊テンプレートで、
 	// 特定のPage投稿に紐づいていない(translation_key=homeのページが仮に存在しても、
 	// それはサイトルートとは別の実体で、リンク先を間違えることになる)。
-	// そのためJPのhomeだけは常にサイトルートを直接返す。
-	if ( 'home' === $key && 'ja' === $lang ) {
-		return home_url( '/' );
+	// そのためhomeだけは常に言語ごとのルートURLを直接返す
+	// (JPは/ja/ページのtranslation_key経由に頼らず、ここで確実に解決する)。
+	if ( 'home' === $key ) {
+		return ( 'en' === $lang ) ? home_url( '/' ) : home_url( '/ja/' );
 	}
 
 	$candidates = get_posts(
@@ -174,7 +175,7 @@ function langmate_get_translation_url( $lang = null ) {
 		$lang = ( 'ja' === $current_lang ) ? 'en' : 'ja';
 	}
 
-	$fallback = ( 'en' === $lang ) ? home_url( '/en/' ) : home_url( '/' );
+	$fallback = ( 'ja' === $lang ) ? home_url( '/ja/' ) : home_url( '/' );
 
 	if ( ! is_page() ) {
 		return $fallback;
@@ -225,22 +226,35 @@ add_filter( 'script_loader_tag', 'langmate_script_module_type', 10, 3 );
  * ==========================================================
  */
 function langmate_head_meta() {
-	$lang = langmate_get_current_language();
+	$lang    = langmate_get_current_language();
+	$is_faq  = is_singular( 'faq' );
 
 	$description = is_page() ? get_post_meta( get_queried_object_id(), 'meta_description', true ) : '';
 	$title       = wp_get_document_title();
-	$permalink   = is_page() ? get_permalink() : home_url( '/' );
+	// canonicalは常に「今表示している実URL」。FAQ単体はis_page()がfalseになるので
+	// 個別に含めないと、旧実装のようにサイトルートへ誤って落ちてしまう。
+	$permalink   = ( is_page() || $is_faq ) ? get_permalink() : home_url( '/' );
 
 	// Canonical
 	printf( '<link rel="canonical" href="%s" />' . "\n", esc_url( $permalink ) );
 
-	// hreflang（対訳が無い場合は自ページのみ。壊れた相互参照を出さない）
-	$ja_url = langmate_get_translation_url( 'ja' );
-	$en_url = langmate_get_translation_url( 'en' );
+	// hreflang
+	if ( $is_faq ) {
+		// FAQはPageのようなtranslation_keyでの対訳ペア機構を持たない(投稿ごとに
+		// faq_langで単一言語のみ)。存在しない対訳URLを出さないよう、
+		// 自分の言語は自己参照のみ、x-defaultはEnglishのサイトルートに固定する
+		// (このFAQ自体が英語ならx-default=自分自身と同じURLになる)。
+		printf( '<link rel="alternate" hreflang="%s" href="%s" />' . "\n", esc_attr( $lang ), esc_url( $permalink ) );
+		printf( '<link rel="alternate" hreflang="x-default" href="%s" />' . "\n", esc_url( 'en' === $lang ? $permalink : home_url( '/' ) ) );
+	} else {
+		// 対訳が無い場合は各言語のホームへのフォールバック（壊れた相互参照を出さない）
+		$ja_url = langmate_get_translation_url( 'ja' );
+		$en_url = langmate_get_translation_url( 'en' );
 
-	printf( '<link rel="alternate" hreflang="ja" href="%s" />' . "\n", esc_url( $ja_url ) );
-	printf( '<link rel="alternate" hreflang="en" href="%s" />' . "\n", esc_url( $en_url ) );
-	printf( '<link rel="alternate" hreflang="x-default" href="%s" />' . "\n", esc_url( $ja_url ) );
+		printf( '<link rel="alternate" hreflang="ja" href="%s" />' . "\n", esc_url( $ja_url ) );
+		printf( '<link rel="alternate" hreflang="en" href="%s" />' . "\n", esc_url( $en_url ) );
+		printf( '<link rel="alternate" hreflang="x-default" href="%s" />' . "\n", esc_url( $en_url ) );
+	}
 
 	// OGP
 	printf( '<meta property="og:site_name" content="Langmate" />' . "\n" );
@@ -329,11 +343,11 @@ function langmate_cf7_validate_email_confirmation( $result, $tag ) {
 
 	if ( $email !== $email_confirm ) {
 		$referer = wp_get_referer();
-		$is_en   = $referer && 0 === strpos( (string) wp_parse_url( $referer, PHP_URL_PATH ), '/en/' );
+		$is_ja   = $referer && 0 === strpos( (string) wp_parse_url( $referer, PHP_URL_PATH ), '/ja/' );
 
-		$message = $is_en
-			? 'The email addresses do not match.'
-			: 'メールアドレスが一致しません。';
+		$message = $is_ja
+			? 'メールアドレスが一致しません。'
+			: 'The email addresses do not match.';
 
 		$result->invalidate( $tag, $message );
 	}
@@ -553,22 +567,22 @@ function langmate_save_faq_category_meta( $term_id ) {
 add_action( 'created_faq_category', 'langmate_save_faq_category_meta' );
 add_action( 'edited_faq_category', 'langmate_save_faq_category_meta' );
 
-// ---- EN投稿のパーマリンクを /en/faq/{slug}/ にする ----
+// ---- JA投稿のパーマリンクを /ja/faq/{slug}/ にする(EN=デフォルトの /faq/{slug}/) ----
 function langmate_faq_permalink( $link, $post ) {
 	if ( 'faq' !== get_post_type( $post ) ) {
 		return $link;
 	}
-	if ( 'en' === get_post_meta( $post->ID, 'faq_lang', true ) ) {
-		$link = home_url( '/en/faq/' . $post->post_name . '/' );
+	if ( 'ja' === get_post_meta( $post->ID, 'faq_lang', true ) ) {
+		$link = home_url( '/ja/faq/' . $post->post_name . '/' );
 	}
 	return $link;
 }
 add_filter( 'post_type_link', 'langmate_faq_permalink', 10, 2 );
 
-// ---- /en/faq/{slug}/ を faq 投稿に振り分けるリライトルール ----
+// ---- /ja/faq/{slug}/ を faq 投稿に振り分けるリライトルール ----
 // 有効化には パーマリンク設定 での一度の再保存(フラッシュ)が必要
 function langmate_faq_rewrite_rules() {
-	add_rewrite_rule( '^en/faq/([^/]+)/?$', 'index.php?faq=$matches[1]', 'top' );
+	add_rewrite_rule( '^ja/faq/([^/]+)/?$', 'index.php?faq=$matches[1]', 'top' );
 }
 add_action( 'init', 'langmate_faq_rewrite_rules' );
 

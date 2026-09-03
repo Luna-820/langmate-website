@@ -136,7 +136,6 @@ img {
 }
 .fuwafuwa {
   animation: fuwafuwa 3s ease-in-out infinite alternate;
-  background: url(../img/ico-apple.svg) no-repeat center center/60px auto;
   display: inline-block;
   transition: 1.5s ease-in-out;
   width: 70px;
@@ -4220,6 +4219,9 @@ img {
   height: auto;
   z-index: 2;
   pointer-events: none;
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 0.4s ease-out, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 @media (max-width: 1000px) {
   .gs-reason__illust {
@@ -4236,11 +4238,6 @@ img {
     right: -8px;
     width: clamp(110px, 32vw, 140px);
   }
-}
-.gs-reason__illust {
-  opacity: 0;
-  transform: scale(0.6);
-  transition: opacity 0.4s ease-out, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .gs-reason__illust.is-visible {
   opacity: 1;
@@ -4584,12 +4581,6 @@ img {
   opacity: 0;
   transform: scale(0.6);
   transition: opacity 0.4s ease-out, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-.gs-started__illust.is-visible {
-  opacity: 1;
-  transform: scale(1);
-}
-.gs-started__illust {
   left: 0;
   bottom: 80px;
   width: clamp(300px, 31.95vw, 400px);
@@ -4597,6 +4588,10 @@ img {
   height: auto;
   z-index: 2;
   pointer-events: none;
+}
+.gs-started__illust.is-visible {
+  opacity: 1;
+  transform: scale(1);
 }
 @media (max-width: 1000px) {
   .gs-started__illust {
@@ -5894,4 +5889,4 @@ p .user-id-steps__num {
   font-size: clamp(1.4rem, 11.38px + 0.8418vw, 2rem);
   line-height: 1.8;
   color: #202020;
-}/*# sourceMappingURL=main.css.map */
+}

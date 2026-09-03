@@ -1,6 +1,5 @@
 // 言語選択・保存・ページ遷移
-// URL構造は /en/ プレフィックス方式（例: /company.html ⇔ /en/company.html、
-// WordPress側では /company/ ⇔ /en/company/）。
+// URL構造は /ja/ プレフィックス方式（例: /company/ ⇔ /ja/company/、英語がデフォルト/ルート）。
 // セレクターの選択状態(aria-selected)は「今開いているページの実際の言語」を
 // 反映する（保存済みの好みではなく、URLから判定した実体に合わせる）。
 //
@@ -11,20 +10,20 @@
 //     → JSでURLを組み立てて遷移する
 const STORAGE_KEY = 'langmate-lang';
 
-// 現在のページがどの言語版か、URLの/en/プレフィックスの有無で判定する
+// 現在のページがどの言語版か、URLの/ja/プレフィックスの有無で判定する（英語がデフォルト）
 function getCurrentLang() {
-  return location.pathname.startsWith('/en/') ? 'en' : 'ja';
+  return location.pathname.startsWith('/ja/') ? 'ja' : 'en';
 }
 
 // 指定した言語版の、今のページに対応するURLを組み立てる（静的HTML用フォールバック）
-// 例: /company.html + 'en' → /en/company.html　/en/company.html + 'ja' → /company.html
+// 例: /company/ + 'ja' → /ja/company/　/ja/company/ + 'en' → /company/
 function buildUrlForLang(lang) {
   const path = location.pathname;
-  const isEn = path.startsWith('/en/');
-  if (lang === 'en') {
-    return isEn ? path : `/en${path}`;
+  const isJa = path.startsWith('/ja/');
+  if (lang === 'ja') {
+    return isJa ? path : `/ja${path}`;
   }
-  return isEn ? path.slice(3) || '/' : path;
+  return isJa ? path.slice(3) || '/' : path;
 }
 
 export function initLanguageSwitcher() {
