@@ -394,7 +394,7 @@ $langmate_theme_uri = get_template_directory_uri();
                   <span>相手を探す</span>
                 </li>
                 <li class="step-list__item">
-                  <span class="step-list__icon" style="--icon-src: url('<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/icon-chat.svg')"
+                  <span class="step-list__icon" style="--icon-src: url('<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/icon-conversation.svg')"
                     aria-hidden="true"></span>
                   <span>交流スタート</span>
                 </li>

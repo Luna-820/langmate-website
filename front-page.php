@@ -37,7 +37,8 @@ $langmate_theme_uri = get_template_directory_uri();
 
           <p class="hero__lead">
             Find Japanese people you’ll actually click with. <br>
-            Check out their profiles, interests, and age,<br>
+            Check out their profiles, <br class="sp-only">
+            interests, and age,<br>
             and connect with people who share your hobbies and<br>
             what you’re looking for.
           </p>
@@ -404,7 +405,7 @@ $langmate_theme_uri = get_template_directory_uri();
                   <span>Find Japanese people</span>
                 </li>
                 <li class="step-list__item">
-                  <span class="step-list__icon" style="--icon-src: url('<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/icon-chat.svg')"
+                  <span class="step-list__icon" style="--icon-src: url('<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/icon-conversation.svg')"
                     aria-hidden="true"></span>
                   <span>Start chatting</span>
                 </li>
