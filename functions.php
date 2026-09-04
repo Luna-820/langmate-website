@@ -662,6 +662,33 @@ function langmate_faq_rewrite_rules() {
 add_action( 'init', 'langmate_faq_rewrite_rules' );
 
 /**
+ * ---- 下書きFAQの「プレビュー」が空クエリになる問題の修正 ----
+ *
+ * langmate_faq_permalink()/langmate_faq_rewrite_rules()はどちらも
+ * 「公開済みのFAQ投稿をスラッグで検索する」前提の仕組みで、下書き状態の
+ * 投稿はこのスラッグ検索にヒットしない(=index.phpの「見つかりません」に
+ * フォールバックしてしまう)。編集画面の「プレビュー」ボタンだけは、
+ * スラッグ経由のURLではなく投稿ID直指定のURL(?post_type=faq&p=123&preview=true)
+ * に差し替え、下書きでも確実にその投稿自体を解決できるようにする。
+ * 公開後の実際のURL構造(/ja/faq/{slug}/、/faq/{slug}/)には一切影響しない。
+ */
+function langmate_fix_faq_preview_link( $preview_link, $post ) {
+	if ( 'faq' !== get_post_type( $post ) ) {
+		return $preview_link;
+	}
+
+	return add_query_arg(
+		array(
+			'post_type' => 'faq',
+			'p'         => $post->ID,
+			'preview'   => 'true',
+		),
+		home_url( '/' )
+	);
+}
+add_filter( 'preview_post_link', 'langmate_fix_faq_preview_link', 10, 2 );
+
+/**
  * ---- FAQ言語判定 ----
  * ページ側の langmate_get_current_language() と同じ役割。
  * single-faq.php や条件分岐から呼び出す。
