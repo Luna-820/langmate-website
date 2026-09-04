@@ -647,6 +647,13 @@ function langmate_faq_permalink( $link, $post ) {
 	if ( 'faq' !== get_post_type( $post ) ) {
 		return $link;
 	}
+	// 公開済み以外(下書き・プレビュー中等)はpost_name(スラッグ)が
+	// 未確定/不安定なことがあり、ここで独自URLを組み立てると壊れた
+	// リンクになる(英語側はこの分岐に入らないため元々問題が出ない)。
+	// 公開済みの投稿だけ、日本語ページを /ja/faq/{slug}/ に変換する。
+	if ( 'publish' !== $post->post_status ) {
+		return $link;
+	}
 	if ( 'ja' === get_post_meta( $post->ID, 'faq_lang', true ) ) {
 		$link = home_url( '/ja/faq/' . $post->post_name . '/' );
 	}
@@ -687,6 +694,25 @@ function langmate_fix_faq_preview_link( $preview_link, $post ) {
 	);
 }
 add_filter( 'preview_post_link', 'langmate_fix_faq_preview_link', 10, 2 );
+
+/**
+ * ---- プレビュー表示中はredirect_canonicalを無効化 ----
+ *
+ * 下書き投稿はpost_name(スラッグ)が未確定/空のことがあり、その状態で
+ * langmate_faq_permalink()等のpost_type_linkフィルターを通すと不完全な
+ * URL(例: /ja/faq//)が組み立てられる。WordPress標準のredirect_canonical
+ * がこれを「正規URL」と誤認してリダイレクトしてしまうと、preview=true
+ * クエリごと失われて「投稿が見つからない」状態になる。
+ * プレビュー表示中はこの自動リダイレクトを止め、上記のpreview_post_link
+ * が生成したURLをそのまま使わせる。
+ */
+function langmate_disable_redirect_canonical_on_preview( $redirect_url ) {
+	if ( is_preview() ) {
+		return false;
+	}
+	return $redirect_url;
+}
+add_filter( 'redirect_canonical', 'langmate_disable_redirect_canonical_on_preview' );
 
 /**
  * ---- FAQ言語判定 ----

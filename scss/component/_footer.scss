@@ -108,21 +108,13 @@
 
         ul {
             display: grid;
-
-            // liは必要な幅だけ
             grid-template-columns: max-content max-content;
-
-            // nav内部の余白は控えめ
             column-gap: clamp(24px, 3vw, 44px);
             row-gap: clamp(12px, 1vw, 16px);
-
             width: fit-content;
-
-            margin: 0;
+            margin-inline:auto ;
             padding: 0;
-
             list-style: none;
-
             font-size: clamp(1.6rem,
                     calc(14.857px + 0.3571vw),
                     2rem);
@@ -150,10 +142,7 @@
 
             ul {
                 grid-template-columns: max-content max-content;
-                justify-content: center;
-
                 column-gap: 32px;
-
                 text-align: left;
             }
         }

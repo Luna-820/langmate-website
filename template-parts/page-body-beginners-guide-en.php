@@ -151,7 +151,7 @@ $theme_uri = get_template_directory_uri();
                     d="M0.716187 255.895C9.51602 188.211 39.7333 133.187 95.7493 92.7494C151.446 52.537 211.524 22.093 278.981 7.37479C307.408 1.17334 336.117 -1.86166 365.264 1.21091"
                     fill="none" />
                   <text>
-                    <textPath href="#gs-reason-path-02" startOffset="2%" textLength="276"
+                    <textPath href="#gs-reason-path-02" startOffset="30%" textLength="276"
                       lengthAdjust="spacing">
                       Help when you get stuck
                     </textPath>
@@ -237,7 +237,7 @@ $theme_uri = get_template_directory_uri();
           </ul>
         </div>
 
-        <img class="gs-reason__illust" src="<?php echo esc_url( $theme_uri ); ?>/design-assets/illust-page-reason-en.svg" alt="" aria-hidden="true" width="405"
+        <img class="gs-reason__illust" src="<?php echo esc_url( $theme_uri ); ?>/design-assets/illust-page-reason-en.png" alt="" aria-hidden="true" width="405"
           height="470" data-pop />
 
       </div>
@@ -486,7 +486,7 @@ $theme_uri = get_template_directory_uri();
           </span>
         </h2>
         <div class="faq-preview__box">
-          <img class="faq-preview__illustration" src="<?php echo esc_url( $theme_uri ); ?>/design-assets/illust-faq.svg" alt="" aria-hidden="true"
+          <img class="faq-preview__illustration" src="<?php echo esc_url( $theme_uri ); ?>/design-assets/illust-faq.png" alt="" aria-hidden="true"
             width="160" height="160" />
           <ul class="faq-preview__list">
             <li class="faq-preview__item">
