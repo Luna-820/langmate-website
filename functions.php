@@ -256,22 +256,29 @@ function langmate_head_meta() {
 		printf( '<link rel="alternate" hreflang="x-default" href="%s" />' . "\n", esc_url( $en_url ) );
 	}
 
-	// OGP
-	printf( '<meta property="og:site_name" content="Langmate" />' . "\n" );
-	printf( '<meta property="og:type" content="website" />' . "\n" );
-	printf( '<meta property="og:title" content="%s" />' . "\n", esc_attr( $title ) );
-	if ( $description ) {
-		printf( '<meta name="description" content="%s" />' . "\n", esc_attr( $description ) );
-		printf( '<meta property="og:description" content="%s" />' . "\n", esc_attr( $description ) );
-	}
-	printf( '<meta property="og:url" content="%s" />' . "\n", esc_url( $permalink ) );
-	printf( '<meta property="og:locale" content="%s" />' . "\n", ( 'en' === $lang ) ? 'en_US' : 'ja_JP' );
+	// OGP / meta description / Twitterカード
+	//
+	// AIOSEOが有効な環境(テスト環境・本番)では、これらは全てAIOSEOに任せる
+	// (クライアントがページごとに編集できるようにするため)。AIOSEOが無い
+	// Local環境では、今まで通りテーマ側がフォールバックとして出力する。
+	// canonical/hreflang/Organizationスキーマは対象外(常にテーマ側が担当、
+	// 下記のAIOSEOフィルターフックで住み分けている)。
+	if ( ! function_exists( 'aioseo' ) ) {
+		printf( '<meta property="og:site_name" content="Langmate" />' . "\n" );
+		printf( '<meta property="og:type" content="website" />' . "\n" );
+		printf( '<meta property="og:title" content="%s" />' . "\n", esc_attr( $title ) );
+		if ( $description ) {
+			printf( '<meta name="description" content="%s" />' . "\n", esc_attr( $description ) );
+			printf( '<meta property="og:description" content="%s" />' . "\n", esc_attr( $description ) );
+		}
+		printf( '<meta property="og:url" content="%s" />' . "\n", esc_url( $permalink ) );
+		printf( '<meta property="og:locale" content="%s" />' . "\n", ( 'en' === $lang ) ? 'en_US' : 'ja_JP' );
 
-	// X(Twitter)カード
-	printf( '<meta name="twitter:card" content="summary_large_image" />' . "\n" );
-	printf( '<meta name="twitter:title" content="%s" />' . "\n", esc_attr( $title ) );
-	if ( $description ) {
-		printf( '<meta name="twitter:description" content="%s" />' . "\n", esc_attr( $description ) );
+		printf( '<meta name="twitter:card" content="summary_large_image" />' . "\n" );
+		printf( '<meta name="twitter:title" content="%s" />' . "\n", esc_attr( $title ) );
+		if ( $description ) {
+			printf( '<meta name="twitter:description" content="%s" />' . "\n", esc_attr( $description ) );
+		}
 	}
 
 	// 構造化データ（トップページのみ、Organization / WebSite）
@@ -323,6 +330,70 @@ function langmate_head_meta() {
 	}
 }
 add_action( 'wp_head', 'langmate_head_meta', 1 );
+
+/**
+ * ==========================================================
+ * AIOSEO連携: 自作バイリンガル構造をAIOSEOが認識できない箇所を補正する
+ *
+ * AIOSEOはWPML/Polylang等の対応済み多言語プラグインが無いと、
+ * ページごとの言語を判定できない。そのため何もしないと以下が
+ * 常にWordPress管理画面の「サイトの言語」設定(このサイトの現状は
+ * 日本語)だけで出力されてしまい、English側のページで内容と食い違う:
+ *   - og:locale
+ *   - schema WebPage/WebSiteノードのinLanguage
+ * また、ナレッジグラフを「組織」に設定すると、詳細欄を空にしても
+ * サイトタイトル／キャッチフレーズをフォールバックにしたOrganization
+ * スキーマを必ず1つ生成してしまい、テーマ側が既に出している
+ * 日英出し分けのOrganizationスキーマと重複する。
+ *
+ * ここではAIOSEOの設定自体は変更せず、フィルターフックで
+ * 「このページの実際の言語」に基づいて出力だけを補正する。
+ * AIOSEOが無効な環境(Local)ではこれらのフィルターは単に発火しない。
+ * ==========================================================
+ */
+
+// ---- og:locale / og:site_name / og:type をページの実際の言語に補正 ----
+function langmate_fix_aioseo_facebook_tags( $facebookMeta ) {
+	$lang = langmate_get_current_language();
+
+	if ( isset( $facebookMeta['og:locale'] ) ) {
+		$facebookMeta['og:locale'] = ( 'en' === $lang ) ? 'en_US' : 'ja_JP';
+	}
+	if ( isset( $facebookMeta['og:site_name'] ) ) {
+		$facebookMeta['og:site_name'] = 'Langmate';
+	}
+	if ( isset( $facebookMeta['og:type'] ) && ! is_singular( 'faq' ) ) {
+		$facebookMeta['og:type'] = 'website';
+	}
+
+	return $facebookMeta;
+}
+add_filter( 'aioseo_facebook_tags', 'langmate_fix_aioseo_facebook_tags' );
+
+// ---- スキーマ: 重複するOrganizationノードを除去し、WebPage/WebSiteのinLanguageを補正 ----
+function langmate_fix_aioseo_schema_output( $graphs ) {
+	$lang       = langmate_get_current_language();
+	$in_language = ( 'en' === $lang ) ? 'en' : 'ja';
+
+	foreach ( $graphs as $index => $graph ) {
+		if ( empty( $graph['@type'] ) ) {
+			continue;
+		}
+
+		if ( 'Organization' === $graph['@type'] ) {
+			// テーマ側で日英出し分けのOrganizationスキーマを別途出しているため除去する。
+			unset( $graphs[ $index ] );
+			continue;
+		}
+
+		if ( in_array( $graph['@type'], array( 'WebPage', 'WebSite' ), true ) ) {
+			$graphs[ $index ]['inLanguage'] = $in_language;
+		}
+	}
+
+	return $graphs;
+}
+add_filter( 'aioseo_schema_output', 'langmate_fix_aioseo_schema_output' );
 
 /**
  * ==========================================================
