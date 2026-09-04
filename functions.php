@@ -380,13 +380,17 @@ function langmate_fix_aioseo_schema_output( $graphs ) {
 			continue;
 		}
 
-		if ( 'Organization' === $graph['@type'] ) {
-			// テーマ側で日英出し分けのOrganizationスキーマを別途出しているため除去する。
+		if ( in_array( $graph['@type'], array( 'Organization', 'WebSite' ), true ) ) {
+			// テーマ側のlangmate_head_meta()がホームページで日英出し分けの
+			// Organization・WebSiteスキーマを別途出しているため、AIOSEO側の
+			// 同じノードは重複するので除去する。
 			unset( $graphs[ $index ] );
 			continue;
 		}
 
-		if ( in_array( $graph['@type'], array( 'WebPage', 'WebSite' ), true ) ) {
+		if ( in_array( $graph['@type'], array( 'WebPage', 'CollectionPage' ), true ) ) {
+			// フロントページ(is_front_page())はAIOSEO内部でWebPageではなく
+			// CollectionPageとして扱われるため、両方をinLanguage補正の対象にする。
 			$graphs[ $index ]['inLanguage'] = $in_language;
 		}
 	}
