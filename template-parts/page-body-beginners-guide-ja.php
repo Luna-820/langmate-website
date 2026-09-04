@@ -471,7 +471,7 @@ $theme_uri = get_template_directory_uri();
           </span>
         </h2>
         <div class="faq-preview__box">
-          <img class="faq-preview__illustration" src="<?php echo esc_url( $theme_uri ); ?>/design-assets/illust-faq.svg" alt="" aria-hidden="true"
+          <img class="faq-preview__illustration" src="<?php echo esc_url( $theme_uri ); ?>/design-assets/illust-faq.png" alt="" aria-hidden="true"
             width="160" height="160" />
           <ul class="faq-preview__list">
             <li class="faq-preview__item">

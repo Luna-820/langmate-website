@@ -118,12 +118,12 @@ $langmate_theme_uri = get_template_directory_uri();
 
     <div class="marquee marquee--yellow" aria-hidden="true">
       <div class="marquee__track">
-        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-yellow.svg" alt="" width="706" height="172" />
-        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-yellow.svg" alt="" width="706" height="172" />
-        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-yellow.svg" alt="" width="706" height="172" />
-        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-yellow.svg" alt="" width="706" height="172" />
-        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-yellow.svg" alt="" width="706" height="172" />
-        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-yellow.svg" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-yellow.png" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-yellow.png" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-yellow.png" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-yellow.png" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-yellow.png" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-yellow.png" alt="" width="706" height="172" />
       </div>
     </div>
 
@@ -142,19 +142,19 @@ $langmate_theme_uri = get_template_directory_uri();
             still learning Japanese, translation, corrections, and reply support can help you keep the conversation
             going at your own pace.
           </p>
-          <a href="<?php echo esc_url( langmate_get_page_url( 'beginners-guide', 'en' ) ); ?>" class="btn btn--outline">Why Langmate is easy to start with</a>
+          <a href="<?php echo esc_url( langmate_get_page_url( 'beginners-guide', 'en' ) ); ?>" class="btn btn--outline">Why Langmate is <br>easy to start with</a>
         </div>
       </div>
     </section>
 
     <div class="marquee marquee--blue" aria-hidden="true">
       <div class="marquee__track">
-        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
-        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
-        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
-        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
-        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
-        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.png" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.png" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.png" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.png" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.png" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.png" alt="" width="706" height="172" />
       </div>
     </div>
 
@@ -179,7 +179,7 @@ $langmate_theme_uri = get_template_directory_uri();
             <img class="reason__bg reason__bg--01" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/bg-reason-01.svg" alt="" aria-hidden="true">
             <img class="reason__bg reason__bg--02" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/bg-reason-02.svg" alt="" aria-hidden="true"
               width="270" height="206" />
-            <img class="reason__illustration reason__illustration--01" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-reason01-en.svg"
+            <img class="reason__illustration reason__illustration--01" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-page-reason-en.png"
               alt="" width="369" height="496" data-pop />
             <div class="card card--reason">
               <p class="card__eyebrow">Reason <span>01</span></p>
@@ -196,7 +196,7 @@ $langmate_theme_uri = get_template_directory_uri();
               width="304" height="176" />
             <img class="reason__bg reason__bg--04" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/bg-reason-04.svg" alt="" aria-hidden="true"
               width="417" height="263" />
-            <img class="reason__illustration reason__illustration--02" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-reason02.svg" alt=""
+            <img class="reason__illustration reason__illustration--02" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-reason02.png" alt=""
               width="435" height="461" data-pop />
             <div class="card card--reason">
               <p class="card__eyebrow">Reason <span>02</span></p>
@@ -209,7 +209,7 @@ $langmate_theme_uri = get_template_directory_uri();
             </div>
           </li>
           <li class="reason__item">
-            <img class="reason__illustration reason__illustration--03" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-reason03.svg" alt=""
+            <img class="reason__illustration reason__illustration--03" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-reason03.png" alt=""
               width="370" height="503" data-pop />
             <div class="card card--reason">
               <p class="card__eyebrow">Reason <span>03</span></p>
@@ -356,9 +356,9 @@ $langmate_theme_uri = get_template_directory_uri();
     <section class="step" aria-labelledby="step-heading">
       <div class="wrapper">
         <div class="step__box">
-          <img class="step__illust step__illust--01" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-step-01.svg" alt="" aria-hidden="true"
+          <img class="step__illust step__illust--01" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-step-01.png" alt="" aria-hidden="true"
             width="227" height="227" data-pop />
-          <img class="step__illust step__illust--02" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-step-02.svg" alt="" aria-hidden="true"
+          <img class="step__illust step__illust--02" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-step-02.png" alt="" aria-hidden="true"
             width="226" height="236" data-pop />
           <img class="step__deco step__deco--01" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/deco-step-01.svg" alt="" aria-hidden="true"
             width="330" height="304" />
@@ -440,7 +440,7 @@ $langmate_theme_uri = get_template_directory_uri();
           </button>
           <ul class="voice__list" data-voice-list>
             <li class="card card--voice">
-              <img class="card--voice__illust" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-voice.svg" alt="" aria-hidden="true"
+              <img class="card--voice__illust" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-voice.png" alt="" aria-hidden="true"
                 width="225" height="213" />
               <p class="card__rating" aria-label="評価5段階中5">★★★★★</p>
               <p class="card__author">Wisniewski2257</p>
@@ -450,7 +450,7 @@ $langmate_theme_uri = get_template_directory_uri();
                 world.</p>
             </li>
             <li class="card card--voice">
-              <img class="card--voice__illust" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-voice.svg" alt="" aria-hidden="true"
+              <img class="card--voice__illust" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-voice.png" alt="" aria-hidden="true"
                 width="225" height="213" />
               <p class="card__rating" aria-label="評価5段階中5">★★★★★</p>
               <p class="card__author">gigi.1kim</p>
@@ -461,7 +461,7 @@ $langmate_theme_uri = get_template_directory_uri();
               </p>
             </li>
             <li class="card card--voice">
-              <img class="card--voice__illust" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-voice.svg" alt="" aria-hidden="true"
+              <img class="card--voice__illust" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-voice.png" alt="" aria-hidden="true"
                 width="225" height="213" />
               <p class="card__rating" aria-label="評価5段階中5">★★★★★</p>
               <p class="card__author">Ijele billion</p>
@@ -470,7 +470,7 @@ $langmate_theme_uri = get_template_directory_uri();
                 that will stress you and at the end of the day you won’t get a single match.</p>
             </li>
             <li class="card card--voice">
-              <img class="card--voice__illust" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-voice.svg" alt="" aria-hidden="true"
+              <img class="card--voice__illust" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-voice.png" alt="" aria-hidden="true"
                 width="225" height="213" />
               <p class="card__rating" aria-label="評価5段階中5">★★★★★</p>
               <p class="card__author">thad mad</p>
@@ -479,7 +479,7 @@ $langmate_theme_uri = get_template_directory_uri();
                 they are pretty strict about scammers, which is great!</p>
             </li>
             <li class="card card--voice">
-              <img class="card--voice__illust" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-voice.svg" alt="" aria-hidden="true"
+              <img class="card--voice__illust" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-voice.png" alt="" aria-hidden="true"
                 width="225" height="213" />
               <p class="card__rating" aria-label="評価5段階中5">★★★★★</p>
               <p class="card__author">Juli1421</p>
@@ -488,7 +488,7 @@ $langmate_theme_uri = get_template_directory_uri();
                 you will meet others with good intentions too</p>
             </li>
             <li class="card card--voice">
-              <img class="card--voice__illust" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-voice.svg" alt="" aria-hidden="true"
+              <img class="card--voice__illust" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-voice.png" alt="" aria-hidden="true"
                 width="225" height="213" />
               <p class="card__rating" aria-label="評価5段階中5">★★★★★</p>
               <p class="card__author">ichigo sakura</p>
@@ -553,7 +553,7 @@ $langmate_theme_uri = get_template_directory_uri();
           </span>
         </h2>
         <div class="faq-preview__box">
-          <img class="faq-preview__illustration" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-faq.svg" alt="" aria-hidden="true"
+          <img class="faq-preview__illustration" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-faq.png" alt="" aria-hidden="true"
             width="160" height="160" data-pop />
           <ul class="faq-preview__list">
             <li class="faq-preview__item">
@@ -657,12 +657,12 @@ $langmate_theme_uri = get_template_directory_uri();
 
     <div class="marquee marquee--blue" aria-hidden="true">
       <div class="marquee__track">
-        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
-        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
-        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
-        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
-        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
-        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.png" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.png" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.png" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.png" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.png" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.png" alt="" width="706" height="172" />
       </div>
     </div>
   </main>

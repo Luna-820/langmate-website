@@ -124,12 +124,12 @@ $langmate_theme_uri = get_template_directory_uri();
 
     <div class="marquee marquee--yellow" aria-hidden="true">
       <div class="marquee__track">
-        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-yellow.svg" alt="" width="706" height="172" />
-        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-yellow.svg" alt="" width="706" height="172" />
-        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-yellow.svg" alt="" width="706" height="172" />
-        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-yellow.svg" alt="" width="706" height="172" />
-        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-yellow.svg" alt="" width="706" height="172" />
-        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-yellow.svg" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-yellow.png" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-yellow.png" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-yellow.png" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-yellow.png" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-yellow.png" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-yellow.png" alt="" width="706" height="172" />
       </div>
     </div>
 
@@ -152,12 +152,12 @@ $langmate_theme_uri = get_template_directory_uri();
 
     <div class="marquee marquee--blue" aria-hidden="true">
       <div class="marquee__track">
-        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
-        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
-        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
-        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
-        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
-        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.png" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.png" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.png" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.png" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.png" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.png" alt="" width="706" height="172" />
       </div>
     </div>
 
@@ -346,9 +346,9 @@ $langmate_theme_uri = get_template_directory_uri();
     <section class="step" aria-labelledby="step-heading">
       <div class="wrapper">
         <div class="step__box">
-          <img class="step__illust step__illust--01" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-step-01.svg" alt="" aria-hidden="true"
+          <img class="step__illust step__illust--01" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-step-01.png" alt="" aria-hidden="true"
             width="227" height="227" data-pop />
-          <img class="step__illust step__illust--02" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-step-02.svg" alt="" aria-hidden="true"
+          <img class="step__illust step__illust--02" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-step-02.png" alt="" aria-hidden="true"
             width="226" height="236" data-pop />
           <img class="step__deco step__deco--01" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/deco-step-01.svg" alt="" aria-hidden="true"
             width="330" height="304" />
@@ -431,7 +431,7 @@ $langmate_theme_uri = get_template_directory_uri();
           </button>
           <ul class="voice__list" data-voice-list>
             <li class="card card--voice">
-              <img class="card--voice__illust" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-voice.svg" alt="" aria-hidden="true"
+              <img class="card--voice__illust" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-voice.png" alt="" aria-hidden="true"
                 width="225" height="213" />
               <p class="card__rating" aria-label="評価5段階中5">★★★★★</p>
               <p class="card__author">伊達メガネ1987</p>
@@ -439,7 +439,7 @@ $langmate_theme_uri = get_template_directory_uri();
                 HelloTalkよりもUIがすっきりしていて、私にはLangmateの方が遥かに使いやすいです。また、海外の方ともスムーズにチャットを楽しめ、満足しています。ありがとうございます。</p>
             </li>
             <li class="card card--voice">
-              <img class="card--voice__illust" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-voice.svg" alt="" aria-hidden="true"
+              <img class="card--voice__illust" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-voice.png" alt="" aria-hidden="true"
                 width="225" height="213" />
               <p class="card__rating" aria-label="評価5段階中5">★★★★★</p>
               <p class="card__author">i_lovepudding</p>
@@ -448,28 +448,28 @@ $langmate_theme_uri = get_template_directory_uri();
               </p>
             </li>
             <li class="card card--voice">
-              <img class="card--voice__illust" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-voice.svg" alt="" aria-hidden="true"
+              <img class="card--voice__illust" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-voice.png" alt="" aria-hidden="true"
                 width="225" height="213" />
               <p class="card__rating" aria-label="評価5段階中5">★★★★★</p>
               <p class="card__author">tms0212</p>
               <p class="card__body">こういう形で外国人の方と知り合うのも、現代的で面白いかも知れません。チャットから入るので、長い文章を作る必要もなく、単語だけでも会話はできそうな感じです。</p>
             </li>
             <li class="card card--voice">
-              <img class="card--voice__illust" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-voice.svg" alt="" aria-hidden="true"
+              <img class="card--voice__illust" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-voice.png" alt="" aria-hidden="true"
                 width="225" height="213" />
               <p class="card__rating" aria-label="評価5段階中5">★★★★★</p>
               <p class="card__author">チョビ🐶</p>
               <p class="card__body">男女関係なくお話が楽しく出来とても良いアプリだと私は思います。国際交流できるのって視野が広がります。</p>
             </li>
             <li class="card card--voice">
-              <img class="card--voice__illust" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-voice.svg" alt="" aria-hidden="true"
+              <img class="card--voice__illust" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-voice.png" alt="" aria-hidden="true"
                 width="225" height="213" />
               <p class="card__rating" aria-label="評価5段階中4">★★★★</p>
               <p class="card__author">てるてるひこひこ</p>
               <p class="card__body">いろんな言語を学べる。暇を持て余した際に、英語のリハビリをしています。がんがん多言語が使える人は大いに楽しめると私は思います:)</p>
             </li>
             <li class="card card--voice">
-              <img class="card--voice__illust" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-voice.svg" alt="" aria-hidden="true"
+              <img class="card--voice__illust" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-voice.png" alt="" aria-hidden="true"
                 width="225" height="213" />
               <p class="card__rating" aria-label="評価5段階中5">★★★★★</p>
               <p class="card__author">tikitikiki</p>
@@ -533,7 +533,7 @@ $langmate_theme_uri = get_template_directory_uri();
           </span>
         </h2>
         <div class="faq-preview__box">
-          <img class="faq-preview__illustration" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-faq.svg" alt="" aria-hidden="true"
+          <img class="faq-preview__illustration" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/illust-faq.png" alt="" aria-hidden="true"
             width="160" height="160" data-pop />
           <ul class="faq-preview__list">
             <li class="faq-preview__item">
@@ -630,12 +630,12 @@ $langmate_theme_uri = get_template_directory_uri();
 
     <div class="marquee marquee--blue" aria-hidden="true">
       <div class="marquee__track">
-        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
-        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
-        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
-        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
-        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
-        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.svg" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.png" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.png" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.png" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.png" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.png" alt="" width="706" height="172" />
+        <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/Langmate-blue.png" alt="" width="706" height="172" />
       </div>
     </div>
   </main>

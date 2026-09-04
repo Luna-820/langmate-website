@@ -60,7 +60,7 @@
         // ------------------------------------------------------
 
         @include mx.sp {
-            --hero-pad-top: 180px;
+            --hero-pad-top: 200px;
             padding-inline: 24px;
         }
     }
@@ -317,7 +317,7 @@
         }
 
         @include mx.sp {
-            width: 78%;
+            width: 70%;
             margin-block-start: 30px;
             font-size: clamp(1.5rem, 4vw, 1.7rem);
             line-height: 1.5;
@@ -862,8 +862,6 @@
         .btn--outline {
             display: flex;
             width: fit-content;
-            // 英語版など文言が長い場合、containerより広がって画面外へ
-            // はみ出さないよう上限を掛け、収まらなければ折り返す
             max-width: 100%;
             white-space: normal;
             margin-inline: auto;
@@ -2454,6 +2452,10 @@
         flex-direction: column;
         align-items: center;
         gap: 32px;
+
+        @include mx.sp {
+            gap: 16px;
+        }
     }
 
     h2 {
