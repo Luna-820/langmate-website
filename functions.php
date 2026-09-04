@@ -647,6 +647,13 @@ function langmate_faq_permalink( $link, $post ) {
 	if ( 'faq' !== get_post_type( $post ) ) {
 		return $link;
 	}
+	// 公開済み以外(下書き・プレビュー中等)はpost_name(スラッグ)が
+	// 未確定/不安定なことがあり、ここで独自URLを組み立てると壊れた
+	// リンクになる(英語側はこの分岐に入らないため元々問題が出ない)。
+	// 公開済みの投稿だけ、日本語ページを /ja/faq/{slug}/ に変換する。
+	if ( 'publish' !== $post->post_status ) {
+		return $link;
+	}
 	if ( 'ja' === get_post_meta( $post->ID, 'faq_lang', true ) ) {
 		$link = home_url( '/ja/faq/' . $post->post_name . '/' );
 	}
