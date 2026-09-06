@@ -44,7 +44,7 @@ $langmate_theme_uri = get_template_directory_uri();
           </p>
 
           <div class="hero__badges">
-            <a href="https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775" target="_blank" rel="noopener" class="btn btn--store"
+            <a href="https://apps.apple.com/jp/app/langmate-%E8%8B%B1%E4%BC%9A%E8%A9%B1%E3%81%A8%E5%A4%96%E5%9B%BD%E4%BA%BA%E3%81%AE%E5%8F%8B%E9%81%94%E4%BD%9C%E3%82%8A/id1093968775" target="_blank" rel="noopener" class="btn btn--store"
               target="_blank" rel="noopener">
               <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/badge-appstore-ja.svg" alt="App Storeからダウンロード" />
             </a>
@@ -140,7 +140,7 @@ $langmate_theme_uri = get_template_directory_uri();
           <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/img-beginner.webp" alt="" width="295" height="256" data-pop>
         </div>
         <div class="banner__content">
-          <p class="banner__heading"><strong>英語に自信がなくても大丈夫。</strong></p>
+          <h2 class="banner__heading"><strong>英語に自信がなくても大丈夫？</strong></h2>
           <p>
             日本が好きな海外の人が多いから、アニメや旅行、食文化など、共通の話題から会話を始められます。
             まずは短いメッセージから。翻訳・添削・返信サポートを使いながら、自分のペースで英語に慣れ、伝える力を伸ばせます。
@@ -618,7 +618,7 @@ $langmate_theme_uri = get_template_directory_uri();
         <h2 id="cta-heading">世界中のユーザーとの交流を、<br />今日から始めてみませんか？</h2>
         <p>英語を勉強するだけではなく、<br>実際に使いながら自然な語学力を身につけましょう。</p>
         <div class="cta__badges">
-          <a href="https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775" target="_blank" rel="noopener" class="btn btn--store">
+          <a href="https://apps.apple.com/jp/app/langmate-%E8%8B%B1%E4%BC%9A%E8%A9%B1%E3%81%A8%E5%A4%96%E5%9B%BD%E4%BA%BA%E3%81%AE%E5%8F%8B%E9%81%94%E4%BD%9C%E3%82%8A/id1093968775" target="_blank" rel="noopener" class="btn btn--store">
             <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/badge-appstore-ja.svg" alt="App Storeからダウンロード" width="160" height="48" />
           </a>
           <a href="https://play.google.com/store/apps/details?id=co.thoron.langmate" target="_blank" rel="noopener" class="btn btn--store">

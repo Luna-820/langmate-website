@@ -7,20 +7,26 @@
  * そのまま踏襲し、見出しとパンくずだけ呼び出し側から差し替えられるようにした。
  *
  * $args:
- *   lang        : 'ja' | 'en'
- *   heading     : h1に表示するテキスト(省略時は「よくある質問」/「FAQ」)
- *   heading_url : 指定するとh1自体をこのURLへのリンクにする(カテゴリー
- *                 アーカイブページ等で、見出しをクリックしてもFAQトップに
- *                 戻れるようにするため)。省略時は通常のテキストのまま。
- *   breadcrumb  : array of ['label' => string, 'url' => string|null]
- *                 url が null の項目は現在地(aria-current="page")として扱う
+ *   lang          : 'ja' | 'en'
+ *   heading       : 見出しに表示するテキスト(省略時は「よくある質問」/「FAQ」)
+ *   heading_url   : 指定すると見出し自体をこのURLへのリンクにする(カテゴリー
+ *                   アーカイブページ等で、見出しをクリックしてもFAQトップに
+ *                   戻れるようにするため)。省略時は通常のテキストのまま。
+ *   heading_level : 見出しのHTMLタグ名(省略時は'h1')。1ページに複数箇所で
+ *                   このパーツを使う都合上、SEO的に1つのページに1つだけに
+ *                   したいh1と重複してしまう場合は'p'等を渡す
+ *                   (single-faq.phpでは実際の質問文をh1にしたいので、
+ *                   ここは非見出しタグにする)。
+ *   breadcrumb    : array of ['label' => string, 'url' => string|null]
+ *                   url が null の項目は現在地(aria-current="page")として扱う
  */
 
-$lang        = $args['lang'] ?? 'ja';
-$heading     = $args['heading'] ?? ( ( 'en' === $lang ) ? 'FAQ' : 'よくある質問' );
-$heading_url = $args['heading_url'] ?? '';
-$breadcrumb  = $args['breadcrumb'] ?? array();
-$theme_uri   = get_template_directory_uri();
+$lang          = $args['lang'] ?? 'ja';
+$heading       = $args['heading'] ?? ( ( 'en' === $lang ) ? 'FAQ' : 'よくある質問' );
+$heading_url   = $args['heading_url'] ?? '';
+$heading_level = $args['heading_level'] ?? 'h1';
+$breadcrumb    = $args['breadcrumb'] ?? array();
+$theme_uri     = get_template_directory_uri();
 ?>
 <section class="sub-hero faq-hero">
   <picture>
@@ -35,13 +41,13 @@ $theme_uri   = get_template_directory_uri();
         <textPath href="#faq-hero-eyebrow-arc" startOffset="50%">FAQ</textPath>
       </text>
     </svg>
-    <h1 class="sub-hero__heading faq-hero__heading">
+    <<?php echo tag_escape( $heading_level ); ?> class="sub-hero__heading faq-hero__heading">
       <?php if ( $heading_url ) : ?>
       <a href="<?php echo esc_url( $heading_url ); ?>"><?php echo esc_html( $heading ); ?></a>
       <?php else : ?>
       <?php echo esc_html( $heading ); ?>
       <?php endif; ?>
-    </h1>
+    </<?php echo tag_escape( $heading_level ); ?>>
 
     <!-- Breadcrumb -->
     <nav class="breadcrumb faq-hero__breadcrumb" aria-label="<?php echo ( 'en' === $lang ) ? 'Breadcrumb' : 'パンくずリスト'; ?>">

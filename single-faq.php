@@ -59,8 +59,16 @@ while ( have_posts() ) :
 		'template-parts/faq-hero',
 		null,
 		array(
-			'lang'       => $lang,
-			'breadcrumb' => $hero_breadcrumb,
+			'lang'          => $lang,
+			// カテゴリーアーカイブページと同じく、見出しはカテゴリー名を継続表示する
+			// (カテゴリーが取得できない場合だけ、faq-hero.php側のデフォルト
+			// 「よくある質問」/「FAQ」にフォールバックする)。
+			'heading'       => $parent_label ? $parent_label : null,
+			'breadcrumb'    => $hero_breadcrumb,
+			// SEO的にはこのFAQ記事の質問文(.faq-detail__title、下の方でthe_title()で
+			// 出力している)こそが唯一のh1であるべきなので、ここの見出しラベルは
+			// h1にしない。
+			'heading_level' => 'p',
 		)
 	);
 
@@ -111,6 +119,13 @@ while ( have_posts() ) :
 	      <article class="faq-detail__block">
 	        <?php echo $faq_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 	      </article>
+	    </div>
+
+	    <!-- 白カード(.faq-detail)の外に配置 -->
+	    <div class="faq-group__more">
+	      <a class="faq-categories__item" href="<?php echo esc_url( $archive_url ); ?>">
+	        <span class="faq-categories__arrow" aria-hidden="true">◀︎</span><?php echo ( 'en' === $lang ) ? 'Back to FAQ TOP' : 'よくある質問TOPへ戻る'; ?>
+	      </a>
 	    </div>
 	  </div>
 	</section>
