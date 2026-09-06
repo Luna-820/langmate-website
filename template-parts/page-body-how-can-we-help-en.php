@@ -114,7 +114,9 @@ $hero_breadcrumb = array(
 	      </ul>
 	      <?php if ( $total_count > $preview_limit ) : ?>
 	      <div class="faq-group__more">
-	        <a class="btn btn--outline" href="<?php echo esc_url( langmate_get_faq_category_archive_url( $parent, $lang ) ); ?>">See more</a>
+	        <a class="faq-categories__item" href="<?php echo esc_url( langmate_get_faq_category_archive_url( $parent, $lang ) ); ?>">
+	          <span class="faq-categories__arrow" aria-hidden="true">▶︎</span>See more
+	        </a>
 	      </div>
 	      <?php endif; ?>
 	    </div>
