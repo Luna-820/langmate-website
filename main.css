@@ -637,6 +637,12 @@ img {
 .site-footer__legal a:hover {
   opacity: 1;
 }
+@media (max-width: 780px) {
+  .site-footer__legal a:last-child {
+    flex-basis: 100%;
+    text-align: center;
+  }
+}
 .site-footer__copyright {
   margin-block-start: 16px;
   font-size: 1.2rem;
@@ -5246,7 +5252,7 @@ img {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   column-gap: clamp(40px, 67.58px - 2.694vw, 56px);
-  row-gap: clamp(56px, 38.63px + 4.04vw, 80px);
+  row-gap: clamp(56px, 38.63px + 4.04vw, 100px);
 }
 @media (max-width: 780px) {
   .faq-groups > .wrapper {
@@ -5254,13 +5260,13 @@ img {
     width: min(100% - 48px, 600px);
     max-width: none;
     margin-inline: auto;
-    row-gap: 56px;
+    row-gap: 80px;
   }
 }
 @media (max-width: 430px) {
   .faq-groups > .wrapper {
     width: min(100% - 32px, 500px);
-    row-gap: 48px;
+    row-gap: 80px;
   }
 }
 
@@ -6047,4 +6053,4 @@ p .user-id-steps__num {
   .webview-page .legal-hero {
     padding-top: 24px;
   }
-}
+}/*# sourceMappingURL=main.css.map */
