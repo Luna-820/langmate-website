@@ -1,10 +1,18 @@
 // 右端追従DLボタン
-// PC / Tablet：クリック・ホバーでパネル開閉
-// 600px以下：iOSはApp Store、AndroidはGoogle Playへ直接
-// 判定できない端末はパネルを開く
+// PC / Tablet：クリック・ホバーでパネル開閉(601px以上はQRコード表示)
+// 600px以下：iOS/AndroidともAppスマートリンク(/app/)へ直接
+// 判定できない端末はパネルを開く(ストアバッジ2つ、リンク先は/app/で統一)
+//
+// 旧仕様ではここでApp Store/Google PlayのURLを直接ハードコードして
+// 出し分けていたが、/app/ 側にOS判定を一本化するため、この追従ボタンの
+// リンク先は常に/app/にする(/app/自体は別途スマートリンクとして新規作成予定)。
 
+const APP_SMART_LINK = '/app/';
+
+// initMobileDownload()(ハンバーガーメニュー内のDLリンク、追従ボタンとは別UI)は
+// 今回の変更対象外のため、従来通り直接ストアURLへ振り分ける。
 const APP_STORE_URL =
-  'https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775';
+  'https://apps.apple.com/jp/app/langmate-%E8%8B%B1%E4%BC%9A%E8%A9%B1%E3%81%A8%E5%A4%96%E5%9B%BD%E4%BA%BA%E3%81%AE%E5%8F%8B%E9%81%94%E4%BD%9C%E3%82%8A/id1093968775';
 
 const GOOGLE_PLAY_URL =
   'https://play.google.com/store/apps/details?id=co.thoron.langmate';
@@ -91,20 +99,14 @@ export function initFloatingDl() {
     const isMobileLayout =
       window.matchMedia('(max-width: 600px)').matches;
 
-    // 600px以下 + iPhone / iPad
-    if (isMobileLayout && deviceType === 'ios') {
-      window.location.href = APP_STORE_URL;
+    // 600px以下 + iOS / Androidと判定できた場合は/app/へ直接
+    if (isMobileLayout && (deviceType === 'ios' || deviceType === 'android')) {
+      window.location.href = APP_SMART_LINK;
       return;
     }
 
-    // 600px以下 + Android
-    if (isMobileLayout && deviceType === 'android') {
-      window.location.href = GOOGLE_PLAY_URL;
-      return;
-    }
-
-    // 601px以上
-    // または600px以下でも端末判定できない場合
+    // 601px以上(QRパネルを開閉)
+    // または600px以下でも端末判定できない場合(ストアバッジのパネルを開閉)
     toggle();
   });
 

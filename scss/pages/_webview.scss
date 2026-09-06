@@ -1,0 +1,53 @@
+@use '../base/mixin' as mx;
+@use '../base/base' as v;
+
+// ==========================================================================
+// WebView(アプリ内ページ)
+//
+// サイト共通のヘッダー・ナビ・フッターを一切使わない専用テンプレート
+// (template-webview.php)用の最小限のスタイル。中身は今後、実際のページを
+// 作る際に調整する前提の暫定的なもの。
+// ==========================================================================
+
+.webview-page {
+
+    &__main {
+        padding-block: 40px;
+
+        @include mx.sp {
+            padding-block: 24px;
+        }
+    }
+
+    .wrapper {
+        max-width: 760px;
+        margin-inline: auto;
+        padding-inline: 24px;
+    }
+
+    &__title {
+        font-size: clamp(2.4rem, calc(18.21px + 1.347vw), 3.2rem);
+        font-weight: v.$fw-bold;
+        margin-block-end: 24px;
+    }
+
+    &__content {
+        font-size: 1.6rem;
+        line-height: 1.8;
+
+        p {
+            margin-block-end: 1.6em;
+        }
+    }
+
+    // privacy/terms(.legal-hero)を流用した場合の上余白調整。
+    // Web版は固定ヘッダーの高さ分を確保するための余白だが、
+    // WebViewにはヘッダー自体が無いので詰める。
+    .legal-hero {
+        padding-top: 40px;
+
+        @include mx.sp {
+            padding-top: 24px;
+        }
+    }
+}

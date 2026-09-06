@@ -878,17 +878,11 @@
 
         @include mx.hero-sp {
             white-space: normal;
+            text-align: center;
         }
 
         @include mx.sp {
             font-size: 2rem;
-        }
-
-        // 英語版のみ、430px以下で中央揃えに
-        &--en {
-            @include mx.sp {
-                text-align: center;
-            }
         }
     }
 
@@ -2053,7 +2047,7 @@
     .card__title {
         font-size: clamp(1.8rem, calc(16.857px + 0.3571vw), 2.2rem);
         line-height: v.$lh-body;
-        margin-bottom:8px; 
+        margin-bottom: 8px;
     }
 
     .card__body {

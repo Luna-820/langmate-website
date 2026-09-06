@@ -54,7 +54,10 @@
         flex-shrink: 0;
 
         width: 72px;
-        min-height: 240px;
+        // QRコード表示(880px以上)を大きめのサイズで縦に2つ収めるため、
+        // 元の240pxから拡張している(store側のバッジパネルは中央揃えのままなので
+        // 高さが増えても崩れない)。
+        min-height: 320px;
         padding-block: 12px;
         padding-inline: 10px;
 
@@ -72,7 +75,7 @@
 
         @media (max-width: 1023px) {
             width: clamp(58px, calc(47.87px + 1.347vw), 72px);
-            min-height: clamp(190px, calc(153.82px + 4.714vw), 240px);
+            min-height: clamp(260px, calc(223.82px + 4.714vw), 320px);
 
             padding-block: 10px;
             padding-inline: 8px;
@@ -145,11 +148,11 @@
 
         .btn--store {
             display: block;
-            width: 150px;
+            width: 190px;
             flex-shrink: 0;
 
             @media (max-width: 1023px) {
-                width: clamp(120px, calc(98.29px + 5.051vw), 150px);
+                width: clamp(150px, calc(128.29px + 5.051vw), 190px);
             }
 
             img {
@@ -167,11 +170,13 @@
     &[data-open="true"] &__panel,
     &:hover &__panel,
     &:focus-within &__panel {
-        width: 174px;
+        // ストアバッジ(.btn--store)を190pxまで大きくした分、パネルの開いた幅も
+        // 合わせて広げている(190px + 左右パディング12px×2 = 214px)。
+        width: 214px;
         padding-inline: 12px;
 
         @media (max-width: 1023px) {
-            width: clamp(140px, calc(115.39px + 5.724vw), 174px);
+            width: clamp(180px, calc(155.39px + 5.724vw), 214px);
             padding-inline: 10px;
         }
     }
@@ -330,5 +335,119 @@
 @media (max-width: 600px) {
     body {
         padding-bottom: 56px;
+    }
+}
+
+// ==========================================================================
+// PANEL VARIANTS
+// 879px以下：ストアバッジ2つ(従来通り、600px以下のSPレイアウトも含む) /
+// 880px以上：QRコード
+//
+// 880px未満は横幅的にQRを大きく表示する余裕が乏しく、またウィンドウが
+// 狭いタブレット等での利用も考えられるため、素直にタップできるストア
+// バッジの方が実用的という判断で、この幅からQR⇔バッジを切り替えている。
+//
+// .floating-dlブロック内の&__panelは600px以下用のルールが後方(上)の
+// @media (max-width: 600px)側で無条件のdisplay:flexを指定しているため、
+// ここでは確実に上書きできるよう、ファイル末尾に!importantで出し分けを置く。
+// ==========================================================================
+
+.floating-dl__panel--store {
+    @media (min-width: 880px) {
+        display: none !important;
+    }
+}
+
+.floating-dl__panel--qr {
+    display: none;
+
+    @media (min-width: 880px) {
+        display: flex !important;
+        // App Store用・Google Play用を縦に2つ並べる。横に並べる場合と違って
+        // パネルの開いた幅はストアバッジ側と共通のままでよい(下の専用の
+        // 幅上書きは不要になったので削除した)。
+        // gapは意図的に広め(22px)にとっている。スマホのカメラで読み取る時、
+        // 2つが近すぎると狙ってない方のQRを誤認識してしまうため
+        // (物理的な間隔を確保する)。
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 22px;
+
+        @media (max-width: 1023px) {
+            gap: 16px;
+        }
+    }
+}
+
+// ==========================================================================
+// QR CODE (880px以上のみ表示)
+// App Store用・Google Play用の2つを縦並びで表示。
+// ==========================================================================
+
+.floating-dl__qr {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    text-decoration: none;
+    position: relative;
+
+    // 2つ目(Google Play)の上に区切り線を引いて、誤読防止のためにgapを
+    // 空けているだけでなく「ここで別のQRですよ」と視覚的にもはっきり
+    // 分かるようにする。
+    &:nth-child(2)::before {
+        content: '';
+        position: absolute;
+        top: -11px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        max-width: 120px;
+        border-top: 1px dashed v.$color-gray-light;
+
+        @media (max-width: 1023px) {
+            top: -8px;
+        }
+    }
+
+    &-frame {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        // スマホのカメラをそこまで画面に近づけんでも読み取れるように、
+        // 大きめのサイズにしている(隣のQRまで一緒にフレームインしにくくする狙い)。
+        width: 120px;
+        height: 120px;
+        flex-shrink: 0;
+
+        border: 1px solid v.$color-gray-light;
+        border-radius: 8px;
+        background-color: v.$color-white;
+        overflow: hidden;
+
+        img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        @media (max-width: 1023px) {
+            width: 100px;
+            height: 100px;
+        }
+    }
+
+    &-caption {
+        color: v.$color-text;
+        font-size: 1.1rem;
+        line-height: 1.4;
+        text-align: center;
+        white-space: nowrap;
+
+        @media (max-width: 1023px) {
+            font-size: 1rem;
+        }
     }
 }

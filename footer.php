@@ -25,7 +25,7 @@ $langmate_sns_label      = ( 'en' === $langmate_lang ) ? 'Follow Us on Social Me
         <p><?php echo esc_html( $langmate_brand_tagline ); ?></p>
         <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/logo-langmate.svg" alt="Langmate" />
         <div class="site-footer__badges">
-          <a href="https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775" target="_blank" rel="noopener"><img
+          <a href="https://apps.apple.com/jp/app/langmate-%E8%8B%B1%E4%BC%9A%E8%A9%B1%E3%81%A8%E5%A4%96%E5%9B%BD%E4%BA%BA%E3%81%AE%E5%8F%8B%E9%81%94%E4%BD%9C%E3%82%8A/id1093968775" target="_blank" rel="noopener"><img
               src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/badge-appstore-<?php echo esc_attr( $langmate_badge_suffix ); ?>.svg" alt="<?php echo esc_attr( $langmate_appstore_alt ); ?>" width="120" height="36" /></a>
           <a href="https://play.google.com/store/apps/details?id=co.thoron.langmate" target="_blank" rel="noopener"><img
               src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/badge-googleplay-<?php echo esc_attr( $langmate_badge_suffix ); ?>.svg" alt="<?php echo esc_attr( $langmate_googleplay_alt ); ?>" width="120" height="36" /></a>

@@ -110,6 +110,13 @@ function langmate_get_current_language() {
 		return langmate_get_faq_language( get_queried_object_id() );
 	}
 
+	// FAQカテゴリーのアーカイブ(/support/{slug}/・/ja/support/{slug}/)は
+	// タクソノミーの性質上ページ階層もfaq_langメタも持てないため、
+	// リライトルールが付与するfaq_jaクエリ変数で言語を判定する。
+	if ( is_tax( 'faq_category' ) ) {
+		return get_query_var( 'faq_ja' ) ? 'ja' : 'en';
+	}
+
 	if ( ! is_page() ) {
 		// front-page.php(ENのTOP)、アーカイブ等は現状すべてen扱い(Englishがデフォルト)。
 		return 'en';
@@ -463,7 +470,10 @@ function langmate_register_faq_cpt() {
 			),
 			'public'       => true,
 			'has_archive'  => false, // 一覧は「よくある質問」Page側で動的に出力するため不要
-			'rewrite'      => array( 'slug' => 'faq', 'with_front' => false ),
+			// %faq_category%は下のlangmate_register_faq_category_taxonomy()が登録する
+			// タクソノミーのrewrite('support')と対応するタグ。実際のスラッグへの
+			// 置換はlangmate_faq_permalink()(post_type_linkフィルター)で行う。
+			'rewrite'      => array( 'slug' => 'support/%faq_category%', 'with_front' => false ),
 			'supports'     => array( 'title', 'editor' ),
 			'show_in_rest' => true,
 			'menu_icon'    => 'dashicons-editor-help',
@@ -486,11 +496,21 @@ function langmate_register_faq_category_taxonomy() {
 			'public'            => true,
 			'show_admin_column' => true,
 			'show_in_rest'      => true,
-			'rewrite'           => array( 'slug' => 'faq-category', 'with_front' => false ),
+			// ディレクター作成のサイトマップ・本番サイトの実際のインデックス状況
+			// (/support/{category}/ が現役でタクソノミーアーカイブとして生きている)に
+			// 合わせて、rewriteスラッグは 'support' にする。
+			'rewrite'           => array( 'slug' => 'support', 'with_front' => false ),
 		)
 	);
 }
 add_action( 'init', 'langmate_register_faq_category_taxonomy' );
+
+// ---- /ja/support/{category}/ アーカイブ・言語判定用のクエリ変数を許可 ----
+function langmate_register_faq_query_vars( $vars ) {
+	$vars[] = 'faq_ja';
+	return $vars;
+}
+add_filter( 'query_vars', 'langmate_register_faq_query_vars' );
 
 // ---- 投稿メタ: faq_lang / faq_featured ----
 function langmate_register_faq_meta() {
@@ -523,6 +543,21 @@ function langmate_register_faq_meta() {
 	register_post_meta(
 		'faq',
 		'faq_toc',
+		array(
+			'type'          => 'string',
+			'single'        => true,
+			'show_in_rest'  => true,
+			'default'       => '',
+			'auth_callback' => function () {
+				return current_user_can( 'edit_posts' );
+			},
+		)
+	);
+	// 旧本番サイト(/support-page/{slug}/)からの301リダイレクト元スラッグ。
+	// クライアントがFAQ編集画面から直接入力する(移行時のみ使用)。
+	register_post_meta(
+		'faq',
+		'faq_legacy_slug',
 		array(
 			'type'          => 'string',
 			'single'        => true,
@@ -571,6 +606,16 @@ function langmate_render_faq_lang_meta_box( $post ) {
 		ONにすると、本文中のH3・H4見出しを自動で拾って、冒頭にジャンプリンク付きの目次を表示する。
 		短いFAQで不要な場合はOFFのままでよい。
 	</p>
+	<hr>
+	<?php $legacy_slug = get_post_meta( $post->ID, 'faq_legacy_slug', true ); ?>
+	<p>
+		<label for="faq_legacy_slug">旧URL(リダイレクト元スラッグ)</label><br>
+		<input type="text" name="faq_legacy_slug" id="faq_legacy_slug" value="<?php echo esc_attr( $legacy_slug ); ?>" style="width:100%;">
+	</p>
+	<p class="description">
+		サイトリニューアル前の旧URL(<code>/support-page/○○○/</code>)の「○○○」部分だけを入力する。
+		入力しておくと、旧URLにアクセスされた時にこのFAQの新URLへ自動で転送される(移行が終わったFAQだけ入力すればOK)。
+	</p>
 	<?php
 }
 
@@ -589,6 +634,9 @@ function langmate_save_faq_lang_meta( $post_id ) {
 	}
 	update_post_meta( $post_id, 'faq_featured', isset( $_POST['faq_featured'] ) ? '1' : '' );
 	update_post_meta( $post_id, 'faq_toc', isset( $_POST['faq_toc'] ) ? '1' : '' );
+	if ( isset( $_POST['faq_legacy_slug'] ) ) {
+		update_post_meta( $post_id, 'faq_legacy_slug', sanitize_title( wp_unslash( $_POST['faq_legacy_slug'] ) ) );
+	}
 }
 add_action( 'save_post_faq', 'langmate_save_faq_lang_meta' );
 
@@ -605,13 +653,19 @@ function langmate_faq_category_add_form_fields() {
 		<input type="number" name="faq_category_order" id="faq_category_order" value="0" step="1">
 		<p>数字が小さいものから先に表示される(同じ階層の中での並び順。未入力は0扱い)。</p>
 	</div>
+	<div class="form-field">
+		<label for="faq_category_legacy_slug">旧URL(リダイレクト元スラッグ)</label>
+		<input type="text" name="faq_category_legacy_slug" id="faq_category_legacy_slug" value="">
+		<p>旧URL(<code>/support/○○○/</code>)の「○○○」部分。カテゴリー統合等で旧スラッグと変わる場合だけ入力する。</p>
+	</div>
 	<?php
 }
 add_action( 'faq_category_add_form_fields', 'langmate_faq_category_add_form_fields' );
 
 function langmate_faq_category_edit_form_fields( $term ) {
-	$name_en = get_term_meta( $term->term_id, 'name_en', true );
-	$order   = get_term_meta( $term->term_id, 'faq_order', true );
+	$name_en     = get_term_meta( $term->term_id, 'name_en', true );
+	$order       = get_term_meta( $term->term_id, 'faq_order', true );
+	$legacy_slug = get_term_meta( $term->term_id, 'legacy_slug', true );
 	?>
 	<tr class="form-field">
 		<th scope="row"><label for="faq_category_name_en">英語名</label></th>
@@ -627,6 +681,13 @@ function langmate_faq_category_edit_form_fields( $term ) {
 			<p class="description">数字が小さいものから先に表示される(同じ階層の中での並び順)。</p>
 		</td>
 	</tr>
+	<tr class="form-field">
+		<th scope="row"><label for="faq_category_legacy_slug">旧URL(リダイレクト元スラッグ)</label></th>
+		<td>
+			<input type="text" name="faq_category_legacy_slug" id="faq_category_legacy_slug" value="<?php echo esc_attr( $legacy_slug ); ?>">
+			<p class="description">旧URL(<code>/support/○○○/</code>)の「○○○」部分。カテゴリー統合等で旧スラッグと変わる場合だけ入力する。</p>
+		</td>
+	</tr>
 	<?php
 }
 add_action( 'faq_category_edit_form_fields', 'langmate_faq_category_edit_form_fields' );
@@ -638,11 +699,37 @@ function langmate_save_faq_category_meta( $term_id ) {
 	if ( isset( $_POST['faq_category_order'] ) ) {
 		update_term_meta( $term_id, 'faq_order', (int) $_POST['faq_category_order'] );
 	}
+	if ( isset( $_POST['faq_category_legacy_slug'] ) ) {
+		update_term_meta( $term_id, 'legacy_slug', sanitize_title( wp_unslash( $_POST['faq_category_legacy_slug'] ) ) );
+	}
 }
 add_action( 'created_faq_category', 'langmate_save_faq_category_meta' );
 add_action( 'edited_faq_category', 'langmate_save_faq_category_meta' );
 
-// ---- JA投稿のパーマリンクを /ja/faq/{slug}/ にする(EN=デフォルトの /faq/{slug}/) ----
+/**
+ * ---- FAQ投稿のURLに使う「カテゴリー」を1つ決める ----
+ *
+ * faq_categoryは階層(親子)を持てるが、URLには常に親カテゴリーの
+ * スラッグだけを使う(子カテゴリーが選ばれていれば、その親を辿る)。
+ * 1つも設定されていない場合は 'general' にフォールバックする
+ * (URLが壊れるのを避けるための保険。実運用では必ずどれか設定される想定)。
+ *
+ * @param int $post_id
+ * @return string faq_categoryの親タームのslug
+ */
+function langmate_get_faq_url_category_slug( $post_id ) {
+	$terms = wp_get_post_terms( $post_id, 'faq_category' );
+	$term  = ( ! is_wp_error( $terms ) && ! empty( $terms ) ) ? $terms[0] : null;
+
+	if ( $term && $term->parent ) {
+		$term = get_term( $term->parent, 'faq_category' );
+	}
+
+	return ( $term && ! is_wp_error( $term ) ) ? $term->slug : 'general';
+}
+
+// ---- FAQ投稿のパーマリンクを /support/{category}/{slug}/ (EN)・
+//      /ja/support/{category}/{slug}/ (JA) にする ----
 function langmate_faq_permalink( $link, $post ) {
 	if ( 'faq' !== get_post_type( $post ) ) {
 		return $link;
@@ -650,23 +737,109 @@ function langmate_faq_permalink( $link, $post ) {
 	// 公開済み以外(下書き・プレビュー中等)はpost_name(スラッグ)が
 	// 未確定/不安定なことがあり、ここで独自URLを組み立てると壊れた
 	// リンクになる(英語側はこの分岐に入らないため元々問題が出ない)。
-	// 公開済みの投稿だけ、日本語ページを /ja/faq/{slug}/ に変換する。
 	if ( 'publish' !== $post->post_status ) {
 		return $link;
 	}
+
+	$category_slug = langmate_get_faq_url_category_slug( $post->ID );
+
 	if ( 'ja' === get_post_meta( $post->ID, 'faq_lang', true ) ) {
-		$link = home_url( '/ja/faq/' . $post->post_name . '/' );
+		return home_url( '/ja/support/' . $category_slug . '/' . $post->post_name . '/' );
 	}
-	return $link;
+
+	// register_post_type()のrewrite('support/%faq_category%')が生成した
+	// デフォルトリンクに含まれる%faq_category%プレースホルダーを実際の
+	// スラッグに置き換える。
+	return str_replace( '%faq_category%', $category_slug, $link );
 }
 add_filter( 'post_type_link', 'langmate_faq_permalink', 10, 2 );
 
-// ---- /ja/faq/{slug}/ を faq 投稿に振り分けるリライトルール ----
+// ---- /ja/support/{category}/{slug}/・/ja/support/{category}/ を
+//      振り分けるリライトルール(EN側はタクソノミー・CPTの標準機能で解決する) ----
 // 有効化には パーマリンク設定 での一度の再保存(フラッシュ)が必要
 function langmate_faq_rewrite_rules() {
-	add_rewrite_rule( '^ja/faq/([^/]+)/?$', 'index.php?faq=$matches[1]', 'top' );
+	add_rewrite_rule( '^ja/support/([^/]+)/([^/]+)/?$', 'index.php?faq_category=$matches[1]&faq=$matches[2]&faq_ja=1', 'top' );
+	add_rewrite_rule( '^ja/support/([^/]+)/?$', 'index.php?faq_category=$matches[1]&faq_ja=1', 'top' );
 }
 add_action( 'init', 'langmate_faq_rewrite_rules' );
+
+/**
+ * ==========================================================
+ * FAQ: 旧本番サイトのURLからの301リダイレクト
+ *
+ * サイトリニューアル前の本番サイトは
+ *   個別記事: /support-page/{slug}/・/ja/support-page/{slug}/
+ *   カテゴリー: /support/{旧slug}/・/ja/support/{旧slug}/(統合・改名されたもの)
+ * というURLで実際にインデックスされている。この新しいURL構造では
+ * これらはそのままだと404になるため、404になった時だけ
+ * 投稿の faq_legacy_slug / タームの legacy_slug と照合し、
+ * 一致すれば新URLへ301する。
+ * すでに正しく解決できているリクエスト(実際のFAQ記事・カテゴリー
+ * アーカイブそのもの)には一切影響しない。
+ * ==========================================================
+ */
+function langmate_faq_legacy_redirect() {
+	if ( ! is_404() ) {
+		return;
+	}
+
+	$request_uri = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
+	$path        = trim( (string) wp_parse_url( $request_uri, PHP_URL_PATH ), '/' );
+
+	// ---- 個別FAQ記事: /support-page/{slug}/・/ja/support-page/{slug}/ ----
+	if ( preg_match( '#^(?:(ja)/)?support-page/([^/]+)/?$#', $path, $matches ) ) {
+		$lang        = ( 'ja' === ( $matches[1] ?? '' ) ) ? 'ja' : 'en';
+		$legacy_slug = sanitize_title( rawurldecode( $matches[2] ) );
+
+		$posts = get_posts(
+			array(
+				'post_type'      => 'faq',
+				'posts_per_page' => 1,
+				'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+					array(
+						'key'   => 'faq_legacy_slug',
+						'value' => $legacy_slug,
+					),
+					array(
+						'key'   => 'faq_lang',
+						'value' => $lang,
+					),
+				),
+			)
+		);
+
+		if ( $posts ) {
+			wp_safe_redirect( get_permalink( $posts[0] ), 301 );
+			exit;
+		}
+		return;
+	}
+
+	// ---- カテゴリーアーカイブ: /support/{旧slug}/・/ja/support/{旧slug}/ ----
+	if ( preg_match( '#^(?:(ja)/)?support/([^/]+)/?$#', $path, $matches ) ) {
+		$lang        = ( 'ja' === ( $matches[1] ?? '' ) ) ? 'ja' : 'en';
+		$legacy_slug = sanitize_title( rawurldecode( $matches[2] ) );
+
+		$terms = get_terms(
+			array(
+				'taxonomy'   => 'faq_category',
+				'hide_empty' => false,
+				'meta_query' => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+					array(
+						'key'   => 'legacy_slug',
+						'value' => $legacy_slug,
+					),
+				),
+			)
+		);
+
+		if ( ! is_wp_error( $terms ) && $terms ) {
+			wp_safe_redirect( langmate_get_faq_category_archive_url( $terms[0], $lang ), 301 );
+			exit;
+		}
+	}
+}
+add_action( 'template_redirect', 'langmate_faq_legacy_redirect' );
 
 /**
  * ---- 下書きFAQの「プレビュー」が空クエリになる問題の修正 ----
@@ -1056,14 +1229,26 @@ function langmate_faq_render_toc( $items, $lang ) {
 }
 
 /**
- * ---- 「よくある質問」一覧ページ(指定カテゴリー付き)へのURL ----
+ * ---- 「よくある質問」ハブページ(/how-can-we-help/)自体へのURL ----
  */
-function langmate_get_faq_archive_url( $lang, $category_slug = '' ) {
-	$url = langmate_get_page_url( 'how-can-we-help', $lang );
-	if ( $category_slug ) {
-		$url = add_query_arg( 'faq_cat', $category_slug, $url );
+function langmate_get_faq_archive_url( $lang ) {
+	return langmate_get_page_url( 'how-can-we-help', $lang );
+}
+
+/**
+ * ---- FAQカテゴリー(faq_category)のアーカイブページへのURL ----
+ * /support/{slug}/(EN)・/ja/support/{slug}/(JA)。
+ *
+ * @param WP_Term $term
+ * @param string  $lang 'ja' | 'en'
+ * @return string
+ */
+function langmate_get_faq_category_archive_url( $term, $lang ) {
+	if ( ! $term || is_wp_error( $term ) ) {
+		return langmate_get_faq_archive_url( $lang );
 	}
-	return $url;
+	$path = 'support/' . $term->slug . '/';
+	return ( 'ja' === $lang ) ? home_url( '/ja/' . $path ) : home_url( '/' . $path );
 }
 
 /**

@@ -44,7 +44,7 @@ $langmate_theme_uri = get_template_directory_uri();
           </p>
 
           <div class="hero__badges">
-            <a href="https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775" target="_blank" rel="noopener" class="btn btn--store">
+            <a href="https://apps.apple.com/jp/app/langmate-%E8%8B%B1%E4%BC%9A%E8%A9%B1%E3%81%A8%E5%A4%96%E5%9B%BD%E4%BA%BA%E3%81%AE%E5%8F%8B%E9%81%94%E4%BD%9C%E3%82%8A/id1093968775" target="_blank" rel="noopener" class="btn btn--store">
               <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/badge-appstore-en.svg" alt="Download from the App Store" />
             </a>
 
@@ -135,8 +135,8 @@ $langmate_theme_uri = get_template_directory_uri();
           <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/img-beginner.webp" alt="" width="295" height="256" data-pop />
         </div>
         <div class="banner__content">
-          <p class="banner__heading banner__heading--en"><strong>Not confident in your Japanese?<br>
-              No problem.</strong></p>
+          <h2 class="banner__heading banner__heading--en"><strong>Not confident in your Japanese?<br>
+              No problem.</strong></h2>
           <p>
             It’s easy to find something to talk about.
             Anime, travel, food, music—start with something you both like. Even a short message is enough. And if you’re
@@ -646,7 +646,7 @@ $langmate_theme_uri = get_template_directory_uri();
         <p>Don’t just study Japanese. <br>Use it.
           Build your Japanese naturally <br>through real conversations with real people.</p>
         <div class="cta__badges">
-          <a href="https://apps.apple.com/us/app/langmate-japanese-friends/id1093968775" target="_blank" rel="noopener" class="btn btn--store">
+          <a href="https://apps.apple.com/jp/app/langmate-%E8%8B%B1%E4%BC%9A%E8%A9%B1%E3%81%A8%E5%A4%96%E5%9B%BD%E4%BA%BA%E3%81%AE%E5%8F%8B%E9%81%94%E4%BD%9C%E3%82%8A/id1093968775" target="_blank" rel="noopener" class="btn btn--store">
             <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/badge-appstore-en.svg" alt="Download from the App Store" width="160" height="48" />
           </a>
           <a href="https://play.google.com/store/apps/details?id=co.thoron.langmate" target="_blank" rel="noopener" class="btn btn--store">

@@ -9,8 +9,10 @@
  *
  * $args:
  *   lang        : 'ja' | 'en'
- *   active_slug : 現在アクティブな親カテゴリーのslug。
- *                 空文字なら「よくある質問」(ピン留め一覧)側をアクティブ扱いにする。
+ *   active_slug : 現在アクティブな親カテゴリーのslug。空文字なら
+ *                 (「よくある質問」を含め)どのボタンもアクティブ表示にしない
+ *                 (FAQトップは全カテゴリーを並べて見せるページなので、
+ *                 特定の1つが選択中であるかのような表示はしない)。
  *   is_search   : true の場合、検索結果表示中とみなしカテゴリーは
  *                 どれもアクティブ表示にしない。
  *   search_query: 検索欄に復元する現在の検索キーワード。
@@ -32,12 +34,13 @@ $parents     = langmate_get_faq_parent_categories();
     </form>
 
     <nav class="faq-categories" aria-label="<?php echo ( 'en' === $lang ) ? 'FAQ categories' : 'FAQカテゴリー'; ?>">
-      <a class="faq-categories__item<?php echo ( ! $is_search && '' === $active_slug ) ? ' faq-categories__item--active' : ''; ?>" href="<?php echo esc_url( $archive_url ); ?>">
-        <span class="faq-categories__arrow" aria-hidden="true">▶︎</span><?php echo esc_html( langmate_get_faq_all_label( $lang ) ); ?>
-      </a>
+      <?php // 「よくある質問」もfaq_categoryの実カテゴリーの1つ(slug: general)として
+      // $parentsループに含まれる。ここで固定リンクとして別出ししてしまうと
+      // FAQトップへのリンクになってしまい、そのカテゴリー自身のアーカイブへ
+      // 飛べなくなるため、特別扱いはせず他のカテゴリーと同じに描画する。 ?>
       <?php foreach ( $parents as $parent ) :
         $label     = langmate_get_faq_category_label( $parent, $lang );
-        $url       = langmate_get_faq_archive_url( $lang, $parent->slug );
+        $url       = langmate_get_faq_category_archive_url( $parent, $lang );
         $is_active = ( ! $is_search && $active_slug === $parent->slug );
       ?>
       <a class="faq-categories__item<?php echo $is_active ? ' faq-categories__item--active' : ''; ?>" href="<?php echo esc_url( $url ); ?>">

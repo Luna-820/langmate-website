@@ -17,17 +17,87 @@
     overflow: hidden;
     margin-block-start: 0;
 
-    &__map {
+    // bg-page.svg自体の下地色(<rect fill="#F7F8FA">)と同じ色の帯。
+    // __mapをmax-widthで頭打ちにして中央寄せにした時、はみ出した左右を
+    // 同じ色で自然に繋げて画面の両端まで途切れなく見せるためのもの。
+    // .sub-hero自体にbackground-colorを付けると、__mapの高さ(460px)を
+    // 超えて.sub-hero__innerの余白・アーチの装飾がある下側の領域にまで
+    // この色が回り込んでしまう(アーチのデザインが壊れる)ため、
+    // __mapと全く同じ高さの帯をこの疑似要素として敷き、__mapの真下にだけ
+    // 敷く。
+    &::before {
+        content: '';
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
+        height: 460px;
+        background-color: #f7f8fa;
+        z-index: -2;
+
+        @include mx.sp {
+            display: none;
+        }
+    }
+
+    // bg-page.svgに焼き込まれたクリーム色のアーチ(<path fill="#FFFCF3">、
+    // 中央が一番高く、両端でちょうど高さ0になる1本のベジェ曲線、頂点の高さは
+    // 約210px)を、画面幅いっぱいでも自然に繋がるよう、大きな円の一部として
+    // 引き直したもの。clip-path: ellipse()は縁の見え方が実際の画像と
+    // 揃わなかったため、border-radius:50%の巨大な円(半径1340px)を使う。
+    // 円の中心から±720px(実画像がmax-widthで頭打ちになる境目)の位置で
+    // ちょうど高さ0になるよう半径を逆算しているので、実画像のアーチが
+    // 高さ0になる位置と滑らかに繋がる。色自体は$color-cream(#FFFCF3)と
+    // 完全に同じなので、円の裾がこの帯の外(.sub-hero__innerの余白側)に
+    // はみ出しても違和感は出ない。
+    &::after {
+        content: '';
+        position: absolute;
+        top: 250px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 2680px;
+        height: 2680px;
+        border-radius: 50%;
+        background-color: #fffcf3;
+        z-index: -1;
+
+        @include mx.sp {
+            display: none;
+        }
+    }
+
+    &__map {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        // object-fit:coverは「幅に対して高さが不足する分だけ拡大」して
+        // 帳尻を合わせるため、高さを固定したまま幅だけ際限なく広がる
+        // (Studio Displayのような超ワイド画面)と、その分だけ画像が
+        // ズームされて吹き出しごと上側が(固定ヘッダーの裏に)切れてしまう。
+        // 幅そのものに上限を設けて、ズーム量がこれ以上増えないようにする。
+        // 1920pxだと1280px(画像の原寸幅)に対してまだ1.5倍もズームされてしまい
+        // 吹き出しが上に寄りすぎるため、MacBook Airで確認できていた
+        // 1440px(1.125倍ズーム、吹き出しが問題なく見えていた幅)に合わせる。
+        // これで生まれる左右の余白は、上の::beforeで画像の下地色と
+        // 同化させて見えなくしている。
+        max-width: 1440px;
         height: auto;
         aspect-ratio: 1280 / 500;
+        // 広いPC画面だとaspect-ratioのままだと地図が縦にどんどん伸びて
+        // 余白が広がりすぎるため、高さにも上限を設ける。object-fit+bottom揃えで、
+        // 高さが縮んだ分は上側(海の部分)を切り取り、吹き出しが並ぶ下側は
+        // 常に見えるようにする。
+        max-height: 460px;
+        object-fit: cover;
+        object-position: bottom;
         z-index: 0;
 
         @include mx.sp {
             aspect-ratio: 393 / 235;
+            max-height: none;
         }
     }
 
@@ -35,7 +105,9 @@
         position: relative;
         z-index: 2;
         text-align: center;
-        padding-block-start: max(180px,calc(100vw * 500 / 1280 - 100px));
+        // 地図側のmax-height: 460pxに合わせて、余白の伸びも360px(460-100)で
+        // 頭打ちにする(広いPC画面で見出しの手前の空白が広がりすぎないように)。
+        padding-block-start: clamp(180px, calc(100vw * 500 / 1280 - 100px), 360px);
 
         @include mx.sp {
             padding-block-start: 200px;
@@ -64,6 +136,13 @@
         font-weight: v.$fw-bold;
         letter-spacing: 0.1em;
         margin-block-end: 24px;
+
+        // FAQカテゴリーアーカイブ等、見出し自体をFAQトップへのリンクにする場合の下地
+        // (通常のテキストのままの場合はaタグが無いので影響しない)。
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
     }
 
     &__lead {

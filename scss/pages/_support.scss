@@ -2,39 +2,12 @@
 @use '../base/base' as v;
 
 // ==========================================================================
-// FAQ detail page（よくある質問 詳細 / support.html）
-// hero / search / categoriesは_how-can-we-help.scssと共通のため、ここでは
-// 白カードパネル以下（.faq-detail）のみを定義する。
-// ※ 本番(WordPress化後)は /support/{category}/{slug}/ の動的ページになる想定。
-//   このファイルは静的プロトタイプでの1本のサンプル実装。
+// FAQ detail page（よくある質問 個別回答ページ / single-faq.php）
+// hero・パンくず(.faq-hero)・検索/カテゴリーナビは_how-can-we-help.scssと
+// 共通のため、ここでは白カードパネル以下（.faq-detail）のみを定義する
+// (以前は.faq-hero__breadcrumbをここにも重複定義していたが、
+// _how-can-we-help.scss側と完全に同一の内容だったため削除した)。
 // ==========================================================================
-
-// ==========================================================================
-// FAQ detail Hero Breadcrumb
-// ==========================================================================
-
-.faq-hero {
-    &__breadcrumb {
-        align-self: stretch;
-        width: 100%;
-        text-align: left;
-
-        .breadcrumb__list {
-            justify-content: flex-start;
-        }
-
-        @include mx.hero-sp {
-            margin-block-start: 24px;
-            padding-inline-start: 12px;
-        }
-
-        @include mx.sp {
-            margin-block-start: 20px;
-            padding-inline-start: 8px;
-        }
-    }
-}
-
 
 .faq-detail-section {
     padding-block-end: clamp(80px, calc(51.04px + 6.734vw), 120px);

@@ -84,4 +84,13 @@ if ( is_singular( 'faq' ) ) {
 
   <?php get_template_part( 'template-parts/mobile-nav', null, array( 'nav_items' => $langmate_nav_items, 'lang' => $langmate_lang, 'current_key' => $langmate_current_key ) ); ?>
 
+  <?php
+  // WebView専用テンプレート(アプリ内ページ)には追従DLボタンを出さない。
+  // 「アプリを使っている最中の人にDLを促す」のは意味が通らないうえ、
+  // WebView内から外部リンク(ストア等)に飛ぶとアプリ側の画面遷移が
+  // 壊れる可能性があるため。ページIDやスラッグではなくテンプレートで判定する
+  // (ページが増えても漏れないようにするため)。
+  if ( ! is_page_template( 'template-webview.php' ) ) :
+  ?>
   <?php get_template_part( 'template-parts/floating-dl', null, array( 'lang' => $langmate_lang ) ); ?>
+  <?php endif; ?>
