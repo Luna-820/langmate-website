@@ -28,9 +28,10 @@
  * このテンプレートを選んだページ側で、translation_keyカスタムフィールドに
  * 以下のいずれかを入れておくこと(page.php側の固定ページと衝突しないよう、
  * Web版とは別のキーにしている):
- *   - privacy-policy-webview … プライバシーポリシー(page-body-privacy-*を流用)
- *   - terms-webview          … 利用規約(page-body-terms-*を流用)
- *   - contact-webview        … お問い合わせ(専用のpage-body-contact-webview-*)
+ *   - privacy-policy-webview      … プライバシーポリシー(page-body-privacy-*を流用)
+ *   - terms-webview               … 利用規約(page-body-terms-*を流用)
+ *   - community-guidelines-webview … コミュニティーガイドライン(page-body-community-guidelines-*を流用)
+ *   - contact-webview             … お問い合わせ(専用のpage-body-contact-webview-*)
  */
 
 $langmate_lang = langmate_get_current_language();
@@ -38,8 +39,9 @@ $langmate_key  = is_page() ? get_post_meta( get_queried_object_id(), 'translatio
 
 // Web版のpage-bodyをそのまま流用するもの(内部リンクを含まないページのみ)。
 $langmate_webview_source_map = array(
-	'privacy-policy-webview' => 'privacy',
-	'terms-webview'          => 'terms',
+	'privacy-policy-webview'       => 'privacy',
+	'terms-webview'                => 'terms',
+	'community-guidelines-webview' => 'community-guidelines',
 );
 
 $langmate_source_key = $langmate_webview_source_map[ $langmate_key ] ?? $langmate_key;

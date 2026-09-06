@@ -66,6 +66,7 @@ $langmate_sns_label      = ( 'en' === $langmate_lang ) ? 'Follow Us on Social Me
     <nav class="site-footer__legal" aria-label="法的情報">
       <a href="<?php echo esc_url( langmate_get_page_url( 'terms', $langmate_lang ) ); ?>"><?php echo ( 'en' === $langmate_lang ) ? 'Terms of Service' : '利用規約'; ?></a>
       <a href="<?php echo esc_url( langmate_get_page_url( 'privacy', $langmate_lang ) ); ?>"><?php echo ( 'en' === $langmate_lang ) ? 'Privacy Policy' : 'プライバシーポリシー'; ?></a>
+      <a href="<?php echo esc_url( langmate_get_page_url( 'community-guidelines', $langmate_lang ) ); ?>"><?php echo ( 'en' === $langmate_lang ) ? 'Community Guidelines' : 'コミュニティーガイドライン'; ?></a>
     </nav>
     <p class="site-footer__copyright">Copyright &copy; 2026 Langmate Inc.</p>
   </footer>

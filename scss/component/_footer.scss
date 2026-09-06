@@ -238,6 +238,16 @@
                 opacity: 1;
             }
         }
+
+        // 780px以下では、利用規約・プライバシーポリシーの2つはそのまま
+        // 1行に収め、Community Guidelines(3つ目)だけをその下の行に
+        // 折り返す(flex-basis:100%で強制的に単独行にする)。
+        @include mx.hero-sp {
+            a:last-child {
+                flex-basis: 100%;
+                text-align: center;
+            }
+        }
     }
 
 

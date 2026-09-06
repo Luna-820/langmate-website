@@ -290,7 +290,7 @@
 
         row-gap: clamp(56px,
                 calc(38.63px + 4.04vw),
-                80px);
+                100px);
 
 
         // ------------------------------------------------------------------
@@ -304,14 +304,14 @@
 
             margin-inline: auto;
 
-            row-gap: 56px;
+            row-gap: 80px;
         }
 
 
         @include mx.sp {
             width: min(calc(100% - 32px), 500px);
 
-            row-gap: 48px;
+            row-gap: 80px;
         }
     }
 
