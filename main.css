@@ -1073,6 +1073,10 @@ img {
   letter-spacing: 0.1em;
   margin-block-end: 24px;
 }
+.sub-hero__heading a {
+  color: inherit;
+  text-decoration: none;
+}
 .sub-hero__lead {
   font-size: clamp(1.6rem, 10.21px + 1.347vw, 2.4rem);
   line-height: 1.4;
@@ -5185,6 +5189,17 @@ img {
     gap: 16px;
   }
 }
+.faq-group__more {
+  grid-column: 1/-1;
+  display: flex;
+  justify-content: center;
+  margin-block-start: 24px;
+}
+@media (max-width: 430px) {
+  .faq-group__more {
+    margin-block-start: 16px;
+  }
+}
 
 .faq-item a {
   display: flex;
@@ -5896,4 +5911,4 @@ p .user-id-steps__num {
   font-size: clamp(1.4rem, 11.38px + 0.8418vw, 2rem);
   line-height: 1.8;
   color: #202020;
-}/*# sourceMappingURL=main.css.map */
+}

@@ -36,17 +36,17 @@ while ( have_posts() ) :
 	$archive_url      = langmate_get_faq_archive_url( $lang );
 	$parent_slug      = $parent_term && ! is_wp_error( $parent_term ) ? $parent_term->slug : '';
 	$parent_label     = $parent_term && ! is_wp_error( $parent_term ) ? langmate_get_faq_category_label( $parent_term, $lang ) : '';
-	$parent_url       = $parent_slug ? langmate_get_faq_archive_url( $lang, $parent_slug ) : $archive_url;
+	$parent_url       = $parent_slug ? langmate_get_faq_category_archive_url( $parent_term, $lang ) : $archive_url;
 	$child_label      = $child_term && ! is_wp_error( $child_term ) ? langmate_get_faq_category_label( $child_term, $lang ) : '';
 
-	// サブヒーローのパンくず(サイト共通パターン): HOME > よくある質問 > 質問タイトル
+	// サブヒーローのパンくず(サイト共通パターン): HOME > よくある質問TOP > 質問タイトル
 	$hero_breadcrumb = array(
 		array(
 			'label' => 'HOME',
 			'url'   => langmate_get_page_url( 'home', $lang ),
 		),
 		array(
-			'label' => ( 'en' === $lang ) ? 'FAQ' : 'よくある質問',
+			'label' => ( 'en' === $lang ) ? 'FAQ TOP' : 'よくある質問TOP',
 			'url'   => $archive_url,
 		),
 		array(
@@ -83,7 +83,7 @@ while ( have_posts() ) :
 
 	      <nav class="faq-detail__breadcrumb" aria-label="<?php echo ( 'en' === $lang ) ? 'Breadcrumb' : 'パンくずリスト'; ?>">
 	        <ol>
-	          <li><a href="<?php echo esc_url( $archive_url ); ?>"><?php echo ( 'en' === $lang ) ? 'FAQ' : 'FAQ'; ?></a></li>
+	          <li><a href="<?php echo esc_url( $archive_url ); ?>"><?php echo ( 'en' === $lang ) ? 'FAQ TOP' : 'よくある質問TOP'; ?></a></li>
 	          <?php if ( $parent_label ) : ?>
 	          <li><a href="<?php echo esc_url( $parent_url ); ?>"><?php echo esc_html( $parent_label ); ?></a></li>
 	          <?php endif; ?>

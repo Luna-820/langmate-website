@@ -64,6 +64,13 @@
         font-weight: v.$fw-bold;
         letter-spacing: 0.1em;
         margin-block-end: 24px;
+
+        // FAQカテゴリーアーカイブ等、見出し自体をFAQトップへのリンクにする場合の下地
+        // (通常のテキストのままの場合はaタグが無いので影響しない)。
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
     }
 
     &__lead {
