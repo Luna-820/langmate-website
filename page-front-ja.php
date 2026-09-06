@@ -24,7 +24,7 @@ $langmate_theme_uri = get_template_directory_uri();
         <img class="hero__deco fuwafuwa" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/fv-parts01.svg" alt="" aria-hidden="true" />
 
         <!-- 右側のスマホ群 -->
-        <img class="hero__phones" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/fv-parts02.png" alt="" aria-hidden="true" />
+        <img class="hero__phones" src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/fv-parts02.webp" alt="" aria-hidden="true" />
 
         <div class="hero__content">
           <h1 class="hero__heading">
@@ -174,7 +174,7 @@ $langmate_theme_uri = get_template_directory_uri();
 
           <span class="section-title__sub">
             <span class="section-title__dot" aria-hidden="true"></span>
-            選ばれる3つの理由
+            外国人と話せる3つの理由
           </span>
         </h2>
         <ol class="reason__list">
@@ -394,7 +394,7 @@ $langmate_theme_uri = get_template_directory_uri();
                   <span>相手を探す</span>
                 </li>
                 <li class="step-list__item">
-                  <span class="step-list__icon" style="--icon-src: url('<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/icon-chat.svg')"
+                  <span class="step-list__icon" style="--icon-src: url('<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/icon-conversation.svg')"
                     aria-hidden="true"></span>
                   <span>交流スタート</span>
                 </li>
@@ -419,7 +419,7 @@ $langmate_theme_uri = get_template_directory_uri();
 
           <span class="section-title__sub">
             <span class="section-title__dot" aria-hidden="true"></span>
-            App Storeでのリアルな口コミ
+            App Storeでのリアルな口コミ・評判
           </span>
         </h2>
         <div class="voice__slider" data-voice-slider>

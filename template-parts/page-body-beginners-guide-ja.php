@@ -341,7 +341,7 @@ $theme_uri = get_template_directory_uri();
             <li class="gs-started__item">
 
               <span class="gs-started__icon gs-started__icon--chat">
-                <img src="<?php echo esc_url( $theme_uri ); ?>/design-assets/icon-chat.svg" alt="" aria-hidden="true" width="60" height="43.86" />
+                <img src="<?php echo esc_url( $theme_uri ); ?>/design-assets/icon-conversation.svg" alt="" aria-hidden="true" width="60" height="43.86" />
               </span>
 
               <div class="gs-started__content">
