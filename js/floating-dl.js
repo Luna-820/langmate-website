@@ -1,16 +1,14 @@
 // 右端追従DLボタン
 // PC / Tablet：クリック・ホバーでパネル開閉(601px以上はQRコード表示)
-// 600px以下：iOS/AndroidともAppスマートリンク(/app/)へ直接
-// 判定できない端末はパネルを開く(ストアバッジ2つ、リンク先は/app/で統一)
+// 600px以下：iOS/AndroidともApp Store/Google Playへ直接振り分け
+// 判定できない端末はパネルを開く(ストアバッジ2つ)
 //
-// 旧仕様ではここでApp Store/Google PlayのURLを直接ハードコードして
-// 出し分けていたが、/app/ 側にOS判定を一本化するため、この追従ボタンの
-// リンク先は常に/app/にする(/app/自体は別途スマートリンクとして新規作成予定)。
+// 中継ページ(/app/)経由でOS判定を一本化する案も検討したが、OS自動判定が
+// 必要な箇所はこの追従ボタンとinitMobileDownload()(ハンバーガーメニュー内の
+// DLリンク)の2箇所のみで、どちらも元々JSが動く場所のため、中継ページを
+// 挟むメリットが無い。よって両者とも同じ定数(APP_STORE_URL/GOOGLE_PLAY_URL)
+// を参照し、直接ストアへ振り分ける方式に統一する。
 
-const APP_SMART_LINK = '/app/';
-
-// initMobileDownload()(ハンバーガーメニュー内のDLリンク、追従ボタンとは別UI)は
-// 今回の変更対象外のため、従来通り直接ストアURLへ振り分ける。
 const APP_STORE_URL =
   'https://apps.apple.com/jp/app/langmate-%E8%8B%B1%E4%BC%9A%E8%A9%B1%E3%81%A8%E5%A4%96%E5%9B%BD%E4%BA%BA%E3%81%AE%E5%8F%8B%E9%81%94%E4%BD%9C%E3%82%8A/id1093968775';
 
@@ -99,9 +97,14 @@ export function initFloatingDl() {
     const isMobileLayout =
       window.matchMedia('(max-width: 600px)').matches;
 
-    // 600px以下 + iOS / Androidと判定できた場合は/app/へ直接
-    if (isMobileLayout && (deviceType === 'ios' || deviceType === 'android')) {
-      window.location.href = APP_SMART_LINK;
+    // 600px以下 + iOS / Androidと判定できた場合は直接ストアへ
+    if (isMobileLayout && deviceType === 'ios') {
+      window.location.href = APP_STORE_URL;
+      return;
+    }
+
+    if (isMobileLayout && deviceType === 'android') {
+      window.location.href = GOOGLE_PLAY_URL;
       return;
     }
 

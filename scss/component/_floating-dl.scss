@@ -148,6 +148,12 @@
 
         .btn--store {
             display: block;
+            // 共通の.btn--store(_button.scss)側でheight:64pxが指定されているが、
+            // App Store/Google Playのバッジ画像は縦横比が異なり見た目の高さが
+            // 揃わないため、この固定高さを打ち消して画像自身の実寸(height:auto)に
+            // 委ねる。こうしないと、高さの違う画像が固定高さの箱の中で上詰めに
+            // なり、2つのバッジのY軸が揃って見えなくなる。
+            height: auto;
             width: 190px;
             flex-shrink: 0;
 
@@ -211,6 +217,9 @@
         // PC版と同じ白背景＋青枠
         // ======================================================
 
+        // PC版(&__box全体を1つの枠で囲み、その中でパネルの幅だけが伸び縮みする)
+        // と同じ考え方にする。枠・背景・角丸は全てこの&__box側だけが持ち、
+        // &__panelは中身(高さ)が伸び縮みするだけの透明な要素にする。
         &__box {
             position: relative;
             display: flex;
@@ -220,7 +229,7 @@
             border: 6px solid v.$color-blue;
             border-bottom: none;
             border-radius: 48px 48px 0 0;
-            overflow: visible;
+            overflow: hidden;
         }
 
         // ======================================================
@@ -264,12 +273,6 @@
         // ======================================================
 
         &__panel {
-            position: absolute;
-
-            right: 0;
-            bottom: 100%;
-            left: 0;
-
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -283,22 +286,14 @@
             padding-inline: 20px;
             padding-block: 0;
 
-            background-color: v.$color-white;
-
-            border: 6px solid v.$color-blue;
-            border-bottom: none;
-            border-radius: 32px 32px 0 0;
-
             overflow: hidden;
 
             opacity: 0;
-            transform: translateY(10px);
 
             transition:
                 max-height 0.3s ease,
                 padding-block 0.3s ease,
-                opacity 0.25s ease,
-                transform 0.3s ease;
+                opacity 0.25s ease;
 
             .btn--store {
                 display: block;
@@ -323,7 +318,6 @@
             padding-block: 16px;
 
             opacity: 1;
-            transform: translateY(0);
         }
     }
 }

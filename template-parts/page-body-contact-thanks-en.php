@@ -13,8 +13,11 @@ $theme_uri = get_template_directory_uri();
 
 <main id="main">
     <section class="sub-hero contact-hero contact-hero--thanks">
-      <img class="sub-hero__map contact-hero__map" src="<?php echo esc_url( $theme_uri ); ?>/design-assets/bg-page.svg" alt="" aria-hidden="true" width="1280"
-        height="500" />
+      <picture>
+        <source srcset="<?php echo esc_url( $theme_uri ); ?>/design-assets/bg-page-wide.svg" media="(min-width: 1441px)">
+        <img class="sub-hero__map contact-hero__map" src="<?php echo esc_url( $theme_uri ); ?>/design-assets/bg-page.svg" alt="" aria-hidden="true" width="1280"
+          height="500" />
+      </picture>
     </section>
 
     <!-- ===== Thanks ===== -->

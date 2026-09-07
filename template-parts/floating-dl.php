@@ -4,26 +4,20 @@
  *
  * header.php から get_template_part() の $args 経由で 'lang' を受け取る。
  *
- * リンク先は /app/ のスマートリンク(OS判定でストアへ振り分ける専用ページ、
- * 新規作成予定)に統一する。600px以下(SP)は従来通りApp Store/Google Play
- * バッジ2つを表示、601px以上(PC/タブレット)はQRコード表示に切り替える。
+ * 600px以下(SP)はApp Store/Google Playバッジ2つを表示、601px以上
+ * (PC/タブレット)はQRコード表示に切り替える。どちらもリンク先は
+ * 各ストアの直接URL(中継ページは挟まない。理由はjs/floating-dl.js
+ * 冒頭コメント参照)。
  *
  * QRコードはApp Store用・Google Play用の2つ(スマホで見分けなくても
- * どちらを読み取ればいいか分かるように)。画像は後日差し替え予定なので、
- * 今は枠だけ用意している。QR自体はストアへ直接飛ばしたいものなので、
- * リンク先も(/app/ではなく)各ストアの直接URLにしている。
+ * どちらを読み取ればいいか分かるように)。
  */
 
 $lang      = $args['lang'] ?? 'ja';
 $theme_uri = get_template_directory_uri();
 
-// /app/ はまだ実体が無い(新規作成予定)が、リンク先としては先にここへ統一しておく。
-$app_link = home_url( '/app/' );
-
-// QRコードは「どちらを読み取るか」が画像自体で分かるものなので、
-// /app/を経由せず各ストアへ直接。
-$appstore_url   = 'https://apps.apple.com/jp/app/langmate-%E8%8B%B1%E4%BC%9A%E8%A9%B1%E3%81%A8%E5%A4%96%E5%9B%BD%E4%BA%BA%E3%81%AE%E5%8F%8B%E9%81%94%E4%BD%9C%E3%82%8A/id1093968775';
-$googleplay_url = 'https://play.google.com/store/apps/details?id=co.thoron.langmate';
+$appstore_url   = LANGMATE_APPSTORE_URL;
+$googleplay_url = LANGMATE_GOOGLEPLAY_URL;
 
 $badge_suffix   = ( 'en' === $lang ) ? 'en' : 'ja';
 $appstore_alt   = ( 'en' === $lang ) ? 'Download from the App Store' : 'App Storeからダウンロード';

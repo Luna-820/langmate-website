@@ -44,12 +44,12 @@ $langmate_theme_uri = get_template_directory_uri();
           </p>
 
           <div class="hero__badges">
-            <a href="https://apps.apple.com/jp/app/langmate-%E8%8B%B1%E4%BC%9A%E8%A9%B1%E3%81%A8%E5%A4%96%E5%9B%BD%E4%BA%BA%E3%81%AE%E5%8F%8B%E9%81%94%E4%BD%9C%E3%82%8A/id1093968775" target="_blank" rel="noopener" class="btn btn--store"
+            <a href="<?php echo esc_url( LANGMATE_APPSTORE_URL ); ?>" target="_blank" rel="noopener" class="btn btn--store"
               target="_blank" rel="noopener">
               <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/badge-appstore-ja.svg" alt="App Storeからダウンロード" />
             </a>
 
-            <a href="https://play.google.com/store/apps/details?id=co.thoron.langmate" target="_blank" rel="noopener" class="btn btn--store"
+            <a href="<?php echo esc_url( LANGMATE_GOOGLEPLAY_URL ); ?>" target="_blank" rel="noopener" class="btn btn--store"
               target="_blank" rel="noopener">
               <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/badge-googleplay-ja.svg" alt="Google Playで手に入れよう" />
             </a>
@@ -618,10 +618,10 @@ $langmate_theme_uri = get_template_directory_uri();
         <h2 id="cta-heading">世界中のユーザーとの交流を、<br />今日から始めてみませんか？</h2>
         <p>英語を勉強するだけではなく、<br>実際に使いながら自然な語学力を身につけましょう。</p>
         <div class="cta__badges">
-          <a href="https://apps.apple.com/jp/app/langmate-%E8%8B%B1%E4%BC%9A%E8%A9%B1%E3%81%A8%E5%A4%96%E5%9B%BD%E4%BA%BA%E3%81%AE%E5%8F%8B%E9%81%94%E4%BD%9C%E3%82%8A/id1093968775" target="_blank" rel="noopener" class="btn btn--store">
+          <a href="<?php echo esc_url( LANGMATE_APPSTORE_URL ); ?>" target="_blank" rel="noopener" class="btn btn--store">
             <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/badge-appstore-ja.svg" alt="App Storeからダウンロード" width="160" height="48" />
           </a>
-          <a href="https://play.google.com/store/apps/details?id=co.thoron.langmate" target="_blank" rel="noopener" class="btn btn--store">
+          <a href="<?php echo esc_url( LANGMATE_GOOGLEPLAY_URL ); ?>" target="_blank" rel="noopener" class="btn btn--store">
             <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/badge-googleplay-ja.svg" alt="Google Playで手に入れよう" width="160" height="48" />
           </a>
         </div>
