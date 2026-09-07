@@ -8,14 +8,8 @@
     position: relative;
     overflow: hidden;
     width: 100%;
-    // 一度100dvh(今実際に見えている分だけの高さに常に追従する値)を試したが、
-    // これはLINEに限らず通常のモバイルSafari/Chromeでもアドレスバーの
-    // 収縮に合わせてスクロール中ずっと数値が変わり続けるため、.hero__phones
-    // 等「heroの高さに対する%」で位置を計算している要素がスクロール中に
-    // 本文とは別に動いて見える新たな不具合を生んでしまった。100svh
-    // (アドレスバーが出ている前提の一番小さい高さで固定、スクロール中に
-    // 値が変化しない)にすることで、両方の不具合を解消する。
-    height: 100svh;
+    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
     margin-block-start: 0;
     background-color: v.$color-cream;
 
@@ -156,10 +150,6 @@
         height: auto;
         max-width: none;
         pointer-events: none;
-
-        // hero__contentと同じ「ヘッダー分の余白を除いた実質表示領域」の
-        // 中央に合わせる。hero__inner側の--hero-pad-top/--hero-pad-bottomを
-        // 継承して使うことで、ブレークポイントごとに個別のtop値を持たなくてよい
         top: calc(var(--hero-pad-top) + (100% - var(--hero-pad-top) - var(--hero-pad-bottom)) / 2);
         transform: translateY(-50%);
 
@@ -197,11 +187,9 @@
         // ------------------------------------------------------
 
         @media (max-width: 600px) {
-            // 600px以下は縦中央寄せをやめ、画面右下に配置する
             top: auto;
             bottom: 0;
             transform: none;
-
             right: -250px;
             width: clamp(470px, 95vw, 580px);
         }
@@ -212,7 +200,7 @@
 
         @include mx.sp {
             right: -140px;
-            width: 85vw;
+            width: 83vw;
         }
     }
 

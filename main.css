@@ -1223,7 +1223,8 @@ img {
   position: relative;
   overflow: hidden;
   width: 100%;
-  height: 100svh;
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   margin-block-start: 0;
   background-color: #FFFCF3;
 }
@@ -1325,7 +1326,7 @@ img {
 @media (max-width: 430px) {
   .hero__phones {
     right: -140px;
-    width: 85vw;
+    width: 83vw;
   }
 }
 .hero__content {
