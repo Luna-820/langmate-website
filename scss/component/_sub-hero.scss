@@ -32,7 +32,7 @@
         left: 0;
         width: 100%;
         height: 460px;
-        background-color: #f7f8fa;
+        // background-color: #f7f8fa;
         z-index: -2;
 
         @include mx.sp {
@@ -149,5 +149,51 @@
         font-size: clamp(1.6rem, calc(10.21px + 1.347vw), 2.4rem);
         line-height: 1.4;
         margin-block-end: 24px;
+    }
+}
+
+// ==========================================================
+// Large Desktop（1441px〜）
+//
+// bg-page-wide.svg(2560×600、bg-page.svgの横幅2倍・かつ縦も600pxに
+// 描き直された実画像)を<picture>のsourceで出し分けている
+// (各page-bodyテンプレート側)。__mapのmax-widthも1440→2560pxに拡張。
+// aspect-ratioも画像自身の実比率(2560/600)に合わせ、max-heightも
+// 実寸と同じ600pxにしているため、object-fit:coverの拡大率
+// (= max(ボックス幅/画像実寸幅, ボックス高さ/画像実寸高さ))は
+// どの横幅でも常にちょうど1倍になり、クロップ(上を切って下だけ見せる
+// 従来のshiftトリック)は発生しない＝画像をそのまま丸ごと表示する。
+//
+// それでも2560pxを超える超ワイドモニターでは画像実寸を超えてしまうため、
+// 従来通り::before(単色の帯)・::after(巨大な円によるアーチの延長)で
+// 引き続きフォールバックする。画像の縦横比が変わった分、この2つの
+// 数値も概算で440→600(倍率1.364)に比例調整している。
+// ==========================================================
+
+@media (min-width: 1441px) {
+    .sub-hero {
+
+        &::before {
+            height: 600px;
+        }
+
+        &::after {
+            top: 355px;
+            width: max(6045px, 320vw);
+            height: max(6045px, 320vw);
+        }
+
+        &__map {
+            // 実画像(bg-page-wide.svg)の実寸幅と同じ2560pxまでは拡大OK
+            max-width: 2560px;
+
+            // 実画像自身の縦横比・実寸の高さに合わせる(クロップさせない)
+            aspect-ratio: 2560 / 600;
+            max-height: 600px;
+        }
+
+        &__inner {
+            padding-block-start: 430px;
+        }
     }
 }

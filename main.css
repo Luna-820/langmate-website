@@ -1124,7 +1124,6 @@ img {
   left: 0;
   width: 100%;
   height: 460px;
-  background-color: #f7f8fa;
   z-index: -2;
 }
 @media (max-width: 430px) {
@@ -1211,6 +1210,24 @@ img {
   margin-block-end: 24px;
 }
 
+@media (min-width: 1441px) {
+  .sub-hero::before {
+    height: 600px;
+  }
+  .sub-hero::after {
+    top: 355px;
+    width: max(6045px, 320vw);
+    height: max(6045px, 320vw);
+  }
+  .sub-hero__map {
+    max-width: 2560px;
+    aspect-ratio: 2560/600;
+    max-height: 600px;
+  }
+  .sub-hero__inner {
+    padding-block-start: 430px;
+  }
+}
 .hero {
   position: relative;
   overflow: hidden;
@@ -6053,4 +6070,4 @@ p .user-id-steps__num {
   .webview-page .legal-hero {
     padding-top: 24px;
   }
-}/*# sourceMappingURL=main.css.map */
+}
