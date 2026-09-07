@@ -498,51 +498,38 @@
         margin-inline: auto;
 
 
-        // ----------------------------------------------------------------------
-        // 01
-        // ----------------------------------------------------------------------
-        &--01 {
-            // 英語版は本文が長く、1001px以上のPC幅で白い図形からテキストが
-            // はみ出していたため、図形自体を大きくして収める
-            // (2列グリッドのトラック幅より広く、明示的にwidthを指定)
+        &--02,
+        &--03,
+        &--04 {
             width: 480px;
-            max-width: 480px;
+        }
+
+        // ---- 01 ----
+        &--01 {
+            width: 384px;
+            max-width: 384px;
             aspect-ratio: 387 / 303;
 
             .gs-reason__blob-text {
-                // 英語版は本文が長く、PC幅ではみ出していたため
-                // 上下の余白を減らして調整。
                 inset: 6% 17% 11% 20%;
             }
         }
 
-
-        // ----------------------------------------------------------------------
-        // 02
-        // ----------------------------------------------------------------------
+        // ---- 02 ----
         &--02 {
-            // 英語版は本文が長く、1001px以上のPC幅で白い図形からテキストが
-            // はみ出していたため、図形自体を大きくして収める
-            // (2列グリッドのトラック幅より広く、明示的にwidthを指定)
-            width: 480px;
             max-width: 480px;
             aspect-ratio: 453 / 354;
 
             .gs-reason__blob-text {
-                // 英語版は本文が長く、PC幅ではみ出していたため
                 // 上下の余白を減らして調整。
                 inset: 16% 16% 6% 24%;
             }
         }
 
-
-        // ----------------------------------------------------------------------
-        // 03
-        // ----------------------------------------------------------------------
+        // ---- 03 ----
         &--03 {
             // 01・02・04と同じ固定幅にして、曲線ラベルの文字サイズ補正が
             // 画面幅によってズレないようにする
-            width: 480px;
             max-width: 580px;
             aspect-ratio: 495 / 328;
 
@@ -554,20 +541,12 @@
             }
         }
 
-
-        // ----------------------------------------------------------------------
-        // 04
-        // ----------------------------------------------------------------------
+        // ---- 04 ----
         &--04 {
-            // 英語版は本文が長く、1001px以上のPC幅で白い図形からテキストが
-            // はみ出していたため、図形自体を大きくして収める
-            // (2列グリッドのトラック幅より広く、明示的にwidthを指定)
-            width: 480px;
             max-width: 590px;
             aspect-ratio: 492 / 333;
 
             .gs-reason__blob-text {
-                // 英語版は本文が長く、PC幅ではみ出していたため
                 // 上下の余白を減らして調整。
                 inset: 15% 16% 11% 18%;
 
@@ -588,25 +567,14 @@
             max-width: none;
             margin-inline: auto;
 
-            &--01 {
-                // 03・04と同じくらいまで大きく
-                width: min(calc(100% - 64px), 500px);
-                max-width: 500px;
-                margin-inline: auto;
-
+            &--01,
+            &--02,
+            &--03 {
                 .gs-reason__blob-text {
-                    inset: 5% 15% 12% 18%;
-
-                    // 631px以上は上限(2rem)で頭打ち、631px〜431pxの間だけ
-                    // 1.4remまで線形に縮小。
                     font-size: clamp(1.4rem,
                             calc(1.07px + 3vw),
                             2rem);
 
-                    // ここは@media(max-width:1000px)なので430px以下でも
-                    // 適用され続けてしまい、&__blob-text本体側の430px以下用
-                    // clampより詳細度が高く上書きしてしまう。同じ式を
-                    // 明示的に指定して縮小を継続させる。
                     @include mx.sp {
                         font-size: clamp(1.15rem,
                                 calc(4.23px + 2.273vw),
@@ -615,68 +583,38 @@
                 }
             }
 
-
-            &--02 {
-                // 03・04と同じくらいまで大きく
-                width: min(calc(100% - 64px), 500px);
-                max-width: 500px;
-                margin-inline: auto;
-
-                .gs-reason__blob-text {
-                    // 英語版はこの2個目だけ本文が長く、431〜1000px幅で
-                    // はみ出していたため上下の余白を減らして調整。
-                    inset: 14% 16% 6% 19%;
-
-                    // 631px以上は上限(2rem)で頭打ち、631px〜431pxの間だけ
-                    // 1.4remまで線形に縮小。
-                    font-size: clamp(1.4rem,
-                            calc(1.07px + 3vw),
-                            2rem);
-
-                    // ここは@media(max-width:1000px)なので430px以下でも
-                    // 適用され続けてしまい、&__blob-text本体側の430px以下用
-                    // clampより詳細度が高く上書きしてしまう。同じ式を
-                    // 明示的に指定して縮小を継続させる。
-                    @include mx.sp {
-                        font-size: clamp(1.15rem,
-                                calc(4.23px + 2.273vw),
-                                1.4rem);
-                    }
-                }
-            }
-
-
+            // 02・03は同じ固定幅
+            &--02,
             &--03 {
                 width: min(calc(100% - 64px), 500px);
                 max-width: 500px;
                 margin-inline: auto;
+            }
+
+            &--01 {
+                width: min(calc(100% - 64px), 400px);
+                max-width: 400px;
+                margin-inline: auto;
 
                 .gs-reason__blob-text {
-                    inset: 7% 15% 14% 17%;
-                    line-height: 1.45;
-
-                    // 631px以上は上限(2rem)で頭打ち、631px〜431pxの間だけ
-                    // 1.4remまで線形に縮小。PC版側のfont-size:2rem固定を
-                    // 打ち消すため明示的に指定する必要がある。
-                    font-size: clamp(1.4rem,
-                            calc(1.07px + 3vw),
-                            2rem);
-
-                    // ここは@media(max-width:1000px)なので430px以下でも
-                    // 適用され続けてしまい、&__blob-text本体側の430px以下用
-                    // clampより詳細度が高く上書きしてしまう。同じ式を
-                    // 明示的に指定して縮小を継続させる。
-                    @include mx.sp {
-                        font-size: clamp(1.15rem,
-                                calc(4.23px + 2.273vw),
-                                1.4rem);
-                    }
+                    inset: 5% 15% 12% 18%;
                 }
             }
 
+            &--02 {
+                .gs-reason__blob-text {
+                    inset: 14% 16% 6% 19%;
+                }
+            }
+
+            &--03 {
+                .gs-reason__blob-text {
+                    inset: 7% 15% 14% 17%;
+                    line-height: 1.45;
+                }
+            }
 
             &--04 {
-                // 04だけさらに一回り大きく
                 width: min(calc(100% - 40px), 560px);
                 max-width: 560px;
                 margin-inline: auto;
@@ -684,9 +622,6 @@
                 .gs-reason__blob-text {
                     inset: 13% 15% 13% 17%;
                     line-height: 1.45;
-
-                    // 631px以上は上限(1.8rem)で頭打ち、631px〜431pxの間だけ
-                    // 1.2remまで線形に縮小(01〜03の2rem→1.4remと同じ考え方)。
                     font-size: clamp(1.2rem,
                             calc(-0.93px + 3vw),
                             1.8rem);
@@ -700,65 +635,46 @@
         // ======================================================================
         @include mx.sp {
 
-            // 02・03・04も1個目と同じく左右に余白を持たせる
-            // (余白が無いと、テキストが図形からわずかにはみ出す分だけ
-            // 画面端で見切れやすくなるため)。
+            &--01 {
+                width: min(calc(100% - 16px), 288px);
+                max-width: 288px;
+                margin-inline: auto;
+                transform: none;
+
+
+                .gs-reason__blob-text {
+                    inset: 10% 17% 16% 20%;
+                    font-size: 16px;
+                }
+            }
+
+            &--02 {
+                width: min(calc(100% - 1px), 350px);
+                max-width: 350px;
+                margin-inline: auto;
+
+                .gs-reason__blob-text {
+                    inset: 15% 17% 6% 30%;
+                }
+            }
+
             &--03 {
                 width: min(calc(100% - 4px), 360px);
                 max-width: 380px;
                 margin-inline: auto;
-            }
 
-            // 英語版は本文が長く、02・04は文字サイズをこれ以上落とさずに
-            // 収めるため、余白(左右)を減らして図形自体を一回り大きくする。
-            &--04 {
-                // 04だけさらに一回り大きく
-                width: min(calc(100% - 1px), 390px);
-                max-width: 390px;
-                margin-inline: auto;
-            }
-
-            &--02 {
-                // 04と同じくらいまでもう一回り大きく(320px幅でもはみ出さない範囲)
-                width: min(calc(100% - 1px), 350px);
-                max-width: 350px;
-                margin-inline: auto;
-            }
-
-            &--01 {
-                // 03・04と同じくらいまで大きく
-                width: min(calc(100% - 16px), 360px);
-                max-width: 360px;
-                margin-inline: auto;
-                transform: none;
-
-                .gs-reason__blob-text {
-                    inset: 10% 17% 16% 20%;
-                }
-            }
-
-            &--02 {
-                .gs-reason__blob-text {
-                    // 英語版の本文が収まるよう上下の余白を減らして
-                    // 文字エリアを広げている(曲線文字と被らない範囲で調整済み)。
-                    inset: 15% 17% 6% 15%;
-                }
-            }
-
-            &--03 {
                 .gs-reason__blob-text {
                     inset: 11% 16% 16% 16%;
                 }
             }
 
             &--04 {
-                .gs-reason__blob-text {
-                    // 英語版の本文が収まるよう上下の余白を減らして
-                    // 文字エリアを広げている(曲線文字と被らない範囲で調整済み)。
-                    inset: 57 14% 5% 10%;
+                width: min(calc(100% - 1px), 390px);
+                max-width: 390px;
+                margin-inline: auto;
 
-                    // 04は上限が1.2rem(01〜03の1.4remと違う)なので、
-                    // 430px以下も専用のclampで引き続き線形に縮小する。
+                .gs-reason__blob-text {
+                    inset: 57 14% 5% 10%;
                     font-size: clamp(0.985rem,
                             calc(3.594px + 1.955vw),
                             1.2rem);
@@ -792,7 +708,7 @@
     // BLOB CURVED LABEL
     // ==========================================================================
     &__blob-label text {
-        font-size: clamp(2rem,calc(11.31px + 5.02vw),2.5rem);
+        font-size: clamp(2rem, calc(11.31px + 5.02vw), 2.5rem);
 
         font-weight: v.$fw-bold;
         line-height: 1.5;
@@ -800,11 +716,11 @@
         fill: v.$color-white;
 
         @include mx.nav-collapse {
-            font-size: clamp(2.2rem,3vw,2.8rem);
+            font-size: clamp(2.2rem, 3vw, 2.8rem);
         }
 
         @include mx.sp {
-            font-size: clamp(1.8rem,7vw,2.6rem);
+            font-size: clamp(1.8rem, 7vw, 2.6rem);
         }
     }
 

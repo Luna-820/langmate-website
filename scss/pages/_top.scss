@@ -8,7 +8,14 @@
     position: relative;
     overflow: hidden;
     width: 100%;
-    height: 100dvh;
+    // 一度100dvh(今実際に見えている分だけの高さに常に追従する値)を試したが、
+    // これはLINEに限らず通常のモバイルSafari/Chromeでもアドレスバーの
+    // 収縮に合わせてスクロール中ずっと数値が変わり続けるため、.hero__phones
+    // 等「heroの高さに対する%」で位置を計算している要素がスクロール中に
+    // 本文とは別に動いて見える新たな不具合を生んでしまった。100svh
+    // (アドレスバーが出ている前提の一番小さい高さで固定、スクロール中に
+    // 値が変化しない)にすることで、両方の不具合を解消する。
+    height: 100svh;
     margin-block-start: 0;
     background-color: v.$color-cream;
 
