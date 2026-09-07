@@ -38,13 +38,6 @@
     &__map {
         position: absolute;
         top: 0;
-        // 共通の.sub-hero__map(scss/component/_sub-hero.scss)側でセンター寄せ用に
-        // left:50%+transform:translateX(-50%)を指定しているが、このページの
-        // マークアップは.sub-hero__mapとこの.gs-hero__mapを同じ<img>に併記して
-        // いるため、ここでleft:0のままにしておくと(同じ詳細度で後勝ちのため)
-        // leftだけがこちらの値で上書きされ、transformだけ共通側が残るという
-        // ズレた状態になり、地図が横に半分ずれて表示されてしまう。
-        // 共通側と同じ値をここでも指定して整合させる。
         left: 50%;
         transform: translateX(-50%);
         width: 100%;

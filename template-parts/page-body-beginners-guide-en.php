@@ -127,8 +127,7 @@ $theme_uri = get_template_directory_uri();
                 </svg>
 
                 <p class="gs-reason__blob-text">
-                  You don't need to be fluent from the start. 
-                  Even a simple message is enough to start connecting with people around the world at your own pace
+                  Start with just one word and enjoy language exchange at your own pace.
                 </p>
 
               </div>
