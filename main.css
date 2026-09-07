@@ -812,6 +812,7 @@ img {
 }
 .floating-dl__panel .btn--store {
   display: block;
+  height: auto;
   width: 190px;
   flex-shrink: 0;
 }
@@ -862,7 +863,7 @@ img {
     border: 6px solid #0083F8;
     border-bottom: none;
     border-radius: 48px 48px 0 0;
-    overflow: visible;
+    overflow: hidden;
   }
   .floating-dl__trigger {
     position: relative;
@@ -887,10 +888,6 @@ img {
     text-orientation: initial;
   }
   .floating-dl__panel {
-    position: absolute;
-    right: 0;
-    bottom: 100%;
-    left: 0;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -900,14 +897,9 @@ img {
     max-height: 0;
     padding-inline: 20px;
     padding-block: 0;
-    background-color: #FFFFFF;
-    border: 6px solid #0083F8;
-    border-bottom: none;
-    border-radius: 32px 32px 0 0;
     overflow: hidden;
     opacity: 0;
-    transform: translateY(10px);
-    transition: max-height 0.3s ease, padding-block 0.3s ease, opacity 0.25s ease, transform 0.3s ease;
+    transition: max-height 0.3s ease, padding-block 0.3s ease, opacity 0.25s ease;
   }
   .floating-dl__panel .btn--store {
     display: block;
@@ -925,7 +917,6 @@ img {
     max-height: 110px;
     padding-block: 16px;
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
