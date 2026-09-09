@@ -169,6 +169,15 @@
         width: fit-content;
         min-width: 0;
 
+        // アイコン行(>div)とその下のブログリンク(&__blog)、それぞれ
+        // 幅の違う要素が並ぶため、この&__sns自体をflexで縦に並べて
+        // align-items:centerで揃える(内側の>divだけにjustify-content:
+        // centerを付けても、>div自体がwidth:fit-contentで自分の中身に
+        // ぴったりのサイズしか持たないため効果が無かった)。
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
         p {
             font-size: clamp(1.6rem,
                     calc(14.857px + 0.3571vw),
@@ -181,10 +190,9 @@
 
         >div {
             display: flex;
-
             gap: clamp(16px, 2vw, 32px);
-
             width: fit-content;
+            justify-content: center;
         }
 
         a {
@@ -208,6 +216,34 @@
                 margin-inline: auto;
             }
         }
+    }
+
+    // SNSアイコンの下に中央揃えで表示するブログへのリンク。
+    // 見た目は横のnav(&__nav)と同じ(下線なし・通常の文字色)にする。
+    // 2行構成: メインタイトル + 装飾的なサブタイトル(sns__labelの
+    // 「\ follow me! /」と同じ「\ X /」の書き方を踏襲)。
+    &__blog {
+        display: block;
+        width: 100%;
+        margin-block-start: 16px;
+
+        text-align: center;
+    }
+
+    &__blog-title {
+        display: block;
+
+        font-size: clamp(1.6rem,
+                calc(14.857px + 0.3571vw),
+                2rem);
+    }
+
+    &__blog-sub {
+        display: block;
+        margin-block-start: 2px;
+
+        font-size: 1.4rem;
+        opacity: 0.7;
     }
 
 

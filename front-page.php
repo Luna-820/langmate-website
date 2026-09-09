@@ -519,7 +519,7 @@ $langmate_theme_uri = get_template_directory_uri();
           <div class="sns__content">
             <p class="sns__label">\ follow me! /</p>
             <h2 id="sns-heading">
-              <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/logo-instagram.svg" alt="" aria-hidden="true" width="56" height="56" />
+              <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/logo-instagram.png" alt="" aria-hidden="true" width="56" height="56" />
               <span class="sns__ig-text" data-text="Instagram">Instagram</span>
             </h2>
             <p class="sns__desc--en">From interviews with travelers in Japan to international culture and short videos, there’s always

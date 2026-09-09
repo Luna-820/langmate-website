@@ -189,6 +189,10 @@
                 width: 20px;
                 height: 20px;
                 border-radius: 50%;
+                // 日本の国旗(flag-jp.svg)は白地の円のため、枠が無いと
+                // ドロップダウンの白背景に溶けてただの赤い点に見えてしまう。
+                // トリガー側と同じ枠線を付けて輪郭を出す。
+                border: 1px solid v.$color-gray-light;
                 object-fit: cover;
             }
 

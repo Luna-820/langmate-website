@@ -146,7 +146,7 @@ $theme_uri = get_template_directory_uri();
                     d="M0.716187 255.895C9.51602 188.211 39.7333 133.187 95.7493 92.7494C151.446 52.537 211.524 22.093 278.981 7.37479C307.408 1.17334 336.117 -1.86166 365.264 1.21091"
                     fill="none" />
                   <text>
-                    <textPath href="#gs-reason-path-02" startOffset="2%" textLength="396"
+                    <textPath href="#gs-reason-path-02" startOffset="20%" textLength="396"
                       lengthAdjust="spacing">
                       会話を助けるサポート機能がある
                     </textPath>

@@ -498,14 +498,12 @@
         margin-inline: auto;
 
 
-        &--02,
-        &--03,
-        &--04 {
-            width: 480px;
-        }
-
-        // ---- 01 ----
+        // ==========================================================
+        // 01
+        // ==========================================================
         &--01 {
+            // クライアントから届いた英語版の正式テキストが想定より短く
+            // なったため、図形をテキスト量に合わせて約20%縮小(480→384px)。
             width: 384px;
             max-width: 384px;
             aspect-ratio: 387 / 303;
@@ -513,10 +511,51 @@
             .gs-reason__blob-text {
                 inset: 6% 17% 11% 20%;
             }
+
+            // ---- 1000px以下：1列レイアウト ----
+            @include mx.nav-collapse {
+                width: min(calc(100% - 64px), 400px);
+                max-width: 400px;
+                margin-inline: auto;
+
+                .gs-reason__blob-text {
+                    inset: 5% 15% 12% 18%;
+
+                    // 631px以上は上限(2rem)で頭打ち、631px〜431pxの間だけ
+                    // 線形に縮小。430px以下でも同じ式を明示的に指定して
+                    // 縮小を継続させる(&__blob-text本体側のclampより
+                    // このセレクタの方が詳細度が高く上書きしてしまうため)。
+                    font-size: clamp(1.6rem,
+                            calc(4px + 3vw),
+                            2rem);
+
+                    @include mx.sp {
+                        font-size: clamp(1.4rem,
+                                calc(6.23px + 2.273vw),
+                                1.46em);
+                    }
+                }
+            }
+
+            // ---- 430px以下 ----
+            @include mx.sp {
+                width: min(calc(100% - 16px), 288px);
+                max-width: 288px;
+                margin-inline: auto;
+                transform: none;
+
+                .gs-reason__blob-text {
+                    inset: 10% 17% 16% 20%;
+                    font-size: 16px;
+                }
+            }
         }
 
-        // ---- 02 ----
+        // ==========================================================
+        // 02
+        // ==========================================================
         &--02 {
+            width: 480px;
             max-width: 480px;
             aspect-ratio: 453 / 354;
 
@@ -524,25 +563,91 @@
                 // 上下の余白を減らして調整。
                 inset: 16% 16% 6% 24%;
             }
+
+            // ---- 1000px以下：1列レイアウト ----
+            @include mx.nav-collapse {
+                width: min(calc(100% - 44px), 520px);
+                max-width: 500px;
+                margin-inline: auto;
+
+                .gs-reason__blob-text {
+                    inset: 16% 12% 4% 27%;
+                    font-size: clamp(1.46rem,
+                            calc(2px + 3vw),
+                            2rem);
+                }
+            }
+
+            // ---- 430px以下 ----
+            @include mx.sp {
+                width: min(calc(100% - 1px), 350px);
+                max-width: 350px;
+                margin-inline: auto;
+
+                .gs-reason__blob-text {
+                    inset: 15% 17% 6% 30%;
+                    font-size: clamp(1.4rem,
+                            calc(6.23px + 2.273vw),
+                            1.46em);
+                }
+            }
         }
 
-        // ---- 03 ----
+        // ==========================================================
+        // 03
+        // ==========================================================
         &--03 {
             // 01・02・04と同じ固定幅にして、曲線ラベルの文字サイズ補正が
             // 画面幅によってズレないようにする
+            width: 480px;
             max-width: 580px;
             aspect-ratio: 495 / 328;
 
             .gs-reason__blob-text {
                 inset: 10% 16% 18% 18%;
-                // PCの2列時だけ少し抑える
                 font-size: 2rem;
                 line-height: 1.35;
             }
+
+            // ---- 1000px以下：1列レイアウト ----
+            @include mx.nav-collapse {
+                width: min(calc(100% - 64px), 500px);
+                max-width: 500px;
+                margin-inline: auto;
+
+                .gs-reason__blob-text {
+                    inset: 7% 15% 14% 17%;
+                    line-height: 1.45;
+
+                    font-size: clamp(1.46rem,
+                            calc(1.2px + 3vw),
+                            2rem);
+
+                    @include mx.sp {
+                        font-size: clamp(1.4rem,
+                                calc(2.23px + 2.273vw),
+                                1.46em);
+                    }
+                }
+            }
+
+            // ---- 430px以下 ----
+            @include mx.sp {
+                width: min(calc(100% - 4px), 360px);
+                max-width: 380px;
+                margin-inline: auto;
+
+                .gs-reason__blob-text {
+                    inset: 8% 12% 14% 20%;
+                }
+            }
         }
 
-        // ---- 04 ----
+        // ==========================================================
+        // 04
+        // ==========================================================
         &--04 {
+            width: 480px;
             max-width: 590px;
             aspect-ratio: 492 / 333;
 
@@ -557,64 +662,10 @@
 
                 line-height: 1.35;
             }
-        }
 
-
-        // ======================================================================
-        // 1000px以下：1列レイアウト
-        // ======================================================================
-        @include mx.nav-collapse {
-            max-width: none;
-            margin-inline: auto;
-
-            &--01,
-            &--02,
-            &--03 {
-                .gs-reason__blob-text {
-                    font-size: clamp(1.4rem,
-                            calc(1.07px + 3vw),
-                            2rem);
-
-                    @include mx.sp {
-                        font-size: clamp(1.15rem,
-                                calc(4.23px + 2.273vw),
-                                1.4rem);
-                    }
-                }
-            }
-
-            // 02・03は同じ固定幅
-            &--02,
-            &--03 {
-                width: min(calc(100% - 64px), 500px);
-                max-width: 500px;
-                margin-inline: auto;
-            }
-
-            &--01 {
-                width: min(calc(100% - 64px), 400px);
-                max-width: 400px;
-                margin-inline: auto;
-
-                .gs-reason__blob-text {
-                    inset: 5% 15% 12% 18%;
-                }
-            }
-
-            &--02 {
-                .gs-reason__blob-text {
-                    inset: 14% 16% 6% 19%;
-                }
-            }
-
-            &--03 {
-                .gs-reason__blob-text {
-                    inset: 7% 15% 14% 17%;
-                    line-height: 1.45;
-                }
-            }
-
-            &--04 {
+            // ---- 1000px以下：1列レイアウト ----
+            @include mx.nav-collapse {
+                // 04だけさらに一回り大きく
                 width: min(calc(100% - 40px), 560px);
                 max-width: 560px;
                 margin-inline: auto;
@@ -622,62 +673,41 @@
                 .gs-reason__blob-text {
                     inset: 13% 15% 13% 17%;
                     line-height: 1.45;
+
                     font-size: clamp(1.2rem,
                             calc(-0.93px + 3vw),
                             1.8rem);
                 }
             }
-        }
 
-
-        // ======================================================================
-        // 430px以下
-        // ======================================================================
-        @include mx.sp {
-
-            &--01 {
-                width: min(calc(100% - 16px), 288px);
-                max-width: 288px;
-                margin-inline: auto;
-                transform: none;
-
-
-                .gs-reason__blob-text {
-                    inset: 10% 17% 16% 20%;
-                    font-size: 16px;
-                }
-            }
-
-            &--02 {
-                width: min(calc(100% - 1px), 350px);
-                max-width: 350px;
-                margin-inline: auto;
-
-                .gs-reason__blob-text {
-                    inset: 15% 17% 6% 30%;
-                }
-            }
-
-            &--03 {
-                width: min(calc(100% - 4px), 360px);
-                max-width: 380px;
-                margin-inline: auto;
-
-                .gs-reason__blob-text {
-                    inset: 11% 16% 16% 16%;
-                }
-            }
-
-            &--04 {
+            // ---- 430px以下 ----
+            @include mx.sp {
                 width: min(calc(100% - 1px), 390px);
                 max-width: 390px;
                 margin-inline: auto;
 
+                html[lang="en"] & {
+                    aspect-ratio: 492 / 400;
+
+                    .gs-reason__blob-shape,
+                    .gs-reason__blob-label {
+                        transform: scale(1.1);
+                        transform-origin: center top;
+                    }
+                }
+
                 .gs-reason__blob-text {
-                    inset: 57 14% 5% 10%;
-                    font-size: clamp(0.985rem,
-                            calc(3.594px + 1.955vw),
-                            1.2rem);
+                    inset: 15% 14% 5% 10%;
+                    font-size: clamp(1.4rem,
+                            calc(6px + 1.955vw),
+                            1.6rem);
+
+                    html[lang="en"] & {
+                        font-size: clamp(1.1rem,
+                                calc(5.58px + 1.818vw),
+                                1.49rem);
+                        inset: 15% 14% 5% 12%;
+                    }
                 }
             }
         }
@@ -774,7 +804,7 @@
         }
 
         @include mx.sp {
-            font-size: clamp(1.4rem, calc(4.23px + 2.273vw), 1.4rem);
+            font-size: clamp(1.4rem, calc(4.23px + 2.273vw), 1.6rem);
             line-height: 1.3;
         }
     }
@@ -855,7 +885,12 @@
         @include watermark;
         position: absolute;
         top: 40px;
-        right: 0;
+        // 601px以上は追従DLボタン(.floating-dl)が画面右端に縦長のボタンとして
+        // 出るため、right:0(画面端に揃える)のままだとこのウォーターマーク
+        // 文字とボタンが常に重なってしまう(z-index的にはボタンが手前に
+        // 来るので描画は壊れないが、文字がボタンで真っ二つに割れて見える)。
+        // ボタン分の余白を確保する。
+        right: 100px;
         writing-mode: vertical-rl;
         transform: none;
         color: #FFFCE6;
@@ -863,9 +898,11 @@
         font-size: clamp(8rem, calc(4.277px + 11vw), 15rem);
 
         @include mx.nav-collapse {
-            right: -8px;
+            right: 90px;
         }
 
+        // 430px以下は追従DLボタンが画面下部のバー表示に切り替わり、
+        // 横方向の干渉が無くなるため、画面端まで寄せてよい。
         @include mx.sp {
             right: -10px;
         }
@@ -1397,13 +1434,23 @@
     }
 
     // ==========================================================================
-    // 1001px〜1200px：PCカーブ型の切り替え直前だけ微調整
+    // 1001px〜1280px：PCカーブ型の切り替え直前だけ微調整
+    //
+    // headingの右端(&__head)とリスト1つ目の項目の左端が、この幅域では
+    // 横方向にも近い位置にくるため、縦の余白(padding-block-start)が
+    // 足りないと実際に重なって見えてしまう。実測したところ、この重なりが
+    // 起きなくなるのは横幅がおよそ1260px以上になってからだったため、
+    // 上限を1200pxから1280pxに広げた(1001px〜1280pxの間で実測して
+    // 重ならないことを確認済み)。
     // ==========================================================================
-    @media (min-width: 1001px) and (max-width: 1200px) {
+    @media (min-width: 1001px) and (max-width: 1280px) {
 
         &__wrapper {
-            // headingと1つ目のアイコンの距離を確保
-            padding-block-start: 180px;
+            // headingと1つ目のアイコンの距離を確保。
+            // 180pxだと実際のheading(&__head)の高さ(最大206px程度)より
+            // 短く、この幅域でheadingと1つ目のアイコン・本文が重なって
+            // いたため、余裕を持たせて220pxに修正。
+            padding-block-start: 220px;
         }
 
         &__list {
@@ -1464,10 +1511,12 @@
 
         // ----------------------------------------------------------------------
         // 1000px以下：右側へ移動
+        // 601px以上は追従DLボタンが画面右端に縦長のボタンとして出るため、
+        // right:-8pxのままだと重なってしまう。ボタン分の余白を確保する。
         // ----------------------------------------------------------------------
         @include mx.nav-collapse {
             top: 140px;
-            right: -8px;
+            right: 90px;
             left: auto;
         }
 

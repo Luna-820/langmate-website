@@ -13,6 +13,14 @@
     margin-block-start: 0;
     background-color: v.$color-cream;
 
+    @include mx.hero-sp {
+        height: 900px;
+    }
+
+    @media (max-width: 600px) {
+        height: 700px;
+    }
+
     // ==========================================================
     // Inner
     // FV内の座標系は最大1440px
@@ -54,6 +62,7 @@
             --hero-pad-top: 200px;
             --hero-pad-bottom: 40px;
             padding-inline: 32px;
+            height: 700px;
         }
 
         // ------------------------------------------------------
@@ -61,7 +70,7 @@
         // ------------------------------------------------------
 
         @include mx.sp {
-            --hero-pad-top: 200px;
+            --hero-pad-top: 180px;
             padding-inline: 24px;
         }
     }
@@ -117,7 +126,7 @@
         // ------------------------------------------------------
 
         @media (max-width: 600px) {
-            top: -100px;
+            top: -120px;
             left: -70px;
 
             width: clamp(230px,
@@ -130,7 +139,7 @@
         // ------------------------------------------------------
 
         @include mx.sp {
-            top: -100px;
+            top: -140px;
             left: -65px;
 
             width: clamp(220px,
@@ -177,8 +186,8 @@
         // ------------------------------------------------------
 
         @include mx.hero-sp {
-            right: clamp(-300px, calc(-143.5px - 20.06vw), -230px);
-            width: clamp(620px, 97vw, 760px);
+            right: -130px;
+            width: 70vw;
         }
 
         // ------------------------------------------------------
@@ -190,8 +199,8 @@
             top: auto;
             bottom: 0;
             transform: none;
-            right: -250px;
-            width: clamp(470px, 95vw, 580px);
+            right: -135px;
+            width: 70vw;
         }
 
         // ------------------------------------------------------
@@ -199,8 +208,8 @@
         // ------------------------------------------------------
 
         @include mx.sp {
-            right: -140px;
-            width: 83vw;
+            right: -120px;
+            width: 80vw;
         }
     }
 
@@ -2007,6 +2016,15 @@
 
     @include mx.sp {
         padding: 20px 22px;
+    }
+
+    // 880px以下はイラスト(&__illust)がカードの右下に重なって表示されるため、
+    // レビュー本文が長い場合にテキストとイラストが被ってしまう。
+    // イラスト分の避け余地として下側の余白だけ広げておく
+    // (mx.spの方が後に効くと20px 22pxで上書きされてしまうため、
+    // padding-block-endだけをこちらで再度指定して勝たせる)。
+    @include mx.voice-collapse {
+        padding-block-end: 90px;
     }
 
     &__illust {

@@ -38,9 +38,7 @@ $langmate_theme_uri = get_template_directory_uri();
             話したい相手ができると、<br class="sp-only">
             英語を使う理由が生まれる。<br>
             英語に自信がなくても、<br class="sp-only">
-            まずは短いメッセージから。<br>
-            楽しみながら、<br class="sp-only">
-            英語で伝える力を伸ばせます。
+            まずは短いメッセージから。
           </p>
 
           <div class="hero__badges">
@@ -498,7 +496,7 @@ $langmate_theme_uri = get_template_directory_uri();
           <div class="sns__content">
             <p class="sns__label">\ follow me! /</p>
             <h2 id="sns-heading">
-              <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/logo-instagram.svg" alt="" aria-hidden="true" width="56" height="56" />
+              <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/logo-instagram.png" alt="" aria-hidden="true" width="56" height="56" />
               <span class="sns__ig-text" data-text="Instagram">Instagram</span>
             </h2>
             <p>英会話フレーズ・国際交流ネタ・ショート動画を日々発信しています！</p>

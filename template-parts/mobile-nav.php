@@ -26,7 +26,7 @@ $theme_uri   = get_template_directory_uri();
   <div class="mobile-nav__sns">
     <!-- <p>公式SNSはこちら<span aria-hidden="true">&#x25BC;</span></p> -->
     <div class="sns__icons"><a href="https://www.instagram.com/langmate_app" target="_blank" rel="noopener"><img
-          src="<?php echo esc_url( $theme_uri ); ?>/design-assets/logo-instagram.svg" alt="Instagram" width="24" height="24" /></a>
+          src="<?php echo esc_url( $theme_uri ); ?>/design-assets/logo-instagram.png" alt="Instagram" width="24" height="24" /></a>
       <a href="https://x.com/LANGMATE_APP" target="_blank" rel="noopener"><img src="<?php echo esc_url( $theme_uri ); ?>/design-assets/logo-x.svg" alt="X" width="24" height="24" /></a>
       <a href="https://www.tiktok.com/@questions_about_japan" target="_blank" rel="noopener"><img src="<?php echo esc_url( $theme_uri ); ?>/design-assets/logo-tiktok.svg" alt="TikTok"
           width="24" height="24" /></a>
