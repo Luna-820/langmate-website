@@ -590,7 +590,7 @@ $langmate_theme_uri = get_template_directory_uri();
                 <span class="faq-preview__a-icon" aria-hidden="true">A</span>
                 <p>Langmate（ラングメイト）は、日本で開発されたアプリです。
                   <br><br>
-                  ※アプリの詳しい機能や特徴については、ダウンロードページをご覧ください。
+                  ※アプリの詳しい機能や特徴については、<a href="<?php echo esc_url( langmate_get_page_url( 'beginners-guide', 'ja' ) ); ?>">こちらのページ</a>をご覧ください。
                   <br>
                   世界へ旅立つ前に、事前に友達を作っちゃおう！
                 </p>

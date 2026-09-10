@@ -39,7 +39,8 @@ $langmate_theme_uri = get_template_directory_uri();
             Find Japanese people you’ll actually click with. <br>
             Check out their profiles, <br class="sp-only">
             interests, and age,<br>
-            and connect with people who share your hobbies and<br>
+            and connect with people <br class="sp-only">
+            who share your hobbies and<br>
             what you’re looking for.
           </p>
 
@@ -619,7 +620,7 @@ $langmate_theme_uri = get_template_directory_uri();
                 <span class="faq-preview__a-icon" aria-hidden="true">A</span>
                 <p>Langmate is an app developed in Japan.
                   <br><br>
-                  For more information about the app's features and functions, please visit our download page.
+                  For more information about the app's features and functions, please visit <a href="<?php echo esc_url( langmate_get_page_url( 'beginners-guide', 'en' ) ); ?>">this page</a>.
                   <br>
                   Make friends before you travel the world!
                 </p>

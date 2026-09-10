@@ -17,6 +17,7 @@
 //    mobile-nav/language-switcherは、使用箇所に応じてheader.scssまたは
 //    各ページのscssに統合済み。breadcrumbは中身が空だったため削除)
 @use "scss/pages/top";
+@use "scss/pages/download";
 @use "scss/pages/company";
 @use "scss/pages/beginners-guide";
 @use "scss/pages/how-can-we-help";

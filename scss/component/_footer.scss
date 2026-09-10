@@ -131,6 +131,7 @@
             }
         }
 
+        // 430px以下も780px以下の中央揃え2カラムデザインを継続する
         @include mx.hero-sp {
             ul {
                 justify-content: center;
@@ -138,25 +139,9 @@
         }
 
         @include mx.sp {
-            width: 100%;
-
             ul {
-                grid-template-columns: max-content max-content;
                 column-gap: 32px;
-                text-align: left;
             }
-        }
-    }
-
-
-    // ==========================================================
-    // Home
-    // ==========================================================
-
-    &__nav-home {
-        @include mx.sp {
-            grid-column: 1 / -1;
-            text-align: left;
         }
     }
 

@@ -29,7 +29,13 @@
 
     &__logo img {
         height: clamp(32px, calc(29.87px + 2.357vw), 54px);
-        width: 250px;
+        // ナビ項目が増えて折り返す問題対策: 1001px→130px / 1440px→200px を線形補間
+        width: clamp(130px, calc(-29.61px + 15.945vw), 200px);
+
+        // グロナビ非表示域(1000px以下)は縮める必要がないので200pxに据え置き
+        @include mx.nav-collapse {
+            width: 200px;
+        }
 
         @include mx.sp {
             width: auto;
