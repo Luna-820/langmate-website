@@ -55,12 +55,16 @@ $langmate_sns_label      = ( 'en' === $langmate_lang ) ? 'Follow Us on Social Me
       <div class="site-footer__sns">
         <!-- <p><?php echo esc_html( $langmate_sns_label ); ?></p> -->
         <div>
-          <a href="https://www.instagram.com/langmate_app" target="_blank" rel="noopener"><img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/logo-instagram.svg" alt="Instagram"
+          <a href="https://www.instagram.com/langmate_app" target="_blank" rel="noopener"><img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/logo-instagram.png" alt="Instagram"
               width="24" height="24" /></a>
           <a href="https://x.com/LANGMATE_APP" target="_blank" rel="noopener"><img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/logo-x.svg" alt="X" width="24" height="24" /></a>
           <a href="https://www.tiktok.com/@questions_about_japan" target="_blank" rel="noopener"><img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/logo-tiktok.svg" alt="TikTok"
               width="24" height="24" /></a>
         </div>
+        <a class="site-footer__blog" href="https://langmate.net/" target="_blank" rel="noopener">
+          <span class="site-footer__blog-title">Langmate English Club</span>
+          <span class="site-footer__blog-sub">\ <?php echo ( 'en' === $langmate_lang ) ? 'English Learning Blog' : '英語学習ブログ'; ?> /</span>
+        </a>
       </div>
     </div>
     <nav class="site-footer__legal" aria-label="法的情報">

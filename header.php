@@ -53,7 +53,7 @@ if ( is_singular( 'faq' ) ) {
         <div class="language-switcher" data-language-switcher>
           <button class="language-switcher__trigger" type="button" aria-haspopup="listbox" aria-expanded="false"
             aria-controls="language-switcher-list">
-            <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/flag-<?php echo ( 'en' === $langmate_lang ) ? 'us' : 'jp'; ?>.svg" alt="" width="24" height="24" />
+            <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/<?php echo ( 'en' === $langmate_lang ) ? 'icon-globe.svg' : 'flag-jp.svg'; ?>" alt="" width="24" height="24" />
             <span class="visually-hidden"><?php echo ( 'en' === $langmate_lang ) ? 'Language' : '言語を選択'; ?></span>
             <span class="language-switcher__caret" aria-hidden="true"></span>
           </button>
@@ -65,7 +65,7 @@ if ( is_singular( 'faq' ) ) {
             </li>
             <li role="option" data-lang="en" aria-selected="<?php echo ( 'en' === $langmate_lang ) ? 'true' : 'false'; ?>">
               <a href="<?php echo esc_url( langmate_get_translation_url( 'en' ) ); ?>">
-                <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/flag-us.svg" alt="" width="20" height="20" />English
+                <img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/icon-globe.svg" alt="" width="20" height="20" />English
               </a>
             </li>
           </ul>

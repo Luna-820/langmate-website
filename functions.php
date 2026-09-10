@@ -52,6 +52,11 @@ function langmate_get_nav_items() {
 			'label_en' => 'Home',
 		),
 		array(
+			'key'      => 'download',
+			'label_ja' => 'ダウンロード',
+			'label_en' => 'Download',
+		),
+		array(
 			'key'      => 'beginners-guide',
 			'label_ja' => '初めての方へ',
 			'label_en' => 'Getting Started',

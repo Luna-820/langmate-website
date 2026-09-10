@@ -5,19 +5,30 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>マッチする方法｜よくある質問｜Langmate（ラングメイト）</title>
-  <meta name="description" content="Langmate（ラングメイト）のよくある質問（FAQ）詳細ページです。" />
+  <title>ダウンロード｜Langmate（ラングメイト）</title>
+  <meta name="description" content="Langmate（ラングメイト）はApp Store・Google Playから無料でダウンロードできます。QRコードまたはストアバッジからどうぞ。" />
 
   <!-- Canonical -->
-  <link rel="canonical" href="https://www.langmate.jp/ja/support/" />
+  <link rel="canonical" href="https://www.langmate.jp/ja/download/" />
+
+  <!-- 日英の相互参照。検索エンジンに言語違いの同一ページであることを伝える -->
+  <link rel="alternate" hreflang="ja" href="https://www.langmate.jp/ja/download/" />
+  <link rel="alternate" hreflang="en" href="https://www.langmate.jp/download/" />
+  <link rel="alternate" hreflang="x-default" href="https://www.langmate.jp/download/" />
 
   <!-- OGP -->
   <meta property="og:site_name" content="Langmate" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="マッチする方法｜よくある質問｜Langmate（ラングメイト）" />
-  <meta property="og:description" content="Langmate（ラングメイト）のよくある質問（FAQ）詳細ページです。" />
-  <meta property="og:url" content="https://www.langmate.jp/ja/support/" />
+  <meta property="og:title" content="ダウンロード｜Langmate（ラングメイト）" />
+  <meta property="og:description" content="Langmate（ラングメイト）はApp Store・Google Playから無料でダウンロードできます。" />
+  <meta property="og:url" content="https://www.langmate.jp/ja/download/" />
   <meta property="og:locale" content="ja_JP" />
+  <!-- TODO: og:image 用のOGP画像(1200x630)を用意して追加する -->
+
+  <!-- X(Twitter)カード -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ダウンロード｜Langmate（ラングメイト）" />
+  <meta name="twitter:description" content="Langmate（ラングメイト）はApp Store・Google Playから無料でダウンロードできます。" />
 
   <!-- Favicon（暫定。後日ちゃんとしたfavicon一式に差し替え予定） -->
   <link rel="icon" type="image/svg+xml" href="/design-assets/logo-langmate.svg" />
@@ -43,8 +54,9 @@
       <nav class="global-nav" aria-label="グローバルナビゲーション">
         <ul class="global-nav__list">
           <li><a href="/ja/">ホーム</a></li>
+          <li><a href="/ja/download/" aria-current="page">ダウンロード</a></li>
           <li><a href="/ja/beginners-guide/">初めての方へ</a></li>
-          <li><a href="/ja/how-can-we-help/" aria-current="page">よくある質問</a></li>
+          <li><a href="/ja/how-can-we-help/">よくある質問</a></li>
           <li><a href="/ja/company/">会社概要</a></li>
           <li><a href="/ja/contact/">お問い合わせ</a></li>
         </ul>
@@ -83,6 +95,7 @@
     <nav aria-label="モバイルナビゲーション">
       <ul class="mobile-nav__list">
         <li><a href="/ja/">ホーム</a></li>
+        <li><a href="/ja/download/">ダウンロード</a></li>
         <li><a href="/ja/beginners-guide/">初めての方へ</a></li>
         <li><a href="/ja/how-can-we-help/">よくある質問</a></li>
         <li><a href="/ja/company/">会社概要</a></li>
@@ -117,123 +130,69 @@
   </div>
 
   <main id="main">
-    <!-- ===== Hero（faq-archive.htmlと共通） ===== -->
-    <section class="sub-hero faq-hero">
+    <!-- ===== Hero ===== -->
+    <section class="sub-hero download-hero">
       <picture>
         <source srcset="/design-assets/bg-page-sp.svg" media="(max-width: 430px)">
         <source srcset="/design-assets/bg-page-wide.svg" media="(min-width: 1441px)">
-        <img class="sub-hero__map faq-hero__map" src="/design-assets/bg-page.svg" alt="" aria-hidden="true" width="1280"
-          height="500" />
+        <img class="sub-hero__map download-hero__map" src="/design-assets/bg-page.svg" alt="" aria-hidden="true"
+          width="1280" height="500" />
       </picture>
-      <div class="wrapper sub-hero__inner faq-hero__inner">
-        <svg class="sub-hero__eyebrow faq-hero__eyebrow" viewBox="0 0 220 70" role="img" aria-label="FAQ">
-          <path id="faq-hero-eyebrow-arc" d="M12,55 A220.3,220.3 0 0,1 208,55" fill="none" />
+      <div class="wrapper sub-hero__inner download-hero__inner">
+        <svg class="sub-hero__eyebrow download-hero__eyebrow" viewBox="0 0 220 70" role="img" aria-label="DOWNLOAD">
+          <path id="download-hero-eyebrow-arc" d="M12,55 A220.3,220.3 0 0,1 208,55" fill="none" />
           <text text-anchor="middle">
-            <textPath href="#faq-hero-eyebrow-arc" startOffset="50%">FAQ</textPath>
+            <textPath href="#download-hero-eyebrow-arc" startOffset="50%">DOWNLOAD</textPath>
           </text>
         </svg>
-        <h1 class="sub-hero__heading faq-hero__heading">よくある質問</h1>
-
-        <!-- Breadcrumb -->
-        <nav class="breadcrumb faq-hero__breadcrumb aria-label=" パンくずリスト>
+        <h1 class="sub-hero__heading download-hero__heading">ダウンロード</h1>
+        <nav class="breadcrumb download-hero__breadcrumb" aria-label="パンくずリスト">
           <ol class="breadcrumb__list">
-
             <li class="breadcrumb__item">
               <a href="/ja/">HOME</a>
             </li>
-
-            <li class="breadcrumb__item">
-              <a href="/ja/how-can-we-help/">よくある質問</a>
-            </li>
-
             <li class="breadcrumb__item" aria-current="page">
-              Cardsとは?
+              ダウンロード
             </li>
           </ol>
         </nav>
       </div>
     </section>
 
-    <!-- ===== Search / Categories（faq-archive.htmlと共通） ===== -->
-    <section class="faq-search-section">
-      <div class="wrapper">
-        <form class="faq-search" action="/ja/how-can-we-help/" method="get">
-          <input class="faq-search__input" type="search" name="q" placeholder="キーワード入力" />
-          <button class="faq-search__submit" type="submit">検索</button>
-        </form>
+    <!-- ===== Download ===== -->
+    <section class="download">
+      <div class="wrapper download__inner">
+        <img class="download__mockup" src="/design-assets/img-download.webp"
+          alt="Langmateアプリのスマホ画面。累計400万ダウンロード突破、ダウンロードは無料。" width="613" height="944" />
 
-        <nav class="faq-categories" aria-label="FAQカテゴリー">
-          <a class="faq-categories__item" href="/ja/how-can-we-help/">
-            <span class="faq-categories__arrow" aria-hidden="true">▶︎</span>よくある質問
-          </a>
-          <a class="faq-categories__item faq-categories__item--active" href="/ja/how-can-we-help/">
-            <span class="faq-categories__arrow" aria-hidden="true">▶︎</span>使い方
-          </a>
-          <a class="faq-categories__item" href="/ja/how-can-we-help/">
-            <span class="faq-categories__arrow" aria-hidden="true">▶︎</span>Langmateについて
-          </a>
-          <a class="faq-categories__item" href="/ja/how-can-we-help/">
-            <span class="faq-categories__arrow" aria-hidden="true">▶︎</span>トラブルシューティング
-          </a>
-          <a class="faq-categories__item" href="/ja/how-can-we-help/">
-            <span class="faq-categories__arrow" aria-hidden="true">▶︎</span>請求と支払い
-          </a>
-          <a class="faq-categories__item" href="/ja/how-can-we-help/">
-            <span class="faq-categories__arrow" aria-hidden="true">▶︎</span>セキュリティ
-          </a>
-        </nav>
-      </div>
-    </section>
-
-    <!-- ===== FAQ詳細 =====
-         1つの.faq-detail__blockが1件のFAQ投稿に対応する想定（WordPress化後）。
-         入れ子の.faq-detail__subは、投稿本文中の見出し+本文のセットとして
-         ACFのフレキシブルコンテンツ（繰り返し可能なブロック）に対応しやすい構造にしている。 -->
-    <section class="faq-detail-section">
-      <div class="wrapper">
-        <div class="faq-detail">
-          <h1 class="faq-detail__title">FAQ　Title</h1>
-
-          <nav class="faq-detail__breadcrumb" aria-label="パンくずリスト">
-            <ol>
-              <li><a href="/ja/how-can-we-help/">FAQ</a></li>
-              <li><a href="/ja/how-can-we-help/">使い方</a></li>
-              <li><a href="/ja/how-can-we-help/">機能について</a></li>
-              <li aria-current="page">マッチする方法</li>
-            </ol>
-          </nav>
-
-          <hr class="faq-detail__divider" />
-
-          <article class="faq-detail__block">
-            <h2>ユーザー同士がフレンドリクエストを送り合いマッチしましょう</h2>
-            <p>
-              ユーザー同士がお互いにフレンドリクエストをするとマッチします。Card表示時に［アイコン］をタップもしくは右にスワイプすると、そのユーザーにフレンドリクエストが送信されます。相手のユーザーも同様に［アイコン］をタップもしくは右にスワイプするとマッチ成立です。ポップアップが表示されるので、すぐにMessagesを始めることができます。
-            </p>
-          </article>
-
-          <article class="faq-detail__block">
-            <h2>新しいマッチリストからメッセージを送る方法</h2>
-            <p>下部ボタン、Messageをタップ。画面上部に、フレンドリクエストが表示されます。チャットしたいユーザーの写真をタップします。チャットウィンドウが開きます。下部のテキストバーを使用してメッセージを送信できます。
-            </p>
-          </article>
-
-          <article class="faq-detail__block">
-            <h2>どうやったらもっとマッチできるか？</h2>
-            <p>プロフィール画面を充実するとマッチ利率が上がります。</p>
-
-            <div class="faq-detail__sub">
-              <h3>良い写真をアップロードしましょう</h3>
-              <p>
-                ユーザー同士がお互いにフレンドリクエストをするとマッチします。Card表示時に［アイコン］をタップもしくは右にスワイプすると、そのユーザーにフレンドリクエストが送信されます。相手のユーザーも同様に［アイコン］をタップもしくは右にスワイプするとマッチ成立です。ポップアップが表示されるので、すぐにMessagesを始めることができます。
-              </p>
+        <div class="download__stores">
+          <!-- iPhone -->
+          <div class="download__store">
+            <span class="download__store-label">iPhone</span>
+            <span class="download__store-lead">ダウンロードはこちら</span>
+            <span class="download__store-arrow" aria-hidden="true"></span>
+            <div class="download__store-card">
+              <a class="btn btn--store" href="https://apps.apple.com/jp/app/langmate-%E8%8B%B1%E4%BC%9A%E8%A9%B1%E3%81%A8%E5%A4%96%E5%9B%BD%E4%BA%BA%E3%81%AE%E5%8F%8B%E9%81%94%E4%BD%9C%E3%82%8A/id1093968775" target="_blank" rel="noopener">
+                <img src="/design-assets/badge-appstore-ja.svg" alt="App Storeからダウンロード" width="160" height="48" />
+              </a>
+              <img class="download__store-qr" src="/design-assets/qr-appstore.png"
+                alt="App Storeのダウンロードページを開くQRコード" width="240" height="240" />
             </div>
+          </div>
 
-            <div class="faq-detail__sub">
-              <h3>Boostしてアピールする</h3>
-              <p>Boostは他のユーザーへアピールする優れた機能です。Boost時は他のユーザーよりも表示回数が増えマッチ率も上がります。</p>
+          <!-- Android -->
+          <div class="download__store">
+            <span class="download__store-label">Android</span>
+            <span class="download__store-lead">ダウンロードはこちら</span>
+            <span class="download__store-arrow" aria-hidden="true"></span>
+            <div class="download__store-card">
+              <a class="btn btn--store" href="https://play.google.com/store/apps/details?id=co.thoron.langmate" target="_blank" rel="noopener">
+                <img src="/design-assets/badge-googleplay-ja.svg" alt="Google Playで手に入れよう" width="160" height="48" />
+              </a>
+              <img class="download__store-qr" src="/design-assets/qr-googleplay.png"
+                alt="Google Playのダウンロードページを開くQRコード" width="240" height="240" />
             </div>
-          </article>
+          </div>
         </div>
       </div>
     </section>
@@ -255,6 +214,7 @@
       <nav class="site-footer__nav" aria-label="フッターナビゲーション">
         <ul>
           <li class="site-footer__nav-home"><a href="/ja/">ホーム</a></li>
+          <li><a href="/ja/download/">ダウンロード</a></li>
           <li><a href="/ja/beginners-guide/">初めての方へ</a></li>
           <li><a href="/ja/company/">会社概要</a></li>
           <li><a href="/ja/how-can-we-help/">よくある質問</a></li>
@@ -265,11 +225,11 @@
       <div class="site-footer__sns">
         <p>公式SNSはこちら</p>
         <div>
-          <a href="https://www.instagram.com/langmate_app" target="_blank" rel="noopener"><img src="/design-assets/logo-instagram.png" alt="Instagram"
-              width="24" height="24" /></a>
-          <a href="https://x.com/LANGMATE_APP" target="_blank" rel="noopener"><img src="/design-assets/logo-x.svg" alt="X" width="24" height="24" /></a>
-          <a href="https://www.tiktok.com/@questions_about_japan" target="_blank" rel="noopener"><img src="/design-assets/logo-tiktok.svg" alt="TikTok"
-              width="24" height="24" /></a>
+          <a href="https://www.instagram.com/langmate_app" target="_blank" rel="noopener"><img src="/design-assets/logo-instagram.png"
+              alt="Instagram"></a>
+          <a href="https://x.com/LANGMATE_APP" target="_blank" rel="noopener"><img src="/design-assets/logo-x.svg" alt="X"></a>
+          <a href="https://www.tiktok.com/@questions_about_japan" target="_blank" rel="noopener"><img src="/design-assets/logo-tiktok.svg"
+              alt="TikTok"></a>
         </div>
       </div>
     </div>

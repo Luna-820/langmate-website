@@ -1,0 +1,194 @@
+@use '../base/mixin' as mx;
+@use '../base/base' as v;
+
+// ==========================================================================
+// Download page（ダウンロード / download.html）
+// ==========================================================================
+
+// ---- Hero ----
+// このページだけ、eyebrow(DOWNLOAD)を他ページの青ではなくピンクにする。
+.download-hero {
+    &__eyebrow text {
+        fill: v.$color-pink;
+    }
+
+    &__breadcrumb {
+        align-self: stretch;
+        width: 100%;
+        padding-inline-start: 24px;
+        padding-top: 50px;
+        text-align: left;
+
+        .breadcrumb__list {
+            justify-content: flex-start;
+        }
+
+        @include mx.hero-sp {
+            margin-block-start: 24px;
+            padding-inline-start: 16px;
+        }
+
+        @include mx.sp {
+            margin-block-start: 20px;
+            padding-inline-start: 8px;
+        }
+    }
+}
+
+
+// ---- Main ----
+.download {
+    background-color: v.$color-cream;
+    padding-block: clamp(40px, calc(4px + 4.5vw), 80px) clamp(64px, calc(24px + 5vw), 110px);
+
+    &__inner {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: clamp(24px, 4vw, 72px);
+
+        // 780px以下: 画像を上、その下にストア2カラム
+        @include mx.hero-sp {
+            flex-direction: column;
+            gap: 36px;
+        }
+    }
+
+    // ==========================================================
+    // スマホモックアップ画像
+    // 「DL無料」バッジ・「400万DL突破！」・アプリアイコンは画像に
+    // 焼き込み済みなので、ここでは画像を置くだけ。
+    // ==========================================================
+    &__mockup {
+        display: block;
+        flex-shrink: 0;
+        width: clamp(240px, 27vw, 360px);
+        height: auto;
+        aspect-ratio: 613 / 944;
+
+        // 780px以下は画像を上、その下にストア2カラムが縦に並ぶ。
+        // この画像は左上に「DL無料」バッジがはみ出しているぶん、
+        // 画像の中央とスマホ本体の中央が約13.7%(84 / 613px)ズレている。
+        // 画像を左へその分ずらして、スマホ本体の中央が下のバッジ2つの
+        // 中央と揃うようにする。
+        @include mx.hero-sp {
+            width: clamp(220px, 58vw, 320px);
+            transform: translateX(-13.7%);
+        }
+    }
+
+    // ==========================================================
+    // iPhone / Android の2カラム
+    // ==========================================================
+    &__stores {
+        display: flex;
+        gap: clamp(20px, 3vw, 48px);
+
+        @include mx.sp {
+            gap: 14px;
+        }
+    }
+
+    &__store {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 6px;
+    }
+
+    // 黄色マーカー風のラベル（iPhone / Android）
+    &__store-label {
+        display: inline-block;
+        padding: 2px 20px;
+        background-color: v.$color-yellow;
+
+        font-family: v.$font-en;
+        font-weight: v.$fw-bold;
+        font-size: clamp(2rem, calc(13px + 1.1vw), 2.8rem);
+        letter-spacing: 0.02em;
+        line-height: 1.5;
+
+        @include mx.sp {
+            padding-inline: 12px;
+            font-size: clamp(1.7rem, 5.4vw, 2rem);
+        }
+    }
+
+    &__store-lead {
+        font-size: clamp(1.3rem, calc(11.5px + 0.25vw), 1.5rem);
+        font-weight: v.$fw-medium;
+
+        @include mx.sp {
+            font-size: 1.2rem;
+        }
+    }
+
+    // 下向き三角
+    &__store-arrow {
+        display: block;
+        width: 0;
+        height: 0;
+        margin: 0 auto 10px;
+
+        // 横幅32px x 高さ16px
+        border-inline: 16px solid transparent;
+        border-top: 16px solid #D9D9D9;
+
+        @include mx.sp {
+            margin-block-end: 6px;
+        }
+    }
+
+    // 白い角丸カード（PC時。SPでは背景・枠なしでバッジのみ）
+    &__store-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: clamp(16px, 2vw, 24px);
+
+        padding: clamp(20px, 2.2vw, 32px);
+        background-color: v.$color-white;
+        border: 1px solid v.$color-gray-light;
+        border-radius: v.$radius-card;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+
+        @include mx.hero-sp {
+            padding: 0;
+            background: none;
+            border: none;
+            box-shadow: none;
+        }
+    }
+
+    .btn--store {
+        display: block;
+        width: auto;
+        height: auto;
+
+        // App Store / Google Play でSVGのアスペクト比が違うため、高さ基準で揃える
+        img {
+            display: block;
+            width: auto;
+            height: clamp(40px, 4.2vw, 52px);
+        }
+
+        @include mx.hero-sp {
+            img {
+                height: clamp(38px, 11vw, 46px);
+            }
+        }
+    }
+
+    // QRコード（PC/タブレット時のみ表示。SPは非表示）
+    &__store-qr {
+        display: block;
+        width: clamp(150px, 15vw, 180px);
+        height: auto;
+        aspect-ratio: 1 / 1;
+
+        @include mx.hero-sp {
+            display: none;
+        }
+    }
+}

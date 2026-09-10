@@ -550,7 +550,7 @@ $theme_uri = get_template_directory_uri();
                 <span class="faq-preview__a-icon" aria-hidden="true">A</span>
                 <p>Langmate is an app developed in Japan.
                   <br><br>
-                  For more information about the app’s features and functions, please visit our download page.
+                  For more information about the app’s features and functions, please refer to this page.
                   <br>
                   Make friends before you travel the world!
                 </p>
