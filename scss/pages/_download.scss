@@ -12,6 +12,16 @@
         fill: v.$color-pink;
     }
 
+    // ENのh1「Download the Langmate App」を780px以下で
+    // 「Download」/「the Langmate App」の2行に折り返す(JAには<br>自体が無い)
+    &__heading-br {
+        display: none;
+
+        @include mx.hero-sp {
+            display: inline;
+        }
+    }
+
     &__breadcrumb {
         align-self: stretch;
         width: 100%;

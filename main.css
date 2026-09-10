@@ -3235,6 +3235,14 @@ img {
 .download-hero__eyebrow text {
   fill: #FF3C71;
 }
+.download-hero__heading-br {
+  display: none;
+}
+@media (max-width: 780px) {
+  .download-hero__heading-br {
+    display: inline;
+  }
+}
 .download-hero__breadcrumb {
   align-self: stretch;
   width: 100%;
