@@ -271,6 +271,10 @@
     color: v.$color-white;
     padding-block: clamp(70px, calc(31.04px + 6.734vw), 100px);
 
+    // hero内の内部リンク(#reason)でジャンプした時、固定ヘッダーに見出しが
+    // 隠れないよう着地位置をヘッダー高さ分＋余白ずらす(header-offset.js)
+    scroll-margin-top: calc(var(--header-offset, 90px) + 16px);
+
     // ==========================================================================
     // INNER
     // 1440px以内をこのセクション全体の座標基準にする
@@ -863,6 +867,10 @@
     padding-block: clamp(60px,
             calc(31.04px + 6.734vw),
             100px);
+
+    // 内部リンク(#get-started)でジャンプした時に見出しが固定ヘッダーに
+    // 隠れないよう着地位置をずらす(header-offset.js)
+    scroll-margin-top: calc(var(--header-offset, 90px) + 16px);
 
 
     // ==========================================================================
@@ -1475,6 +1483,10 @@
 
     background-color: v.$color-blue;
     color: v.$color-white;
+
+    // 内部リンク(#safety)でジャンプした時に見出しが固定ヘッダーに
+    // 隠れないよう着地位置をずらす(header-offset.js)
+    scroll-margin-top: calc(var(--header-offset, 90px) + 16px);
 
     padding-block:
         clamp(60px, calc(31.04px + 6.734vw), 100px) clamp(60px, calc(16.57px + 10.1vw), 120px);

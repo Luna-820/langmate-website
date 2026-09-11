@@ -4177,6 +4177,7 @@ img {
   background-color: #FF3C83;
   color: #FFFFFF;
   padding-block: clamp(70px, 31.04px + 6.734vw, 100px);
+  scroll-margin-top: calc(var(--header-offset, 90px) + 16px);
 }
 .gs-reason__inner {
   position: relative;
@@ -4607,6 +4608,7 @@ img {
   overflow: hidden;
   background-color: #FFE940;
   padding-block: clamp(60px, 31.04px + 6.734vw, 100px);
+  scroll-margin-top: calc(var(--header-offset, 90px) + 16px);
 }
 .gs-started__inner {
   position: relative;
@@ -4991,6 +4993,7 @@ img {
   overflow: hidden;
   background-color: #0083F8;
   color: #FFFFFF;
+  scroll-margin-top: calc(var(--header-offset, 90px) + 16px);
   padding-block: clamp(60px, 31.04px + 6.734vw, 100px) clamp(60px, 16.57px + 10.1vw, 120px);
 }
 .gs-safety__inner {

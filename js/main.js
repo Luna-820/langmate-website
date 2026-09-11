@@ -1,4 +1,5 @@
 import { initViewportHeight } from './viewport-height.js';
+import { initHeaderOffset } from './header-offset.js';
 import { initMobileNav } from './mobile-nav.js';
 import { initLanguageSwitcher } from './language-switcher.js';
 import {
@@ -15,6 +16,7 @@ import { initCf7Redirect } from './cf7-redirect.js';
 import { initDropzone } from './dropzone.js';
 
 initViewportHeight();
+initHeaderOffset();
 initMobileNav();
 initLanguageSwitcher();
 initFloatingDl();
