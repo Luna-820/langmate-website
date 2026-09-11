@@ -73,6 +73,42 @@ export function initFloatingDl() {
   }
 
   // ==========================================================
+  // ダウンロードページ限定：ストアバッジ(.download__stores)が画面内に
+  // 入ったら追従ボタンを隠す（役割が被ってしつこくなるため）。
+  // このセクションは当該ページにしか存在しないため、他ページには影響しない
+  //
+  // - threshold 0.5：高さのある端末だと読込直後からバッジの上端が数十px
+  //   だけ画面に入ってしまう(端だけ見えてる状態)ので、0だと即座に隠れて
+  //   ボタンが一瞬も表示されない。半分以上見えてから隠す
+  // - 一度でも見えたらそのまま隠す(badgesSeen)：バッジを通過してフッター
+  //   側までスクロールしても再表示はしない
+  // ==========================================================
+
+  const storeBadges = document.querySelector('.download__stores');
+
+  if (storeBadges) {
+    // 601px以上はストアバッジが常に本文内に見えているため、追従ボタン自体を
+    // 非表示にする(CSS側の `@include mx.nav-collapse` 範囲外＝601px以上で判定)
+    el.classList.add('is-download-page');
+
+    let badgesSeen = false;
+
+    const storeObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            badgesSeen = true;
+          }
+          el.classList.toggle('is-near-store-badges', badgesSeen);
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    storeObserver.observe(storeBadges);
+  }
+
+  // ==========================================================
   // Open / Close
   // ==========================================================
 

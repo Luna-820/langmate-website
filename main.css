@@ -735,6 +735,11 @@ img {
   z-index: 100;
   transform: translateY(-50%);
 }
+@media (min-width: 601px) {
+  .floating-dl.is-download-page {
+    display: none;
+  }
+}
 .floating-dl__box {
   display: flex;
   align-items: stretch;
@@ -868,6 +873,11 @@ img {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
+  }
+  .floating-dl.is-near-store-badges {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
   }
   .floating-dl__box {
     position: relative;
