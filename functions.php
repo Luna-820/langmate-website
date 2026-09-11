@@ -335,6 +335,15 @@ function langmate_head_meta() {
 			'alternateName' => $org['alternateName'],
 			'url'          => $permalink,
 			'foundingDate' => '2017-07-28',
+			// 公式SNSアカウントを明示すると、Googleナレッジパネル等でこの会社と
+			// 同一のエンティティだと認識されやすくなる。フッターのSNSリンク
+			// (footer.php)と同じURLを直接指定している(AIOSEOの「Social Networks」
+			// 設定はフッターの表示には使われていないため、そちらとは連動しない)。
+			'sameAs'       => array(
+				'https://www.instagram.com/langmate_app',
+				'https://x.com/LANGMATE_APP',
+				'https://www.tiktok.com/@questions_about_japan',
+			),
 			'address'      => array(
 				'@type'           => 'PostalAddress',
 				'postalCode'      => '105-0003',
@@ -354,6 +363,65 @@ function langmate_head_meta() {
 
 		printf( '<script type="application/ld+json">%s</script>' . "\n", wp_json_encode( $organization_schema ) );
 		printf( '<script type="application/ld+json">%s</script>' . "\n", wp_json_encode( $website_schema ) );
+	}
+
+	// 構造化データ（FAQ単体ページ）: FAQPageスキーマ
+	//
+	// AIOSEO(無料版)はスキーマタイプの変更がPRO限定機能で、FAQ Page/Questionへの
+	// 変更ができないため、テーマ側でJSON-LDを直接出力する。
+	// 「投稿タイトル＝質問」「本文全体＝回答」の1問1答として出力する
+	// (本文中のH3/H4を個別のQuestionとして扱わないのは、「iOS」「Android」の
+	// ようにH3を単なる手順の見出しとして使っているFAQもあり、それらまで
+	// 質問として構造化すると誤ったスキーマになってしまうため)。
+	if ( $is_faq ) {
+		$faq_id      = get_queried_object_id();
+		$raw_content = get_post_field( 'post_content', $faq_id );
+		$answer_html = apply_filters( 'the_content', $raw_content );
+		$answer_text = trim( preg_replace( '/\s+/u', ' ', wp_strip_all_tags( $answer_html ) ) );
+
+		if ( '' !== $answer_text ) {
+			$faq_schema = array(
+				'@context'   => 'https://schema.org',
+				'@type'      => 'FAQPage',
+				'mainEntity' => array(
+					array(
+						'@type'          => 'Question',
+						'name'           => get_the_title( $faq_id ),
+						'acceptedAnswer' => array(
+							'@type' => 'Answer',
+							'text'  => $answer_text,
+						),
+					),
+				),
+			);
+
+			printf( '<script type="application/ld+json">%s</script>' . "\n", wp_json_encode( $faq_schema ) );
+		}
+	}
+
+	// 構造化データ（ダウンロードページのみ）: SoftwareApplicationスキーマ
+	//
+	// FAQPageと同じ理由(AIOSEO無料版はスキーマタイプ変更がPRO限定)で、
+	// アプリの基本情報をテーマ側から直接出力する。実データが無い項目
+	// (ユーザー評価等)は不正確な値を出さないよう含めない。
+	$is_download = is_page() && 'download' === get_post_meta( get_queried_object_id(), 'translation_key', true );
+
+	if ( $is_download ) {
+		$app_schema = array(
+			'@context'            => 'https://schema.org',
+			'@type'               => 'SoftwareApplication',
+			'name'                => 'Langmate',
+			'operatingSystem'     => 'iOS, Android',
+			'applicationCategory' => 'SocialNetworkingApplication',
+			'url'                 => $permalink,
+			'offers'              => array(
+				'@type'         => 'Offer',
+				'price'         => '0',
+				'priceCurrency' => 'JPY',
+			),
+		);
+
+		printf( '<script type="application/ld+json">%s</script>' . "\n", wp_json_encode( $app_schema ) );
 	}
 }
 add_action( 'wp_head', 'langmate_head_meta', 1 );

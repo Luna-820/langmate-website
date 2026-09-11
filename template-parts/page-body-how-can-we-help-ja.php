@@ -21,6 +21,19 @@ $is_search    = ( '' !== $search_query );
 $parents       = langmate_get_faq_parent_categories();
 $preview_limit = 5;
 
+// 「よくある質問」ボタンの表示名(設定 > FAQ表示設定)と同じ名前の
+// FAQカテゴリーが存在すると、featured枠(下記)とこのカテゴリーの
+// グループが同じタイトル「よくある質問」で並んで表示され、同じ質問が
+// 二重に出ているように見えてしまう。そのカテゴリーだけはここで除外する
+// (カテゴリー自体やFAQへの分類は残したまま、このグループ表示だけ省く)。
+$faq_all_label = langmate_get_faq_all_label( $lang );
+$parents       = array_filter(
+	$parents,
+	function ( $parent ) use ( $faq_all_label, $lang ) {
+		return langmate_get_faq_category_label( $parent, $lang ) !== $faq_all_label;
+	}
+);
+
 $hero_breadcrumb = array(
 	array(
 		'label' => 'HOME',
