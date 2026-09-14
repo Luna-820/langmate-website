@@ -214,6 +214,13 @@ img {
 // ==========================================================================
 .breadcrumb {
     width: 100%;
+    // 上下の基本余白はここで一括管理する。各ページ側の〇〇-hero__breadcrumbは
+    // 左右の位置揃え(text-align/padding-inline-start等)だけを担当し、
+    // 上下の余白はここを基準にページごとの微調整だけに留める
+    // (以前は各ページが独自にpadding-top/margin-block-startを持っていて
+    // 数値がバラバラ(50px〜80px)な上、直前の見出しのmargin-block-endと
+    // 単純に足し算されて余白が広くなりすぎていた)。
+    margin-block: 24px;
 
     &__list {
         display: flex;

@@ -267,12 +267,40 @@ function langmate_head_meta() {
 
 	// hreflang
 	if ( $is_faq ) {
-		// FAQはPageのようなtranslation_keyでの対訳ペア機構を持たない(投稿ごとに
-		// faq_langで単一言語のみ)。存在しない対訳URLを出さないよう、
-		// 自分の言語は自己参照のみ、x-defaultはEnglishのサイトルートに固定する
-		// (このFAQ自体が英語ならx-default=自分自身と同じURLになる)。
-		printf( '<link rel="alternate" hreflang="%s" href="%s" />' . "\n", esc_attr( $lang ), esc_url( $permalink ) );
-		printf( '<link rel="alternate" hreflang="x-default" href="%s" />' . "\n", esc_url( 'en' === $lang ? $permalink : home_url( '/' ) ) );
+		// FAQはPageのようなtranslation_keyでの対訳ペア機構を持たないため、
+		// 「日本語版・英語版でスラッグ(post_name)を揃える」運用ルール
+		// (仕様書④手順13で必須化)を前提に、同じスラッグを持つ他言語のFAQ投稿を
+		// 探して対訳として紐づける。見つからない場合(まだ片方の言語しか
+		// 書かれていない等)は、存在しないURLへ誤ったhreflangを出さないよう
+		// 自分の言語のみ自己参照する。
+		$faq_slug      = get_post_field( 'post_name', get_queried_object_id() );
+		$faq_other_lang = ( 'ja' === $lang ) ? 'en' : 'ja';
+		$faq_counterpart = $faq_slug ? get_posts(
+			array(
+				'post_type'      => 'faq',
+				'name'           => $faq_slug,
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+					array(
+						'key'   => 'faq_lang',
+						'value' => $faq_other_lang,
+					),
+				),
+			)
+		) : array();
+
+		$faq_hreflang_urls = array( $lang => $permalink );
+		if ( $faq_counterpart ) {
+			$faq_hreflang_urls[ $faq_other_lang ] = get_permalink( $faq_counterpart[0] );
+		}
+
+		foreach ( $faq_hreflang_urls as $faq_hreflang_lang => $faq_hreflang_url ) {
+			printf( '<link rel="alternate" hreflang="%s" href="%s" />' . "\n", esc_attr( $faq_hreflang_lang ), esc_url( $faq_hreflang_url ) );
+		}
+
+		// x-defaultは常に英語版(見つかっていればそのURL、無ければEnglishルート)
+		printf( '<link rel="alternate" hreflang="x-default" href="%s" />' . "\n", esc_url( isset( $faq_hreflang_urls['en'] ) ? $faq_hreflang_urls['en'] : home_url( '/' ) ) );
 	} else {
 		// 対訳が無い場合は各言語のホームへのフォールバック（壊れた相互参照を出さない）
 		$ja_url = langmate_get_translation_url( 'ja' );
@@ -377,7 +405,9 @@ function langmate_head_meta() {
 		$faq_id      = get_queried_object_id();
 		$raw_content = get_post_field( 'post_content', $faq_id );
 		$answer_html = apply_filters( 'the_content', $raw_content );
-		$answer_text = trim( preg_replace( '/\s+/u', ' ', wp_strip_all_tags( $answer_html ) ) );
+		// wp_strip_all_tags()はタグを消すだけで&nbsp;等のHTMLエンティティは
+		// デコードしないため、そのままだと回答テキストに実体参照が残ってしまう。
+		$answer_text = trim( preg_replace( '/\s+/u', ' ', html_entity_decode( wp_strip_all_tags( $answer_html ), ENT_QUOTES, 'UTF-8' ) ) );
 
 		if ( '' !== $answer_text ) {
 			$faq_schema = array(
@@ -842,6 +872,76 @@ function langmate_faq_permalink( $link, $post ) {
 }
 add_filter( 'post_type_link', 'langmate_faq_permalink', 10, 2 );
 
+/**
+ * ==========================================================
+ * FAQ: 日本語版・英語版で同じスラッグを使えるようにする
+ *
+ * FAQ投稿のURLは /support/{category}/{slug}/ (EN)・
+ * /ja/support/{category}/{slug}/ (JA) と言語ごとに完全に別のパスなので、
+ * 同じスラッグを日英で共有しても実際のURLが衝突することはない。
+ * しかしWordPress標準のスラッグ重複チェックは投稿タイプ単位でしか
+ * 見ないため、日本語版と同じスラッグで英語版を保存しようとすると
+ * 自動的に「-2」等が付与されてしまい、仕様書④手順13の
+ * 「日英で同じスラッグに揃える」が実現できなくなってしまう。
+ * 衝突相手が全員「別の言語(faq_lang)のFAQ投稿」である場合だけ、
+ * 重複チェックをスキップして元のスラッグをそのまま使わせる
+ * (同じ言語同士のスラッグ重複は、今まで通りWordPressに任せる)。
+ * ==========================================================
+ */
+function langmate_faq_allow_shared_slug( $slug, $post_id, $post_status, $post_type, $post_parent, $original_slug ) {
+	if ( 'faq' !== $post_type || '' === $original_slug ) {
+		return $slug;
+	}
+
+	// スラッグが変更されていない(=衝突していない)場合はそのまま。
+	if ( $slug === $original_slug ) {
+		return $slug;
+	}
+
+	// この投稿自身の言語。wp_unique_post_slug()はwp_insert_post()の中で
+	// save_post(表示設定メタボックスの保存処理)より先に走るため、
+	// 新規投稿を初めて保存する時点ではまだfaq_langがpostmetaに保存
+	// されていない。そのため、まずは今まさに送信されたフォームの値
+	// ($_POST)を優先して見る(無ければ保存済みのpostmetaにフォールバック)。
+	if ( isset( $_POST['faq_lang'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$this_lang = sanitize_text_field( wp_unslash( $_POST['faq_lang'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+	} else {
+		$this_lang = get_post_meta( $post_id, 'faq_lang', true );
+	}
+	$this_lang = ( 'en' === $this_lang ) ? 'en' : 'ja';
+
+	$conflicts = get_posts(
+		array(
+			'name'           => $original_slug,
+			'post_type'      => 'faq',
+			'post_status'    => array( 'publish', 'future', 'draft', 'pending', 'private' ),
+			'posts_per_page' => -1,
+			'exclude'        => array( $post_id ),
+			'fields'         => 'ids',
+		)
+	);
+
+	if ( ! $conflicts ) {
+		return $original_slug;
+	}
+
+	foreach ( $conflicts as $conflict_id ) {
+		$conflict_lang = get_post_meta( $conflict_id, 'faq_lang', true );
+		$conflict_lang = ( 'en' === $conflict_lang ) ? 'en' : 'ja';
+
+		// 同じ言語の投稿と衝突している場合は、今まで通りWordPressに
+		// 重複回避のスラッグ("-2"等)を付けさせる。
+		if ( $conflict_lang === $this_lang ) {
+			return $slug;
+		}
+	}
+
+	// 衝突相手が全員「別の言語」のFAQ投稿だったので、元のスラッグを
+	// そのまま使わせてよい。
+	return $original_slug;
+}
+add_filter( 'wp_unique_post_slug', 'langmate_faq_allow_shared_slug', 10, 6 );
+
 // ---- /ja/support/{category}/{slug}/・/ja/support/{category}/ を
 //      振り分けるリライトルール(EN側はタクソノミー・CPTの標準機能で解決する) ----
 // 有効化には パーマリンク設定 での一度の再保存(フラッシュ)が必要
@@ -850,6 +950,35 @@ function langmate_faq_rewrite_rules() {
 	add_rewrite_rule( '^ja/support/([^/]+)/?$', 'index.php?faq_category=$matches[1]&faq_ja=1', 'top' );
 }
 add_action( 'init', 'langmate_faq_rewrite_rules' );
+
+/**
+ * ==========================================================
+ * FAQ: 言語違いのURLで開かれた時に正しいURLへ301リダイレクト
+ *
+ * FAQ単体の英語側URL(/support/{category}/{slug}/)は、CPT標準の
+ * rewrite機能がpost_name(スラッグ)の一致だけで投稿を解決するため、
+ * faq_langメタとは無関係にどの言語の投稿でもヒットしてしまう
+ * (日本語版しか無いFAQでも、英語URLでアクセスすると404にならず
+ * そのまま日本語の内容が表示されてしまう＝重複URL状態)。
+ * URLが暗示する言語(faq_jaクエリ変数の有無)と、実際にヒットした
+ * 投稿のfaq_langが食い違う場合は、その投稿本来の正しいURLへ301する。
+ * ==========================================================
+ */
+function langmate_faq_language_url_guard() {
+	if ( ! is_singular( 'faq' ) ) {
+		return;
+	}
+
+	$post_id       = get_queried_object_id();
+	$expected_lang = get_query_var( 'faq_ja' ) ? 'ja' : 'en';
+	$actual_lang   = langmate_get_faq_language( $post_id );
+
+	if ( $expected_lang !== $actual_lang ) {
+		wp_safe_redirect( get_permalink( $post_id ), 301 );
+		exit;
+	}
+}
+add_action( 'template_redirect', 'langmate_faq_language_url_guard' );
 
 /**
  * ==========================================================

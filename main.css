@@ -156,6 +156,7 @@ img {
 }
 .breadcrumb {
   width: 100%;
+  margin-block: 24px;
 }
 .breadcrumb__list {
   display: flex;
@@ -3257,7 +3258,6 @@ img {
   align-self: stretch;
   width: 100%;
   padding-inline-start: 24px;
-  padding-top: 50px;
   text-align: left;
 }
 .download-hero__breadcrumb .breadcrumb__list {
@@ -3265,20 +3265,24 @@ img {
 }
 @media (max-width: 780px) {
   .download-hero__breadcrumb {
-    margin-block-start: 24px;
     padding-inline-start: 16px;
   }
 }
 @media (max-width: 430px) {
   .download-hero__breadcrumb {
-    margin-block-start: 20px;
     padding-inline-start: 8px;
   }
 }
 
 .download {
   background-color: #FFFCF3;
-  padding-block: clamp(40px, 4px + 4.5vw, 80px) clamp(64px, 24px + 5vw, 110px);
+  padding-bottom: clamp(64px, 24px + 5vw, 110px);
+  padding-top: 40px;
+}
+@media (max-width: 780px) {
+  .download {
+    padding-top: 0px;
+  }
 }
 .download__inner {
   display: flex;
@@ -3410,26 +3414,23 @@ img {
   width: 100%;
   padding-inline-start: 24px;
   text-align: left;
-  padding-top: 50px;
 }
 .about-hero__breadcrumb .breadcrumb__list {
   justify-content: flex-start;
 }
 @media (max-width: 780px) {
   .about-hero__breadcrumb {
-    margin-block-start: 24px;
     padding-inline-start: 16px;
   }
 }
 @media (max-width: 430px) {
   .about-hero__breadcrumb {
-    margin-block-start: 20px;
     padding-inline-start: 8px;
   }
 }
 
 .about-intro {
-  padding-block: 16px 100px;
+  padding-block: 0 100px;
 }
 .about-intro .wrapper {
   display: flex;
@@ -3956,25 +3957,11 @@ img {
 .gs-hero__breadcrumb {
   align-self: stretch;
   width: 100%;
-  margin-block-start: 28px;
-  margin-block-end: 36px;
   padding-inline-start: 16px;
   text-align: left;
 }
 .gs-hero__breadcrumb .breadcrumb__list {
   justify-content: flex-start;
-}
-@media (max-width: 780px) {
-  .gs-hero__breadcrumb {
-    margin-block-start: 24px;
-    margin-block-end: 28px;
-  }
-}
-@media (max-width: 430px) {
-  .gs-hero__breadcrumb {
-    margin-block-start: 20px;
-    margin-block-end: 24px;
-  }
 }
 .gs-hero__map {
   position: absolute;
@@ -5287,14 +5274,6 @@ img {
   background-color: #0083F8;
 }
 
-.faq-hero {
-  padding-block-end: clamp(26px, 45.52px + 3.367vw, 24px);
-}
-@media (max-width: 430px) {
-  .faq-hero {
-    padding-block-end: 26px;
-  }
-}
 .faq-hero__breadcrumb {
   align-self: stretch;
   width: 100%;
@@ -5305,13 +5284,11 @@ img {
 }
 @media (max-width: 780px) {
   .faq-hero__breadcrumb {
-    margin-block-start: 24px;
     padding-inline-start: 12px;
   }
 }
 @media (max-width: 430px) {
   .faq-hero__breadcrumb {
-    margin-block-start: 20px;
     padding-inline-start: 8px;
   }
 }
@@ -5756,7 +5733,6 @@ body.tax-faq_category .faq-group:first-child:nth-last-child(2) {
   align-self: stretch;
   width: 100%;
   padding-inline-start: 24px;
-  padding-block-start: clamp(60px, 45.52px + 3.367vw, 80px);
   text-align: left;
 }
 .contact-hero__breadcrumb .breadcrumb__list {
@@ -5764,13 +5740,11 @@ body.tax-faq_category .faq-group:first-child:nth-last-child(2) {
 }
 @media (max-width: 780px) {
   .contact-hero__breadcrumb {
-    margin-block-start: 36px;
     padding-inline-start: 16px;
   }
 }
 @media (max-width: 430px) {
   .contact-hero__breadcrumb {
-    margin-block-start: 28px;
     padding-inline-start: 8px;
   }
 }
@@ -5807,13 +5781,7 @@ body.tax-faq_category .faq-group:first-child:nth-last-child(2) {
 }
 
 .contact-form-section {
-  padding-top: 24px;
   padding-bottom: clamp(60px, 31.04px + 6.734vw, 100px);
-}
-@media (max-width: 430px) {
-  .contact-form-section {
-    padding-top: 0;
-  }
 }
 
 .contact-form {
@@ -6280,4 +6248,4 @@ p .user-id-steps__num {
   .webview-page .legal-hero {
     padding-top: 24px;
   }
-}
+}/*# sourceMappingURL=main.css.map */

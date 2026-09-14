@@ -10,19 +10,16 @@
         width: 100%;
         padding-inline-start: 24px;
         text-align: left;
-        padding-top: 50px;
 
         .breadcrumb__list {
             justify-content: flex-start;
         }
 
         @include mx.hero-sp {
-            margin-block-start: 24px;
             padding-inline-start: 16px;
         }
 
         @include mx.sp {
-            margin-block-start: 20px;
             padding-inline-start: 8px;
         }
     }
@@ -30,7 +27,9 @@
 
 // ---- Intro ----
 .about-intro {
-    padding-block: 16px 100px;
+    // 上側の余白は無し(直前の.breadcrumbのmargin-block-end:24pxに任せる。
+    // ここでも上パディングを足すと二重に間隔が空いてしまうため)。
+    padding-block: 0 100px;
 
     .wrapper {
         display: flex;
