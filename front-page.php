@@ -88,12 +88,12 @@ $langmate_theme_uri = get_template_directory_uri();
             </li>
             <li class="stat-box stat-box--sm">
               <span class="stat-box__tag" data-pop>Downloads</span>
-              <p class="stat-box__value"><strong>Over 4M+</strong>downloads</p>
+              <p class="stat-box__value"><strong>Over 4M+</strong> downloads</p>
             </li>
             <li class="stat-box stat-box--lg">
               <span class="stat-box__tag" data-pop>Featured in Japanese Media</span>
               <ul class="stat-box__list">
-                <li>Langmate has been featured by TBS, Ameba, and many other media outlets in Japan.</li>
+                <li>Langmate has been featured by TBS, ABEMA, and many other media outlets in Japan.</li>
               </ul>
             </li>
           </ul>

@@ -5,11 +5,8 @@
 // HERO
 // ==========================================================================
 .faq-hero {
-    padding-block-end: clamp(26px,calc(45.52px + 3.367vw),24px);
-
-    @include mx.sp {
-        padding-block-end: 26px;
-    }
+    // 下側の余白は.breadcrumb(margin-block:24px)に任せる
+    // (次の.faq-search-sectionも独自の上余白を持たないため、二重にならない)。
 
     &__breadcrumb {
         align-self: stretch;
@@ -21,12 +18,10 @@
         }
 
         @include mx.hero-sp {
-            margin-block-start: 24px;
             padding-inline-start: 12px;
         }
 
         @include mx.sp {
-            margin-block-start: 20px;
             padding-inline-start: 8px;
         }
     }

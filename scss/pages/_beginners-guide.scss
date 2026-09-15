@@ -13,25 +13,16 @@
     padding-block-end: clamp(40px, calc(-75.82px + 26.94vw), 200px);
 
     &__breadcrumb {
+        // 上下の余白は共通の.breadcrumb(margin-block:24px)に任せる
+        // (直前の.sub-hero__lead・直後の.gs-hero__navどちらも独自の
+        // margin/paddingを持たないため、二重に余白が空くことはない)。
         align-self: stretch;
         width: 100%;
-        margin-block-start: 28px;
-        margin-block-end: 36px;
         padding-inline-start: 16px;
         text-align: left;
 
         .breadcrumb__list {
             justify-content: flex-start;
-        }
-
-        @include mx.hero-sp {
-            margin-block-start: 24px;
-            margin-block-end: 28px;
-        }
-
-        @include mx.sp {
-            margin-block-start: 20px;
-            margin-block-end: 24px;
         }
     }
 
@@ -270,6 +261,10 @@
     background-color: v.$color-pink-deep;
     color: v.$color-white;
     padding-block: clamp(70px, calc(31.04px + 6.734vw), 100px);
+
+    // hero内の内部リンク(#reason)でジャンプした時、固定ヘッダーに見出しが
+    // 隠れないよう着地位置をヘッダー高さ分＋余白ずらす(header-offset.js)
+    scroll-margin-top: calc(var(--header-offset, 90px) + 16px);
 
     // ==========================================================================
     // INNER
@@ -863,6 +858,10 @@
     padding-block: clamp(60px,
             calc(31.04px + 6.734vw),
             100px);
+
+    // 内部リンク(#get-started)でジャンプした時に見出しが固定ヘッダーに
+    // 隠れないよう着地位置をずらす(header-offset.js)
+    scroll-margin-top: calc(var(--header-offset, 90px) + 16px);
 
 
     // ==========================================================================
@@ -1475,6 +1474,10 @@
 
     background-color: v.$color-blue;
     color: v.$color-white;
+
+    // 内部リンク(#safety)でジャンプした時に見出しが固定ヘッダーに
+    // 隠れないよう着地位置をずらす(header-offset.js)
+    scroll-margin-top: calc(var(--header-offset, 90px) + 16px);
 
     padding-block:
         clamp(60px, calc(31.04px + 6.734vw), 100px) clamp(60px, calc(16.57px + 10.1vw), 120px);

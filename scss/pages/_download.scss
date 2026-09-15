@@ -12,11 +12,20 @@
         fill: v.$color-pink;
     }
 
+    // ENのh1「Download the Langmate App」を780px以下で
+    // 「Download」/「the Langmate App」の2行に折り返す(JAには<br>自体が無い)
+    &__heading-br {
+        display: none;
+
+        @include mx.hero-sp {
+            display: inline;
+        }
+    }
+
     &__breadcrumb {
         align-self: stretch;
         width: 100%;
         padding-inline-start: 24px;
-        padding-top: 50px;
         text-align: left;
 
         .breadcrumb__list {
@@ -24,12 +33,10 @@
         }
 
         @include mx.hero-sp {
-            margin-block-start: 24px;
             padding-inline-start: 16px;
         }
 
         @include mx.sp {
-            margin-block-start: 20px;
             padding-inline-start: 8px;
         }
     }
@@ -39,7 +46,12 @@
 // ---- Main ----
 .download {
     background-color: v.$color-cream;
-    padding-block: clamp(40px, calc(4px + 4.5vw), 80px) clamp(64px, calc(24px + 5vw), 110px);
+    padding-bottom: clamp(64px, calc(24px + 5vw), 110px);
+    padding-top: 40px;
+
+    @include mx.hero-sp {
+        padding-top: 0px;
+    }
 
     &__inner {
         display: flex;

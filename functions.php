@@ -267,12 +267,40 @@ function langmate_head_meta() {
 
 	// hreflang
 	if ( $is_faq ) {
-		// FAQはPageのようなtranslation_keyでの対訳ペア機構を持たない(投稿ごとに
-		// faq_langで単一言語のみ)。存在しない対訳URLを出さないよう、
-		// 自分の言語は自己参照のみ、x-defaultはEnglishのサイトルートに固定する
-		// (このFAQ自体が英語ならx-default=自分自身と同じURLになる)。
-		printf( '<link rel="alternate" hreflang="%s" href="%s" />' . "\n", esc_attr( $lang ), esc_url( $permalink ) );
-		printf( '<link rel="alternate" hreflang="x-default" href="%s" />' . "\n", esc_url( 'en' === $lang ? $permalink : home_url( '/' ) ) );
+		// FAQはPageのようなtranslation_keyでの対訳ペア機構を持たないため、
+		// 「日本語版・英語版でスラッグ(post_name)を揃える」運用ルール
+		// (仕様書④手順13で必須化)を前提に、同じスラッグを持つ他言語のFAQ投稿を
+		// 探して対訳として紐づける。見つからない場合(まだ片方の言語しか
+		// 書かれていない等)は、存在しないURLへ誤ったhreflangを出さないよう
+		// 自分の言語のみ自己参照する。
+		$faq_slug      = get_post_field( 'post_name', get_queried_object_id() );
+		$faq_other_lang = ( 'ja' === $lang ) ? 'en' : 'ja';
+		$faq_counterpart = $faq_slug ? get_posts(
+			array(
+				'post_type'      => 'faq',
+				'name'           => $faq_slug,
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+					array(
+						'key'   => 'faq_lang',
+						'value' => $faq_other_lang,
+					),
+				),
+			)
+		) : array();
+
+		$faq_hreflang_urls = array( $lang => $permalink );
+		if ( $faq_counterpart ) {
+			$faq_hreflang_urls[ $faq_other_lang ] = get_permalink( $faq_counterpart[0] );
+		}
+
+		foreach ( $faq_hreflang_urls as $faq_hreflang_lang => $faq_hreflang_url ) {
+			printf( '<link rel="alternate" hreflang="%s" href="%s" />' . "\n", esc_attr( $faq_hreflang_lang ), esc_url( $faq_hreflang_url ) );
+		}
+
+		// x-defaultは常に英語版(見つかっていればそのURL、無ければEnglishルート)
+		printf( '<link rel="alternate" hreflang="x-default" href="%s" />' . "\n", esc_url( isset( $faq_hreflang_urls['en'] ) ? $faq_hreflang_urls['en'] : home_url( '/' ) ) );
 	} else {
 		// 対訳が無い場合は各言語のホームへのフォールバック（壊れた相互参照を出さない）
 		$ja_url = langmate_get_translation_url( 'ja' );
@@ -335,6 +363,15 @@ function langmate_head_meta() {
 			'alternateName' => $org['alternateName'],
 			'url'          => $permalink,
 			'foundingDate' => '2017-07-28',
+			// 公式SNSアカウントを明示すると、Googleナレッジパネル等でこの会社と
+			// 同一のエンティティだと認識されやすくなる。フッターのSNSリンク
+			// (footer.php)と同じURLを直接指定している(AIOSEOの「Social Networks」
+			// 設定はフッターの表示には使われていないため、そちらとは連動しない)。
+			'sameAs'       => array(
+				'https://www.instagram.com/langmate_app',
+				'https://x.com/LANGMATE_APP',
+				'https://www.tiktok.com/@questions_about_japan',
+			),
 			'address'      => array(
 				'@type'           => 'PostalAddress',
 				'postalCode'      => '105-0003',
@@ -354,6 +391,67 @@ function langmate_head_meta() {
 
 		printf( '<script type="application/ld+json">%s</script>' . "\n", wp_json_encode( $organization_schema ) );
 		printf( '<script type="application/ld+json">%s</script>' . "\n", wp_json_encode( $website_schema ) );
+	}
+
+	// 構造化データ（FAQ単体ページ）: FAQPageスキーマ
+	//
+	// AIOSEO(無料版)はスキーマタイプの変更がPRO限定機能で、FAQ Page/Questionへの
+	// 変更ができないため、テーマ側でJSON-LDを直接出力する。
+	// 「投稿タイトル＝質問」「本文全体＝回答」の1問1答として出力する
+	// (本文中のH3/H4を個別のQuestionとして扱わないのは、「iOS」「Android」の
+	// ようにH3を単なる手順の見出しとして使っているFAQもあり、それらまで
+	// 質問として構造化すると誤ったスキーマになってしまうため)。
+	if ( $is_faq ) {
+		$faq_id      = get_queried_object_id();
+		$raw_content = get_post_field( 'post_content', $faq_id );
+		$answer_html = apply_filters( 'the_content', $raw_content );
+		// wp_strip_all_tags()はタグを消すだけで&nbsp;等のHTMLエンティティは
+		// デコードしないため、そのままだと回答テキストに実体参照が残ってしまう。
+		$answer_text = trim( preg_replace( '/\s+/u', ' ', html_entity_decode( wp_strip_all_tags( $answer_html ), ENT_QUOTES, 'UTF-8' ) ) );
+
+		if ( '' !== $answer_text ) {
+			$faq_schema = array(
+				'@context'   => 'https://schema.org',
+				'@type'      => 'FAQPage',
+				'mainEntity' => array(
+					array(
+						'@type'          => 'Question',
+						'name'           => get_the_title( $faq_id ),
+						'acceptedAnswer' => array(
+							'@type' => 'Answer',
+							'text'  => $answer_text,
+						),
+					),
+				),
+			);
+
+			printf( '<script type="application/ld+json">%s</script>' . "\n", wp_json_encode( $faq_schema ) );
+		}
+	}
+
+	// 構造化データ（ダウンロードページのみ）: SoftwareApplicationスキーマ
+	//
+	// FAQPageと同じ理由(AIOSEO無料版はスキーマタイプ変更がPRO限定)で、
+	// アプリの基本情報をテーマ側から直接出力する。実データが無い項目
+	// (ユーザー評価等)は不正確な値を出さないよう含めない。
+	$is_download = is_page() && 'download' === get_post_meta( get_queried_object_id(), 'translation_key', true );
+
+	if ( $is_download ) {
+		$app_schema = array(
+			'@context'            => 'https://schema.org',
+			'@type'               => 'SoftwareApplication',
+			'name'                => 'Langmate',
+			'operatingSystem'     => 'iOS, Android',
+			'applicationCategory' => 'SocialNetworkingApplication',
+			'url'                 => $permalink,
+			'offers'              => array(
+				'@type'         => 'Offer',
+				'price'         => '0',
+				'priceCurrency' => 'JPY',
+			),
+		);
+
+		printf( '<script type="application/ld+json">%s</script>' . "\n", wp_json_encode( $app_schema ) );
 	}
 }
 add_action( 'wp_head', 'langmate_head_meta', 1 );
@@ -588,6 +686,24 @@ function langmate_register_faq_meta() {
 			},
 		)
 	);
+	// 検索用キーワード(同義語・言い換え)。WP標準検索はタイトル・本文しか
+	// 見ないため、本文中に存在しない言い換え(例:「退会」で検索しても
+	// 本文に「アカウント削除」としか書いていない等)を拾えない問題への対応。
+	// クライアントがFAQごとに自由記入し、langmate_faq_search_include_keywords()
+	// で検索対象に含める。
+	register_post_meta(
+		'faq',
+		'faq_search_keywords',
+		array(
+			'type'          => 'string',
+			'single'        => true,
+			'show_in_rest'  => true,
+			'default'       => '',
+			'auth_callback' => function () {
+				return current_user_can( 'edit_posts' );
+			},
+		)
+	);
 }
 add_action( 'init', 'langmate_register_faq_meta' );
 
@@ -636,6 +752,18 @@ function langmate_render_faq_lang_meta_box( $post ) {
 		サイトリニューアル前の旧URL(<code>/support-page/○○○/</code>)の「○○○」部分だけを入力する。
 		入力しておくと、旧URLにアクセスされた時にこのFAQの新URLへ自動で転送される(移行が終わったFAQだけ入力すればOK)。
 	</p>
+	<hr>
+	<?php $search_keywords = get_post_meta( $post->ID, 'faq_search_keywords', true ); ?>
+	<p>
+		<label for="faq_search_keywords">検索用キーワード</label><br>
+		<textarea name="faq_search_keywords" id="faq_search_keywords" rows="3" style="width:100%;"><?php echo esc_textarea( $search_keywords ); ?></textarea>
+	</p>
+	<p class="description">
+		「よくある質問」ページの検索ボックスで、本文中の言葉と違う言い方で検索されても
+		見つかるようにするための言い換え・同義語を入力する(カンマや読点区切りで複数可)。
+		例:タイトルが「アカウントを削除するには」なら、「退会, やめる, 消したい, 解除」等を入力しておく。
+		画面には表示されず、検索対象としてのみ使われる。
+	</p>
 	<?php
 }
 
@@ -656,6 +784,9 @@ function langmate_save_faq_lang_meta( $post_id ) {
 	update_post_meta( $post_id, 'faq_toc', isset( $_POST['faq_toc'] ) ? '1' : '' );
 	if ( isset( $_POST['faq_legacy_slug'] ) ) {
 		update_post_meta( $post_id, 'faq_legacy_slug', sanitize_title( wp_unslash( $_POST['faq_legacy_slug'] ) ) );
+	}
+	if ( isset( $_POST['faq_search_keywords'] ) ) {
+		update_post_meta( $post_id, 'faq_search_keywords', sanitize_textarea_field( wp_unslash( $_POST['faq_search_keywords'] ) ) );
 	}
 }
 add_action( 'save_post_faq', 'langmate_save_faq_lang_meta' );
@@ -774,6 +905,114 @@ function langmate_faq_permalink( $link, $post ) {
 }
 add_filter( 'post_type_link', 'langmate_faq_permalink', 10, 2 );
 
+/**
+ * ==========================================================
+ * FAQ: 同じスラッグの日英投稿がある時、URLの言語で正しい方だけに絞り込む
+ *
+ * 下記のlangmate_faq_allow_shared_slug()で日英同じスラッグを共有できる
+ * ようにした結果、今度はURLから投稿を探す側(WordPress標準のクエリ解決)が
+ * スラッグだけで投稿を探してしまい、faq_lang(日本語/英語)を見ずに
+ * どちらか一方の投稿を拾ってしまう問題が発生する
+ * (例: /ja/support/{category}/{slug}/ にアクセスしたのに、
+ * 同じスラッグの英語版投稿の方が返ってくることがある)。
+ * URLが/ja/始まりかどうか(faq_jaクエリ変数)を、メインクエリの
+ * 絞り込み条件(faq_lang)に組み込むことで、最初から正しい言語の
+ * 投稿しか候補に入らないようにする。
+ * ==========================================================
+ */
+function langmate_faq_scope_query_by_url_language( $query ) {
+	if ( is_admin() || ! $query->is_main_query() ) {
+		return;
+	}
+
+	// FAQ単体をスラッグで指定しているリクエストにだけ適用する
+	// (カテゴリーアーカイブ一覧・検索結果等、スラッグ指定の無いクエリには
+	// 影響しない)。
+	if ( '' === (string) $query->get( 'faq' ) ) {
+		return;
+	}
+
+	$expected_lang = $query->get( 'faq_ja' ) ? 'ja' : 'en';
+
+	$meta_query   = (array) $query->get( 'meta_query' );
+	$meta_query[] = array(
+		'key'   => 'faq_lang',
+		'value' => $expected_lang,
+	);
+	$query->set( 'meta_query', $meta_query );
+}
+add_action( 'pre_get_posts', 'langmate_faq_scope_query_by_url_language' );
+
+/**
+ * ==========================================================
+ * FAQ: 日本語版・英語版で同じスラッグを使えるようにする
+ *
+ * FAQ投稿のURLは /support/{category}/{slug}/ (EN)・
+ * /ja/support/{category}/{slug}/ (JA) と言語ごとに完全に別のパスなので、
+ * 同じスラッグを日英で共有しても実際のURLが衝突することはない。
+ * しかしWordPress標準のスラッグ重複チェックは投稿タイプ単位でしか
+ * 見ないため、日本語版と同じスラッグで英語版を保存しようとすると
+ * 自動的に「-2」等が付与されてしまい、仕様書④手順13の
+ * 「日英で同じスラッグに揃える」が実現できなくなってしまう。
+ * 衝突相手が全員「別の言語(faq_lang)のFAQ投稿」である場合だけ、
+ * 重複チェックをスキップして元のスラッグをそのまま使わせる
+ * (同じ言語同士のスラッグ重複は、今まで通りWordPressに任せる)。
+ * ==========================================================
+ */
+function langmate_faq_allow_shared_slug( $slug, $post_id, $post_status, $post_type, $post_parent, $original_slug ) {
+	if ( 'faq' !== $post_type || '' === $original_slug ) {
+		return $slug;
+	}
+
+	// スラッグが変更されていない(=衝突していない)場合はそのまま。
+	if ( $slug === $original_slug ) {
+		return $slug;
+	}
+
+	// この投稿自身の言語。wp_unique_post_slug()はwp_insert_post()の中で
+	// save_post(表示設定メタボックスの保存処理)より先に走るため、
+	// 新規投稿を初めて保存する時点ではまだfaq_langがpostmetaに保存
+	// されていない。そのため、まずは今まさに送信されたフォームの値
+	// ($_POST)を優先して見る(無ければ保存済みのpostmetaにフォールバック)。
+	if ( isset( $_POST['faq_lang'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$this_lang = sanitize_text_field( wp_unslash( $_POST['faq_lang'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+	} else {
+		$this_lang = get_post_meta( $post_id, 'faq_lang', true );
+	}
+	$this_lang = ( 'en' === $this_lang ) ? 'en' : 'ja';
+
+	$conflicts = get_posts(
+		array(
+			'name'           => $original_slug,
+			'post_type'      => 'faq',
+			'post_status'    => array( 'publish', 'future', 'draft', 'pending', 'private' ),
+			'posts_per_page' => -1,
+			'exclude'        => array( $post_id ),
+			'fields'         => 'ids',
+		)
+	);
+
+	if ( ! $conflicts ) {
+		return $original_slug;
+	}
+
+	foreach ( $conflicts as $conflict_id ) {
+		$conflict_lang = get_post_meta( $conflict_id, 'faq_lang', true );
+		$conflict_lang = ( 'en' === $conflict_lang ) ? 'en' : 'ja';
+
+		// 同じ言語の投稿と衝突している場合は、今まで通りWordPressに
+		// 重複回避のスラッグ("-2"等)を付けさせる。
+		if ( $conflict_lang === $this_lang ) {
+			return $slug;
+		}
+	}
+
+	// 衝突相手が全員「別の言語」のFAQ投稿だったので、元のスラッグを
+	// そのまま使わせてよい。
+	return $original_slug;
+}
+add_filter( 'wp_unique_post_slug', 'langmate_faq_allow_shared_slug', 10, 6 );
+
 // ---- /ja/support/{category}/{slug}/・/ja/support/{category}/ を
 //      振り分けるリライトルール(EN側はタクソノミー・CPTの標準機能で解決する) ----
 // 有効化には パーマリンク設定 での一度の再保存(フラッシュ)が必要
@@ -782,6 +1021,35 @@ function langmate_faq_rewrite_rules() {
 	add_rewrite_rule( '^ja/support/([^/]+)/?$', 'index.php?faq_category=$matches[1]&faq_ja=1', 'top' );
 }
 add_action( 'init', 'langmate_faq_rewrite_rules' );
+
+/**
+ * ==========================================================
+ * FAQ: 言語違いのURLで開かれた時に正しいURLへ301リダイレクト
+ *
+ * FAQ単体の英語側URL(/support/{category}/{slug}/)は、CPT標準の
+ * rewrite機能がpost_name(スラッグ)の一致だけで投稿を解決するため、
+ * faq_langメタとは無関係にどの言語の投稿でもヒットしてしまう
+ * (日本語版しか無いFAQでも、英語URLでアクセスすると404にならず
+ * そのまま日本語の内容が表示されてしまう＝重複URL状態)。
+ * URLが暗示する言語(faq_jaクエリ変数の有無)と、実際にヒットした
+ * 投稿のfaq_langが食い違う場合は、その投稿本来の正しいURLへ301する。
+ * ==========================================================
+ */
+function langmate_faq_language_url_guard() {
+	if ( ! is_singular( 'faq' ) ) {
+		return;
+	}
+
+	$post_id       = get_queried_object_id();
+	$expected_lang = get_query_var( 'faq_ja' ) ? 'ja' : 'en';
+	$actual_lang   = langmate_get_faq_language( $post_id );
+
+	if ( $expected_lang !== $actual_lang ) {
+		wp_safe_redirect( get_permalink( $post_id ), 301 );
+		exit;
+	}
+}
+add_action( 'template_redirect', 'langmate_faq_language_url_guard' );
 
 /**
  * ==========================================================
@@ -1053,6 +1321,10 @@ function langmate_get_faq_groups_for_parent( $parent_term, $lang ) {
 /**
  * ---- FAQ検索(キーワードでタイトル・本文を検索。言語で絞り込み) ----
  *
+ * タイトル・本文に加えて、投稿メタ「faq_search_keywords」(検索用キーワード)
+ * もlangmate_faq_search_include_keywords()経由で検索対象に含める。
+ * 検索ボックス・クエリパラメータ自体には一切手を加えていない。
+ *
  * @param string $search_term 検索キーワード
  * @param string $lang        'ja' | 'en'
  * @return WP_Post[]
@@ -1060,10 +1332,17 @@ function langmate_get_faq_groups_for_parent( $parent_term, $lang ) {
 function langmate_search_faq_posts( $search_term, $lang ) {
 	return get_posts(
 		array(
-			'post_type'      => 'faq',
-			'posts_per_page' => -1,
-			's'              => $search_term,
-			'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+			'post_type'                   => 'faq',
+			'posts_per_page'              => -1,
+			's'                           => $search_term,
+			'langmate_faq_keyword_search' => true,
+			// get_posts()はデフォルトでsuppress_filters=>trueのため、
+			// posts_search等のSQL生成系フィルターが一切発火しない
+			// (meta_queryはWP_Queryに直接組み込まれる仕組みのため影響を
+			// 受けないが、下のlangmate_faq_search_include_keywords()は
+			// フィルターなのでこれが無いと呼ばれない)。明示的にfalseにする。
+			'suppress_filters'            => false,
+			'meta_query'                  => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 				array(
 					'key'   => 'faq_lang',
 					'value' => $lang,
@@ -1072,6 +1351,48 @@ function langmate_search_faq_posts( $search_term, $lang ) {
 		)
 	);
 }
+
+/**
+ * ---- FAQ検索: 「検索用キーワード」欄もLIKEで検索対象に含める ----
+ *
+ * langmate_search_faq_posts()が'langmate_faq_keyword_search'=>trueを
+ * 付けて呼んだクエリにだけ発動する(他のsearch()呼び出し・管理画面の
+ * 検索等には一切影響しない)。WP標準のタイトル・本文検索に、
+ * 投稿メタfaq_search_keywordsへのLIKE一致をORで追加する。
+ */
+function langmate_faq_search_include_keywords( $search, $query ) {
+	if ( ! $query->get( 'langmate_faq_keyword_search' ) ) {
+		return $search;
+	}
+
+	$term = trim( (string) $query->get( 's' ) );
+	if ( '' === $term || '' === trim( $search ) ) {
+		return $search;
+	}
+
+	global $wpdb;
+	$like = '%' . $wpdb->esc_like( $term ) . '%';
+
+	$keyword_clause = $wpdb->prepare(
+		" OR EXISTS (
+			SELECT 1 FROM {$wpdb->postmeta} AS langmate_faq_kw
+			WHERE langmate_faq_kw.post_id = {$wpdb->posts}.ID
+			AND langmate_faq_kw.meta_key = 'faq_search_keywords'
+			AND langmate_faq_kw.meta_value LIKE %s
+		) ",
+		$like
+	);
+
+	// WP標準の検索条件( "AND (...)" )の一番最後の閉じ括弧の直前に、
+	// キーワード欄への条件をORで差し込む。
+	$last_paren = strrpos( $search, ')' );
+	if ( false === $last_paren ) {
+		return $search;
+	}
+
+	return substr( $search, 0, $last_paren ) . $keyword_clause . substr( $search, $last_paren );
+}
+add_filter( 'posts_search', 'langmate_faq_search_include_keywords', 10, 2 );
 
 /**
  * ---- 「よくある質問」に手動でピン留めされたFAQ一覧(カテゴリー横断) ----

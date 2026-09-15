@@ -21,6 +21,15 @@
     z-index: 100;
     transform: translateY(-50%);
 
+    // ダウンロードページ限定：601px以上はストアバッジが本文内に常に見えて
+    // いるため、追従ボタンごと非表示にする(JS側で.download__storesの有無を
+    // 見て`is-download-page`を付与。他ページはこのクラスが付かない)
+    @media (min-width: 601px) {
+        &.is-download-page {
+            display: none;
+        }
+    }
+
     // ==========================================================
     // Box
     // ==========================================================
@@ -210,6 +219,14 @@
             opacity: 1;
             visibility: visible;
             pointer-events: auto;
+        }
+
+        // ダウンロードページ限定：ストアバッジが画面内に入ったら再度隠す
+        // (JSが.download__storesの有無で判定するので他ページはこのクラスが付かない)
+        &.is-near-store-badges {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
         }
 
         // ======================================================

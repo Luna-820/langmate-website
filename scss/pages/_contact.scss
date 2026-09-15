@@ -9,12 +9,10 @@
 .contact-hero {
 
     &__breadcrumb {
+        // 上下の余白は共通の.breadcrumb(margin-block:24px)に任せる。
         align-self: stretch;
         width: 100%;
-        // margin-block-start: 48px;
         padding-inline-start: 24px;
-        padding-block-start: clamp(60px, calc(45.52px + 3.367vw), 80px);
-
         text-align: left;
 
         .breadcrumb__list {
@@ -22,12 +20,10 @@
         }
 
         @include mx.hero-sp {
-            margin-block-start: 36px;
             padding-inline-start: 16px;
         }
 
         @include mx.sp {
-            margin-block-start: 28px;
             padding-inline-start: 8px;
         }
     }
@@ -74,12 +70,9 @@
 
 // ---- Form ----
 .contact-form-section {
-    padding-top: 24px;
+    // 上側は直前の.breadcrumbのmargin-block-end:24pxに任せる
+    // (ここでも足すと二重に間隔が空いてしまうため)。
     padding-bottom: clamp(60px, calc(31.04px + 6.734vw), 100px);
-
-    @include mx.sp {
-        padding-top: 0;
-    }
 }
 
 .contact-form {
