@@ -5443,6 +5443,13 @@ img {
     padding: 16px 20px;
   }
 }
+.faq-categories__item--contact {
+  background-color: #E5F3FF;
+}
+.faq-categories__item--contact:hover, .faq-categories__item--contact:active {
+  background-color: #E5F3FF;
+  opacity: 0.7;
+}
 .faq-categories__arrow {
   flex-shrink: 0;
   color: #202020;
@@ -5532,6 +5539,28 @@ img {
 
 body.tax-faq_category .faq-group:first-child:nth-last-child(2) {
   grid-column: 1/-1;
+}
+
+.faq-groups--search .faq-group {
+  grid-column: 1/-1;
+}
+.faq-groups--search .faq-group p {
+  text-align: center;
+}
+
+.faq-group__more-group {
+  grid-column: 1/-1;
+  display: grid;
+  justify-content: center;
+  row-gap: 24px;
+}
+.faq-group__more-group .faq-group__more {
+  margin-block-start: 0;
+  display: block;
+}
+.faq-group__more-group .faq-categories__item {
+  width: 100%;
+  justify-content: center;
 }
 
 .faq-item a {
@@ -6248,4 +6277,4 @@ p .user-id-steps__num {
   .webview-page .legal-hero {
     padding-top: 24px;
   }
-}/*# sourceMappingURL=main.css.map */
+}

@@ -245,6 +245,18 @@
         @include mx.sp {
             padding: 16px 20px;
         }
+
+        // 検索結果0件の時の「お問い合わせはこちら」ボタン。形(padding・
+        // border・border-radius・フォント)は同じまま、背景色だけ変える。
+        &--contact {
+            background-color: v.$color-blue-light;
+
+            &:hover,
+            &:active {
+                background-color: v.$color-blue-light;
+                opacity: 0.7;
+            }
+        }
     }
 
 
@@ -410,6 +422,45 @@
 // かつ後ろから2番目」で".faq-groupが1個だけ+その後に戻るボタンだけ"を判定する。
 body.tax-faq_category .faq-group:first-child:nth-last-child(2) {
     grid-column: 1 / -1;
+}
+
+// 検索結果セクション(page-body-how-can-we-help-*.php)も同じ理由で、
+// .faq-group(検索結果1件分)が2カラムgridの左側だけに偏らないよう、
+// 全幅に広げて中央に来るようにする。
+.faq-groups--search .faq-group {
+    grid-column: 1 / -1;
+
+    // 0件の時の「該当するFAQが見つかりませんでした」メッセージも中央揃え
+    // (通常の検索結果<ul>は左揃えのままでいい)。
+    p {
+        text-align: center;
+    }
+}
+
+// 0件の時だけ表示する「お問い合わせはこちら」ボタンを、「よくある質問TOPへ戻る」
+// ボタンのすぐ上(24px)に、同じ幅で並べて表示するためのラッパー。
+// 单一列gridにして、幅は2つのうち広い方(=戻るボタン)に両方揃える
+// (justify-items:stretchが初期値なので、片方だけ幅を指定しなくても
+// 自動でカラム幅いっぱいに広がる)。
+.faq-group__more-group {
+    grid-column: 1 / -1;
+    display: grid;
+    justify-content: center;
+    row-gap: 24px;
+
+    // 個別の.faq-group__moreが持つ上余白(.faq-groupの下のグループ全体との間隔)は
+    // ここでは不要(row-gapで24px間隔を管理するため、二重にならないよう0に戻す)。
+    .faq-group__more {
+        margin-block-start: 0;
+        display: block;
+    }
+
+    // 中でボタン自体の幅をカラム幅いっぱいに広げ、中身(アイコン+テキスト)は
+    // 中央揃えのまま。
+    .faq-categories__item {
+        width: 100%;
+        justify-content: center;
+    }
 }
 
 
