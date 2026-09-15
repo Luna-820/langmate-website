@@ -686,6 +686,24 @@ function langmate_register_faq_meta() {
 			},
 		)
 	);
+	// 検索用キーワード(同義語・言い換え)。WP標準検索はタイトル・本文しか
+	// 見ないため、本文中に存在しない言い換え(例:「退会」で検索しても
+	// 本文に「アカウント削除」としか書いていない等)を拾えない問題への対応。
+	// クライアントがFAQごとに自由記入し、langmate_faq_search_include_keywords()
+	// で検索対象に含める。
+	register_post_meta(
+		'faq',
+		'faq_search_keywords',
+		array(
+			'type'          => 'string',
+			'single'        => true,
+			'show_in_rest'  => true,
+			'default'       => '',
+			'auth_callback' => function () {
+				return current_user_can( 'edit_posts' );
+			},
+		)
+	);
 }
 add_action( 'init', 'langmate_register_faq_meta' );
 
@@ -734,6 +752,18 @@ function langmate_render_faq_lang_meta_box( $post ) {
 		サイトリニューアル前の旧URL(<code>/support-page/○○○/</code>)の「○○○」部分だけを入力する。
 		入力しておくと、旧URLにアクセスされた時にこのFAQの新URLへ自動で転送される(移行が終わったFAQだけ入力すればOK)。
 	</p>
+	<hr>
+	<?php $search_keywords = get_post_meta( $post->ID, 'faq_search_keywords', true ); ?>
+	<p>
+		<label for="faq_search_keywords">検索用キーワード</label><br>
+		<textarea name="faq_search_keywords" id="faq_search_keywords" rows="3" style="width:100%;"><?php echo esc_textarea( $search_keywords ); ?></textarea>
+	</p>
+	<p class="description">
+		「よくある質問」ページの検索ボックスで、本文中の言葉と違う言い方で検索されても
+		見つかるようにするための言い換え・同義語を入力する(カンマや読点区切りで複数可)。
+		例:タイトルが「アカウントを削除するには」なら、「退会, やめる, 消したい, 解除」等を入力しておく。
+		画面には表示されず、検索対象としてのみ使われる。
+	</p>
 	<?php
 }
 
@@ -754,6 +784,9 @@ function langmate_save_faq_lang_meta( $post_id ) {
 	update_post_meta( $post_id, 'faq_toc', isset( $_POST['faq_toc'] ) ? '1' : '' );
 	if ( isset( $_POST['faq_legacy_slug'] ) ) {
 		update_post_meta( $post_id, 'faq_legacy_slug', sanitize_title( wp_unslash( $_POST['faq_legacy_slug'] ) ) );
+	}
+	if ( isset( $_POST['faq_search_keywords'] ) ) {
+		update_post_meta( $post_id, 'faq_search_keywords', sanitize_textarea_field( wp_unslash( $_POST['faq_search_keywords'] ) ) );
 	}
 }
 add_action( 'save_post_faq', 'langmate_save_faq_lang_meta' );
@@ -871,6 +904,44 @@ function langmate_faq_permalink( $link, $post ) {
 	return str_replace( '%faq_category%', $category_slug, $link );
 }
 add_filter( 'post_type_link', 'langmate_faq_permalink', 10, 2 );
+
+/**
+ * ==========================================================
+ * FAQ: 同じスラッグの日英投稿がある時、URLの言語で正しい方だけに絞り込む
+ *
+ * 下記のlangmate_faq_allow_shared_slug()で日英同じスラッグを共有できる
+ * ようにした結果、今度はURLから投稿を探す側(WordPress標準のクエリ解決)が
+ * スラッグだけで投稿を探してしまい、faq_lang(日本語/英語)を見ずに
+ * どちらか一方の投稿を拾ってしまう問題が発生する
+ * (例: /ja/support/{category}/{slug}/ にアクセスしたのに、
+ * 同じスラッグの英語版投稿の方が返ってくることがある)。
+ * URLが/ja/始まりかどうか(faq_jaクエリ変数)を、メインクエリの
+ * 絞り込み条件(faq_lang)に組み込むことで、最初から正しい言語の
+ * 投稿しか候補に入らないようにする。
+ * ==========================================================
+ */
+function langmate_faq_scope_query_by_url_language( $query ) {
+	if ( is_admin() || ! $query->is_main_query() ) {
+		return;
+	}
+
+	// FAQ単体をスラッグで指定しているリクエストにだけ適用する
+	// (カテゴリーアーカイブ一覧・検索結果等、スラッグ指定の無いクエリには
+	// 影響しない)。
+	if ( '' === (string) $query->get( 'faq' ) ) {
+		return;
+	}
+
+	$expected_lang = $query->get( 'faq_ja' ) ? 'ja' : 'en';
+
+	$meta_query   = (array) $query->get( 'meta_query' );
+	$meta_query[] = array(
+		'key'   => 'faq_lang',
+		'value' => $expected_lang,
+	);
+	$query->set( 'meta_query', $meta_query );
+}
+add_action( 'pre_get_posts', 'langmate_faq_scope_query_by_url_language' );
 
 /**
  * ==========================================================
@@ -1250,6 +1321,10 @@ function langmate_get_faq_groups_for_parent( $parent_term, $lang ) {
 /**
  * ---- FAQ検索(キーワードでタイトル・本文を検索。言語で絞り込み) ----
  *
+ * タイトル・本文に加えて、投稿メタ「faq_search_keywords」(検索用キーワード)
+ * もlangmate_faq_search_include_keywords()経由で検索対象に含める。
+ * 検索ボックス・クエリパラメータ自体には一切手を加えていない。
+ *
  * @param string $search_term 検索キーワード
  * @param string $lang        'ja' | 'en'
  * @return WP_Post[]
@@ -1257,10 +1332,17 @@ function langmate_get_faq_groups_for_parent( $parent_term, $lang ) {
 function langmate_search_faq_posts( $search_term, $lang ) {
 	return get_posts(
 		array(
-			'post_type'      => 'faq',
-			'posts_per_page' => -1,
-			's'              => $search_term,
-			'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+			'post_type'                   => 'faq',
+			'posts_per_page'              => -1,
+			's'                           => $search_term,
+			'langmate_faq_keyword_search' => true,
+			// get_posts()はデフォルトでsuppress_filters=>trueのため、
+			// posts_search等のSQL生成系フィルターが一切発火しない
+			// (meta_queryはWP_Queryに直接組み込まれる仕組みのため影響を
+			// 受けないが、下のlangmate_faq_search_include_keywords()は
+			// フィルターなのでこれが無いと呼ばれない)。明示的にfalseにする。
+			'suppress_filters'            => false,
+			'meta_query'                  => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 				array(
 					'key'   => 'faq_lang',
 					'value' => $lang,
@@ -1269,6 +1351,48 @@ function langmate_search_faq_posts( $search_term, $lang ) {
 		)
 	);
 }
+
+/**
+ * ---- FAQ検索: 「検索用キーワード」欄もLIKEで検索対象に含める ----
+ *
+ * langmate_search_faq_posts()が'langmate_faq_keyword_search'=>trueを
+ * 付けて呼んだクエリにだけ発動する(他のsearch()呼び出し・管理画面の
+ * 検索等には一切影響しない)。WP標準のタイトル・本文検索に、
+ * 投稿メタfaq_search_keywordsへのLIKE一致をORで追加する。
+ */
+function langmate_faq_search_include_keywords( $search, $query ) {
+	if ( ! $query->get( 'langmate_faq_keyword_search' ) ) {
+		return $search;
+	}
+
+	$term = trim( (string) $query->get( 's' ) );
+	if ( '' === $term || '' === trim( $search ) ) {
+		return $search;
+	}
+
+	global $wpdb;
+	$like = '%' . $wpdb->esc_like( $term ) . '%';
+
+	$keyword_clause = $wpdb->prepare(
+		" OR EXISTS (
+			SELECT 1 FROM {$wpdb->postmeta} AS langmate_faq_kw
+			WHERE langmate_faq_kw.post_id = {$wpdb->posts}.ID
+			AND langmate_faq_kw.meta_key = 'faq_search_keywords'
+			AND langmate_faq_kw.meta_value LIKE %s
+		) ",
+		$like
+	);
+
+	// WP標準の検索条件( "AND (...)" )の一番最後の閉じ括弧の直前に、
+	// キーワード欄への条件をORで差し込む。
+	$last_paren = strrpos( $search, ')' );
+	if ( false === $last_paren ) {
+		return $search;
+	}
+
+	return substr( $search, 0, $last_paren ) . $keyword_clause . substr( $search, $last_paren );
+}
+add_filter( 'posts_search', 'langmate_faq_search_include_keywords', 10, 2 );
 
 /**
  * ---- 「よくある質問」に手動でピン留めされたFAQ一覧(カテゴリー横断) ----

@@ -105,6 +105,12 @@ $hero_breadcrumb = array(
 	      <p>該当するFAQが見つかりませんでした。別のキーワードでお試しください。</p>
 	      <?php endif; ?>
 	    </div>
+
+	    <div class="faq-group__more">
+	      <a class="faq-categories__item" href="<?php echo esc_url( langmate_get_faq_archive_url( $lang ) ); ?>">
+	        <span class="faq-categories__arrow" aria-hidden="true">◀︎</span>よくある質問TOPへ戻る
+	      </a>
+	    </div>
 	  </div>
 	</section>
 	<?php else : ?>
