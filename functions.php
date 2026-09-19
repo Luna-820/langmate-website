@@ -987,13 +987,26 @@ function langmate_get_faq_url_category_slug( $post_id ) {
 
 // ---- FAQ投稿のパーマリンクを /support/{category}/{slug}/ (EN)・
 //      /ja/support/{category}/{slug}/ (JA) にする ----
-function langmate_faq_permalink( $link, $post ) {
+//
+// $leavename(WordPress本体がget_sample_permalink()経由で「%投稿タイプ名%を
+// 実際のスラッグに置き換えず、プレースホルダーのまま残してほしい」と頼む
+// フラグ)を必ず受け取ること。編集画面のスラッグ編集欄は、REST APIの
+// permalink_templateがこのプレースホルダーを含んでいることを前提に
+// 「編集可能な部分」を判定しているため、ここでpost_nameを直接埋め込んで
+// しまうと、公開後にスラッグを変更できなくなる(以前JA分岐だけこの引数を
+// 受け取っておらず、post_nameを常に直接埋め込んでいたためこの不具合が
+// 発生していた。EN分岐は$linkのプレースホルダーをそのまま残す実装だった
+// ため元々問題が出ていなかった)。
+function langmate_faq_permalink( $link, $post, $leavename = false ) {
 	if ( 'faq' !== get_post_type( $post ) ) {
 		return $link;
 	}
 	// 公開済み以外(下書き・プレビュー中等)はpost_name(スラッグ)が
 	// 未確定/不安定なことがあり、ここで独自URLを組み立てると壊れた
 	// リンクになる(英語側はこの分岐に入らないため元々問題が出ない)。
+	// なお、get_sample_permalink()は下書き等でも一時的にpost_statusを
+	// 'publish'にした上でこのフィルターを呼ぶため、編集画面のスラッグ
+	// プレビュー自体はこのガードの影響を受けない。
 	if ( 'publish' !== $post->post_status ) {
 		return $link;
 	}
@@ -1001,15 +1014,20 @@ function langmate_faq_permalink( $link, $post ) {
 	$category_slug = langmate_get_faq_url_category_slug( $post->ID );
 
 	if ( 'ja' === get_post_meta( $post->ID, 'faq_lang', true ) ) {
-		return home_url( '/ja/support/' . $category_slug . '/' . $post->post_name . '/' );
+		// $leavenameがtrueの時は実スラッグの代わりに%faq%プレースホルダーの
+		// ままにしておく(get_sample_permalink()側で%pagename%に変換され、
+		// 編集画面のスラッグ編集欄に渡る)。
+		$slug = $leavename ? '%' . $post->post_type . '%' : $post->post_name;
+		return home_url( '/ja/support/' . $category_slug . '/' . $slug . '/' );
 	}
 
 	// register_post_type()のrewrite('support/%faq_category%')が生成した
 	// デフォルトリンクに含まれる%faq_category%プレースホルダーを実際の
-	// スラッグに置き換える。
+	// スラッグに置き換える(%faq%側のプレースホルダーは$leavenameに応じて
+	// $link自体に既に反映済みのため、ここでは触らない)。
 	return str_replace( '%faq_category%', $category_slug, $link );
 }
-add_filter( 'post_type_link', 'langmate_faq_permalink', 10, 2 );
+add_filter( 'post_type_link', 'langmate_faq_permalink', 10, 3 );
 
 /**
  * ==========================================================
