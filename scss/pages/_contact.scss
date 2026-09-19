@@ -75,6 +75,99 @@
     padding-bottom: clamp(60px, calc(31.04px + 6.734vw), 100px);
 }
 
+// ---- お知らせバナー(障害・注意/お知らせ/通常時ステータス) ----
+// 設定画面(設定 → お問い合わせ お知らせ設定)の内容を表示する。
+// フォームの直上、Web版・WebView版・日英とも共通。
+.contact-notice {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 12px;
+
+    width: 100%;
+    max-width: 700px;
+    // 上(CTAボタンとの間)は元の余白のまま、下(パンくずとの間)はその倍にする。
+    // 下側はパンくず自身のmargin-block-start:24pxと隣接マージンの相殺が
+    // 起きるため、ここを倍にしても最終的な見た目はこの値がそのまま効く
+    // (24-32pxより大きいため、相殺されずこちらが優先される)。
+    margin: clamp(24px, calc(15.52px + 1.687vw), 32px) auto clamp(48px, calc(31.04px + 3.374vw), 64px);
+    padding: 16px 20px;
+
+    border-radius: v.$radius-card;
+
+    &__badge {
+        flex-shrink: 0;
+
+        padding: 4px 12px;
+
+        font-size: 1.2rem;
+        font-weight: v.$fw-bold;
+        line-height: 1.5;
+        white-space: nowrap;
+
+        border-radius: v.$radius-button;
+    }
+
+    &__text {
+        flex: 1;
+        min-width: 200px;
+
+        font-size: 1.4rem;
+        line-height: 1.6;
+    }
+
+    // 障害・注意(赤)
+    &--alert {
+        background-color: v.$color-alert-light;
+
+        .contact-notice__badge {
+            color: v.$color-white;
+            background-color: v.$color-alert;
+        }
+
+        .contact-notice__text {
+            color: v.$color-alert;
+        }
+    }
+
+    // お知らせ(青)
+    &--info {
+        background-color: v.$color-blue-light;
+
+        .contact-notice__badge {
+            color: v.$color-white;
+            background-color: v.$color-blue;
+        }
+
+        .contact-notice__text {
+            color: v.$color-blue;
+        }
+    }
+
+    // 通常時(不具合なし、落ち着いた見た目)
+    &--normal {
+        background-color: v.$color-gray-light;
+
+        .contact-notice__badge {
+            color: v.$color-white;
+            background-color: v.$color-gray;
+        }
+
+        .contact-notice__text {
+            color: v.$color-text;
+        }
+    }
+
+    @include mx.sp {
+        padding: 12px 16px;
+
+        &__text {
+            min-width: 0;
+            font-size: 1.3rem;
+        }
+    }
+}
+
 .contact-form {
     display: flex;
     flex-direction: column;

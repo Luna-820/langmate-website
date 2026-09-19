@@ -81,6 +81,19 @@
             margin-block-start: 64px;
         }
 
+        // 本文中に差し込むインラインアイコン用。サイト全体のimg初期設定
+        // (base/_base.scss: display:block)のままだと、文中に画像を置いても
+        // 必ず前後で改行されてしまい、テキストと同じ行に並べられない
+        // (クライアント要望: 「> プロフィール[アイコン]をタップ」のように
+        // 1行に収めたい)。FAQ本文の中だけ、img を通常のインライン要素として
+        // 扱うよう上書きする(このページ以外のimg挙動には影響しない)。
+        img {
+            display: inline-block;
+            max-width: 100%;
+            height: auto;
+            vertical-align: middle;
+        }
+
         h2 {
             // fluid化: sp=2rem / pc=2.4rem（431〜1023pxを線形補間）
             font-size: clamp(2rem, calc(17.1px + 0.6734vw), 2.4rem);

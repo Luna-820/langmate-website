@@ -146,6 +146,109 @@ function langmate_get_current_language() {
 }
 
 /**
+ * ==========================================================
+ * トップページのブラウザ言語自動判定・リダイレクト
+ *
+ * ルート('/')にアクセスした人を、以下の優先順位でJA/ENへ振り分ける:
+ *   1. Cookie(langmate_lang)に保存済みの言語があればそれを最優先
+ *      (過去に手動切替、または後述の自動判定で確定した言語)
+ *   2. ブラウザのAccept-Languageの先頭(最優先)言語がjaで始まればJA
+ *   3. それ以外はEN(現在地=ルート=EN版のため、リダイレクト不要)
+ *
+ * 対象はルートページのみ。FAQ個別記事やSNSでシェアされたJA/EN個別URL・
+ * カテゴリーアーカイブ等、URLで言語が明示されているページは対象外
+ * (直リンクを壊さない・hreflangの意味を壊さないため)。
+ * 検索エンジンのクローラーも対象外(自分のブラウザ言語を持たないため、
+ * 巻き込むとhreflang通りにインデックスされなくなる恐れがある)。
+ * 302(一時的)リダイレクトとし、ブラウザ・CDNに恒久キャッシュされない
+ * ようにする(Cookie変更後も正しく効くようにするため)。
+ * ==========================================================
+ */
+
+// ---- ざっくりとしたBot判定(主要なクローラーのUser-Agentを弾く) ----
+function langmate_is_bot_request() {
+	$ua = isset( $_SERVER['HTTP_USER_AGENT'] ) ? (string) $_SERVER['HTTP_USER_AGENT'] : '';
+	if ( '' === $ua ) {
+		// UA無しのリクエストは大半がbot/スクリプトのため、対象外にしておく方が安全。
+		return true;
+	}
+	return (bool) preg_match( '/bot|crawl|spider|slurp|facebookexternalhit|bingpreview|apis-google|adsbot|mediapartners/i', $ua );
+}
+
+// ---- ルートページのみ、初回訪問者をブラウザ言語で振り分ける ----
+function langmate_root_language_redirect() {
+	if ( is_admin() ) {
+		return;
+	}
+
+	$request_uri = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '/';
+	$path        = (string) wp_parse_url( $request_uri, PHP_URL_PATH );
+
+	// ルート('/')以外は対象外。
+	if ( '' !== trim( $path, '/' ) ) {
+		return;
+	}
+
+	if ( langmate_is_bot_request() ) {
+		return;
+	}
+
+	$cookie_name = 'langmate_lang';
+	$cookie_lang = isset( $_COOKIE[ $cookie_name ] ) ? sanitize_text_field( wp_unslash( $_COOKIE[ $cookie_name ] ) ) : '';
+
+	if ( 'ja' === $cookie_lang || 'en' === $cookie_lang ) {
+		$lang = $cookie_lang;
+	} else {
+		$accept_language = isset( $_SERVER['HTTP_ACCEPT_LANGUAGE'] ) ? (string) $_SERVER['HTTP_ACCEPT_LANGUAGE'] : '';
+		// 先頭(最優先)の言語タグだけを見る(例: "ja-JP,ja;q=0.9,en;q=0.8" → "ja-jp")。
+		$primary_tags = explode( ',', $accept_language );
+		$primary      = strtolower( trim( $primary_tags[0] ) );
+		$lang         = ( 0 === strpos( $primary, 'ja' ) ) ? 'ja' : 'en';
+
+		// 初回判定の結果をCookieに保存(次回以降は判定をスキップできるように)。
+		langmate_set_language_cookie( $lang );
+	}
+
+	if ( 'ja' === $lang ) {
+		wp_safe_redirect( home_url( '/ja/' ), 302 );
+		exit;
+	}
+	// enの場合はそのまま(現在地=ルート=EN版)。リダイレクト不要。
+}
+add_action( 'template_redirect', 'langmate_root_language_redirect', 5 );
+
+// ---- Cookie書き込みの共通ヘルパー ----
+function langmate_set_language_cookie( $lang ) {
+	$cookie_name = 'langmate_lang';
+	setcookie( $cookie_name, $lang, time() + YEAR_IN_SECONDS, '/', '', is_ssl(), true );
+	$_COOKIE[ $cookie_name ] = $lang; // 同一リクエスト内でも即座に反映されるように。
+}
+
+/**
+ * ---- 閲覧中ページの言語にCookieを同期する ----
+ *
+ * 手動の言語切替(language-switcher.js)・通常のページ内リンクどちらで
+ * 移動した場合でも、「最後に見ていた言語」が自動的にCookieへ反映される
+ * ようにする(JS側の変更は不要。localStorageは他のPHP処理から読めない
+ * ため、Cookieに一本化している)。既に正しい値ならCookieを再送信しない
+ * (無駄なSet-Cookieヘッダーを毎回のリクエストで発行しないため)。
+ */
+function langmate_sync_language_cookie() {
+	if ( is_admin() ) {
+		return;
+	}
+
+	$cookie_name = 'langmate_lang';
+	$current     = langmate_get_current_language();
+	$cookie_lang = isset( $_COOKIE[ $cookie_name ] ) ? sanitize_text_field( wp_unslash( $_COOKIE[ $cookie_name ] ) ) : '';
+
+	if ( $cookie_lang !== $current ) {
+		langmate_set_language_cookie( $current );
+	}
+}
+add_action( 'template_redirect', 'langmate_sync_language_cookie', 20 );
+
+/**
  * translation_key(例: 'company')と言語から、対応する固定ページのURLを返す。
  * 見つからない場合は '#'（Language Switcher等で無理にリンクさせない）。
  *
@@ -592,7 +695,10 @@ function langmate_register_faq_cpt() {
 			// タクソノミーのrewrite('support')と対応するタグ。実際のスラッグへの
 			// 置換はlangmate_faq_permalink()(post_type_linkフィルター)で行う。
 			'rewrite'      => array( 'slug' => 'support/%faq_category%', 'with_front' => false ),
-			'supports'     => array( 'title', 'editor' ),
+			// page-attributesで編集画面に「順番」欄を出す(menu_order)。
+			// カテゴリー内での記事の並び順に使う。クエリ側は元から
+			// orderby=>'menu_order title'になっている(langmate_get_faq_posts_by_term()等)。
+			'supports'     => array( 'title', 'editor', 'page-attributes' ),
 			'show_in_rest' => true,
 			'menu_icon'    => 'dashicons-editor-help',
 		)
@@ -1064,6 +1170,23 @@ add_action( 'template_redirect', 'langmate_faq_language_url_guard' );
  * 一致すれば新URLへ301する。
  * すでに正しく解決できているリクエスト(実際のFAQ記事・カテゴリー
  * アーカイブそのもの)には一切影響しない。
+ *
+ * ---- WordPress標準の「旧スラッグ自動リダイレクト」対策 ----
+ * WordPress本体は、投稿のスラッグ変更を検知して自動で旧URLから
+ * 新URLへ転送する標準機能(wp_old_slug_redirect())を持っている。
+ * これは`_wp_old_slug`というメタキーだけを見て、post_type単位で
+ * 一致する投稿を探す仕組みで、faq_lang(言語)を一切考慮しない。
+ * しかも本体側は functions.php 読み込みより先、WordPress起動時に
+ * 同じtemplate_redirectフックへ登録されるため、優先度が同じだと
+ * 必ず本体側が先に実行され、マッチした時点でexitしてしまい、
+ * 下記の言語判定付きリダイレクトが一切呼ばれなくなる
+ * (実際に確認した不具合: 日本語版しか無いFAQの英語旧URLに
+ * アクセスすると、本体機能が言語を無視して日本語版へ転送していた)。
+ * これを避けるため、①本体より早い優先度(1)でこの関数を登録し、
+ * ②FAQの旧URL形式に一致したのに該当データが無かった場合は、
+ * その場でwp_old_slug_redirect()を無効化してから抜ける
+ * (通常の投稿・固定ページ向けの本体機能自体は、FAQと無関係な
+ * URLでは今まで通り動作させたいため、無条件に無効化はしない)。
  * ==========================================================
  */
 function langmate_faq_legacy_redirect() {
@@ -1100,6 +1223,10 @@ function langmate_faq_legacy_redirect() {
 			wp_safe_redirect( get_permalink( $posts[0] ), 301 );
 			exit;
 		}
+
+		// 該当データが無かった場合、この後に本体のwp_old_slug_redirect()が
+		// 言語無視で誤ったリダイレクトをしてしまわないよう止めておく。
+		remove_action( 'template_redirect', 'wp_old_slug_redirect' );
 		return;
 	}
 
@@ -1125,9 +1252,13 @@ function langmate_faq_legacy_redirect() {
 			wp_safe_redirect( langmate_get_faq_category_archive_url( $terms[0], $lang ), 301 );
 			exit;
 		}
+
+		remove_action( 'template_redirect', 'wp_old_slug_redirect' );
 	}
 }
-add_action( 'template_redirect', 'langmate_faq_legacy_redirect' );
+// 優先度1(標準の10より早く)で登録し、wp_old_slug_redirect()より
+// 先にこちらを実行させる。
+add_action( 'template_redirect', 'langmate_faq_legacy_redirect', 1 );
 
 /**
  * ---- 下書きFAQの「プレビュー」が空クエリになる問題の修正 ----
@@ -1666,4 +1797,205 @@ function langmate_get_faq_all_label( $lang ) {
 		return get_option( 'langmate_faq_all_label_en', 'All FAQs' );
 	}
 	return get_option( 'langmate_faq_all_label_ja', 'よくある質問' );
+}
+
+/**
+ * ==========================================================
+ * お問い合わせページ:障害・注意お知らせバナー設定
+ *
+ * Card不具合・ログイン不具合等、現在発生中の不具合をクライアント側で
+ * ON/OFF・種別・本文(日英)を管理できるようにする設定画面。
+ * Web版(page-body-contact-*.php)・WebView版(page-body-contact-webview-*.php)、
+ * 日英とも共通のtemplate-parts/contact-notice.phpから呼び出す。
+ * OFF、または本文が空の時は「通常時文言」を表示し、常に何らかの
+ * ステータスが見える状態にする(クライアント要望: 平常時も
+ * 「現在エラーは起きていません」等の安心材料を出したい)。
+ * ==========================================================
+ */
+function langmate_register_contact_notice_settings() {
+	register_setting(
+		'langmate_contact_notice_settings',
+		'langmate_contact_notice_enabled',
+		array(
+			'type'              => 'string',
+			'sanitize_callback' => function ( $value ) {
+				return $value ? '1' : '';
+			},
+			'default'           => '',
+		)
+	);
+	register_setting(
+		'langmate_contact_notice_settings',
+		'langmate_contact_notice_type',
+		array(
+			'type'              => 'string',
+			'sanitize_callback' => function ( $value ) {
+				return ( 'info' === $value ) ? 'info' : 'alert';
+			},
+			'default'           => 'alert',
+		)
+	);
+	register_setting(
+		'langmate_contact_notice_settings',
+		'langmate_contact_notice_message_ja',
+		array(
+			'type'              => 'string',
+			'sanitize_callback' => 'sanitize_textarea_field',
+			'default'           => '',
+		)
+	);
+	register_setting(
+		'langmate_contact_notice_settings',
+		'langmate_contact_notice_message_en',
+		array(
+			'type'              => 'string',
+			'sanitize_callback' => 'sanitize_textarea_field',
+			'default'           => '',
+		)
+	);
+	register_setting(
+		'langmate_contact_notice_settings',
+		'langmate_contact_notice_normal_ja',
+		array(
+			'type'              => 'string',
+			'sanitize_callback' => 'sanitize_text_field',
+			'default'           => '現在、エラーは発生しておりません。',
+		)
+	);
+	register_setting(
+		'langmate_contact_notice_settings',
+		'langmate_contact_notice_normal_en',
+		array(
+			'type'              => 'string',
+			'sanitize_callback' => 'sanitize_text_field',
+			'default'           => 'No issues are currently reported.',
+		)
+	);
+}
+add_action( 'admin_init', 'langmate_register_contact_notice_settings' );
+
+function langmate_add_contact_notice_settings_page() {
+	add_options_page( 'お問い合わせ お知らせ設定', 'お問い合わせ お知らせ設定', 'manage_options', 'langmate-contact-notice-settings', 'langmate_render_contact_notice_settings_page' );
+}
+add_action( 'admin_menu', 'langmate_add_contact_notice_settings_page' );
+
+function langmate_render_contact_notice_settings_page() {
+	$enabled    = get_option( 'langmate_contact_notice_enabled', '' );
+	$type       = get_option( 'langmate_contact_notice_type', 'alert' );
+	$message_ja = get_option( 'langmate_contact_notice_message_ja', '' );
+	$message_en = get_option( 'langmate_contact_notice_message_en', '' );
+	$normal_ja  = get_option( 'langmate_contact_notice_normal_ja', '現在、エラーは発生しておりません。' );
+	$normal_en  = get_option( 'langmate_contact_notice_normal_en', 'No issues are currently reported.' );
+	?>
+	<div class="wrap">
+		<h1>お問い合わせ お知らせ設定</h1>
+		<p>お問い合わせフォーム(Web版・アプリ内WebView版、日英とも)の直上に表示される、不具合・障害のお知らせです。<br>
+		「表示する」がOFF、または本文が空の場合は、下の「通常時文言」の方が表示されます。</p>
+		<form method="post" action="options.php">
+			<?php settings_fields( 'langmate_contact_notice_settings' ); ?>
+			<table class="form-table">
+				<tr>
+					<th scope="row"><label for="langmate_contact_notice_enabled">表示する</label></th>
+					<td>
+						<label>
+							<input type="checkbox" name="langmate_contact_notice_enabled" id="langmate_contact_notice_enabled" value="1" <?php checked( $enabled, '1' ); ?>>
+							ONにすると、下の本文を不具合・お知らせとして表示する。
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row"><label for="langmate_contact_notice_type">種別</label></th>
+					<td>
+						<select name="langmate_contact_notice_type" id="langmate_contact_notice_type">
+							<option value="alert" <?php selected( $type, 'alert' ); ?>>障害・注意(赤)</option>
+							<option value="info" <?php selected( $type, 'info' ); ?>>お知らせ(青)</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row"><label for="langmate_contact_notice_message_ja">本文(日本語)</label></th>
+					<td>
+						<textarea name="langmate_contact_notice_message_ja" id="langmate_contact_notice_message_ja" rows="3" class="large-text"><?php echo esc_textarea( $message_ja ); ?></textarea>
+						<p class="description">例:現在、Card機能で不具合が発生しております。復旧まで今しばらくお待ちください。</p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row"><label for="langmate_contact_notice_message_en">本文(英語)</label></th>
+					<td>
+						<textarea name="langmate_contact_notice_message_en" id="langmate_contact_notice_message_en" rows="3" class="large-text"><?php echo esc_textarea( $message_en ); ?></textarea>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row"><label for="langmate_contact_notice_normal_ja">通常時文言(日本語)</label></th>
+					<td>
+						<input type="text" name="langmate_contact_notice_normal_ja" id="langmate_contact_notice_normal_ja"
+							value="<?php echo esc_attr( $normal_ja ); ?>" class="regular-text">
+					</td>
+				</tr>
+				<tr>
+					<th scope="row"><label for="langmate_contact_notice_normal_en">通常時文言(英語)</label></th>
+					<td>
+						<input type="text" name="langmate_contact_notice_normal_en" id="langmate_contact_notice_normal_en"
+							value="<?php echo esc_attr( $normal_en ); ?>" class="regular-text">
+					</td>
+				</tr>
+			</table>
+			<?php submit_button(); ?>
+		</form>
+	</div>
+	<?php
+}
+
+/**
+ * ---- お問い合わせお知らせの表示内容を言語別に取得 ----
+ *
+ * @param string $lang 'ja' | 'en'
+ * @return array{is_alert: bool, type: string, text: string}
+ */
+function langmate_get_contact_notice( $lang ) {
+	$enabled = ( '1' === get_option( 'langmate_contact_notice_enabled', '' ) );
+	$type    = get_option( 'langmate_contact_notice_type', 'alert' );
+	$message = ( 'en' === $lang )
+		? get_option( 'langmate_contact_notice_message_en', '' )
+		: get_option( 'langmate_contact_notice_message_ja', '' );
+
+	if ( $enabled && '' !== trim( $message ) ) {
+		return array(
+			'is_alert' => true,
+			'type'     => ( 'info' === $type ) ? 'info' : 'alert',
+			'text'     => $message,
+		);
+	}
+
+	$normal = ( 'en' === $lang )
+		? get_option( 'langmate_contact_notice_normal_en', 'No issues are currently reported.' )
+		: get_option( 'langmate_contact_notice_normal_ja', '現在、エラーは発生しておりません。' );
+
+	return array(
+		'is_alert' => false,
+		'type'     => 'normal',
+		'text'     => $normal,
+	);
+}
+
+/**
+ * ---- お問い合わせお知らせの種別バッジ表示名(言語対応) ----
+ */
+function langmate_get_contact_notice_badge_label( $type, $lang ) {
+	$labels = array(
+		'alert'  => array(
+			'ja' => '障害・注意',
+			'en' => 'Notice',
+		),
+		'info'   => array(
+			'ja' => 'お知らせ',
+			'en' => 'Info',
+		),
+		'normal' => array(
+			'ja' => 'ステータス',
+			'en' => 'Status',
+		),
+	);
+	$lang = ( 'en' === $lang ) ? 'en' : 'ja';
+	return $labels[ $type ][ $lang ] ?? $labels['normal'][ $lang ];
 }

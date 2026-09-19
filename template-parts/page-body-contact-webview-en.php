@@ -21,6 +21,7 @@ $lang = 'en';
 
     <section class="contact-form-section">
       <div class="wrapper">
+        <?php get_template_part( 'template-parts/contact-notice', null, array( 'lang' => $lang ) ); ?>
         <div class="contact-form" data-contact-thanks-url="<?php echo esc_url( langmate_get_page_url( 'contact-thanks', $lang ) ); ?>">
           <?php echo do_shortcode( '[contact-form-7 id="616e10f" title="Draft1 / EN"]' ); ?>
         </div>
