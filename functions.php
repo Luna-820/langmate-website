@@ -193,6 +193,22 @@ function langmate_root_language_redirect() {
 		return;
 	}
 
+	// 言語切替スイッチャー(language-switcher.js)からの明示的な選択は、
+	// Cookieより最優先で即座に反映する。Cookieはサーバー側でHttpOnly付きの
+	// ため、切替直後のJS側からは書き換えられず、切替直後にルートへ
+	// 遷移した場合、直前の言語のままのCookieを見て自動判定が「直前の
+	// 言語へ送り返してしまう」不具合があったため(?langswitch=はその対策)。
+	if ( isset( $_GET['langswitch'] ) ) {
+		$switch_lang = ( 'ja' === $_GET['langswitch'] ) ? 'ja' : 'en';
+		langmate_set_language_cookie( $switch_lang );
+
+		if ( 'ja' === $switch_lang ) {
+			wp_safe_redirect( home_url( '/ja/' ), 302 );
+			exit;
+		}
+		return; // enの場合はそのまま(現在地=ルート=EN版)。Cookieだけ更新して終わり。
+	}
+
 	$cookie_name = 'langmate_lang';
 	$cookie_lang = isset( $_COOKIE[ $cookie_name ] ) ? sanitize_text_field( wp_unslash( $_COOKIE[ $cookie_name ] ) ) : '';
 
@@ -662,6 +678,142 @@ add_filter( 'wpcf7_validate_email*', 'langmate_cf7_validate_email_confirmation',
 
 /**
  * ==========================================================
+ * お問い合わせフォーム: 問い合わせ番号の自動採番
+ *
+ * Contact Form 7には連番機能が無いため、独自の特殊メールタグ
+ * [_langmate_serial] を追加する(メール(1)(2)の件名・本文で使う)。
+ * 日英フォームを判別してJP-0001 / EN-0001形式で言語別に連番管理する。
+ * フォームの判別は、テーマのcontact.php等で使っているCF7ショートコードの
+ * id(ハッシュ文字列)と一致させる必要がある。
+ * ==========================================================
+ */
+function langmate_cf7_is_ja_form( $contact_form ) {
+	if ( ! $contact_form ) {
+		return false;
+	}
+	// template-parts/page-body-contact-ja.php・-webview-ja.php で使っている
+	// CF7ショートコードの id と合わせること。
+	$ja_form_hashes = array( 'e4da4e7' );
+	return in_array( $contact_form->hash(), $ja_form_hashes, true );
+}
+
+// ---- Cookie/Session跨ぎでの二重採番を避けるため、1リクエスト内で
+//      同じ投稿(Submission)には同じ番号を使い回す ----
+function langmate_cf7_get_or_create_serial( $submission ) {
+	static $cache = array();
+	$key = spl_object_id( $submission );
+	if ( isset( $cache[ $key ] ) ) {
+		return $cache[ $key ];
+	}
+
+	$is_ja  = langmate_cf7_is_ja_form( $submission->get_contact_form() );
+	$lang   = $is_ja ? 'ja' : 'en';
+	$prefix = $is_ja ? 'JP' : 'EN';
+	$number = langmate_cf7_increment_serial( $lang );
+
+	$serial        = sprintf( '%s-%04d', $prefix, $number );
+	$cache[ $key ] = $serial;
+	return $serial;
+}
+
+// ---- 言語別の連番をDBレベルでアトミックに+1する(同時アクセスでも
+//      同じ番号が重複しないように、INSERT ... ON DUPLICATE KEY UPDATEで
+//      1クエリで採番する) ----
+function langmate_cf7_increment_serial( $lang ) {
+	global $wpdb;
+	$option_name = 'langmate_contact_serial_' . ( 'ja' === $lang ? 'ja' : 'en' );
+
+	$wpdb->query(
+		$wpdb->prepare(
+			"INSERT INTO {$wpdb->options} (option_name, option_value, autoload) VALUES (%s, '1', 'no')
+			ON DUPLICATE KEY UPDATE option_value = option_value + 1",
+			$option_name
+		)
+	);
+
+	return (int) $wpdb->get_var(
+		$wpdb->prepare( "SELECT option_value FROM {$wpdb->options} WHERE option_name = %s", $option_name )
+	);
+}
+
+function langmate_cf7_serial_mail_tag( $output, $name, $html ) {
+	if ( '_langmate_serial' !== $name ) {
+		return $output;
+	}
+	$submission = WPCF7_Submission::get_instance();
+	if ( ! $submission ) {
+		return $output;
+	}
+	return langmate_cf7_get_or_create_serial( $submission );
+}
+add_filter( 'wpcf7_special_mail_tags', 'langmate_cf7_serial_mail_tag', 10, 3 );
+
+/**
+ * ==========================================================
+ * お問い合わせフォーム: スパム対策
+ *
+ * ①ハニーポット: 本物のユーザーには見えない罠フィールド
+ *   (フォーム側に text型 の contact-form-hp フィールドを追加し、
+ *   CSSで視覚的に隠す必要がある)。ここに値が入っていたら機械的な
+ *   入力とみなしてスパム扱いにする。
+ *   ※フィールド名は「website」等、ブラウザの自動入力(オートフィル)が
+ *   反応しそうな一般的な単語を避けること。autocomplete="off"だけでは
+ *   一部のブラウザ(特にモバイルSafari等)がそれを無視して自動入力して
+ *   しまい、実際は人間なのにスパム誤判定される事故につながるため。
+ * ②同一IPの短時間連投制限: 60秒以内の同一IPからの再送信をブロックする。
+ * どちらもwpcf7_spamフィルターで判定し、CF7標準のスパム処理(送信は
+ * 見た目上成功したように見せつつ実際にはメール送信しない)に乗せる。
+ *
+ * (診断メモ: InfinityFreeで原因不明の送信失敗が発生した際、この2つを
+ * 一時的に無効化して再テストしたが、無効化しても同じエラーが再現した。
+ * よってこの2つが原因ではないと確認済み。原因はCF7/このテーマの外側
+ * ―― InfinityFreeサーバー側のメール送信自体の制約 ―― の可能性が高い)
+ * ==========================================================
+ */
+function langmate_cf7_honeypot_check( $spam, $submission ) {
+	if ( $spam ) {
+		return $spam;
+	}
+	$value = $submission->get_posted_data( 'contact-form-hp' );
+	if ( ! empty( $value ) ) {
+		$submission->add_spam_log(
+			array(
+				'agent'  => 'langmate',
+				'reason' => 'Honeypot field (contact-form-hp) was filled in.',
+			)
+		);
+		return true;
+	}
+	return $spam;
+}
+add_filter( 'wpcf7_spam', 'langmate_cf7_honeypot_check', 10, 2 );
+
+function langmate_cf7_ip_rate_limit_check( $spam, $submission ) {
+	if ( $spam ) {
+		return $spam;
+	}
+	$ip = (string) $submission->get_meta( 'remote_ip' );
+	if ( '' === $ip ) {
+		return $spam;
+	}
+
+	$key = 'langmate_cf7_ip_' . md5( $ip );
+	if ( false !== get_transient( $key ) ) {
+		$submission->add_spam_log(
+			array(
+				'agent'  => 'langmate',
+				'reason' => 'Same IP submitted again within the 60-second cooldown window.',
+			)
+		);
+		return true;
+	}
+	set_transient( $key, 1, 60 ); // 60秒のクールダウン。
+	return $spam;
+}
+add_filter( 'wpcf7_spam', 'langmate_cf7_ip_rate_limit_check', 20, 2 );
+
+/**
+ * ==========================================================
  * FAQ: カスタム投稿タイプ + カテゴリータクソノミー
  *
  * ACFは使わず、標準の投稿本文(the_content)をそのまま回答として扱う。
@@ -896,6 +1048,64 @@ function langmate_save_faq_lang_meta( $post_id ) {
 	}
 }
 add_action( 'save_post_faq', 'langmate_save_faq_lang_meta' );
+
+/**
+ * ==========================================================
+ * FAQ: 新規作成→即公開時に付いてしまう不要な「-2」等の事後修正
+ *
+ * langmate_faq_allow_shared_slug()(wp_unique_post_slugフィルター)は
+ * 「衝突相手が全員別言語なら連番を付けない」という正しいロジックだが、
+ * Gutenbergは投稿保存時、まずREST API経由でwp_insert_post()を実行し
+ * (この中でwp_unique_post_slugが発火する)、その"後"に別リクエストで
+ * 旧来のメタボックス保存(save_post_faq、上のlangmate_save_faq_lang_meta)
+ * を行う。そのため新規投稿を初めて公開する瞬間だけ、1回目の時点では
+ * $_POSTにfaq_langが無く、DBにもまだ保存されておらず、langmate_faq_allow_shared_slug()
+ * が言語を正しく判定できない(=誤って「-2」等が付くことがある)。
+ *
+ * ここでfaq_lang確定"後"にスラッグを再検証し、不要な連番が付いて
+ * いれば正しいスラッグに戻す。同じ言語同士の本当の衝突であれば
+ * wp_unique_post_slug()が変わらず連番付きスラッグを返すので、
+ * その場合は何もしない。
+ * ==========================================================
+ */
+function langmate_faq_fix_premature_slug_suffix( $post_id ) {
+	if ( wp_is_post_autosave( $post_id ) || wp_is_post_revision( $post_id ) ) {
+		return;
+	}
+
+	static $fixing = array();
+	if ( ! empty( $fixing[ $post_id ] ) ) {
+		return; // wp_update_post()による再帰呼び出しを防ぐ
+	}
+
+	$post = get_post( $post_id );
+	if ( ! $post || 'faq' !== $post->post_type ) {
+		return;
+	}
+
+	if ( ! preg_match( '/^(.+)-(\d+)$/', $post->post_name, $matches ) ) {
+		return; // 連番が付いていなければ修正の必要なし
+	}
+	$base_slug = $matches[1];
+
+	// faq_langが確定済みの状態で、あらためて重複チェックにかける
+	// (langmate_faq_allow_shared_slug()フィルターが正しく効くようになる)。
+	$corrected_slug = wp_unique_post_slug( $base_slug, $post_id, $post->post_status, $post->post_type, $post->post_parent, $base_slug );
+
+	if ( $corrected_slug === $post->post_name ) {
+		return;
+	}
+
+	$fixing[ $post_id ] = true;
+	wp_update_post(
+		array(
+			'ID'        => $post_id,
+			'post_name' => $corrected_slug,
+		)
+	);
+	unset( $fixing[ $post_id ] );
+}
+add_action( 'save_post_faq', 'langmate_faq_fix_premature_slug_suffix', 20 );
 
 // ---- タームメタ: name_en(カテゴリーの英語表示名) / faq_order(表示順) ----
 function langmate_faq_category_add_form_fields() {
@@ -1279,6 +1489,60 @@ function langmate_faq_legacy_redirect() {
 add_action( 'template_redirect', 'langmate_faq_legacy_redirect', 1 );
 
 /**
+ * ==========================================================
+ * 旧サイトの固定ページURLからの301リダイレクト
+ *
+ * 新サイトでスラッグが変わった／ページが統合されたものだけを対象にする
+ * (スラッグが同じページはWordPress標準のルーティングでそのまま解決
+ * されるため、このコードの対象外)。
+ *
+ *   - /about-us/          → /company/   （スラッグ変更）
+ *   - /contact-business/  → /contact/   （ページ統合）
+ *
+ * langmate_faq_legacy_redirect()と同じ理由・同じ仕組みで、対象外の
+ * URLではwp_old_slug_redirect()の標準動作に影響しないよう、
+ * legacy_mapに存在する旧スラッグに一致した場合のみ処理する。
+ * ==========================================================
+ */
+function langmate_legacy_static_page_redirect() {
+	if ( ! is_404() ) {
+		return;
+	}
+
+	$request_uri = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
+	$path        = trim( (string) wp_parse_url( $request_uri, PHP_URL_PATH ), '/' );
+
+	if ( ! preg_match( '#^(?:(ja)/)?([^/]+)/?$#', $path, $matches ) ) {
+		return;
+	}
+
+	// '旧スラッグ' => '新ページのtranslation_key'
+	$legacy_map = array(
+		'about-us'         => 'company',
+		'contact-business' => 'contact',
+	);
+
+	$old_slug = $matches[2];
+	if ( ! isset( $legacy_map[ $old_slug ] ) ) {
+		return;
+	}
+
+	$lang   = ( 'ja' === ( $matches[1] ?? '' ) ) ? 'ja' : 'en';
+	$target = langmate_get_page_url( $legacy_map[ $old_slug ], $lang );
+
+	if ( $target && '#' !== $target ) {
+		wp_safe_redirect( $target, 301 );
+		exit;
+	}
+
+	// legacy_mapに載っているのに対訳ページ側の設定不備等で見つからなかった
+	// 場合、この後の本体wp_old_slug_redirect()が無関係な投稿へ誤って
+	// リダイレクトしてしまわないよう止めておく。
+	remove_action( 'template_redirect', 'wp_old_slug_redirect' );
+}
+add_action( 'template_redirect', 'langmate_legacy_static_page_redirect', 1 );
+
+/**
  * ---- 下書きFAQの「プレビュー」が空クエリになる問題の修正 ----
  *
  * langmate_faq_permalink()/langmate_faq_rewrite_rules()はどちらも
@@ -1442,17 +1706,55 @@ function langmate_get_faq_posts_by_term( $term_id, $lang, $include_children = tr
  * @return array 各要素は ['title' => string, 'posts' => WP_Post[]]
  */
 function langmate_get_faq_groups_for_parent( $parent_term, $lang ) {
-	$groups = array();
+	$groups   = array();
+	$children = langmate_get_faq_child_categories( $parent_term->term_id );
 
-	$direct_posts = langmate_get_faq_posts_by_term( $parent_term->term_id, $lang, false );
+	// 親カテゴリーに直接タグ付けされていても、子カテゴリーのどれかにも
+	// 同時に属している投稿は、子カテゴリー側のグループにだけ出す
+	// (以前はinclude_children=falseだけで絞っていたが、これは「子だけの
+	// 投稿を親側に取り込まない」ためのオプションであって、「親と子を
+	// 両方付けている投稿」までは除外できず、二重表示の原因になっていた)。
+	$child_ids = wp_list_pluck( $children, 'term_id' );
+	$tax_query = array(
+		array(
+			'taxonomy'         => 'faq_category',
+			'field'            => 'term_id',
+			'terms'            => $parent_term->term_id,
+			'include_children' => false,
+		),
+	);
+	if ( $child_ids ) {
+		$tax_query['relation'] = 'AND';
+		$tax_query[]           = array(
+			'taxonomy' => 'faq_category',
+			'field'    => 'term_id',
+			'terms'    => $child_ids,
+			'operator' => 'NOT IN',
+		);
+	}
+
+	$direct_posts = get_posts(
+		array(
+			'post_type'      => 'faq',
+			'posts_per_page' => -1,
+			'orderby'        => 'menu_order title',
+			'order'          => 'ASC',
+			'tax_query'      => $tax_query, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+			'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+				array(
+					'key'   => 'faq_lang',
+					'value' => $lang,
+				),
+			),
+		)
+	);
+
 	if ( ! empty( $direct_posts ) ) {
 		$groups[] = array(
 			'title' => langmate_get_faq_category_label( $parent_term, $lang ),
 			'posts' => $direct_posts,
 		);
 	}
-
-	$children = langmate_get_faq_child_categories( $parent_term->term_id );
 
 	foreach ( $children as $child ) {
 		$posts = langmate_get_faq_posts_by_term( $child->term_id, $lang );
