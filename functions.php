@@ -1612,6 +1612,47 @@ function langmate_get_faq_category_label( $term, $lang ) {
 }
 
 /**
+ * ==========================================================
+ * FAQカテゴリーアーカイブページの<title>タグを言語に応じて補正
+ *
+ * <title>タグ自体はAIOSEOが生成しており、そこはWordPressタクソノミー
+ * の生の名前(term->name、常に日本語で保存されている)をそのまま使って
+ * しまう。本文中の見出し・パンくず等はlangmate_get_faq_category_label()
+ * で英語ラベルに変換しているが、<title>だけこれを経由していないため、
+ * 英語ページでもタブに日本語のカテゴリー名が出てしまっていた。
+ * AIOSEOが最終的にどのフックでタイトル文字列を確定させているか
+ * バージョンによって差がありうるため、候補になりうる複数のフィルターに
+ * 同じ補正をかけて確実に効かせる(サイト名等は変えず、日本語カテゴリー名
+ * の部分だけを安全に置換する)。
+ * ==========================================================
+ */
+function langmate_fix_faq_category_title_string( $title ) {
+	if ( ! is_tax( 'faq_category' ) || '' === trim( (string) $title ) ) {
+		return $title;
+	}
+
+	$term = get_queried_object();
+	if ( ! ( $term instanceof WP_Term ) ) {
+		return $title;
+	}
+
+	$correct_label = langmate_get_faq_category_label( $term, langmate_get_current_language() );
+
+	return str_replace( $term->name, $correct_label, $title );
+}
+add_filter(
+	'document_title_parts',
+	function ( $parts ) {
+		if ( isset( $parts['title'] ) ) {
+			$parts['title'] = langmate_fix_faq_category_title_string( $parts['title'] );
+		}
+		return $parts;
+	}
+);
+add_filter( 'pre_get_document_title', 'langmate_fix_faq_category_title_string', 20 );
+add_filter( 'aioseo_title', 'langmate_fix_faq_category_title_string', 20 );
+
+/**
  * ---- タームメタ faq_order(表示順)で並び替える ----
  * get_terms()のmeta_value_numソートはfaq_order未設定のタームで
  * 挙動が不安定になりやすいため、PHP側で確実にソートする。

@@ -5541,6 +5541,10 @@ body.tax-faq_category .faq-group:first-child:nth-last-child(2) {
   grid-column: 1/-1;
 }
 
+body.tax-faq_category .faq-group:has(.faq-group__list > li:nth-child(5)) {
+  grid-column: 1/-1;
+}
+
 .faq-groups--search .faq-group {
   grid-column: 1/-1;
 }
