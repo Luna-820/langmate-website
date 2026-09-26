@@ -206,7 +206,10 @@ function langmate_root_language_redirect() {
 			wp_safe_redirect( home_url( '/ja/' ), 302 );
 			exit;
 		}
-		return; // enの場合はそのまま(現在地=ルート=EN版)。Cookieだけ更新して終わり。
+		// enの場合も、?langswitch=enが付いたままのURLで表示されてしまわない
+		// よう、クエリ無しのルートへ改めてリダイレクトする。
+		wp_safe_redirect( home_url( '/' ), 302 );
+		exit;
 	}
 
 	$cookie_name = 'langmate_lang';
