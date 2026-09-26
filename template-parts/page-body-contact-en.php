@@ -36,6 +36,8 @@ $theme_uri = get_template_directory_uri();
         <p class="contact-hero__note"> Before contacting us, please check our FAQ for answers to common questions.</p>
         <a class="btn btn--outline contact-hero__cta" href="<?php echo esc_url( langmate_get_page_url( 'how-can-we-help', $lang ) ); ?>">View FAQs</a>
 
+        <?php get_template_part( 'template-parts/contact-notice', null, array( 'lang' => $lang ) ); ?>
+
         <!-- Breadcrumb -->
         <nav class="breadcrumb contact-hero__breadcrumb" aria-label="Breadcrumb">
           <ol class="breadcrumb__list">

@@ -91,7 +91,7 @@ $hero_breadcrumb = array(
 		$search_results = langmate_search_faq_posts( $search_query, $lang );
 		?>
 	<!-- ===== Search results ===== -->
-	<section class="faq-groups">
+	<section class="faq-groups faq-groups--search">
 	  <div class="wrapper">
 	    <div class="faq-group">
 	      <h2 class="faq-group__title">Search results for "<?php echo esc_html( $search_query ); ?>" (<?php echo count( $search_results ); ?>)</h2>
@@ -103,14 +103,53 @@ $hero_breadcrumb = array(
 	      </ul>
 	      <?php else : ?>
 	      <p>No matching FAQs found. Please try a different keyword.</p>
+	      <?php
+	      // Send the zero-result search term to GA4(gtag) if it's set up. Safe
+	      // to call even where GA4/GTM isn't installed (checks window.gtag /
+	      // dataLayer first, no-ops otherwise). Lets the client mine "no result"
+	      // search terms later as candidates for new FAQs.
+	      ?>
+	      <script>
+	        (function () {
+	          var searchTerm = <?php echo wp_json_encode( $search_query ); ?>;
+	          if ( typeof window.gtag === 'function' ) {
+	            window.gtag( 'event', 'faq_search_no_results', {
+	              search_term: searchTerm,
+	              page_location: window.location.href,
+	            } );
+	          } else if ( Array.isArray( window.dataLayer ) ) {
+	            window.dataLayer.push( {
+	              event: 'faq_search_no_results',
+	              search_term: searchTerm,
+	            } );
+	          }
+	        })();
+	      </script>
 	      <?php endif; ?>
 	    </div>
 
+	    <?php if ( ! $search_results ) : ?>
+	    <!-- Only shown for zero results: place the "Contact Us" button right
+	         above the "Back to FAQ TOP" button, same width, 24px apart -->
+	    <div class="faq-group__more-group">
+	      <div class="faq-group__more">
+	        <a class="faq-categories__item faq-categories__item--contact" href="<?php echo esc_url( langmate_get_page_url( 'contact', $lang ) ); ?>">
+	          Contact Us
+	        </a>
+	      </div>
+	      <div class="faq-group__more">
+	        <a class="faq-categories__item" href="<?php echo esc_url( langmate_get_faq_archive_url( $lang ) ); ?>">
+	          <span class="faq-categories__arrow" aria-hidden="true">◀︎</span>Back to FAQ TOP
+	        </a>
+	      </div>
+	    </div>
+	    <?php else : ?>
 	    <div class="faq-group__more">
 	      <a class="faq-categories__item" href="<?php echo esc_url( langmate_get_faq_archive_url( $lang ) ); ?>">
 	        <span class="faq-categories__arrow" aria-hidden="true">◀︎</span>Back to FAQ TOP
 	      </a>
 	    </div>
+	    <?php endif; ?>
 	  </div>
 	</section>
 	<?php else : ?>

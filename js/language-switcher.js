@@ -8,6 +8,14 @@
 //     → そのネイティブな遷移にそのまま任せる
 //   - <a>が無い場合（静的HTML側。今まで通り）
 //     → JSでURLを組み立てて遷移する
+//
+// ルートページ(/)には、Cookie/ブラウザ言語からJA/ENを自動判定して振り分ける
+// サーバー側の仕組み(functions.php: langmate_root_language_redirect)がある。
+// この手動切替でルートへ遷移する場合(JA→ENなど)、遷移直後はCookieがまだ
+// 直前の言語のままのタイミングがあり、自動判定にCookie優先で直前の言語へ
+// 送り返されてしまう不具合があった。Cookie自体はサーバー側でHttpOnly付きの
+// ため、ここ(JS)からは書き換えられない。そこで遷移先URLに?langswitch=<lang>
+// を付け、サーバー側でCookieより優先して処理してもらうことで解決する。
 const STORAGE_KEY = 'langmate-lang';
 
 // 現在のページがどの言語版か、URLの/ja/プレフィックスの有無で判定する（英語がデフォルト）
@@ -66,12 +74,23 @@ export function initLanguageSwitcher() {
         }
 
         if (hasNativeLink) {
-          // WordPress側：<a href>のネイティブな遷移にそのまま任せる
+          // WordPress側：<a href>のネイティブな遷移にそのまま任せるが、
+          // 遷移先がルート(/)だと自動言語判定と衝突するため、hrefに
+          // ?langswitch=<lang> を付けてサーバー側で最優先判定してもらう
+          // (クリックのデフォルト動作が起きる前にhref属性を書き換えれば、
+          // ブラウザは書き換え後のURLへ遷移する)。
+          const anchor = li.querySelector('a[href]');
+          if (anchor) {
+            const url = new URL(anchor.getAttribute('href'), location.href);
+            url.searchParams.set('langswitch', lang);
+            anchor.setAttribute('href', `${url.pathname}${url.search}`);
+          }
           return;
         }
 
         // 静的HTML側：<a>が無いのでJSでURLを組み立てて遷移する
-        location.href = buildUrlForLang(lang);
+        // (?langswitch=の理由は上記コメントと同じ)
+        location.href = `${buildUrlForLang(lang)}?langswitch=${lang}`;
       });
     });
 

@@ -75,6 +75,99 @@
     padding-bottom: clamp(60px, calc(31.04px + 6.734vw), 100px);
 }
 
+// ---- お知らせバナー(障害・注意/お知らせ/通常時ステータス) ----
+// 設定画面(設定 → お問い合わせ お知らせ設定)の内容を表示する。
+// フォームの直上、Web版・WebView版・日英とも共通。
+.contact-notice {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 12px;
+
+    width: 100%;
+    max-width: 700px;
+    // 上(CTAボタンとの間)は元の余白のまま、下(パンくずとの間)はその倍にする。
+    // 下側はパンくず自身のmargin-block-start:24pxと隣接マージンの相殺が
+    // 起きるため、ここを倍にしても最終的な見た目はこの値がそのまま効く
+    // (24-32pxより大きいため、相殺されずこちらが優先される)。
+    margin: clamp(24px, calc(15.52px + 1.687vw), 32px) auto clamp(48px, calc(31.04px + 3.374vw), 64px);
+    padding: 16px 20px;
+
+    border-radius: v.$radius-card;
+
+    &__badge {
+        flex-shrink: 0;
+
+        padding: 4px 12px;
+
+        font-size: 1.2rem;
+        font-weight: v.$fw-bold;
+        line-height: 1.5;
+        white-space: nowrap;
+
+        border-radius: v.$radius-button;
+    }
+
+    &__text {
+        flex: 1;
+        min-width: 200px;
+
+        font-size: 1.4rem;
+        line-height: 1.6;
+    }
+
+    // 障害・注意(赤)
+    &--alert {
+        background-color: v.$color-alert-light;
+
+        .contact-notice__badge {
+            color: v.$color-white;
+            background-color: v.$color-alert;
+        }
+
+        .contact-notice__text {
+            color: v.$color-alert;
+        }
+    }
+
+    // お知らせ(青)
+    &--info {
+        background-color: v.$color-blue-light;
+
+        .contact-notice__badge {
+            color: v.$color-white;
+            background-color: v.$color-blue;
+        }
+
+        .contact-notice__text {
+            color: v.$color-blue;
+        }
+    }
+
+    // 通常時(不具合なし、落ち着いた見た目)
+    &--normal {
+        background-color: v.$color-gray-light;
+
+        .contact-notice__badge {
+            color: v.$color-white;
+            background-color: v.$color-gray;
+        }
+
+        .contact-notice__text {
+            color: v.$color-text;
+        }
+    }
+
+    @include mx.sp {
+        padding: 12px 16px;
+
+        &__text {
+            min-width: 0;
+            font-size: 1.3rem;
+        }
+    }
+}
+
 .contact-form {
     display: flex;
     flex-direction: column;
@@ -95,6 +188,16 @@
         align-items: stretch;
         gap: 24px;
         width: 100%;
+    }
+
+    // CF7標準の送信結果メッセージ(バリデーションエラー・送信失敗等)。
+    // CF7側の既定CSS(margin:2em 0.5em 1em;で全幅・左揃え)を上書きし、
+    // 他の入力欄と同じ幅・中央揃えにする(枠線の色分けはCF7標準のまま活かす)。
+    .wpcf7-response-output {
+        width: 100%;
+        max-width: clamp(345px, calc(160.4px + 42.93vw), 600px);
+        margin-inline: auto !important;
+        text-align: center;
     }
 
     &__field {
@@ -155,19 +258,57 @@
         min-height: 160px;
     }
 
+    // メッセージ欄の残り文字数カウンター([count your-message down])
+    &__counter {
+        display: block;
+        width: 100%;
+        max-width: clamp(345px, calc(160.4px + 42.93vw), 600px);
+        margin: 4px auto 0;
+        font-size: 1.2rem;
+        color: v.$color-gray;
+        text-align: right;
+    }
+
+    // スパム対策のハニーポット。本物のユーザーには一切見えない・
+    // フォーカスも当たらない罠フィールド(bot避け)。
+    &__hp {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
     &__user-id {
-        text-align: center;
+        // お問い合わせ内容欄(&__field/&__textarea)と同じ幅に揃える。
+        width: 100%;
+        max-width: clamp(345px, calc(160.4px + 42.93vw), 600px);
+        margin-inline: auto;
+        text-align: left;
         font-size: 2rem;
-        margin-top: 20px;
+        // 直前のユーザーID欄との間隔。<form>のflex gap:24pxに対して
+        // マイナスマージンで相殺し、実質12pxの間隔にする。
+        margin-top: -12px;
 
         p {
-            margin-block-end: 8px;
+            // ボタンとの間隔
+            margin-block-end: 20px;
             font-size: 1.6rem;
         }
     }
 
     &__user-id-trigger {
-        display: inline-flex;
+        // 「重要:...」のテキストは左揃えのままにしたいが、このボタン自体は
+        // 中央揃えにしたい。親のtext-align:leftの影響を受けないよう、
+        // display:flex(ブロック化) + width:fit-content + margin-inline:auto
+        // で、親のtext-alignに関係なく確実に中央寄せする。
+        display: flex;
+        width: fit-content;
+        margin-inline: auto;
         align-items: center;
         gap: 8px;
         background: none;
@@ -254,24 +395,66 @@
             background-color: #E6F2FF;
         }
 
-        // ファイル選択済み: 案内文言とボタンは隠し、ファイル名表示＋やり直しボタンだけにする
+        // ファイルを1枚以上選択済み: 枠を実線に(案内文言・ボタンは
+        // 5枚に達するまで残す。追加で選べるようにするため)。
         &.has-file {
             border-style: solid;
             border-color: v.$color-blue;
+        }
 
+        // 5枚に達した時だけ、これ以上選べないことが分かるようにする
+        &.is-full {
             .contact-form__dropzone-label,
             .contact-form__dropzone-or,
             .contact-form__file-button {
-                display: none;
+                opacity: 0.4;
+                pointer-events: none;
             }
+        }
+    }
 
-            .contact-form__dropzone-filename {
-                display: flex;
-            }
+    // 添付条件の説明文(例: 「最大5枚まで、各2MBまで」)。
+    // .contact-form__user-id > p (「Langmateユーザーの場合は…」)と
+    // 同じ大きさに揃える。
+    &__dropzone-hint {
+        margin-block-start: 16px;
+        font-size: 1.6rem;
+        font-weight: v.$fw-normal;
+        color: v.$color-text;
+    }
 
-            .contact-form__dropzone-actions {
-                display: flex;
-            }
+    // 選択済みファイルの一覧(複数枚)
+    &__dropzone-filelist {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+        margin: 16px 0 0;
+        padding: 0;
+        list-style: none;
+        text-align: left;
+    }
+
+    &__dropzone-file {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        background-color: v.$color-white;
+        border: 1px solid v.$color-blue;
+        border-radius: v.$radius-input;
+        font-size: 1.3rem;
+        font-weight: v.$fw-bold;
+        color: v.$color-blue;
+
+        .contact-form__dropzone-filename-text {
+            flex: 1;
+            min-width: 0;
+            word-break: break-all;
+        }
+
+        .contact-form__dropzone-remove {
+            flex-shrink: 0;
         }
     }
 

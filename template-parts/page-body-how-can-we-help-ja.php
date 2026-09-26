@@ -91,7 +91,7 @@ $hero_breadcrumb = array(
 		$search_results = langmate_search_faq_posts( $search_query, $lang );
 		?>
 	<!-- ===== 検索結果 ===== -->
-	<section class="faq-groups">
+	<section class="faq-groups faq-groups--search">
 	  <div class="wrapper">
 	    <div class="faq-group">
 	      <h2 class="faq-group__title">「<?php echo esc_html( $search_query ); ?>」の検索結果(<?php echo count( $search_results ); ?>件)</h2>
@@ -103,14 +103,53 @@ $hero_breadcrumb = array(
 	      </ul>
 	      <?php else : ?>
 	      <p>該当するFAQが見つかりませんでした。別のキーワードでお試しください。</p>
+	      <?php
+	      // 0件だった検索語をGA4(gtag)に送る。GA4/GTMが未導入の環境でも
+	      // エラーにならないよう、window.gtag / dataLayerの存在を確認してから
+	      // 呼び出す(無ければ何もしない)。後からFAQを追加する際の材料として、
+	      // クライアント側でGA4のイベントレポートから拾える想定。
+	      ?>
+	      <script>
+	        (function () {
+	          var searchTerm = <?php echo wp_json_encode( $search_query ); ?>;
+	          if ( typeof window.gtag === 'function' ) {
+	            window.gtag( 'event', 'faq_search_no_results', {
+	              search_term: searchTerm,
+	              page_location: window.location.href,
+	            } );
+	          } else if ( Array.isArray( window.dataLayer ) ) {
+	            window.dataLayer.push( {
+	              event: 'faq_search_no_results',
+	              search_term: searchTerm,
+	            } );
+	          }
+	        })();
+	      </script>
 	      <?php endif; ?>
 	    </div>
 
+	    <?php if ( ! $search_results ) : ?>
+	    <!-- 0件の時だけ、「お問い合わせはこちら」ボタンを「よくある質問TOPへ戻る」
+	         ボタンの上に、同じ幅・24px間隔で並べて表示する -->
+	    <div class="faq-group__more-group">
+	      <div class="faq-group__more">
+	        <a class="faq-categories__item faq-categories__item--contact" href="<?php echo esc_url( langmate_get_page_url( 'contact', $lang ) ); ?>">
+	          お問い合わせはこちら
+	        </a>
+	      </div>
+	      <div class="faq-group__more">
+	        <a class="faq-categories__item" href="<?php echo esc_url( langmate_get_faq_archive_url( $lang ) ); ?>">
+	          <span class="faq-categories__arrow" aria-hidden="true">◀︎</span>よくある質問TOPへ戻る
+	        </a>
+	      </div>
+	    </div>
+	    <?php else : ?>
 	    <div class="faq-group__more">
 	      <a class="faq-categories__item" href="<?php echo esc_url( langmate_get_faq_archive_url( $lang ) ); ?>">
 	        <span class="faq-categories__arrow" aria-hidden="true">◀︎</span>よくある質問TOPへ戻る
 	      </a>
 	    </div>
+	    <?php endif; ?>
 	  </div>
 	</section>
 	<?php else : ?>

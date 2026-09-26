@@ -1,46 +1,84 @@
-// お問い合わせフォームのファイル添付ドロップゾーン
-// - 実際のドラッグ&ドロップを受け付ける（今まで見た目だけで機能していなかった）
-// - ファイルが選択されたら、ファイル名を表示して「選択済み」の見た目にする
+// お問い合わせフォームのファイル添付ドロップゾーン(最大5枚まで)
+//
+// Contact Form 7には複数ファイル一括アップロード用のタグ(multiple属性)が
+// 無いため、実際の送信は隠した[file]タグ5個(.contact-form__dropzone-slots
+// 内のyour-file-1〜your-file-5)で行う。画面に見えているのは、それとは
+// 独立した1つの<input type="file" multiple>(.contact-form__dropzone-picker)
+// で、ここで選ばれた/ドロップされたファイルを、JS側で1枚ずつ隠しの
+// [file]タグへ割り当て直す。
 export function initDropzone() {
   const dropzones = document.querySelectorAll('.contact-form__dropzone');
 
   dropzones.forEach((dropzone) => {
-    const input = dropzone.querySelector('input[type="file"]');
-    const filenameTextEl = dropzone.querySelector('.contact-form__dropzone-filename-text');
-    const changeBtn = dropzone.querySelector('.contact-form__dropzone-change');
-    const removeBtn = dropzone.querySelector('.contact-form__dropzone-remove');
-    if (!input) return;
+    const picker = dropzone.querySelector('.contact-form__dropzone-picker');
+    const slotInputs = Array.from(
+      dropzone.querySelectorAll('.contact-form__dropzone-slots input[type="file"]')
+    );
+    const listEl = dropzone.querySelector('.contact-form__dropzone-filelist');
+    const countEl = dropzone.querySelector('.contact-form__dropzone-count');
+    const maxFiles = slotInputs.length;
+    if (!picker || !listEl || maxFiles === 0) return;
 
-    // 表示・非表示はCSS側(.has-file)に任せ、ここではクラスの付け外しだけ行う
-    // （hidden属性はCF7フォーム保存時にサニタイズで落ちることがあるため使わない）
-    const showFile = (file) => {
-      if (!file) {
-        dropzone.classList.remove('has-file');
-        if (filenameTextEl) filenameTextEl.textContent = '';
-        return;
-      }
-      dropzone.classList.add('has-file');
-      if (filenameTextEl) filenameTextEl.textContent = file.name;
+    let files = [];
+
+    // 選択中のfilesを、隠しの[file]タグ(1枚=1入力)へ実際に反映する。
+    // input.filesは読み取り専用のため、DataTransferを介して差し替える。
+    const syncSlots = () => {
+      slotInputs.forEach((input, index) => {
+        const transfer = new DataTransfer();
+        if (files[index]) transfer.items.add(files[index]);
+        input.files = transfer.files;
+      });
     };
 
-    input.addEventListener('change', () => {
-      showFile(input.files && input.files[0]);
-    });
+    const renderList = () => {
+      listEl.innerHTML = '';
+      dropzone.classList.toggle('has-file', files.length > 0);
+      dropzone.classList.toggle('is-full', files.length >= maxFiles);
 
-    // 「他のファイルを選ぶ」ボタンで選び直せるようにする
-    if (changeBtn) {
-      changeBtn.addEventListener('click', () => {
-        input.click();
-      });
-    }
+      if (countEl) {
+        countEl.textContent = `${files.length}/${maxFiles}`;
+      }
 
-    // 「削除」ボタンで添付を取り消し、初期のドロップ画面に戻す
-    if (removeBtn) {
-      removeBtn.addEventListener('click', () => {
-        input.value = ''; // file inputの選択を確実にクリアする唯一の方法
-        showFile(null);
+      files.forEach((file, index) => {
+        const item = document.createElement('li');
+        item.className = 'contact-form__dropzone-file';
+
+        const icon = document.createElement('span');
+        icon.className = 'contact-form__dropzone-filename-icon';
+        icon.setAttribute('aria-hidden', 'true');
+
+        const name = document.createElement('span');
+        name.className = 'contact-form__dropzone-filename-text';
+        name.textContent = file.name;
+
+        const removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.className = 'contact-form__dropzone-remove';
+        removeBtn.textContent = 'Remove';
+        removeBtn.addEventListener('click', () => {
+          files.splice(index, 1);
+          syncSlots();
+          renderList();
+        });
+
+        item.append(icon, name, removeBtn);
+        listEl.appendChild(item);
       });
-    }
+    };
+
+    const addFiles = (fileList) => {
+      const incoming = Array.from(fileList || []);
+      if (!incoming.length) return;
+      const room = maxFiles - files.length;
+      files = files.concat(incoming.slice(0, room));
+      syncSlots();
+      renderList();
+      // 同じファイルを選び直してもchangeイベントが発火するようにリセットする
+      picker.value = '';
+    };
+
+    picker.addEventListener('change', () => addFiles(picker.files));
 
     ['dragover', 'dragenter'].forEach((eventName) => {
       dropzone.addEventListener(eventName, (e) => {
@@ -58,16 +96,9 @@ export function initDropzone() {
     dropzone.addEventListener('drop', (e) => {
       e.preventDefault();
       dropzone.classList.remove('is-dragover');
-
-      const file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
-      if (!file) return;
-
-      // input.files はread-onlyなので、DataTransferを介して差し替える
-      const transfer = new DataTransfer();
-      transfer.items.add(file);
-      input.files = transfer.files;
-
-      showFile(file);
+      addFiles(e.dataTransfer && e.dataTransfer.files);
     });
+
+    renderList();
   });
 }
