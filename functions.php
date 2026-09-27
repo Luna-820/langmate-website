@@ -175,6 +175,48 @@ function langmate_is_bot_request() {
 	return (bool) preg_match( '/bot|crawl|spider|slurp|facebookexternalhit|bingpreview|apis-google|adsbot|mediapartners/i', $ua );
 }
 
+/**
+ * ==========================================================
+ * 言語切替スイッチャー(language-switcher.js)からの ?langswitch=<lang> を
+ * 全ページ共通で処理する
+ *
+ * Cookieより最優先で即座に反映する。Cookieはサーバー側でHttpOnly付きの
+ * ため、切替直後のJS側からは書き換えられず、切替直後にルートへ遷移した
+ * 場合、直前の言語のままのCookieを見て自動判定が「直前の言語へ送り返して
+ * しまう」不具合があったため(?langswitch=はその対策)。
+ *
+ * ルート('/')限定だったlangmate_root_language_redirect()の内部で処理して
+ * いたが、/ja/配下のページ(ルート以外)へ切り替えた時にそちらの「ルート
+ * 以外は対象外」チェックに阻まれてしまい、?langswitch=jaが消化されずURLに
+ * 残ったままになる不具合があったため、パスを問わず動く独立した関数に
+ * 切り出した。langswitch以外の既存クエリ(検索キーワード等)は保持する。
+ * ==========================================================
+ */
+function langmate_langswitch_redirect() {
+	if ( is_admin() || ! isset( $_GET['langswitch'] ) ) {
+		return;
+	}
+
+	$switch_lang = ( 'ja' === $_GET['langswitch'] ) ? 'ja' : 'en';
+	langmate_set_language_cookie( $switch_lang );
+
+	$request_uri = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '/';
+	$path        = (string) wp_parse_url( $request_uri, PHP_URL_PATH );
+	$query       = (string) wp_parse_url( $request_uri, PHP_URL_QUERY );
+
+	parse_str( $query, $query_args );
+	unset( $query_args['langswitch'] );
+
+	$target = home_url( $path );
+	if ( $query_args ) {
+		$target = add_query_arg( $query_args, $target );
+	}
+
+	wp_safe_redirect( $target, 302 );
+	exit;
+}
+add_action( 'template_redirect', 'langmate_langswitch_redirect', 4 );
+
 // ---- ルートページのみ、初回訪問者をブラウザ言語で振り分ける ----
 function langmate_root_language_redirect() {
 	if ( is_admin() ) {
@@ -191,25 +233,6 @@ function langmate_root_language_redirect() {
 
 	if ( langmate_is_bot_request() ) {
 		return;
-	}
-
-	// 言語切替スイッチャー(language-switcher.js)からの明示的な選択は、
-	// Cookieより最優先で即座に反映する。Cookieはサーバー側でHttpOnly付きの
-	// ため、切替直後のJS側からは書き換えられず、切替直後にルートへ
-	// 遷移した場合、直前の言語のままのCookieを見て自動判定が「直前の
-	// 言語へ送り返してしまう」不具合があったため(?langswitch=はその対策)。
-	if ( isset( $_GET['langswitch'] ) ) {
-		$switch_lang = ( 'ja' === $_GET['langswitch'] ) ? 'ja' : 'en';
-		langmate_set_language_cookie( $switch_lang );
-
-		if ( 'ja' === $switch_lang ) {
-			wp_safe_redirect( home_url( '/ja/' ), 302 );
-			exit;
-		}
-		// enの場合も、?langswitch=enが付いたままのURLで表示されてしまわない
-		// よう、クエリ無しのルートへ改めてリダイレクトする。
-		wp_safe_redirect( home_url( '/' ), 302 );
-		exit;
 	}
 
 	$cookie_name = 'langmate_lang';
