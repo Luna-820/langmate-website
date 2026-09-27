@@ -365,6 +365,34 @@ function langmate_get_translation_url( $lang = null ) {
 }
 
 /**
+ * main.js(ES Modules)はimport.meta.urlの?verを、動的importする子モジュール
+ * (language-switcher.js等)のURLにも付与してキャッシュを揃えている
+ * (下のlangmate_script_module_type()の下、main.js側の実装コメント参照)。
+ * そのため、main.js自身ではなくjs/フォルダ内のどれか1ファイルだけを
+ * 更新した場合でも、main.js自体のバージョン(=?ver)が変わらないと、
+ * 動的importされる子モジュール側のキャッシュが更新されない。
+ * js/フォルダ内の全.jsファイルの更新日時のうち最新のものを使うことで、
+ * main.js自身・子モジュールのどちらを更新してもキャッシュが正しく
+ * 無効化されるようにする。
+ */
+function langmate_get_js_version() {
+	static $version = null;
+	if ( null !== $version ) {
+		return $version;
+	}
+
+	$version = 0;
+	$files   = glob( get_template_directory() . '/js/*.js' );
+	foreach ( $files as $file ) {
+		$mtime = filemtime( $file );
+		if ( $mtime > $version ) {
+			$version = $mtime;
+		}
+	}
+	return $version;
+}
+
+/**
  * ==========================================================
  * Assets（main.css / Google Fonts / JS）
  * ==========================================================
@@ -374,7 +402,7 @@ function langmate_enqueue_assets() {
 
 	wp_enqueue_style( 'langmate-main', get_template_directory_uri() . '/main.css', array(), filemtime( get_template_directory() . '/main.css' ) );
 
-	wp_enqueue_script( 'langmate-main', get_template_directory_uri() . '/js/main.js', array(), filemtime( get_template_directory() . '/js/main.js' ), true );
+	wp_enqueue_script( 'langmate-main', get_template_directory_uri() . '/js/main.js', array(), langmate_get_js_version(), true );
 }
 add_action( 'wp_enqueue_scripts', 'langmate_enqueue_assets' );
 
