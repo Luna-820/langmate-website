@@ -1413,6 +1413,47 @@ add_action( 'template_redirect', 'langmate_faq_language_url_guard' );
 
 /**
  * ==========================================================
+ * FAQ: URL中のカテゴリー部分が投稿の正規カテゴリーと違う場合、
+ * 正しいURLへ301リダイレクト
+ *
+ * FAQ CPTのrewrite(support/%faq_category%)は投稿をpost_name(スラッグ)
+ * だけで解決し、URL中のカテゴリー部分自体は検証しない。1つの投稿が
+ * 複数のfaq_categoryタームに属せるため、どのカテゴリーのURLでアクセス
+ * しても同じ投稿がそのまま200で開けてしまう(例: 本来troubleshooting
+ * 配下の記事が、how-to-use配下のURLでも開けてしまう)。
+ * canonicalタグ自体は正しいURLを指しているため実害は小さいが、
+ * langmate_get_faq_url_category_slug()が常に一意な「正規カテゴリー」を
+ * 決定的に選ぶ設計になっているのを利用し、get_permalink()が返す
+ * 正規URLと実際のリクエストURLが違う場合は301で正規化しておく。
+ * ==========================================================
+ */
+function langmate_faq_category_url_guard() {
+	if ( ! is_singular( 'faq' ) || is_preview() ) {
+		return;
+	}
+
+	$post_id           = get_queried_object_id();
+	$correct_permalink = get_permalink( $post_id );
+	$correct_path      = trim( (string) wp_parse_url( $correct_permalink, PHP_URL_PATH ), '/' );
+
+	$request_uri  = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
+	$current_path = trim( (string) wp_parse_url( $request_uri, PHP_URL_PATH ), '/' );
+
+	if ( $current_path === $correct_path ) {
+		return;
+	}
+
+	// クエリ文字列(あれば)は保持したまま正規URLへリダイレクトする。
+	$query  = (string) wp_parse_url( $request_uri, PHP_URL_QUERY );
+	$target = $query ? $correct_permalink . '?' . $query : $correct_permalink;
+
+	wp_safe_redirect( $target, 301 );
+	exit;
+}
+add_action( 'template_redirect', 'langmate_faq_category_url_guard' );
+
+/**
+ * ==========================================================
  * FAQ: 旧本番サイトのURLからの301リダイレクト
  *
  * サイトリニューアル前の本番サイトは
