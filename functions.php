@@ -1478,9 +1478,20 @@ function langmate_faq_legacy_redirect() {
 			exit;
 		}
 
-		// 該当データが無かった場合、この後に本体のwp_old_slug_redirect()が
-		// 言語無視で誤ったリダイレクトをしてしまわないよう止めておく。
+		// 該当データが無かった場合、この後にwp_old_slug_redirect()や
+		// redirect_canonical()が言語無視で誤ったリダイレクトをして
+		// しまわないよう止めておく。
+		//
+		// redirect_canonical()は「_wp_old_slugとは無関係に、URL末尾の
+		// スラッグがpost_type='faq'の中の"現在の"post_nameと一致する
+		// 投稿がないか」も調べており、日英で同じスラッグ(post_name)を
+		// 持つ投稿が両方存在する場合、こちらがヒットして言語を無視した
+		// 投稿へ301してしまう不具合が実際にあった(is_404()の時点では
+		// まだ投稿は見つかっていないため、is_singular()ベースのガードでは
+		// 検知できない。redirect_canonical()自身がここで初めて検索し、
+		// 見つけてしまう)。
 		remove_action( 'template_redirect', 'wp_old_slug_redirect' );
+		remove_action( 'template_redirect', 'redirect_canonical' );
 		return;
 	}
 
@@ -1508,6 +1519,7 @@ function langmate_faq_legacy_redirect() {
 		}
 
 		remove_action( 'template_redirect', 'wp_old_slug_redirect' );
+		remove_action( 'template_redirect', 'redirect_canonical' );
 	}
 }
 // 優先度1(標準の10より早く)で登録し、wp_old_slug_redirect()より
