@@ -5680,14 +5680,21 @@ body.tax-faq_category .faq-group:has(.faq-group__list > li:nth-child(5)) {
   font-weight: 700;
   line-height: 1.4;
   margin-block-end: clamp(10px, 5.657px + 1.01vw, 16px);
+  padding: 8px 12px;
+  color: #FF3C71;
+  background-color: #FFF2F7;
+  border-block-end: 2px solid #FF3C71;
 }
 .faq-detail__block h3 {
   font-size: clamp(1.6rem, 13.1px + 0.6734vw, 2rem);
   font-weight: 500;
   line-height: 1.4;
-  margin-block-start: 24px;
-  margin-block-end: 16px;
+  margin-block-start: 40px;
+  margin-block-end: 20px;
   scroll-margin-top: 120px;
+  padding: 8px 16px;
+  background-color: #F6F6F6;
+  border-inline-start: 4px solid #FF3C71;
 }
 .faq-detail__block > p {
   font-size: clamp(1.5rem, 14.28px + 0.1684vw, 1.6rem);
@@ -5723,9 +5730,12 @@ body.tax-faq_category .faq-group:has(.faq-group__list > li:nth-child(5)) {
   font-size: clamp(1.4rem, 12.55px + 0.3367vw, 1.6rem);
   font-weight: 700;
   line-height: 1.4;
-  margin-block-start: 20px;
-  margin-block-end: 12px;
+  margin-block-start: 28px;
+  margin-block-end: 16px;
   scroll-margin-top: 120px;
+  display: inline-block;
+  padding-block-end: 4px;
+  border-block-end: 1px solid #202020;
 }
 .faq-detail__block a {
   display: inline;
