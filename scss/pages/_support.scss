@@ -94,6 +94,9 @@
             vertical-align: middle;
         }
 
+        // デザイナー案(FAQ 回答ページ.pdf)に沿って、フラットになりすぎない
+        // よう背景色・下線・飾りを追加(SEO/AIO対策で使うリスト・見出しが
+        // 来訪者にも読みやすくなるように)。
         h2 {
             // fluid化: sp=2rem / pc=2.4rem（431〜1023pxを線形補間）
             font-size: clamp(2rem, calc(17.1px + 0.6734vw), 2.4rem);
@@ -101,6 +104,11 @@
             line-height: 1.4;
             // fluid化: sp=10px / pc=16px（431〜1023pxを線形補間）
             margin-block-end: clamp(10px, calc(5.657px + 1.01vw), 16px);
+
+            padding: 8px 12px;
+            color: v.$color-pink;
+            background-color: v.$color-pink-light;
+            border-block-end: 2px solid v.$color-pink;
         }
 
         // the_content()から出力される小見出し(以前の.faq-detail__sub h3相当)
@@ -109,14 +117,20 @@
             font-size: clamp(1.6rem, calc(13.1px + 0.6734vw), 2rem);
             font-weight: v.$fw-medium;
             line-height: 1.4;
-            margin-block-start: 24px;
-            margin-block-end: 16px;
+            // 背景色付きのブロックになった分、前後のテキストと詰まって
+            // 見えないよう余白を広げている(24px/16px→40px/20px)。
+            margin-block-start: 40px;
+            margin-block-end: 20px;
 
             // 目次(.faq-toc)からのページ内リンクジャンプ時、固定ヘッダー
             // (.site-header, position:fixed)に見出しの上部が隠れてしまう
             // のを防ぐ余白。実測でヘッダー下端がSP=約83px/PC=約106pxだった
             // ため、余裕を持って120pxにしている。
             scroll-margin-top: 120px;
+
+            padding: 8px 16px;
+            background-color: #F6F6F6;
+            border-inline-start: 4px solid v.$color-pink;
         }
 
         >p {
@@ -176,11 +190,16 @@
             font-size: clamp(1.4rem, calc(12.55px + 0.3367vw), 1.6rem);
             font-weight: v.$fw-bold;
             line-height: 1.4;
-            margin-block-start: 20px;
-            margin-block-end: 12px;
+            margin-block-start: 28px;
+            margin-block-end: 16px;
 
             // h3と同じ理由(固定ヘッダーとの重なり対策)
             scroll-margin-top: 120px;
+
+            // テキスト幅だけの下線にするためinline-blockにする
+            display: inline-block;
+            padding-block-end: 4px;
+            border-block-end: 1px solid v.$color-text;
         }
 
         // 本文中のリンク。サイト全体の共通aスタイル(base/_base.scss)は
