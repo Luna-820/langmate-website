@@ -6016,6 +6016,10 @@ body.tax-faq_category .faq-group:has(.faq-group__list > li:nth-child(5)) {
   gap: 24px;
   width: 100%;
 }
+.contact-form .cf-turnstile {
+  display: flex;
+  justify-content: center;
+}
 .contact-form .wpcf7-response-output {
   width: 100%;
   max-width: clamp(345px, 160.4px + 42.93vw, 600px);

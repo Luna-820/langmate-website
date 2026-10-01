@@ -868,6 +868,94 @@ add_filter( 'wpcf7_spam', 'langmate_cf7_ip_rate_limit_check', 20, 2 );
 
 /**
  * ==========================================================
+ * お問い合わせフォーム: スパム対策③ Cloudflare Turnstile
+ *
+ * ハニーポット・IP制限に続く3段目の対策。フォーム側(CF7管理画面)に
+ * Turnstileウィジェット(data-sitekeyにLANGMATE_TURNSTILE_SITE_KEYを
+ * 指定したdiv)を設置しておく必要がある。送信時に自動生成される
+ * "cf-turnstile-response"をCloudflareの検証APIに照会し、人間と
+ * 判定されなければスパム扱いにする。
+ * ==========================================================
+ */
+define( 'LANGMATE_TURNSTILE_SITE_KEY', '0x4AAAAAAFJnDXaH6yxfL7KN' );
+define( 'LANGMATE_TURNSTILE_SECRET_KEY', '0x4AAAAAAFJnDVUAjZ2nuw94JDqQwzFy91Q' );
+
+function langmate_cf7_turnstile_check( $spam, $submission ) {
+	if ( $spam ) {
+		return $spam;
+	}
+
+	$token = $submission->get_posted_data( 'cf-turnstile-response' );
+	if ( empty( $token ) ) {
+		$submission->add_spam_log(
+			array(
+				'agent'  => 'langmate',
+				'reason' => 'Cloudflare Turnstile token missing.',
+			)
+		);
+		return true;
+	}
+
+	$response = wp_remote_post(
+		'https://challenges.cloudflare.com/turnstile/v0/siteverify',
+		array(
+			'timeout' => 10,
+			'body'    => array(
+				'secret'   => LANGMATE_TURNSTILE_SECRET_KEY,
+				'response' => $token,
+				'remoteip' => (string) $submission->get_meta( 'remote_ip' ),
+			),
+		)
+	);
+
+	if ( is_wp_error( $response ) ) {
+		// Cloudflare側/ネットワークの一時的な障害でユーザーの送信自体を
+		// ブロックしてしまわないよう、検証エラー時は素通りさせる
+		// (ハニーポット・IP制限は引き続き効いているため無防備にはならない)。
+		return $spam;
+	}
+
+	$body   = json_decode( wp_remote_retrieve_body( $response ), true );
+	$passed = ! empty( $body['success'] );
+
+	if ( ! $passed ) {
+		$submission->add_spam_log(
+			array(
+				'agent'  => 'langmate',
+				'reason' => 'Cloudflare Turnstile verification failed.',
+			)
+		);
+		return true;
+	}
+
+	return $spam;
+}
+add_filter( 'wpcf7_spam', 'langmate_cf7_turnstile_check', 30, 2 );
+
+/**
+ * Turnstileのウィジェットスクリプトは、CF7フォームが実際にレンダリング
+ * されたページでだけ読み込む。CF7フォームはpost_content(投稿本文)経由
+ * ではなく各テンプレート(page-body-contact-*.php)内でdo_shortcode()
+ * により直接埋め込まれているため、post_content側でのショートコード
+ * 判定(has_shortcode())は効かない。代わりにCF7が実際にフォームのHTML
+ * を生成する瞬間(wpcf7_form_elements)を捉えることで、Web版・WebView版
+ * どちらのお問い合わせページも、テンプレート構造に依存せず自動的に
+ * カバーできるようにしている。
+ */
+function langmate_mark_turnstile_needed( $elements ) {
+	if ( ! has_action( 'wp_footer', 'langmate_print_turnstile_script' ) ) {
+		add_action( 'wp_footer', 'langmate_print_turnstile_script', 5 );
+	}
+	return $elements;
+}
+add_filter( 'wpcf7_form_elements', 'langmate_mark_turnstile_needed' );
+
+function langmate_print_turnstile_script() {
+	printf( '<script src="%s" async defer></script>' . "\n", esc_url( 'https://challenges.cloudflare.com/turnstile/v0/api.js' ) );
+}
+
+/**
+ * ==========================================================
  * FAQ: カスタム投稿タイプ + カテゴリータクソノミー
  *
  * ACFは使わず、標準の投稿本文(the_content)をそのまま回答として扱う。

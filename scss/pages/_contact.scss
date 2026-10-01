@@ -190,6 +190,13 @@
         width: 100%;
     }
 
+    // Cloudflare Turnstileウィジェット。デフォルトだと固定幅の中身が
+    // 左揃えになってしまうため、送信ボタンの真上で中央に来るようにする。
+    .cf-turnstile {
+        display: flex;
+        justify-content: center;
+    }
+
     // CF7標準の送信結果メッセージ(バリデーションエラー・送信失敗等)。
     // CF7側の既定CSS(margin:2em 0.5em 1em;で全幅・左揃え)を上書きし、
     // 他の入力欄と同じ幅・中央揃えにする(枠線の色分けはCF7標準のまま活かす)。
