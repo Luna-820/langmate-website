@@ -2555,3 +2555,39 @@ function langmate_get_contact_notice_badge_label( $type, $lang ) {
 	$lang = ( 'en' === $lang ) ? 'en' : 'ja';
 	return $labels[ $type ][ $lang ] ?? $labels['normal'][ $lang ];
 }
+
+/**
+ * ==========================================================
+ * Google Tag Manager(コンテナID: GTM-PDWP26W6)
+ *
+ * Local/テスト環境(InfinityFree)でテストアクセスまで計測して
+ * しまわないよう、本番移行までは下のブロックごとコメントアウトして
+ * 待機させている。本番公開時に、このコメント開始行(/ *)と
+ * 終了行(* /)を削除すれば有効になる(クライアント確認済み: GTMは
+ * コンテナ作成・GA4設定タグ作成・公開まで完了している前提)。
+ *
+ * head用スクリプトとbody直後のnoscriptタグ、どちらも?>タグを使わず
+ * printf()でHTML文字列として出力する形にしている(PHPのブロック
+ * コメント内に?><?phpのような開始/終了タグが混在すると、字句解析が
+ * 複雑になり意図せずコメントが途切れるリスクがあるため)。
+ * ==========================================================
+ */
+/*
+define( 'LANGMATE_GTM_CONTAINER_ID', 'GTM-PDWP26W6' );
+
+function langmate_gtm_head_script() {
+	printf(
+		"<!-- Google Tag Manager -->\n<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','%s');</script>\n<!-- End Google Tag Manager -->\n",
+		esc_js( LANGMATE_GTM_CONTAINER_ID )
+	);
+}
+add_action( 'wp_head', 'langmate_gtm_head_script', 1 );
+
+function langmate_gtm_body_noscript() {
+	printf(
+		"<!-- Google Tag Manager (noscript) -->\n<noscript><iframe src=\"https://www.googletagmanager.com/ns.html?id=%s\" height=\"0\" width=\"0\" style=\"display:none;visibility:hidden\"></iframe></noscript>\n<!-- End Google Tag Manager (noscript) -->\n",
+		esc_attr( LANGMATE_GTM_CONTAINER_ID )
+	);
+}
+add_action( 'wp_body_open', 'langmate_gtm_body_noscript' );
+*/

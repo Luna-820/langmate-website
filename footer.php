@@ -61,7 +61,7 @@ $langmate_sns_label      = ( 'en' === $langmate_lang ) ? 'Follow Us on Social Me
           <a href="https://www.tiktok.com/@questions_about_japan" target="_blank" rel="noopener"><img src="<?php echo esc_url( $langmate_theme_uri ); ?>/design-assets/logo-tiktok.svg" alt="TikTok"
               width="24" height="24" /></a>
         </div>
-        <a class="site-footer__blog" href="https://langmate.net/" target="_blank" rel="noopener">
+        <a class="site-footer__blog" href="<?php echo esc_url( ( 'en' === $langmate_lang ) ? 'https://langmate.net/en/' : 'https://langmate.net/' ); ?>" target="_blank" rel="noopener">
           <span class="site-footer__blog-title">Langmate English Club</span>
           <span class="site-footer__blog-sub">\ <?php echo ( 'en' === $langmate_lang ) ? 'English Learning Blog' : '英語学習ブログ'; ?> /</span>
         </a>
