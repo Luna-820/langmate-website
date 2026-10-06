@@ -349,6 +349,39 @@ function langmate_get_translation_url( $lang = null ) {
 
 	$fallback = ( 'ja' === $lang ) ? home_url( '/ja/' ) : home_url( '/' );
 
+	// FAQ個別記事: is_page()ではなくis_singular('faq')のため、以前は
+	// この判定に一切引っかからずフォールバック(ルート)に飛んでしまって
+	// いた。同じスラッグ(post_name)を持つ、対象言語の投稿を探して
+	// そちらへ切り替える。
+	if ( is_singular( 'faq' ) ) {
+		$current_id = get_queried_object_id();
+		$slug       = get_post_field( 'post_name', $current_id );
+		$candidates = $slug ? get_posts(
+			array(
+				'post_type'      => 'faq',
+				'name'           => $slug,
+				'posts_per_page' => 1,
+				'exclude'        => array( $current_id ),
+				'fields'         => 'ids',
+				'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+					array(
+						'key'   => 'faq_lang',
+						'value' => $lang,
+					),
+				),
+			)
+		) : array();
+		return $candidates ? get_permalink( $candidates[0] ) : $fallback;
+	}
+
+	// FAQカテゴリーアーカイブ: 同様にis_page()では判定できず、以前は
+	// フォールバックしていた。タクソノミーのtermは日英共通のため、
+	// 同じtermのまま言語だけ切り替えたURLを組み立てる。
+	if ( is_tax( 'faq_category' ) ) {
+		$term = get_queried_object();
+		return ( $term instanceof WP_Term ) ? langmate_get_faq_category_archive_url( $term, $lang ) : $fallback;
+	}
+
 	if ( ! is_page() ) {
 		return $fallback;
 	}
@@ -2555,6 +2588,25 @@ function langmate_get_contact_notice_badge_label( $type, $lang ) {
 	$lang = ( 'en' === $lang ) ? 'en' : 'ja';
 	return $labels[ $type ][ $lang ] ?? $labels['normal'][ $lang ];
 }
+
+/**
+ * ==========================================================
+ * Cookie同意(Consent Mode)の初期化
+ *
+ * GTMスニペットより先に実行し、デフォルトで分析・広告Cookieを
+ * 「拒否」状態にしておく(ユーザーがバナーで同意するまでGA4等は
+ * Cookieを使わない)。このコード自体はdataLayerに同意状態を
+ * push()するだけで外部通信を一切行わないため、GTM本体(下のブロック、
+ * 本番移行まで無効化中)が止まっていても安全に常時有効にできる。
+ * 実際の同意状態の判定・更新はjs/cookie-consent.jsが行う。
+ * ==========================================================
+ */
+function langmate_consent_mode_default() {
+	printf(
+		"<script>\nwindow.dataLayer = window.dataLayer || [];\nfunction gtag(){dataLayer.push(arguments);}\ngtag('consent', 'default', {\n  'analytics_storage': 'denied',\n  'ad_storage': 'denied',\n  'ad_user_data': 'denied',\n  'ad_personalization': 'denied'\n});\n</script>\n"
+	);
+}
+add_action( 'wp_head', 'langmate_consent_mode_default', 0 );
 
 /**
  * ==========================================================
