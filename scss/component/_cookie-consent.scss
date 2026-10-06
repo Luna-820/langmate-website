@@ -25,7 +25,7 @@
         gap: 16px;
 
         width: 100%;
-        max-width: 900px;
+        max-width: 1100px;
 
         padding: 20px 24px;
 
@@ -45,7 +45,7 @@
         flex: 1;
         min-width: 0;
 
-        font-size: 1.3rem;
+        font-size: 1.4rem;
         line-height: 1.6;
         color: v.$color-text;
 
@@ -65,7 +65,7 @@
         gap: 12px;
 
         @include mx.sp {
-            justify-content: flex-end;
+            justify-content: center;
         }
     }
 
@@ -73,7 +73,7 @@
     &__decline {
         padding: 10px 20px;
 
-        font-size: 1.3rem;
+        font-size: 1.4rem;
         font-weight: v.$fw-bold;
 
         border-radius: v.$radius-button;
