@@ -2591,6 +2591,25 @@ function langmate_get_contact_notice_badge_label( $type, $lang ) {
 
 /**
  * ==========================================================
+ * Cookie同意(Consent Mode)の初期化
+ *
+ * GTMスニペットより先に実行し、デフォルトで分析・広告Cookieを
+ * 「拒否」状態にしておく(ユーザーがバナーで同意するまでGA4等は
+ * Cookieを使わない)。このコード自体はdataLayerに同意状態を
+ * push()するだけで外部通信を一切行わないため、GTM本体(下のブロック、
+ * 本番移行まで無効化中)が止まっていても安全に常時有効にできる。
+ * 実際の同意状態の判定・更新はjs/cookie-consent.jsが行う。
+ * ==========================================================
+ */
+function langmate_consent_mode_default() {
+	printf(
+		"<script>\nwindow.dataLayer = window.dataLayer || [];\nfunction gtag(){dataLayer.push(arguments);}\ngtag('consent', 'default', {\n  'analytics_storage': 'denied',\n  'ad_storage': 'denied',\n  'ad_user_data': 'denied',\n  'ad_personalization': 'denied'\n});\n</script>\n"
+	);
+}
+add_action( 'wp_head', 'langmate_consent_mode_default', 0 );
+
+/**
+ * ==========================================================
  * Google Tag Manager(コンテナID: GTM-PDWP26W6)
  *
  * Local/テスト環境(InfinityFree)でテストアクセスまで計測して

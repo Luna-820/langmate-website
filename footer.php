@@ -75,6 +75,24 @@ $langmate_sns_label      = ( 'en' === $langmate_lang ) ? 'Follow Us on Social Me
     <p class="site-footer__copyright">Copyright &copy; 2026 Langmate Inc.</p>
   </footer>
 
+  <div class="cookie-consent" data-cookie-consent hidden>
+    <div class="cookie-consent__inner">
+      <p class="cookie-consent__text">
+        <?php if ( 'en' === $langmate_lang ) : ?>
+          This site uses cookies to analyze traffic and improve our service. See our
+          <a href="<?php echo esc_url( langmate_get_page_url( 'privacy', $langmate_lang ) ); ?>">Privacy Policy</a> for details.
+        <?php else : ?>
+          当サイトでは、サービス向上のためCookieを使用しています。詳しくは
+          <a href="<?php echo esc_url( langmate_get_page_url( 'privacy', $langmate_lang ) ); ?>">プライバシーポリシー</a>をご覧ください。
+        <?php endif; ?>
+      </p>
+      <div class="cookie-consent__actions">
+        <button type="button" class="cookie-consent__decline" data-cookie-consent-decline><?php echo ( 'en' === $langmate_lang ) ? 'Decline' : '拒否する'; ?></button>
+        <button type="button" class="cookie-consent__accept" data-cookie-consent-accept><?php echo ( 'en' === $langmate_lang ) ? 'Accept' : '同意する'; ?></button>
+      </div>
+    </div>
+  </div>
+
   <?php wp_footer(); ?>
 </body>
 

@@ -56,6 +56,7 @@ $langmate_part       = 'template-parts/page-body-' . sanitize_key( $langmate_sou
 <?php wp_head(); ?>
 </head>
 <body <?php body_class( 'webview-page' ); ?>>
+<?php wp_body_open(); ?>
 
 <?php
 if ( $langmate_source_key && locate_template( $langmate_part . '-' . $langmate_lang . '.php' ) ) {

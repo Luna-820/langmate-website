@@ -1,0 +1,100 @@
+@use '../base/mixin' as mx;
+@use '../base/base' as v;
+
+// ==========================================================================
+// Cookie同意バナー
+// 画面下部に固定表示。js/cookie-consent.jsがhidden属性の付け外しで
+// 表示/非表示を制御する(初期状態はhiddenでちらつきを防ぐ)。
+// ==========================================================================
+.cookie-consent {
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 500;
+
+    display: flex;
+    justify-content: center;
+
+    padding: 16px;
+    padding-block-end: calc(16px + env(safe-area-inset-bottom, 0px));
+
+    &__inner {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 16px;
+
+        width: 100%;
+        max-width: 900px;
+
+        padding: 20px 24px;
+
+        background-color: v.$color-white;
+        border: 1px solid v.$color-gray-light;
+        border-radius: v.$radius-card;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+
+        @include mx.sp {
+            flex-direction: column;
+            align-items: stretch;
+            padding: 16px 20px;
+        }
+    }
+
+    &__text {
+        flex: 1;
+        min-width: 0;
+
+        font-size: 1.3rem;
+        line-height: 1.6;
+        color: v.$color-text;
+
+        a {
+            color: v.$color-blue;
+            text-decoration: underline;
+
+            &:hover {
+                opacity: 0.7;
+            }
+        }
+    }
+
+    &__actions {
+        display: flex;
+        flex-shrink: 0;
+        gap: 12px;
+
+        @include mx.sp {
+            justify-content: flex-end;
+        }
+    }
+
+    &__accept,
+    &__decline {
+        padding: 10px 20px;
+
+        font-size: 1.3rem;
+        font-weight: v.$fw-bold;
+
+        border-radius: v.$radius-button;
+        cursor: pointer;
+
+        transition: opacity 0.3s;
+
+        &:hover {
+            opacity: 0.85;
+        }
+    }
+
+    &__accept {
+        color: v.$color-white;
+        background-color: v.$color-pink;
+        border: none;
+    }
+
+    &__decline {
+        color: v.$color-text;
+        background-color: transparent;
+        border: 1px solid v.$color-gray-light;
+    }
+}

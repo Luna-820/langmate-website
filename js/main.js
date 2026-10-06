@@ -21,6 +21,7 @@ const { initVoiceSlider } = await import( `./voice-slider.js${ verSuffix }` );
 const { initStartedCurve } = await import( `./started-curve.js${ verSuffix }` );
 const { initCf7Redirect } = await import( `./cf7-redirect.js${ verSuffix }` );
 const { initDropzone } = await import( `./dropzone.js${ verSuffix }` );
+const { initCookieConsent } = await import( `./cookie-consent.js${ verSuffix }` );
 
 initViewportHeight();
 initHeaderOffset();
@@ -36,3 +37,4 @@ initVoiceSlider();
 initStartedCurve();
 initCf7Redirect();
 initDropzone();
+initCookieConsent();
