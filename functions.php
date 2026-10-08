@@ -35,8 +35,8 @@ add_action( 'after_setup_theme', 'langmate_setup' );
  * (js/floating-dl.js側は別ファイルのためこの定数は共有できないが、
  * そちらも同様にファイル内で1箇所にまとめてある)
  */
-define( 'LANGMATE_APPSTORE_URL', 'https://apps.apple.com/jp/app/langmate-%E8%8B%B1%E4%BC%9A%E8%A9%B1%E3%81%A8%E5%A4%96%E5%9B%BD%E4%BA%BA%E3%81%AE%E5%8F%8B%E9%81%94%E4%BD%9C%E3%82%8A/id1093968775' );
-define( 'LANGMATE_GOOGLEPLAY_URL', 'https://play.google.com/store/apps/details?id=co.thoron.langmate' );
+define( 'LANGMATE_APPSTORE_URL', 'https://langmate.go.link?adj_t=25z7cjqy' );
+define( 'LANGMATE_GOOGLEPLAY_URL', 'https://langmate.go.link?adj_t=25u0jmyb' );
 
 /**
  * グローバルナビ / モバイルナビ / フッターnav で共通して使う項目定義。
