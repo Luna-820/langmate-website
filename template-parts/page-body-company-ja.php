@@ -178,7 +178,7 @@ $theme_uri = get_template_directory_uri();
               <span class="about-recruit__badge" aria-hidden="true"></span>
               応募方法
             </h3>
-            <p>面談を希望される方は、職務経歴書をこちらよりお送りください。<br>
+            <p>面談を希望される方は、職務経歴書を<a href="<?php echo esc_url( langmate_get_page_url( 'contact', $lang ) ); ?>">こちら</a>よりお送りください。<br>
               Langmateでのキャリアにご興味のある方からのご応募をお待ちしております！</p>
             <img class="about-recruit__illust" src="<?php echo esc_url( $theme_uri ); ?>/design-assets/illust-recruit-03.svg" alt="" aria-hidden="true"
               width="300" height="193" />

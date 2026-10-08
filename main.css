@@ -4027,6 +4027,15 @@ img {
   margin-top: 0;
 }
 
+.about-recruit__item--apply p a {
+  text-decoration: underline;
+  transition: color 0.3s;
+}
+.about-recruit__item--apply p a:hover {
+  color: #0083F8;
+  opacity: 1;
+}
+
 .gs-hero {
   position: relative;
   overflow: hidden;
@@ -6149,6 +6158,11 @@ body.tax-faq_category .faq-group:has(.faq-group__list > li:nth-child(5)) {
 .contact-form__input:focus, .contact-form__textarea:focus {
   outline: 2px solid #0083F8;
   outline-offset: 1px;
+}
+.contact-form__input:-webkit-autofill, .contact-form__input:-webkit-autofill:hover, .contact-form__input:-webkit-autofill:focus, .contact-form__textarea:-webkit-autofill, .contact-form__textarea:-webkit-autofill:hover, .contact-form__textarea:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #FFFFFF inset;
+  -webkit-text-fill-color: #202020;
+  transition: background-color 9999s ease-in-out 0s;
 }
 .contact-form__textarea {
   resize: vertical;

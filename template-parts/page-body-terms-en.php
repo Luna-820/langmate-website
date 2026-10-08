@@ -15,7 +15,7 @@ $theme_uri = get_template_directory_uri();
     <section class="legal-hero wrapper">
       <div class="legal-hero__inner">
         <h1 class="legal-hero__title">Terms of Service</h1>
-        <p class="legal-hero__meta">Established and effective July 28, 2017<br>Last updated: April 27, 2026</p>
+        <p class="legal-hero__meta">Established and effective July 28, 2017<br>Last updated: October 8, 2026</p>
       </div>
     </section>
 
