@@ -5,20 +5,21 @@
 // Contact Thanks page（お問い合わせありがとうございます）
 // ==========================================================================
 
-// ---- Hero（contact.htmlの.contact-heroに--thanksモディファイアを付けて使用） ----
+// ---- Hero（contact.htmlの.contact-heroに--thanksモディファイアを付けて使用。
+//       sub-hero/contact-heroの共通スタイル(背景アーチ・&__inner等)を
+//       そのまま使用し、ページ固有の上書きは最小限に留める） ----
 .contact-hero--thanks {
     padding-block-end: 0;
 
-    .sub-hero__map {
-        position: static;
-        display: block;
-        aspect-ratio: 1280 / 400;
-        object-fit: cover;
-        object-position: bottom;
+    // &__innerの中身が空のため、/contact/ページ(見出し・リード文等を
+    // 含む実測の高さ: 1024px→885.7px, 1440px→945.7px, 1920px→1015.7px、
+    // ほぼ線形)と同じ見た目の高さになるよう、見えない余白だけ確保する。
+    // テキストや装飾は一切追加しない。
+    .sub-hero__inner {
+        min-height: calc(738px + 14.4vw);
 
-        // hero-sp以下は地図がもう少し見えるように高さを増やす
-        @include mx.hero-sp {
-            aspect-ratio: 1280 / 700;
+        @include mx.sp {
+            min-height: auto;
         }
     }
 }
@@ -27,10 +28,33 @@
     position: relative;
     z-index: 1; // アーチ画像(.contact-hero--thanks)と重なった時に必ず手前に来るように
     padding-top: 0;
-    margin-block-start: clamp(-90px, -9vw, -50px);
+    // .contact-hero--thanks .sub-hero__innerに足した見えない高さ分
+    // (738px+14.4vw)このセクションを引き上げて、元のmargin基準の
+    // 見た目位置に戻す。sub-hero__innerのpadding-block-start自体が
+    // clamp(180px, 39.0625vw-100px, 360px)と非線形(430-717pxは180px
+    // 固定、717-1178pxは線形、1178px以上は360px固定)なため、相殺量も
+    // 画面幅の区間ごとに正しい式を使う必要がある
+    // (1178px〜1440pxの区間を基準値とする)
+    margin-block-start: calc(clamp(-90px, -9vw, -50px) - 378px - 14.4vw);
     padding-bottom: clamp(100px, 24vw, 240px);
 
-    @include mx.hero-sp {
+    // 430px〜717px: sub-hero__inner側のpadding-block-startが180px固定の区間
+    @media (min-width: 431px) and (max-width: 717px) {
+        margin-block-start: calc(clamp(-90px, -9vw, -50px) - 558px - 14.4vw);
+    }
+
+    // 718px〜1178px: sub-hero__inner側のpadding-block-startが線形変化する区間
+    @media (min-width: 718px) and (max-width: 1178px) {
+        margin-block-start: calc(clamp(-90px, -9vw, -50px) - 838px + 24.6625vw);
+    }
+
+    @media (min-width: 1441px) {
+        margin-block-start: calc(-398px - 14.4vw);
+    }
+
+    // アーチ円形(.sub-hero::after)自体がdisplay:noneになるのはmx.sp
+    // (430px)以下のみのため、margin相殺のリセットもここに合わせる
+    @include mx.sp {
         margin-block-start: 0;
     }
 
@@ -43,10 +67,11 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: clamp(80px, calc(7.20px + 16.879vw), 180px);
+        width: clamp(40px, calc(3.60px + 8.440vw), 90px);
         aspect-ratio: 1 / 1;
 
         margin-inline: auto;
+        margin-block-start: clamp(24px, 4vw, 48px);
         margin-block-end: 32px;
 
         border: 2px solid v.$color-blue;
@@ -56,7 +81,7 @@
         img {
             display: block;
             width: 66.667%;
-            max-width: 120px;
+            max-width: 60px;
             height: auto;
             max-height: 66.667%;
             object-fit: contain;

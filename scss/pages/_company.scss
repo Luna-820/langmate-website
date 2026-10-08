@@ -704,3 +704,16 @@
 .site-footer {
     margin-top: 0;
 }
+
+// 本文中のaタグはグローバルでcolor:inherit; text-decoration:none;に
+// なっていて周囲のテキストと見分けがつかないため、応募方法セクションの
+// 「こちら」/「here」リンクのみ視覚的にリンクと分かるよう装飾する
+.about-recruit__item--apply p a {
+    text-decoration: underline;
+    transition: color 0.3s;
+
+    &:hover {
+        color: v.$color-blue;
+        opacity: 1;
+    }
+}

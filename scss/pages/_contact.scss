@@ -258,6 +258,19 @@
             outline: 2px solid v.$color-blue;
             outline-offset: 1px;
         }
+
+        // ブラウザの自動入力(オートフィル)機能で値が入ると、ブラウザ側が
+        // 背景色を強制的に変えてしまう(Chromeは標準で黄色/青系になる)。
+        // box-shadowのinsetで塗りつぶして背景色を白に固定し、手打ち入力時
+        // との見た目を統一する(transitionの遅延は背景色変化そのものを
+        // 実質無効化するための定番のハック)。
+        &:-webkit-autofill,
+        &:-webkit-autofill:hover,
+        &:-webkit-autofill:focus {
+            -webkit-box-shadow: 0 0 0 1000px v.$color-white inset;
+            -webkit-text-fill-color: v.$color-text;
+            transition: background-color 9999s ease-in-out 0s;
+        }
     }
 
     &__textarea {

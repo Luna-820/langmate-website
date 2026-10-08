@@ -18,6 +18,12 @@
     padding: 16px;
     padding-block-end: calc(16px + env(safe-area-inset-bottom, 0px));
 
+    // display:flexがhidden属性のデフォルトdisplay:noneより詳細度で
+    // 勝ってしまい、hidden属性を付けても見た目上消えない問題があった
+    &[hidden] {
+        display: none;
+    }
+
     &__inner {
         display: flex;
         align-items: center;

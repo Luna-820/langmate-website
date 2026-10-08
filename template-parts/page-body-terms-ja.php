@@ -15,7 +15,7 @@ $theme_uri = get_template_directory_uri();
     <section class="legal-hero wrapper">
       <div class="legal-hero__inner">
         <h1 class="legal-hero__title">利用規約</h1>
-        <p class="legal-hero__meta">2017年7月28日制定・施行<br>最終更新日：2026年04月27日</p>
+        <p class="legal-hero__meta">2017年7月28日制定・施行<br>最終更新日：2026年10月8日</p>
       </div>
     </section>
 

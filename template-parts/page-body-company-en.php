@@ -191,7 +191,7 @@ Additionally, we currently work fully remotely.</p>
               <span class="about-recruit__badge" aria-hidden="true"></span>
               How to Apply:
             </h3>
-            <p>If you would like to schedule an interview, please submit your resume/CV here.<br>
+            <p>If you would like to schedule an interview, please submit your resume/CV <a href="<?php echo esc_url( langmate_get_page_url( 'contact', $lang ) ); ?>">here</a>.<br>
               We look forward to hearing from anyone interested in building a career at Langmate.</p>
             <img class="about-recruit__illust" src="<?php echo esc_url( $theme_uri ); ?>/design-assets/illust-recruit-03.svg" alt="" aria-hidden="true"
               width="300" height="193" />
