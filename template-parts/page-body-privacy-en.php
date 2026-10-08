@@ -69,6 +69,8 @@ $theme_uri = get_template_directory_uri();
 <p>When you open the app and read a message and/or shared media (images, photos, voice messages), the content will be then permanently deleted from the third party products such as Google Firebase, and will be stocked only on your device.</p>
 <p>Link to the privacy policy of the third party product provider used by the app messaging services.</p>
 <p>[Google Firebase] https://firebase.google.com/support/privacy/</p>
+<h3>3.2.5 Website Cookies</h3>
+<p>Our website (langmate.jp) uses Google Analytics to analyze traffic, which collects information through cookies. For details on how Google handles data, please see <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a>.</p>
 <h2>4. Information we receive from others</h2>
 <p>In addition to the information you provide us directly, we may receive information about you from others, including:</p>
 <h3>4.1 Other Users</h3>
