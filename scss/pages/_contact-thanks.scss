@@ -5,20 +5,21 @@
 // Contact Thanks page（お問い合わせありがとうございます）
 // ==========================================================================
 
-// ---- Hero（contact.htmlの.contact-heroに--thanksモディファイアを付けて使用） ----
+// ---- Hero（contact.htmlの.contact-heroに--thanksモディファイアを付けて使用。
+//       sub-hero/contact-heroの共通スタイル(背景アーチ・&__inner等)を
+//       そのまま使用し、ページ固有の上書きは最小限に留める） ----
 .contact-hero--thanks {
     padding-block-end: 0;
 
-    .sub-hero__map {
-        position: static;
-        display: block;
-        aspect-ratio: 1280 / 400;
-        object-fit: cover;
-        object-position: bottom;
+    // &__innerの中身が空のため、/contact/ページ(見出し・リード文等を
+    // 含む実測の高さ: 1024px→885.7px, 1440px→945.7px, 1920px→1015.7px、
+    // ほぼ線形)と同じ見た目の高さになるよう、見えない余白だけ確保する。
+    // テキストや装飾は一切追加しない。
+    .sub-hero__inner {
+        min-height: calc(738px + 14.4vw);
 
-        // hero-sp以下は地図がもう少し見えるように高さを増やす
-        @include mx.hero-sp {
-            aspect-ratio: 1280 / 700;
+        @include mx.sp {
+            min-height: auto;
         }
     }
 }
@@ -27,8 +28,15 @@
     position: relative;
     z-index: 1; // アーチ画像(.contact-hero--thanks)と重なった時に必ず手前に来るように
     padding-top: 0;
-    margin-block-start: clamp(-90px, -9vw, -50px);
+    // .contact-hero--thanks .sub-hero__innerに足した見えない高さ分
+    // (実測: 1024px→585.7px, 1440px→585.7px, 1920px→585.7pxとほぼ一定)
+    // このセクションを引き上げて、元のmargin基準の見た目位置に戻す
+    margin-block-start: calc(clamp(-90px, -9vw, -50px) - 378px - 14.4vw);
     padding-bottom: clamp(100px, 24vw, 240px);
+
+    @media (min-width: 1441px) {
+        margin-block-start: calc(-398px - 14.4vw);
+    }
 
     @include mx.hero-sp {
         margin-block-start: 0;
@@ -43,10 +51,11 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: clamp(80px, calc(7.20px + 16.879vw), 180px);
+        width: clamp(40px, calc(3.60px + 8.440vw), 90px);
         aspect-ratio: 1 / 1;
 
         margin-inline: auto;
+        margin-block-start: clamp(24px, 4vw, 48px);
         margin-block-end: 32px;
 
         border: 2px solid v.$color-blue;
@@ -56,7 +65,7 @@
         img {
             display: block;
             width: 66.667%;
-            max-width: 120px;
+            max-width: 60px;
             height: auto;
             max-height: 66.667%;
             object-fit: contain;

@@ -6509,16 +6509,12 @@ p .user-id-steps__num {
 .contact-hero--thanks {
   padding-block-end: 0;
 }
-.contact-hero--thanks .sub-hero__map {
-  position: static;
-  display: block;
-  aspect-ratio: 1280/400;
-  object-fit: cover;
-  object-position: bottom;
+.contact-hero--thanks .sub-hero__inner {
+  min-height: calc(738px + 14.4vw);
 }
-@media (max-width: 780px) {
-  .contact-hero--thanks .sub-hero__map {
-    aspect-ratio: 1280/700;
+@media (max-width: 430px) {
+  .contact-hero--thanks .sub-hero__inner {
+    min-height: auto;
   }
 }
 
@@ -6526,8 +6522,13 @@ p .user-id-steps__num {
   position: relative;
   z-index: 1;
   padding-top: 0;
-  margin-block-start: clamp(-90px, -9vw, -50px);
+  margin-block-start: calc(clamp(-90px, -9vw, -50px) - 378px - 14.4vw);
   padding-bottom: clamp(100px, 24vw, 240px);
+}
+@media (min-width: 1441px) {
+  .contact-thanks {
+    margin-block-start: calc(-398px - 14.4vw);
+  }
 }
 @media (max-width: 780px) {
   .contact-thanks {
@@ -6542,9 +6543,10 @@ p .user-id-steps__num {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: clamp(80px, 7.2px + 16.879vw, 180px);
+  width: clamp(40px, 3.6px + 8.44vw, 90px);
   aspect-ratio: 1/1;
   margin-inline: auto;
+  margin-block-start: clamp(24px, 4vw, 48px);
   margin-block-end: 32px;
   border: 2px solid #0083F8;
   border-radius: 50%;
@@ -6553,7 +6555,7 @@ p .user-id-steps__num {
 .contact-thanks__icon img {
   display: block;
   width: 66.667%;
-  max-width: 120px;
+  max-width: 60px;
   height: auto;
   max-height: 66.667%;
   object-fit: contain;
