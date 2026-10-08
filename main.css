@@ -1255,6 +1255,9 @@ img {
   padding: 16px;
   padding-block-end: calc(16px + env(safe-area-inset-bottom, 0px));
 }
+.cookie-consent[hidden] {
+  display: none;
+}
 .cookie-consent__inner {
   display: flex;
   align-items: center;
@@ -6525,12 +6528,22 @@ p .user-id-steps__num {
   margin-block-start: calc(clamp(-90px, -9vw, -50px) - 378px - 14.4vw);
   padding-bottom: clamp(100px, 24vw, 240px);
 }
+@media (min-width: 431px) and (max-width: 717px) {
+  .contact-thanks {
+    margin-block-start: calc(clamp(-90px, -9vw, -50px) - 558px - 14.4vw);
+  }
+}
+@media (min-width: 718px) and (max-width: 1178px) {
+  .contact-thanks {
+    margin-block-start: calc(clamp(-90px, -9vw, -50px) - 838px + 24.6625vw);
+  }
+}
 @media (min-width: 1441px) {
   .contact-thanks {
     margin-block-start: calc(-398px - 14.4vw);
   }
 }
-@media (max-width: 780px) {
+@media (max-width: 430px) {
   .contact-thanks {
     margin-block-start: 0;
   }
